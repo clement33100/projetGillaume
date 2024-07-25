@@ -16,10 +16,13 @@
             android:name=".step1FirstName"
             android:exported="false" />
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".Rules"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Stape2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
