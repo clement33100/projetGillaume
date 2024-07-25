@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    tools:context=".Advices">
+
+    <ImageButton
+        android:id="@+id/imageButtonRFirstStep"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button left"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageButton
+        android:id="@+id/imageButtonLFirstStep"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button right"
+        android:rotation="-90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintStart_toEndOf="@+id/editTextText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <TextView
+        android:id="@+id/txt_explainPart2"
+        android:layout_width="345dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="244dp"
+        android:gravity="center"
+        android:text="Pour renforcer l'imprégnation dans ton système nerveux de ces nouvelles croyances que TU as choisies pour atteindre tes objectifs, Bouge ton Corps, contracte tes muscles. Ce ne sont pas seulement des affirmations, ce sont des INCANTATIONS. Trouve l'énergie de la conviction"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/txt_explainPart3"
+        android:layout_width="343dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="464dp"
+        android:gravity="center"
+        android:text="Cet exercice change tes pensées, donc ta vibration, et par conséquent tes actions, ce qui attire l'expérience que tu as choisie. Pour encore plus d'efficacité, utilise la Visualisation."
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/txt_explain"
+        android:layout_width="346dp"
+        android:layout_height="246dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Ecoute pendant 21 jours cet audio autant que tu le peux, veux, au moins une fois par jour, et répète les phrases à voix haute pendant les moments de silence que tu as laissés. Dis les phrases avec la conviction qu'elles sont vraies. Ressens de la gratitude pour cet être illimité que tu es."
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="166dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Les Conseilles"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
