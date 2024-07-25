@@ -21,19 +21,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
-    <ImageButton
-
-        android:id="@+id/imageButtonRRules"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="button left"
-        android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_music"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
-
     <Button
         android:id="@+id/btn_music"
         android:layout_width="wrap_content"

@@ -14,14 +14,14 @@ import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class Stape2 : AppCompatActivity() {
+class Step2 : AppCompatActivity() {
     private lateinit var container: LinearLayout
     private var textViewCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_stape2)
+        setContentView(R.layout.activity_step2)
 
         container = findViewById(R.id.container)
         val addButton = findViewById<Button>(R.id.addButton)
