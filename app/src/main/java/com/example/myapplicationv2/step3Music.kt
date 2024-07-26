@@ -17,6 +17,7 @@ import com.example.myapplicationv2.R.id.uploadButton
 import kotlin.math.log
 import android.media.MediaPlayer
 import android.view.ViewGroup
+import android.widget.ImageButton
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -29,12 +30,15 @@ class step3Music : AppCompatActivity() {
     private lateinit var dynamicButtonContainer: LinearLayout
     private var savedFilePath: String? = null
     private var mediaPlayer: MediaPlayer? = null
+    private val fileList = mutableListOf<Pair<String, String>>()
+    private var currentFilePath: String? = null
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 val audioFileName = getFileName(it)
                 savedFilePath = saveFileToInternalStorage(it, audioFileName.toString())
+                fileList.add(Pair(audioFileName.toString(), savedFilePath.toString()))
                 createDynamicButton(audioFileName.toString(), savedFilePath.toString())
                 Toast.makeText(this, "Selected: $audioFileName", Toast.LENGTH_SHORT).show()
                 // Here you can handle the MP3 file (e.g., upload it to a server, play it, etc.)
@@ -45,6 +49,20 @@ class step3Music : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_step3_music)
+
+        val ImageButton = findViewById<ImageButton>(R.id.imageButtonLFirstStep)
+
+        ImageButton.setOnClickListener {
+            val intent = Intent(this, Step4::class.java)
+            val filePaths = fileList.map { it.second }.toTypedArray()
+            intent.putExtra("filePaths", filePaths)
+
+            startActivity(intent)
+
+
+
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(
@@ -134,18 +152,31 @@ class step3Music : AppCompatActivity() {
 
     private fun playAudio(filePath: String) {
         if (mediaPlayer == null) {
+            // Initialize and start playback
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(filePath)
                 prepare()
                 start()
             }
+            currentFilePath = filePath
+            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
         } else {
-            mediaPlayer?.reset()
-            mediaPlayer?.setDataSource(filePath)
-            mediaPlayer?.prepare()
-            mediaPlayer?.start()
+            if (mediaPlayer?.isPlaying == true && currentFilePath == filePath) {
+                // Stop playback
+                mediaPlayer?.stop()
+                mediaPlayer?.reset()
+                currentFilePath = null
+                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
+            } else {
+                // Switch to new audio file or restart current one
+                mediaPlayer?.reset()
+                mediaPlayer?.setDataSource(filePath)
+                mediaPlayer?.prepare()
+                mediaPlayer?.start()
+                currentFilePath = filePath
+                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            }
         }
-        Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

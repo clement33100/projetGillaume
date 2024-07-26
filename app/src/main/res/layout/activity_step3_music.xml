@@ -35,12 +35,12 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <LinearLayout
@@ -57,15 +57,41 @@
                 android:layout_height="wrap_content"
                 android:text="Upload MP3" />
 
-        <LinearLayout
-            android:id="@+id/dynamicButtonContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp"/>
+            <LinearLayout
+                android:id="@+id/dynamicButtonContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp" />
 
             <!-- Ajoutez autant de boutons ou autres éléments que nécessaire -->
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/imageButtonLFirstStep"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button right"
+        android:rotation="-90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintStart_toEndOf="@+id/intro"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageButton
+        android:id="@+id/imageButtonRFirstStep"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button left"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/intro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

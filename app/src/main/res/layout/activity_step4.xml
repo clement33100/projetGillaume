@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toEndOf="@+id/editTextText"
+        app:layout_constraintStart_toEndOf="@+id/intro"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
@@ -28,7 +28,7 @@
         android:contentDescription="button left"
         android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextText"
+        app:layout_constraintEnd_toStartOf="@+id/intro"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/arrow_down_float" />
@@ -67,11 +67,9 @@
         android:text="Intro"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-        app:layout_constraintVertical_bias="0.229" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_Valid"
