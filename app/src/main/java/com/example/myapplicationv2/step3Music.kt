@@ -51,6 +51,9 @@ class step3Music : AppCompatActivity() {
         setContentView(R.layout.activity_step3_music)
 
         val ImageButton = findViewById<ImageButton>(R.id.imageButtonLFirstStep)
+        val ButtonEpic = findViewById<Button>(R.id.btn_epic)
+        val ButtonVib = findViewById<Button>(R.id.btn_frequence)
+
 
         ImageButton.setOnClickListener {
             val intent = Intent(this, Step4::class.java)
@@ -59,7 +62,15 @@ class step3Music : AppCompatActivity() {
 
             startActivity(intent)
 
+        }
+        ButtonEpic.setOnClickListener{
+            val intent = Intent(this, EpicMusic::class.java)
+            startActivity(intent)
 
+        }
+        ButtonVib.setOnClickListener {
+            val intent = Intent(this, FrequenceVibratoire::class.java)
+            startActivity(intent)
 
         }
 
@@ -68,7 +79,7 @@ class step3Music : AppCompatActivity() {
             v.setPadding(
                 systemBars.left,
                 systemBars.top,
-                systemBars.right,
+                systemBars.right,-
                 systemBars.bottom
             )
             insets
