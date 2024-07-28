@@ -10,7 +10,7 @@
     tools:context=".Step2">
 
     <ImageButton
-        android:id="@+id/imageButtonRFirstStep"
+        android:id="@+id/imageButtonL"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="button left"
@@ -22,7 +22,7 @@
         app:srcCompat="@android:drawable/arrow_down_float" />
 
     <ImageButton
-        android:id="@+id/imageButtonLFirstStep"
+        android:id="@+id/imageButtonRStep2"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="button right"
@@ -73,9 +73,8 @@
         android:layout_height="0dp"
         android:contentDescription="scrollView"
         app:layout_constraintBottom_toTopOf="@+id/addButton"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonRStep2"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonL"
         app:layout_constraintTop_toBottomOf="@+id/txt_explain">
 
         <LinearLayout

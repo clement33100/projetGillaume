@@ -10,10 +10,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplicationv2"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".Step2"
+            android:exported="false" />
+        <activity
+            android:name=".Visualize"
+            android:exported="false" />
+        <activity
+            android:name=".MainPage"
             android:exported="false" />
         <activity
             android:name=".Advices"
@@ -28,13 +34,13 @@
             android:name=".step1FirstName"
             android:exported="false" />
         <activity
-            android:name=".Step2"
+            android:name=".step3Music"
             android:exported="false" />
         <activity
             android:name=".Rules"
             android:exported="false" />
         <activity
-            android:name=".step3Music"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

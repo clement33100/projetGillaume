@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    tools:context=".Visualize">
+
+    <ImageButton
+        android:id="@+id/imageButtonL"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button left"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageButton
+        android:id="@+id/imageButtonRVisualize"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button right"
+        android:rotation="-90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintStart_toEndOf="@+id/editTextText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="281dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="La Visualisation"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_explain"
+        android:layout_width="346dp"
+        android:layout_height="246dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Ton cerveau ne fait pas la différence entre l'imagination et la réalité. Si tu imagines ton plat préféré, tu vas saliver. Si tu imagines des situations joyeuses, tu vas vraiment te sentir heureux. L'imagination permet donc de modifier ton état vibratoire."
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/txt_explainPart2"
+        android:layout_width="352dp"
+        android:layout_height="265dp"
+        android:layout_marginTop="228dp"
+        android:gravity="center"
+        android:text="Pour changer ta vibration de manière encore plus puissante, tu dois aller au-delà des mots. Lorsque tu écoutes tes affirmations et que tu les répètes à voix haute, visualise-toi en train de vivre ces affirmations. Utilise ton imagination pour les vivre pleinement et les ressentir. Plus tu expérimentes tes affirmations par l'imagination, plus tu modifies ta vibration, attirant ainsi l'expérience réelle dans ta vie."
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/txt_explainPart3"
+        android:layout_width="343dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="496dp"
+        android:gravity="center"
+        android:text="Pour t'aider, focalise-toi sur tes sens : qu'est ce que tu voix,sens, entends, touches, goûtes ?"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+</androidx.constraintlayout.widget.ConstraintLayout>

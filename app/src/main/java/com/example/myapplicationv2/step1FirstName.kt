@@ -14,7 +14,7 @@ class step1FirstName : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_step1_first_name)
 
-        val imageButtonLRules = findViewById<ImageButton>(R.id.imageButtonLFirstStep)
+        val imageButtonLRules = findViewById<ImageButton>(R.id.imageButtonRStep1)
         // Définir les listeners pour les boutons
         imageButtonLRules.setOnClickListener {
             // Créez une intention pour lancer Stage2

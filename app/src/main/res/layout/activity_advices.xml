@@ -9,19 +9,7 @@
     tools:context=".Advices">
 
     <ImageButton
-        android:id="@+id/imageButtonRFirstStep"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="button left"
-        android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
-
-    <ImageButton
-        android:id="@+id/imageButtonLFirstStep"
+        android:id="@+id/imageButtonRAdivices"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="button right"
@@ -31,6 +19,20 @@
         app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toEndOf="@+id/editTextText"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageButton
+        android:id="@+id/imageButtonL"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="button left"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
     <TextView

@@ -1,10 +1,13 @@
 package com.example.myapplicationv2
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -18,11 +21,17 @@ class Step2 : AppCompatActivity() {
     private lateinit var container: LinearLayout
     private var textViewCount = 0
 
+    @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_step2)
 
+        val button = findViewById<ImageButton>(R.id.imageButtonRStep2)
+        button.setOnClickListener {
+            val intent = Intent(this, Step4::class.java)
+            startActivity(intent)
+        }
         container = findViewById(R.id.container)
         val addButton = findViewById<Button>(R.id.addButton)
 

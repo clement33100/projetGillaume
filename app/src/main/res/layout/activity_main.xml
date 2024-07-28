@@ -31,6 +31,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textColorLink="@color/black"
+        android:fontFamily="@font/customfont"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
