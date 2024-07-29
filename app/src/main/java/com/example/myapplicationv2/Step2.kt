@@ -45,13 +45,13 @@ class Step2 : AppCompatActivity() {
         }
 
         addButton.setOnClickListener {
-            Log.d("Stape2", "Button clicked")
+            Log.d("Step2", "Button clicked")
             showAddTextDialog()
         }
     }
 
     private fun showAddTextDialog() {
-        Log.d("Stape2", "Showing dialog")
+        Log.d("Step2", "Showing dialog")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Ajouter un texte")
 
@@ -72,11 +72,31 @@ class Step2 : AppCompatActivity() {
     private fun addTextView(text: String) {
         textViewCount++
         val numberedText = "Affirmation $textViewCount : Tu es $text"
-        Log.d("Stape2", "Adding TextView with text: $numberedText")
+        Log.d("Step2", "Adding TextView with text: $numberedText")
+
+        // Create a new horizontal LinearLayout
+        val linearLayout = LinearLayout(this)
+        linearLayout.orientation = LinearLayout.HORIZONTAL
+
+        // Create the TextView
         val textView = TextView(this)
         textView.text = numberedText
         textView.textSize = 18f
-        textView.setPadding(8, 8, 8, 8)
-        container.addView(textView)
+        textView.setPadding(8, 30, 8, 0)
+
+        // Create the delete ImageButton
+        val deleteButton = ImageButton(this)
+        deleteButton.setImageResource(R.drawable.imgbtn_delete)
+        deleteButton.setBackgroundColor(0x00000000)  // Make background transparent
+        deleteButton.setOnClickListener {
+            container.removeView(linearLayout)
+        }
+
+        // Add TextView and ImageButton to the horizontal LinearLayout
+        linearLayout.addView(textView)
+        linearLayout.addView(deleteButton)
+
+        // Add the horizontal LinearLayout to the container
+        container.addView(linearLayout)
     }
 }
