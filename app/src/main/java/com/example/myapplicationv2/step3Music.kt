@@ -16,12 +16,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.myapplicationv2.R.id.uploadButton
 import kotlin.math.log
 import android.media.MediaPlayer
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
 
 class step3Music : AppCompatActivity() {
 
@@ -32,6 +35,30 @@ class step3Music : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private val fileList = mutableListOf<Pair<String, String>>()
     private var currentFilePath: String? = null
+
+
+    private lateinit var btn_ChoixEpic1: Button
+    private lateinit var btn_ChoixEpic2: Button
+
+    private lateinit var btn_ChoixFrequenceVibratoire1: Button
+    private lateinit var btn_ChoixFrequenceVibratoire2: Button
+
+    private lateinit var btn_ok: Button
+
+
+    private lateinit var scrollview_Epic: ScrollView
+    private lateinit var scrollview_FrequenceVibratoire: ScrollView
+
+    private lateinit var epicMusic1: ImageButton
+    private lateinit var epicMusic2: ImageButton
+
+    private lateinit var FrequenceVibratoire1: ImageButton
+    private lateinit var FrequenceVibratoire2: ImageButton
+
+    private var curentVoice: Int?=null
+
+
+
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -55,6 +82,20 @@ class step3Music : AppCompatActivity() {
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
 
 
+        scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
+        scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
+        epicMusic1 = findViewById<ImageButton>(R.id.listenepic1)
+        epicMusic2 = findViewById<ImageButton>(R.id.listenepic2)
+        FrequenceVibratoire1 = findViewById<ImageButton>(R.id.listenfrequence1)
+        FrequenceVibratoire2 = findViewById<ImageButton>(R.id.listenfrequence2)
+
+        btn_ChoixEpic1 = findViewById<Button>(R.id.epic1)
+        btn_ChoixEpic2 = findViewById<Button>(R.id.epic2)
+
+        btn_ChoixFrequenceVibratoire1 = findViewById<Button>(R.id.frequence1)
+        btn_ChoixFrequenceVibratoire2 = findViewById<Button>(R.id.frequence2)
+
+        btn_ok = findViewById<Button>(R.id.btn_okmusic)
         ImageButton.setOnClickListener {
             val intent = Intent(this, Step4::class.java)
             val filePaths = fileList.map { it.second }.toTypedArray()
@@ -64,14 +105,61 @@ class step3Music : AppCompatActivity() {
 
         }
         ButtonEpic.setOnClickListener{
-            val intent = Intent(this, EpicMusic::class.java)
-            startActivity(intent)
+            setViewVisibility(scrollview_Epic)
+
 
         }
         ButtonVib.setOnClickListener {
-            val intent = Intent(this, FrequenceVibratoire::class.java)
-            startActivity(intent)
+            setViewVisibility(scrollview_FrequenceVibratoire)
 
+        }
+
+        epicMusic1.setOnClickListener{
+            playAudioFromRaw(R.raw.epicinstantcrush)
+        }
+        epicMusic2.setOnClickListener{
+            playAudioFromRaw(R.raw.epictobuildhome)
+        }
+        FrequenceVibratoire1.setOnClickListener{
+            playAudioFromRaw(R.raw.viblonely)
+        }
+        FrequenceVibratoire2.setOnClickListener{
+            playAudioFromRaw(R.raw.vibgoodbye)
+        }
+
+        btn_ChoixEpic1.setOnClickListener {
+
+            setTextInfo(btn_ChoixEpic1.text.toString(),R.raw.epicinstantcrush)
+
+        }
+        btn_ChoixEpic2.setOnClickListener {
+            setTextInfo(btn_ChoixEpic2.text.toString(),R.raw.epictobuildhome)
+
+
+        }
+        btn_ChoixFrequenceVibratoire1.setOnClickListener {
+            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),R.raw.viblonely)
+
+
+        }
+        btn_ChoixFrequenceVibratoire2.setOnClickListener {
+
+            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),R.raw.vibgoodbye)
+
+        }
+        btn_ok.setOnClickListener {
+            if (curentVoice == null) {
+                Toast.makeText(this, "Selectionner une voix", Toast.LENGTH_SHORT).show()
+
+            } else {
+
+                val intent = Intent(this, Step2::class.java)
+                intent.putExtra("curentVoice", curentVoice)
+
+                startActivity(intent)
+
+
+            }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -103,7 +191,11 @@ class step3Music : AppCompatActivity() {
     private fun openAudioFilePicker() {
         getContent.launch("audio/mpeg")
     }
-
+    private fun setTextInfo(text : String,audioResId: Int){
+        val textInfo = findViewById<TextView>(R.id.textView4)
+        curentVoice = audioResId
+        textInfo.setText("Ton choix : "+text)
+    }
     private fun getFileName(uri: Uri): String? {
         var result: String? = null
         if (uri.scheme == "content") {
@@ -160,7 +252,27 @@ class step3Music : AppCompatActivity() {
 
         dynamicButtonContainer.addView(button)
     }
-
+    private fun playAudioFromRaw(audioResId: Int) {
+        if (mediaPlayer == null) {
+            // Initialize and start playback
+            mediaPlayer = MediaPlayer.create(this, audioResId)
+            mediaPlayer?.start()
+            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+        } else {
+            if (mediaPlayer?.isPlaying == true) {
+                // Stop playback
+                mediaPlayer?.stop()
+                mediaPlayer?.reset()
+                mediaPlayer = null
+                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
+            } else {
+                // Restart playback
+                mediaPlayer = MediaPlayer.create(this, audioResId)
+                mediaPlayer?.start()
+                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     private fun playAudio(filePath: String) {
         if (mediaPlayer == null) {
             // Initialize and start playback
@@ -187,6 +299,16 @@ class step3Music : AppCompatActivity() {
                 currentFilePath = filePath
                 Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun setViewVisibility(scrollview : ScrollView){
+
+        if(scrollview.visibility== View.GONE){
+            scrollview.visibility = View.VISIBLE
+        }
+        else {
+            scrollview.visibility = View.GONE
         }
     }
 
