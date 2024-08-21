@@ -8,66 +8,166 @@
     android:background="@color/yellow"
     tools:context=".Rules">
 
-    <ImageButton
-        android:id="@+id/imageButtonLRules"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="button right"
-        android:rotation="-90"
+    <ImageView
+        android:id="@+id/btnImg_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        app:srcCompat="@drawable/leftarrow" />
+
+    <ImageView
+        android:id="@+id/btnImg_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toEndOf="@+id/btn_music"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/rightarrow" />
 
-    <Button
-        android:id="@+id/btn_music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/txt_descstep6"
+        android:layout_width="178dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="Télécharge tes affirmations a écouter chaque jour"
+        app:layout_constraintStart_toEndOf="@+id/txt_step6"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep5" />
+
+    <TextView
+        android:id="@+id/txt_descstep5"
+        android:layout_width="172dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
-        android:text="Etape 3 : Choisis ta musique de fond"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_affirm" />
+        android:text="Choisis la durée de ton fichier audio"
+        app:layout_constraintStart_toEndOf="@+id/txt_step5"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep4" />
 
-    <Button
-        android:id="@+id/btn_download"
+    <TextView
+        android:id="@+id/txt_descstep3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
-        android:text="Etape 5 : télécharge ton fichier audio a écrouter chaque jour"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_fileTime" />
+        android:text="Écris tes affirmations"
+        app:layout_constraintStart_toEndOf="@+id/txt_step3"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep2" />
 
-    <Button
-        android:id="@+id/btn_fileTime"
+    <TextView
+        android:id="@+id/txt_descstep4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
-        android:text="Etape 4 : choisis la durée de ton fichier audio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_music" />
+        android:text="Choisis ta musique de fond"
+        app:layout_constraintStart_toEndOf="@+id/txt_step4"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep3" />
 
-    <Button
-        android:id="@+id/btn_affirm"
+    <TextView
+        android:id="@+id/txt_step3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="50dp"
-        android:text="Etape 2 : écris tes affirmations"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Étape 3:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_name" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_step2" />
 
-    <Button
-        android:id="@+id/btn_name"
+    <TextView
+        android:id="@+id/txt_step5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Etape 1 : écris ton prénom"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="50dp"
+        android:text="Étape 5:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_step4" />
+
+    <TextView
+        android:id="@+id/txt_step6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="50dp"
+        android:text="Étape 6:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_step5" />
+
+    <TextView
+        android:id="@+id/txt_step4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="50dp"
+        android:text="Étape 4:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_step3" />
+
+    <TextView
+        android:id="@+id/txt_step2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="50dp"
+        android:text="Étape 2:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_step1" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="126dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="Créer Nouveau"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_step1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="200dp"
+        android:text="Étape 1:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_descstep1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="200dp"
+        android:text="Écris ton prénom"
+        app:layout_constraintStart_toEndOf="@+id/txt_step1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_descstep2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:text="Choisis une voix off"
+        app:layout_constraintStart_toEndOf="@+id/txt_step2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep1" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="C'est Partie!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

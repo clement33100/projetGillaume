@@ -4,4 +4,7 @@
     <string name="language_fr">French</string>
     <string name="language_eng">English</string>
     <string name="language_esp">Spanish</string>
+    <string name="open">Open Drawer</string>
+    <string name="close">Close Drawer</string>
+    <string name="menu">Menu</string>
 </resources>

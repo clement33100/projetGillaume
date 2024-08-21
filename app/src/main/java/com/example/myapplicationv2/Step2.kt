@@ -1,6 +1,7 @@
 package com.example.myapplicationv2
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,30 +12,28 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class Step2 : AppCompatActivity() {
+class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private lateinit var container: LinearLayout
     private var textViewCount = 0
 
-    @SuppressLint("WrongViewCast")
+    override fun getLayoutId(): Int {
+        return R.layout.activity_step2  // Retourne le layout spécifique à cette activité
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_step2)
 
-        val button = findViewById<ImageButton>(R.id.imageButtonRStep2)
-        button.setOnClickListener {
-            val intent = Intent(this, Step4::class.java)
-            startActivity(intent)
-        }
+        // Configuration du bouton de navigation dans Base, ne plus toucher à btn_burger ici
+
         container = findViewById(R.id.container)
         val addButton = findViewById<Button>(R.id.addButton)
 
+        // Gestion des insets pour le layout
         ViewCompat.setOnApplyWindowInsetsListener(
             findViewById<View>(R.id.main)
         ) { v: View, insets: WindowInsetsCompat ->
@@ -71,7 +70,7 @@ class Step2 : AppCompatActivity() {
 
     private fun addTextView(text: String) {
         textViewCount++
-        val numberedText = "Affirmation $textViewCount : Tu es $text"
+        val numberedText = "Affirmation $textViewCount : $text"
         Log.d("Step2", "Adding TextView with text: $numberedText")
 
         // Create a new horizontal LinearLayout
