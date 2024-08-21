@@ -3,6 +3,7 @@ package com.example.myapplicationv2
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -13,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import java.io.File
+import kotlin.math.log
 
 class Etape2Voix : AppCompatActivity() {
     private lateinit var btn_VoiceFemme: Button
@@ -25,6 +28,7 @@ class Etape2Voix : AppCompatActivity() {
     private lateinit var btn_ChoixVoiceFemme2: Button
 
     private lateinit var btn_ok: Button
+    private var currentFilePath: String? = null
 
 
     private lateinit var scrollview_FemmeVoice: ScrollView
@@ -37,7 +41,7 @@ class Etape2Voix : AppCompatActivity() {
     private lateinit var voicehomme1: ImageButton
     private lateinit var voicehomme2: ImageButton
 
-    private var curentVoice: Int?=null
+    private var curentVoice: String?=null
 
 
 
@@ -76,37 +80,42 @@ class Etape2Voix : AppCompatActivity() {
             setViewVisibility(scrollview_HommeVoice)
         }
 
+        val basePath = filesDir.absolutePath + "/audio/"
+
+        Log.i("TEST123", "path : "+basePath)
+
+
         voicefemme1.setOnClickListener{
-            playAudioFromRaw(R.raw.voixfemme1)
+            playAudio("$basePath/voiceFemale1.mp3")
         }
         voicefemme2.setOnClickListener{
-            playAudioFromRaw(R.raw.voixfemme2)
+            playAudio("$basePath/voiceFemale2.mp3")
         }
         voicehomme1.setOnClickListener{
-            playAudioFromRaw(R.raw.voixhomme1)
+            playAudio("$basePath/voiceMale1.mp3")
         }
         voicehomme2.setOnClickListener{
-            playAudioFromRaw(R.raw.voixhomme2)
+            playAudio("$basePath/voiceMale2.mp3")
         }
 
         btn_ChoixVoiceFemme1.setOnClickListener {
 
-            setTextInfo(btn_ChoixVoiceFemme1.text.toString(),R.raw.voixfemme1)
+            setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
 
         }
         btn_ChoixVoiceFemme2.setOnClickListener {
-            setTextInfo(btn_ChoixVoiceFemme2.text.toString(),R.raw.voixfemme2)
+            setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
 
 
         }
         btn_ChoixVoiceHomme1.setOnClickListener {
-            setTextInfo(btn_ChoixVoiceHomme1.text.toString(),R.raw.voixhomme1)
+            setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
 
 
         }
         btn_ChoixVoiceHomme2.setOnClickListener {
 
-            setTextInfo(btn_ChoixVoiceHomme2.text.toString(),R.raw.voixhomme2)
+            setTextInfo(btn_ChoixVoiceHomme2.text.toString(),"$basePath/voiceMale2.mp3")
 
         }
 
@@ -129,9 +138,9 @@ class Etape2Voix : AppCompatActivity() {
 
     }
 
-    private fun setTextInfo(text : String,audioResId: Int){
+    private fun setTextInfo(text : String,currentVoice : String){
         val textInfo = findViewById<TextView>(R.id.textViewStep2)
-        curentVoice = audioResId
+        curentVoice = currentVoice
         textInfo.setText("Ton choix : "+text)
     }
 
@@ -162,6 +171,37 @@ class Etape2Voix : AppCompatActivity() {
                 // Restart playback
                 mediaPlayer = MediaPlayer.create(this, audioResId)
                 mediaPlayer?.start()
+                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+
+    private fun playAudio(filePath: String) {
+        if (mediaPlayer == null) {
+            // Initialize and start playback
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(filePath)
+                prepare()
+                start()
+            }
+            currentFilePath = filePath
+            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+        } else {
+            if (mediaPlayer?.isPlaying == true && currentFilePath == filePath) {
+                // Stop playback
+                mediaPlayer?.stop()
+                mediaPlayer?.reset()
+                currentFilePath = null
+                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
+            } else {
+                // Switch to new audio file or restart current one
+                mediaPlayer?.reset()
+                mediaPlayer?.setDataSource(filePath)
+                mediaPlayer?.prepare()
+                mediaPlayer?.start()
+                currentFilePath = filePath
                 Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
         }
