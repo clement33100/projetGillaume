@@ -36,7 +36,6 @@ abstract class Base : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
