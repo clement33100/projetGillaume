@@ -1,6 +1,7 @@
 package com.example.myapplicationv2
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -77,8 +78,22 @@ abstract class Base : AppCompatActivity() {
     private fun handleMenuItemClick(menuItem: MenuItem) {
         when (menuItem.itemId) {
             R.id.btn_menu -> {
-                // Action pour "Menu Principale"
+                val intent = Intent(this, ChoseBelieve::class.java)
+                startActivity(intent)
             }
+            R.id.btn_new -> {
+                val intent = Intent(this, Rules::class.java)
+                startActivity(intent)
+            }
+            R.id.btn_advices -> {
+                val intent = Intent(this, Advices::class.java)
+                startActivity(intent)
+            }
+            R.id.btn_visu -> {
+                val intent = Intent(this, Visualize::class.java)
+                startActivity(intent)
+            }
+
             // Autres actions pour les autres boutons du menu
         }
     }

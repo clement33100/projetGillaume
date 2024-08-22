@@ -47,11 +47,11 @@
             android:name=".step3Music"
             android:exported="false" />
         <activity
-            android:name=".Rules"
+            android:name=".ChoseBelieve"
             android:exported="false" />
 
         <activity
-            android:name=".ChoseBelieve"
+            android:name=".Rules"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

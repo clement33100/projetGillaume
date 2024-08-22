@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/leftarrow" />
 
     <ImageView
-        android:id="@+id/btnImg_right"
+        android:id="@+id/btnImg_rulesright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
