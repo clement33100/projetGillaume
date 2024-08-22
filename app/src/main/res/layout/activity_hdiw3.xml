@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    tools:context=".hdiw1">
+
+    <!-- Contenu principal de l'activité -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".hdiw1">
+
+        <!-- Bouton Menu Burger en haut à gauche -->
+
+        <ImageView
+            android:id="@+id/btnImg_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499"
+            app:srcCompat="@drawable/leftarrow" />
+
+        <ImageView
+            android:id="@+id/btnImg_rulesright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/rightarrow" />
+
+        <TextView
+            android:id="@+id/txt_explain"
+            android:layout_width="324dp"
+            android:layout_height="566dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Si tu connais la derstination d'une ancienne autoroute et qu'elle ne te convient plus, il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi. Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l'ancienne, n'étant plus utilisée, disparaîtra dans la jungle, permettant ainsi l'émergence d'un nouveau sentiment d'identité et une perception renouvelée de toi-même."
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.538"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="281dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="Comment ça Marche?"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_burger"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/menu"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Bouton de sélection de la langue en haut à droite -->
+        <ImageButton
+            android:id="@+id/btn_language"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/select_language"
+            android:scaleType="fitCenter"
+            android:src="@drawable/eng"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Autres vues spécifiques à l'activité hdiw1 peuvent être ajoutées ici -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Menu Latéral (Navigation View) -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".Rules"
+            android:exported="false" />
         <activity
             android:name=".Step2"
             android:exported="false" />
@@ -49,9 +52,17 @@
         <activity
             android:name=".ChoseBelieve"
             android:exported="false" />
-
         <activity
-            android:name=".Rules"
+            android:name=".hdiw2"
+            android:exported="false" />
+        <activity
+            android:name=".hdiw3"
+            android:exported="false" />
+        <activity
+            android:name=".hdiw4"
+            android:exported="false" />
+        <activity
+            android:name=".hdiw1"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
