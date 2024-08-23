@@ -96,6 +96,11 @@ abstract class Base : AppCompatActivity() {
                 val intent = Intent(this, hdiw1::class.java)
                 startActivity(intent)
             }
+            R.id.btn_affirm -> {
+                val intent = Intent(this, mesAffirmations::class.java)
+                startActivity(intent)
+            }
+
 
             // Autres actions pour les autres boutons du menu
         }

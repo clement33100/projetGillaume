@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    tools:context=".hdiw1">
+    tools:context=".hdiw4">
 
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".hdiw1">
+        tools:context=".hdiw4">
 
         <!-- Bouton Menu Burger en haut à gauche -->
 
