@@ -35,12 +35,11 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
-        app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic">
+        android:layout_width="312dp"
+        android:layout_height="228dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_epic">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="16dp" />
+
 
             <!-- Ajoutez autant de boutons ou autres éléments que nécessaire -->
 
@@ -164,6 +164,7 @@
 
         </LinearLayout>
     </ScrollView>
+
     <ScrollView
         android:id="@+id/scrollViewEpic"
         android:layout_width="match_parent"
@@ -225,6 +226,7 @@
 
         </LinearLayout>
     </ScrollView>
+
     <Button
         android:id="@+id/btn_epic"
         android:layout_width="wrap_content"
@@ -236,7 +238,6 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollViewFrequenceVibratoire" />
 
 
-
     <Button
         android:id="@+id/btn_okmusic"
         android:layout_width="wrap_content"
@@ -245,16 +246,17 @@
         android:text="ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="20dp"
         android:text="Ton choix :"
-        app:layout_constraintBottom_toTopOf="@+id/btn_okmusic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

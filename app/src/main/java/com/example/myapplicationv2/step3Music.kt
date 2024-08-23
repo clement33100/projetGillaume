@@ -16,6 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.myapplicationv2.R.id.uploadButton
 import kotlin.math.log
 import android.media.MediaPlayer
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -36,6 +38,7 @@ class step3Music : AppCompatActivity() {
     private val fileList = mutableListOf<Pair<String, String>>()
     private var currentFilePath: String? = null
 
+    private var songChoose: String? = null
 
     private lateinit var btn_ChoixEpic1: Button
     private lateinit var btn_ChoixEpic2: Button
@@ -55,7 +58,6 @@ class step3Music : AppCompatActivity() {
     private lateinit var FrequenceVibratoire1: ImageButton
     private lateinit var FrequenceVibratoire2: ImageButton
 
-    private var curentVoice: Int?=null
 
 
 
@@ -97,12 +99,15 @@ class step3Music : AppCompatActivity() {
 
         btn_ok = findViewById<Button>(R.id.btn_okmusic)
         ImageButton.setOnClickListener {
-            val intent = Intent(this, Step4::class.java)
-            val filePaths = fileList.map { it.second }.toTypedArray()
-            intent.putExtra("filePaths", filePaths)
+            if (fileList.isNotEmpty()) {
+                val intent = Intent(this, Step4::class.java)
+                val filePaths = fileList.map { it.second }.toTypedArray()
+                intent.putExtra("filePaths", filePaths)
 
-            startActivity(intent)
-
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "No files to pass", Toast.LENGTH_SHORT).show()
+            }
         }
         ButtonEpic.setOnClickListener{
             setViewVisibility(scrollview_Epic)
@@ -114,50 +119,87 @@ class step3Music : AppCompatActivity() {
 
         }
 
+        val vibgoodbye = "vibgoodbye.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathVibgoodbye = copyRawResourceToInternalStorage(R.raw.vibgoodbye, vibgoodbye)
+
+        val epicinstantcrush = "epicinstantcrush.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathEpicinstantcrush = copyRawResourceToInternalStorage(R.raw.epicinstantcrush, epicinstantcrush)
+
+        val epictobuildhome = "epictobuildhome.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathEpictobuildhome = copyRawResourceToInternalStorage(R.raw.epictobuildhome, epictobuildhome)
+
+        val viblonely = "viblonely.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathViblonely = copyRawResourceToInternalStorage(R.raw.viblonely, viblonely)
+
         epicMusic1.setOnClickListener{
-            playAudioFromRaw(R.raw.epicinstantcrush)
+            //playAudioFromRaw(R.raw.epicinstantcrush)
+            if (savedFilePathEpicinstantcrush != null) {
+                // Jouer le fichier audio en utilisant la fonction playAudio
+                playAudio(savedFilePathEpicinstantcrush)
+            } else {
+                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
         }
         epicMusic2.setOnClickListener{
-            playAudioFromRaw(R.raw.epictobuildhome)
+            if (savedFilePathEpictobuildhome != null) {
+                // Jouer le fichier audio en utilisant la fonction playAudio
+                playAudio(savedFilePathEpictobuildhome)
+            } else {
+                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
         }
         FrequenceVibratoire1.setOnClickListener{
-            playAudioFromRaw(R.raw.viblonely)
+            if (savedFilePathVibgoodbye != null) {
+                // Jouer le fichier audio en utilisant la fonction playAudio
+                playAudio(savedFilePathVibgoodbye)
+            } else {
+                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
         }
         FrequenceVibratoire2.setOnClickListener{
-            playAudioFromRaw(R.raw.vibgoodbye)
+            if (savedFilePathViblonely != null) {
+                // Jouer le fichier audio en utilisant la fonction playAudio
+                playAudio(savedFilePathViblonely)
+            } else {
+                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btn_ChoixEpic1.setOnClickListener {
+        // Jouer le fichier audio en utilisant la fonction playAudio
+            setTextInfo(btn_ChoixEpic1.text.toString(),savedFilePathEpicinstantcrush)
 
-            setTextInfo(btn_ChoixEpic1.text.toString(),R.raw.epicinstantcrush)
+
 
         }
         btn_ChoixEpic2.setOnClickListener {
-            setTextInfo(btn_ChoixEpic2.text.toString(),R.raw.epictobuildhome)
+            setTextInfo(btn_ChoixEpic2.text.toString(),savedFilePathEpictobuildhome)
 
 
         }
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
-            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),R.raw.viblonely)
+            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),savedFilePathVibgoodbye)
 
 
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
 
-            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),R.raw.vibgoodbye)
+            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),savedFilePathViblonely)
 
         }
+
+
         btn_ok.setOnClickListener {
-            if (curentVoice == null) {
-                Toast.makeText(this, "Selectionner une voix", Toast.LENGTH_SHORT).show()
+            if (songChoose == null) {
+                Toast.makeText(this, "Selectionner une musique", Toast.LENGTH_SHORT).show()
 
             } else {
 
-                val intent = Intent(this, Step2::class.java)
-                intent.putExtra("curentVoice", curentVoice)
+                val intent = Intent(this, Step4::class.java)
+                intent.putExtra("filePaths", songChoose)
+                Log.i("test123", "onCreate: "+songChoose.toString())
 
                 startActivity(intent)
-
 
             }
         }
@@ -191,11 +233,14 @@ class step3Music : AppCompatActivity() {
     private fun openAudioFilePicker() {
         getContent.launch("audio/mpeg")
     }
-    private fun setTextInfo(text : String,audioResId: Int){
+
+    private fun setTextInfo(text : String,curentSong: String?){
         val textInfo = findViewById<TextView>(R.id.textView4)
-        curentVoice = audioResId
+        songChoose = curentSong
         textInfo.setText("Ton choix : "+text)
     }
+
+
     private fun getFileName(uri: Uri): String? {
         var result: String? = null
         if (uri.scheme == "content") {
@@ -215,6 +260,7 @@ class step3Music : AppCompatActivity() {
         }
         return result
     }
+
     private fun saveFileToInternalStorage(uri: Uri, fileName: String): String {
         val inputStream: InputStream? = contentResolver.openInputStream(uri)
         val file = File(filesDir, fileName)
@@ -235,7 +281,8 @@ class step3Music : AppCompatActivity() {
     }
 
 
-    private fun createDynamicButton(fileName: String, filePath: String) {
+    /*private fun createDynamicButton(fileName: String, filePath: String) {
+
         val button = Button(this).apply {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -251,7 +298,43 @@ class step3Music : AppCompatActivity() {
         }
 
         dynamicButtonContainer.addView(button)
+    }*/
+
+
+    private fun copyRawResourceToInternalStorage(resourceId: Int, fileName: String): String? {
+        val uri = Uri.parse("android.resource://${packageName}/$resourceId")
+        return saveFileToInternalStorage(uri, fileName)
     }
+
+    private fun createDynamicButton(fileName: String, filePath: String) {
+        // Charger la disposition personnalisée
+        val inflater = LayoutInflater.from(this)
+        val rowView = inflater.inflate(R.layout.item_music, dynamicButtonContainer, false)
+
+        // Récupérer les vues du layout personnalisé
+        val btnMusicText = rowView.findViewById<Button>(R.id.btn_music_text)
+        val imgBtnPlay = rowView.findViewById<ImageButton>(R.id.img_btn_play)
+
+        // Définir le texte du bouton avec le nom du fichier
+        btnMusicText.text = fileName
+
+        // Définir l'action de clic sur le bouton de texte si besoin (par exemple pour afficher les paroles)
+        btnMusicText.setOnClickListener {
+            // Action lorsque le bouton texte est cliqué
+            Toast.makeText(this, "You clicked on $fileName", Toast.LENGTH_SHORT).show()
+            setTextInfo(btnMusicText.text.toString(),filePath)
+        }
+
+        // Définir l'action de clic sur l'ImageButton pour jouer la musique
+        imgBtnPlay.setOnClickListener {
+            playAudio(filePath)
+        }
+
+        // Ajouter la vue à votre conteneur
+        dynamicButtonContainer.addView(rowView)
+    }
+
+
     private fun playAudioFromRaw(audioResId: Int) {
         if (mediaPlayer == null) {
             // Initialize and start playback
@@ -273,6 +356,7 @@ class step3Music : AppCompatActivity() {
             }
         }
     }
+
     private fun playAudio(filePath: String) {
         if (mediaPlayer == null) {
             // Initialize and start playback
@@ -310,6 +394,23 @@ class step3Music : AppCompatActivity() {
         else {
             scrollview.visibility = View.GONE
         }
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        stopAudio()
+    }
+
+    private fun stopAudio() {
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.release()
+        }
+        mediaPlayer = null
+        currentFilePath = null
     }
 
     override fun onDestroy() {
