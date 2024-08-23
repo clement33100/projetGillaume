@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,8 @@ import androidx.core.view.WindowInsetsCompat
 
 class MeditationPlay : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
-    private var remainingTime: Int = 0
+    private lateinit var progressBar: ProgressBar
+    private var handler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,9 @@ class MeditationPlay : AppCompatActivity() {
 
 
     private fun playAudio(filePath: String,durationTime: Int) {
+        val initialDuration = durationTime
+        var progressBarTimer = durationTime
+        var remainingTime = durationTime
 
         if (mediaPlayer == null) {
 
@@ -67,9 +72,36 @@ class MeditationPlay : AppCompatActivity() {
                 Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
         }
-        val songDuration = mediaPlayer?.duration?.div(1000) ?: 0
 
-        var remainingTime = durationTime
+
+
+        progressBar = findViewById(R.id.progressBar)
+        progressBar.max = durationTime
+        progressBar.progress = 0
+
+
+        val songDuration = mediaPlayer?.duration?.div(1000) ?: 0
+        handler = Handler(Looper.getMainLooper())
+
+        handler?.post(object : Runnable {
+            override fun run() {
+                if (progressBarTimer > 0) {
+                    progressBarTimer--
+                    progressBar.progress = initialDuration - progressBarTimer
+                    handler?.postDelayed(this, 1000) // Update every second
+                    if (durationTime < songDuration) {
+                        // If the chosen duration is less than the song's duration, stop the audio after the chosen time
+                    } else if (progressBarTimer < songDuration) {
+                        // If the remaining time is less than the song's duration, stop the song when the timer reaches 0
+                        handler?.postDelayed({
+                        }, progressBarTimer * 1000L)
+                    }
+                } else {
+                    progressBar.progress = initialDuration
+                }
+            }
+        })
+
 
 
         if (durationTime < songDuration) {
@@ -79,8 +111,8 @@ class MeditationPlay : AppCompatActivity() {
             mediaPlayer?.start()
 
             mediaPlayer?.let {
-                val handler = Handler(Looper.getMainLooper())
-                handler.postDelayed({
+                //handler = Handler(Looper.getMainLooper())
+                handler?.postDelayed({
                     stopAudio()
                 }, durationTime * 1000L)  // Stop after the chosen time in milliseconds
             }
@@ -94,8 +126,8 @@ class MeditationPlay : AppCompatActivity() {
                     if (remainingTime < songDuration) {
                         mediaPlayer?.start()
                         // Stop the song when the timer reaches 0
-                        val handler = Handler(Looper.getMainLooper())
-                        handler.postDelayed({
+                        //val handler = Handler(Looper.getMainLooper())
+                        handler?.postDelayed({
                             stopAudio()
                         }, remainingTime * 1000L)
                     } else {
@@ -106,6 +138,7 @@ class MeditationPlay : AppCompatActivity() {
                 }
             }
         }
+
     }
 
     override fun onPause() {
@@ -116,6 +149,8 @@ class MeditationPlay : AppCompatActivity() {
         mediaPlayer?.stop()
         mediaPlayer?.release()
         mediaPlayer = null
+        handler?.removeCallbacksAndMessages(null) // Remove any pending callbacks
+        handler = null
     }
 
     override fun onDestroy() {
