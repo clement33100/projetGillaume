@@ -42,9 +42,11 @@ class step3Music : AppCompatActivity() {
 
     private lateinit var btn_ChoixEpic1: Button
     private lateinit var btn_ChoixEpic2: Button
+    private lateinit var btn_ChoixEpic3: Button
 
     private lateinit var btn_ChoixFrequenceVibratoire1: Button
     private lateinit var btn_ChoixFrequenceVibratoire2: Button
+    private lateinit var btn_ChoixFrequenceVibratoire3: Button
 
     private lateinit var btn_ok: Button
 
@@ -54,9 +56,11 @@ class step3Music : AppCompatActivity() {
 
     private lateinit var epicMusic1: ImageButton
     private lateinit var epicMusic2: ImageButton
+    private lateinit var epicMusic3: ImageButton
 
     private lateinit var FrequenceVibratoire1: ImageButton
     private lateinit var FrequenceVibratoire2: ImageButton
+    private lateinit var FrequenceVibratoire3: ImageButton
 
 
 
@@ -88,27 +92,34 @@ class step3Music : AppCompatActivity() {
         scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
         epicMusic1 = findViewById<ImageButton>(R.id.listenepic1)
         epicMusic2 = findViewById<ImageButton>(R.id.listenepic2)
+        epicMusic3 = findViewById<ImageButton>(R.id.listenepic3)
+
         FrequenceVibratoire1 = findViewById<ImageButton>(R.id.listenfrequence1)
         FrequenceVibratoire2 = findViewById<ImageButton>(R.id.listenfrequence2)
+        FrequenceVibratoire3 = findViewById<ImageButton>(R.id.listenfrequence3)
 
         btn_ChoixEpic1 = findViewById<Button>(R.id.epic1)
         btn_ChoixEpic2 = findViewById<Button>(R.id.epic2)
+        btn_ChoixEpic3 = findViewById<Button>(R.id.epic3)
 
         btn_ChoixFrequenceVibratoire1 = findViewById<Button>(R.id.frequence1)
         btn_ChoixFrequenceVibratoire2 = findViewById<Button>(R.id.frequence2)
+        btn_ChoixFrequenceVibratoire3 = findViewById<Button>(R.id.frequence3)
 
         btn_ok = findViewById<Button>(R.id.btn_okmusic)
-        ImageButton.setOnClickListener {
+
+        /*ImageButton.setOnClickListener {
             if (fileList.isNotEmpty()) {
                 val intent = Intent(this, Step4::class.java)
                 val filePaths = fileList.map { it.second }.toTypedArray()
                 intent.putExtra("filePaths", filePaths)
-
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "No files to pass", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
+
+
         ButtonEpic.setOnClickListener{
             setViewVisibility(scrollview_Epic)
 
@@ -119,47 +130,71 @@ class step3Music : AppCompatActivity() {
 
         }
 
-        val vibgoodbye = "vibgoodbye.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
-        val savedFilePathVibgoodbye = copyRawResourceToInternalStorage(R.raw.vibgoodbye, vibgoodbye)
+        val puissanceinterieure = "puissanceinterieure.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathPuissanceinterieure = copyRawResourceToInternalStorage(R.raw.puissanceinterieure, puissanceinterieure)
 
-        val epicinstantcrush = "epicinstantcrush.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
-        val savedFilePathEpicinstantcrush = copyRawResourceToInternalStorage(R.raw.epicinstantcrush, epicinstantcrush)
+        val renaissance = "renaissance.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathRenaissance = copyRawResourceToInternalStorage(R.raw.renaissance, renaissance)
 
-        val epictobuildhome = "epictobuildhome.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
-        val savedFilePathEpictobuildhome = copyRawResourceToInternalStorage(R.raw.epictobuildhome, epictobuildhome)
+        val ressourceinfinie = "ressourceinfinie.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathRessourceinfinie = copyRawResourceToInternalStorage(R.raw.ressourceinfinie, ressourceinfinie)
 
-        val viblonely = "viblonely.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
-        val savedFilePathViblonely = copyRawResourceToInternalStorage(R.raw.viblonely, viblonely)
+        val abondance = "abondance.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathAbondance = copyRawResourceToInternalStorage(R.raw.abondance, abondance)
+
+        val focus = "focus.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathFocus = copyRawResourceToInternalStorage(R.raw.focus, focus)
+
+        val intuition = "intuition.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathIntuition = copyRawResourceToInternalStorage(R.raw.intuition, intuition)
 
         epicMusic1.setOnClickListener{
             //playAudioFromRaw(R.raw.epicinstantcrush)
-            if (savedFilePathEpicinstantcrush != null) {
+            if (savedFilePathPuissanceinterieure != null) {
                 // Jouer le fichier audio en utilisant la fonction playAudio
-                playAudio(savedFilePathEpicinstantcrush)
+                playAudio(savedFilePathPuissanceinterieure)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         epicMusic2.setOnClickListener{
-            if (savedFilePathEpictobuildhome != null) {
+            if (savedFilePathRenaissance != null) {
                 // Jouer le fichier audio en utilisant la fonction playAudio
-                playAudio(savedFilePathEpictobuildhome)
+                playAudio(savedFilePathRenaissance)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
-        FrequenceVibratoire1.setOnClickListener{
-            if (savedFilePathVibgoodbye != null) {
+
+        epicMusic3.setOnClickListener{
+            if (savedFilePathRessourceinfinie != null) {
                 // Jouer le fichier audio en utilisant la fonction playAudio
-                playAudio(savedFilePathVibgoodbye)
+                playAudio(savedFilePathRessourceinfinie)
+            } else {
+                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        FrequenceVibratoire1.setOnClickListener{
+            if (savedFilePathAbondance != null) {
+                // Jouer le fichier audio en utilisant la fonction playAudio
+                playAudio(savedFilePathAbondance)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         FrequenceVibratoire2.setOnClickListener{
-            if (savedFilePathViblonely != null) {
+            if (savedFilePathFocus != null) {
                 // Jouer le fichier audio en utilisant la fonction playAudio
-                playAudio(savedFilePathViblonely)
+                playAudio(savedFilePathFocus)
+            } else {
+                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        FrequenceVibratoire3.setOnClickListener{
+            if (savedFilePathIntuition != null) {
+                // Jouer le fichier audio en utilisant la fonction playAudio
+                playAudio(savedFilePathIntuition)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
@@ -167,24 +202,34 @@ class step3Music : AppCompatActivity() {
 
         btn_ChoixEpic1.setOnClickListener {
         // Jouer le fichier audio en utilisant la fonction playAudio
-            setTextInfo(btn_ChoixEpic1.text.toString(),savedFilePathEpicinstantcrush)
+            setTextInfo(btn_ChoixEpic1.text.toString(),savedFilePathPuissanceinterieure)
 
 
 
         }
         btn_ChoixEpic2.setOnClickListener {
-            setTextInfo(btn_ChoixEpic2.text.toString(),savedFilePathEpictobuildhome)
+            setTextInfo(btn_ChoixEpic2.text.toString(),savedFilePathRenaissance)
+
+
+        }
+        btn_ChoixEpic3.setOnClickListener {
+            setTextInfo(btn_ChoixEpic3.text.toString(),savedFilePathRessourceinfinie)
 
 
         }
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
-            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),savedFilePathVibgoodbye)
+            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),savedFilePathAbondance)
 
 
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
 
-            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),savedFilePathViblonely)
+            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),savedFilePathFocus)
+
+        }
+        btn_ChoixFrequenceVibratoire3.setOnClickListener {
+
+            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(),savedFilePathIntuition)
 
         }
 

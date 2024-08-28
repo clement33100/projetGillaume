@@ -39,7 +39,7 @@
         android:layout_height="228dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_epic">
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Option 1" />
+                    android:text="Abondance" />
 
                 <ImageButton
                     android:id="@+id/listenfrequence1"
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Option 2" />
+                    android:text="Focus" />
 
                 <ImageButton
                     android:id="@+id/listenfrequence2"
@@ -161,7 +161,26 @@
                     app:srcCompat="@drawable/listen" />
             </LinearLayout>
             <!-- Add more options as needed -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/frequence3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Intuition" />
+
+                <ImageButton
+                    android:id="@+id/listenfrequence3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="listen femme"
+                    app:srcCompat="@drawable/listen" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -192,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Option 1" />
+                    android:text="Puissance intérieur" />
 
                 <ImageButton
                     android:id="@+id/listenepic1"
@@ -213,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Option 2" />
+                    android:text="Renaissance" />
 
                 <ImageButton
                     android:id="@+id/listenepic2"
@@ -223,7 +242,26 @@
                     app:srcCompat="@drawable/listen" />
             </LinearLayout>
             <!-- Add more options as needed -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/epic3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Ressource infinie" />
+
+                <ImageButton
+                    android:id="@+id/listenepic3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="listen femme"
+                    app:srcCompat="@drawable/listen" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

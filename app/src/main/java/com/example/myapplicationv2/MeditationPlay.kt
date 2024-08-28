@@ -1,6 +1,7 @@
 package com.example.myapplicationv2
 
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,9 +12,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class MeditationPlay : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
+    private var preAudioPlayer: MediaPlayer? = null
+    private var afterAudioPlayer: MediaPlayer? = null
     private lateinit var progressBar: ProgressBar
     private var handler: Handler? = null
 
@@ -27,23 +33,104 @@ class MeditationPlay : AppCompatActivity() {
             insets
         }
 
-        val filePaths = intent.getStringExtra("filePaths")
-        Log.i("test1234567", "onCreate: "+filePaths)
+        val intromeditation = "intromeditation.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathIntromeditation = copyRawResourceToInternalStorage(R.raw.intromeditation, intromeditation)
+        val isIntroEnabled = intent.getBooleanExtra("isIntroEnabled", false)
+        val sonboltibetain= "sonboltibetain.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val savedFilePathBolTibetain = copyRawResourceToInternalStorage(R.raw.sonboltibetain, sonboltibetain)
 
+        val filePaths = intent.getStringExtra("filePaths")
         val selectedDurationInSeconds = intent.getIntExtra("selectedDuration", 0)
 
-        Log.i("test123456", "onCreate: "+selectedDurationInSeconds.toString())
+
+        if (isIntroEnabled) {
+            playAudioFirst(savedFilePathIntromeditation,savedFilePathBolTibetain,filePaths,selectedDurationInSeconds)
+
+        } else {
+
+            playAudioSecond(savedFilePathBolTibetain,filePaths,selectedDurationInSeconds )
+
+        }
 
 
-        playAudio(filePaths.toString(),selectedDurationInSeconds)
+    }
+
+    private fun copyRawResourceToInternalStorage(resourceId: Int, fileName: String): String? {
+        val uri = Uri.parse("android.resource://${packageName}/$resourceId")
+        return saveFileToInternalStorage(uri, fileName)
+    }
+    private fun saveFileToInternalStorage(uri: Uri, fileName: String): String {
+        val inputStream: InputStream? = contentResolver.openInputStream(uri)
+        val file = File(filesDir, fileName)
+        val outputStream = FileOutputStream(file)
+
+        inputStream?.use { input ->
+            outputStream.use { output ->
+                val buffer = ByteArray(4 * 1024) // 4KB buffer
+                var read: Int
+                while (input.read(buffer).also { read = it } != -1) {
+                    output.write(buffer, 0, read)
+                }
+                output.flush()
+            }
+        }
+
+        return file.absolutePath
+    }
+
+
+    private fun playAudioFirst(preAudioFilePath: String?,boltibetain :String?, mainAudioFilePath: String?, durationTime: Int) {
+
+        // Initialize and start pre-audio playback
+        preAudioPlayer = MediaPlayer().apply {
+            setDataSource(preAudioFilePath)
+            prepare()
+            start()
+        }
+        Toast.makeText(this, "Playing pre-audio", Toast.LENGTH_SHORT).show()
+
+        preAudioPlayer?.setOnCompletionListener {
+            // After pre-audio completes, start the main audio
+            playAudioSecond(boltibetain,mainAudioFilePath,durationTime )
+        }
+
+    }
+
+    private fun playAudioSecond(preAudioFilePath: String?, mainAudioFilePath: String?, durationTime: Int) {
+
+        // Initialize and start pre-audio playback
+        preAudioPlayer = MediaPlayer().apply {
+            setDataSource(preAudioFilePath)
+            prepare()
+            start()
+        }
+        Toast.makeText(this, "Playing pre-audio", Toast.LENGTH_SHORT).show()
+
+        preAudioPlayer?.setOnCompletionListener {
+            // After pre-audio completes, start the main audio
+            playMainAudio(mainAudioFilePath,preAudioFilePath, durationTime)
+        }
+
+
+
+    }
+
+    private fun playAudioLast(lastAudio: String?, durationTime: Int) {
+
+        // Initialize and start pre-audio playback
+        afterAudioPlayer = MediaPlayer().apply {
+            setDataSource(lastAudio)
+            prepare()
+            start()
+        }
+
+
 
 
     }
 
 
-
-
-    private fun playAudio(filePath: String,durationTime: Int) {
+    private fun playMainAudio(filePath: String?,boltibetain: String?,durationTime: Int) {
         val initialDuration = durationTime
         var progressBarTimer = durationTime
         var remainingTime = durationTime
@@ -113,7 +200,7 @@ class MeditationPlay : AppCompatActivity() {
             mediaPlayer?.let {
                 //handler = Handler(Looper.getMainLooper())
                 handler?.postDelayed({
-                    stopAudio()
+                    stopAudioEnd(boltibetain,durationTime)
                 }, durationTime * 1000L)  // Stop after the chosen time in milliseconds
             }
         } else {
@@ -128,16 +215,23 @@ class MeditationPlay : AppCompatActivity() {
                         // Stop the song when the timer reaches 0
                         //val handler = Handler(Looper.getMainLooper())
                         handler?.postDelayed({
-                            stopAudio()
+                            stopAudioEnd(boltibetain,durationTime)
                         }, remainingTime * 1000L)
+
                     } else {
                         mediaPlayer?.start()  // Restart the song
                     }
                 } else {
-                    stopAudio()
+
+                    stopAudioEnd(boltibetain,durationTime)
+
+
+
                 }
             }
         }
+
+
 
     }
 
@@ -145,6 +239,18 @@ class MeditationPlay : AppCompatActivity() {
         super.onPause()
         stopAudio()
     }
+    private fun stopAudioEnd(boltibetain: String?,durationTime: Int) {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+        handler?.removeCallbacksAndMessages(null) // Remove any pending callbacks
+        handler = null
+
+        playAudioLast(boltibetain, durationTime)
+
+
+    }
+
     private fun stopAudio() {
         mediaPlayer?.stop()
         mediaPlayer?.release()
@@ -152,6 +258,7 @@ class MeditationPlay : AppCompatActivity() {
         handler?.removeCallbacksAndMessages(null) // Remove any pending callbacks
         handler = null
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

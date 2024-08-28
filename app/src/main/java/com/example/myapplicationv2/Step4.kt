@@ -1,10 +1,13 @@
 package com.example.myapplicationv2
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.NumberPicker
+import android.widget.Switch
 import android.widget.TextClock
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -15,12 +18,14 @@ import androidx.core.view.WindowInsetsCompat
 class Step4 : AppCompatActivity() {
 
     private lateinit var btn_valider: Button
+    private lateinit var btn_listenIntro: ImageButton
 
     private lateinit var numberPickerMinutes: NumberPicker
     private lateinit var numberPickerSeconds: NumberPicker
     private lateinit var numberPickerHours: NumberPicker
     private var selectedDurationInSeconds: Int = 0
-
+    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var introSwitch: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,15 +58,16 @@ class Step4 : AppCompatActivity() {
         }
 
         btn_valider=findViewById<Button>(R.id.btn_Valid)
+        btn_listenIntro=findViewById<ImageButton>(R.id.imageButtonStep4Listen)
+        introSwitch = findViewById(R.id.intro)
 
         btn_valider.setOnClickListener {
-
-
 
             val hours = numberPickerHours.value
             val minutes = numberPickerMinutes.value
             val seconds = numberPickerSeconds.value
             selectedDurationInSeconds = hours * 3600 + minutes * 60 + seconds
+            val isIntroEnabled = introSwitch.isChecked
 
             // Passer directement les données à Step5
             if (filePaths != null && selectedDurationInSeconds > 30  ) {
@@ -71,6 +77,7 @@ class Step4 : AppCompatActivity() {
 
                     putExtra("selectedDuration", selectedDurationInSeconds)
                     Log.i("test12345", "onCreate: "+selectedDurationInSeconds.toString())
+                    putExtra("isIntroEnabled", isIntroEnabled)
                 }
                 startActivity(intent)
             } else {
@@ -78,6 +85,36 @@ class Step4 : AppCompatActivity() {
                 Toast.makeText(this, "Please select a valid time.", Toast.LENGTH_SHORT).show()            }
         }
 
+        btn_listenIntro.setOnClickListener{
+
+
+            playAudioFromRaw(R.raw.intromeditation)
+
+        }
+
 
     }
+
+    private fun playAudioFromRaw(audioResId: Int) {
+        if (mediaPlayer == null) {
+            // Initialize and start playback
+            mediaPlayer = MediaPlayer.create(this, audioResId)
+            mediaPlayer?.start()
+            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+        } else {
+            if (mediaPlayer?.isPlaying == true) {
+                // Stop playback
+                mediaPlayer?.stop()
+                mediaPlayer?.reset()
+                mediaPlayer = null
+                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
+            } else {
+                // Restart playback
+                mediaPlayer = MediaPlayer.create(this, audioResId)
+                mediaPlayer?.start()
+                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }
