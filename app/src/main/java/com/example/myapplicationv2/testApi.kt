@@ -34,23 +34,29 @@ class testApi : AppCompatActivity() {
             insets
         }
 
-        // Trouver le bouton par son ID
+        // Trouver les boutons par leur ID
         val buttonTTS: Button = findViewById(R.id.buttonTTS)
+        val buttonTTS2: Button = findViewById(R.id.buttonTTS2)
 
-        // Ajouter un listener pour le clic du bouton
+        // Ajouter un listener pour le clic du premier bouton (Voix 1)
         buttonTTS.setOnClickListener {
-            Log.d("testApi", "Bouton cliqué, démarrage de l'appel API...")
-
-            // Appeler l'API dans une coroutine
+            Log.d("testApi", "Bouton Voix 1 cliqué, démarrage de l'appel API...")
             CoroutineScope(Dispatchers.IO).launch {
-                textToSpeech("Ton texte à convertir ici")
+                textToSpeech("Bonjour, comment vas-tu aujourd'hui ?", "VR6AewLTigWG4xSOukaG") // Voice ID 1 avec texte en français
+            }
+        }
+
+        // Ajouter un listener pour le clic du deuxième bouton (Voix 2)
+        buttonTTS2.setOnClickListener {
+            Log.d("testApi", "Bouton Voix 2 cliqué, démarrage de l'appel API...")
+            CoroutineScope(Dispatchers.IO).launch {
+                textToSpeech("C'est une belle journée pour apprendre quelque chose de nouveau.", "pMsXgVXv3BLzUgSXRplE") // Voice ID 2 avec texte en français
             }
         }
     }
 
     // Fonction suspendue pour l'appel API avec OkHttp
-    private suspend fun textToSpeech(text: String) {
-        val voiceId = "VR6AewLTigWG4xSOukaG" // Remplace avec ton voice_id
+    private suspend fun textToSpeech(text: String, voiceId: String) {
         val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
 
         val client = OkHttpClient()

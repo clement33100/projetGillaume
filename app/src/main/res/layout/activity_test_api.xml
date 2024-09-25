@@ -11,9 +11,18 @@
         android:id="@+id/buttonTTS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Voix 1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/buttonTTS2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voix 2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTTS" />
 </androidx.constraintlayout.widget.ConstraintLayout>
