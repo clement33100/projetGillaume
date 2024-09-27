@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -25,6 +25,7 @@
         <activity
             android:name=".Base"
             android:exported="false" />
+
         <activity
             android:name=".MeditationPlay"
             android:exported="false" />
@@ -50,6 +51,9 @@
             android:name=".step1FirstName"
             android:exported="false" />
         <activity
+            android:name=".step3Music"
+            android:exported="false" />
+        <activity
             android:name=".ChoseBelieve"
             android:exported="false" />
         <activity
@@ -58,6 +62,7 @@
         <activity
             android:name=".mesAffirmations"
             android:exported="false" />
+
         <activity
             android:name=".hdiw2"
             android:exported="false" />
@@ -67,12 +72,12 @@
         <activity
             android:name=".hdiw4"
             android:exported="false" />
-        <activity
-            android:name=".step3Music"
-            android:exported="false" />
+
+
         <activity
             android:name=".testApi"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

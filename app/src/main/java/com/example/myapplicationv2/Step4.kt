@@ -3,6 +3,7 @@ package com.example.myapplicationv2
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -14,6 +15,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.io.File
+import java.util.Locale
 
 class Step4 : AppCompatActivity() {
 
@@ -26,6 +29,7 @@ class Step4 : AppCompatActivity() {
     private var selectedDurationInSeconds: Int = 0
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var introSwitch: Switch
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +51,13 @@ class Step4 : AppCompatActivity() {
 
 
 
-        val filePaths = intent.getStringExtra("filePaths")
 
-        Log.i("test12345", "onCreate: "+filePaths.toString())
+
+        val filePaths = intent.getStringExtra("filePaths")
+        val curentVoice = intent.getStringExtra("curentVoice")
+        Log.d("test123", "onCreate: "+curentVoice.toString())
+
+        val userTexts = intent.getStringArrayListExtra("userTexts")
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -62,7 +70,6 @@ class Step4 : AppCompatActivity() {
         introSwitch = findViewById(R.id.intro)
 
         btn_valider.setOnClickListener {
-
             val hours = numberPickerHours.value
             val minutes = numberPickerMinutes.value
             val seconds = numberPickerSeconds.value
@@ -76,9 +83,11 @@ class Step4 : AppCompatActivity() {
                     putExtra("filePaths", filePaths)
 
                     putExtra("selectedDuration", selectedDurationInSeconds)
-                    Log.i("test12345", "onCreate: "+selectedDurationInSeconds.toString())
                     putExtra("isIntroEnabled", isIntroEnabled)
-                }
+                    putExtra("curentVoice", curentVoice)
+                    putStringArrayListExtra("userTexts", userTexts)
+
+                    }
                 startActivity(intent)
             } else {
                 // Afficher un message d'erreur ou gérer le cas où filePaths est null
@@ -94,6 +103,8 @@ class Step4 : AppCompatActivity() {
 
 
     }
+
+
 
     private fun playAudioFromRaw(audioResId: Int) {
         if (mediaPlayer == null) {

@@ -127,6 +127,7 @@ class Etape2Voix : AppCompatActivity() {
 
                 val intent = Intent(this, Step2::class.java)
                 intent.putExtra("curentVoice", curentVoice)
+                Log.i("test12345678", "onCreate: "+curentVoice.toString())
 
                 startActivity(intent)
 

@@ -115,6 +115,16 @@
                 android:orientation="vertical"
                 android:padding="16dp" />
         </ScrollView>
+
+        <Button
+            android:id="@+id/step2ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ok"
+            app:layout_constraintBottom_toBottomOf="@+id/addButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addButton"
+            app:layout_constraintTop_toTopOf="@+id/addButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Menu Latéral (Navigation View) -->

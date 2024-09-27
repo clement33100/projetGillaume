@@ -20,6 +20,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="min"
+        app:layout_constraintBottom_toBottomOf="@+id/numberPickerMinutes"
+        app:layout_constraintEnd_toEndOf="@+id/numberPickerSeconds"
+        app:layout_constraintStart_toStartOf="@+id/numberPickerMinutes"
+        app:layout_constraintTop_toTopOf="@+id/numberPickerMinutes" />
+
     <ImageButton
         android:id="@+id/imageButtonRFirstStep"
         android:layout_width="50dp"
@@ -30,6 +40,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sec"
+        app:layout_constraintBottom_toBottomOf="@+id/numberPickerSeconds"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
+        app:layout_constraintStart_toEndOf="@+id/numberPickerMinutes"
+        app:layout_constraintTop_toTopOf="@+id/numberPickerSeconds" />
 
     <TextView
         android:id="@+id/txt_explain"
@@ -111,6 +130,16 @@
         app:layout_constraintEnd_toEndOf="@+id/txt_explain"
         app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
         app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="h"
+        app:layout_constraintBottom_toBottomOf="@+id/numberPickerHours"
+        app:layout_constraintEnd_toEndOf="@+id/numberPickerMinutes"
+        app:layout_constraintStart_toStartOf="@+id/numberPickerHours"
+        app:layout_constraintTop_toTopOf="@+id/numberPickerHours" />
 
     <ImageButton
         android:id="@+id/imageButtonStep4Listen"

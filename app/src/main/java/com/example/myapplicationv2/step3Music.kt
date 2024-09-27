@@ -86,7 +86,9 @@ class step3Music : AppCompatActivity() {
         val ImageButton = findViewById<ImageButton>(R.id.imageButtonLFirstStep)
         val ButtonEpic = findViewById<Button>(R.id.btn_epic)
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
-
+        val curentVoice = intent.getStringExtra("curentVoice")
+        Log.d("test1234", "onCreate: "+curentVoice.toString())
+        val userTexts = intent.getStringArrayListExtra("userTexts")
 
         scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
         scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
@@ -242,7 +244,8 @@ class step3Music : AppCompatActivity() {
 
                 val intent = Intent(this, Step4::class.java)
                 intent.putExtra("filePaths", songChoose)
-                Log.i("test123", "onCreate: "+songChoose.toString())
+                intent.putExtra("curentVoice", curentVoice)
+                intent.putStringArrayListExtra("userTexts", userTexts)
 
                 startActivity(intent)
 
