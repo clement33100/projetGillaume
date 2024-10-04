@@ -203,7 +203,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         //val file = File(generatedFilePath)
         generateFiles.add(generatedFilePath)
 
-        val fullText = "$nom,tu es $text"
+        val fullText = "$nom, $text"
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
