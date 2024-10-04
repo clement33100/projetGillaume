@@ -48,7 +48,7 @@
             android:name=".Step4"
             android:exported="false" />
         <activity
-            android:name=".step1FirstName"
+            android:name=".Etape2Voix"
             android:exported="false" />
         <activity
             android:name=".step3Music"
@@ -75,7 +75,7 @@
 
 
         <activity
-            android:name=".testApi"
+            android:name=".step1FirstName"
             android:exported="true">
 
             <intent-filter>

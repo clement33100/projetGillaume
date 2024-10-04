@@ -74,20 +74,17 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         val curentVoice = intent.getStringExtra("curentVoice")
         Log.i("test123456", "onCreate: "+curentVoice.toString())
+        val nom = intent.getStringExtra("nom")
 
 
         buttonOk.setOnClickListener{
-            generateTTSFilesForAllTexts()
+            generateTTSFilesForAllTexts(nom)
 
             //textToSpeech(userTexts.get(0),"VR6AewLTigWG4xSOukaG")
 
             if(curentVoice!=null){
 
-                if(generateFiles!=null){
-                    for (filePath in generateFiles) {
-                        Log.d("test124", "Fichier généré: $filePath")
-                    }
-                }
+
 
                 val intent = Intent(this, step3Music::class.java)
                 intent.putExtra("curentVoice", curentVoice)
@@ -109,10 +106,10 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
 
 
-    private fun generateTTSFilesForAllTexts() {
+    private fun generateTTSFilesForAllTexts(nom :String?) {
         for ((index, text) in userTexts.withIndex()) {
-            generateAudioFileForText(text, index)
-            //textToSpeech(text, index,"VR6AewLTigWG4xSOukaG")
+            //generateAudioFileForText(text, index)
+            if(nom!=null) textToSpeech(text,nom, index,"VR6AewLTigWG4xSOukaG")
         }
     }
 
@@ -191,14 +188,26 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         container.addView(linearLayout)
     }
 
-    private fun textToSpeech(text: String, index: Int, voiceId: String) {
+    private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String) {
         val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
 
         val client = OkHttpClient()
+        val basePath = filesDir.absolutePath + "/audio/"
+        val audioDir = File(basePath)
+        if (!audioDir.exists()) {
+            audioDir.mkdirs()  // Créer le dossier si nécessaire
+        }
+
+        // Générer un fichier avec un nom unique basé sur l'index
+        val generatedFilePath = "$basePath/voice_$index.mp3"
+        //val file = File(generatedFilePath)
+        generateFiles.add(generatedFilePath)
+
+        val fullText = "$nom,tu es $text"
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
-            put("text", text)
+            put("text", fullText)
             put("voice_settings", JSONObject().apply {
                 put("stability", 0.5)
                 put("similarity_boost", 0.75)
@@ -231,15 +240,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 if (responseBody != null) {
                     // Sauvegarder le fichier audio avec un nom unique basé sur l'index
 
-                    val basePath = filesDir.absolutePath + "/audio/"
-                    val audioDir = File(basePath)
-                    if (!audioDir.exists()) {
-                        audioDir.mkdirs()  // Créer le dossier si nécessaire
-                    }
 
-                    // Générer un fichier avec un nom unique basé sur l'index
-                    val generatedFilePath = "$basePath/voice_$index.mp3"
-                    //val file = File(generatedFilePath)
 
 
                     val audioFileName = "voice_$index.mp3"
@@ -253,7 +254,6 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                         Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
 
                         // Ajouter le chemin du fichier généré à la liste `generateFiles`
-                        generateFiles.add(generatedFilePath)
 
                         // Notification de succès
                         runOnUiThread {

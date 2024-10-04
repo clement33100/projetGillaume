@@ -71,7 +71,8 @@ class Etape2Voix : AppCompatActivity() {
 
         btn_ok = findViewById<Button>(R.id.btn_ok_step2)
 
-
+        val nom = intent.getStringExtra("nom")
+        Log.i("TAG", "onCreate: "+nom.toString())
         btn_VoiceFemme.setOnClickListener {
            setViewVisibility(scrollview_FemmeVoice)
         }
@@ -128,6 +129,7 @@ class Etape2Voix : AppCompatActivity() {
                 val intent = Intent(this, Step2::class.java)
                 intent.putExtra("curentVoice", curentVoice)
                 Log.i("test12345678", "onCreate: "+curentVoice.toString())
+                intent.putExtra("nom", nom)
 
                 startActivity(intent)
 

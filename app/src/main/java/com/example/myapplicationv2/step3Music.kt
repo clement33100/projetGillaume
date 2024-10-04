@@ -87,8 +87,9 @@ class step3Music : AppCompatActivity() {
         val ButtonEpic = findViewById<Button>(R.id.btn_epic)
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
         val curentVoice = intent.getStringExtra("curentVoice")
-        Log.d("test1234", "onCreate: "+curentVoice.toString())
         val userTexts = intent.getStringArrayListExtra("userTexts")
+        Log.i("test123456", "onCreate: "+userTexts.toString())
+
 
         scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
         scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
