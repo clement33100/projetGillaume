@@ -368,8 +368,8 @@ class MeditationPlay : AppCompatActivity() {
         affirmationAudioPlayer?.stop()
         affirmationAudioPlayer?.release()
         affirmationAudioPlayer = null
-
-
+        handlerAffirmation?.removeCallbacksAndMessages(null) // Remove any pending callbacks
+        handlerAffirmation = null
         handler?.removeCallbacksAndMessages(null) // Remove any pending callbacks
         handler = null
     }
