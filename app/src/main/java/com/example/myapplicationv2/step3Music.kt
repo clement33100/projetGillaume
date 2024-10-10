@@ -83,7 +83,6 @@ class step3Music : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_step3_music)
 
-        val ImageButton = findViewById<ImageButton>(R.id.imageButtonLFirstStep)
         val ButtonEpic = findViewById<Button>(R.id.btn_epic)
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
         val curentVoice = intent.getStringExtra("curentVoice")

@@ -8,18 +8,6 @@
     android:background="@color/yellow"
     tools:context=".Step4">
 
-    <ImageButton
-        android:id="@+id/imageButtonLFirstStep"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="button right"
-        android:rotation="-90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -30,23 +18,12 @@
         app:layout_constraintStart_toStartOf="@+id/numberPickerMinutes"
         app:layout_constraintTop_toTopOf="@+id/numberPickerMinutes" />
 
-    <ImageButton
-        android:id="@+id/imageButtonRFirstStep"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="button left"
-        android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="sec"
         app:layout_constraintBottom_toBottomOf="@+id/numberPickerSeconds"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/numberPickerMinutes"
         app:layout_constraintTop_toTopOf="@+id/numberPickerSeconds" />
 
@@ -80,13 +57,12 @@
         android:id="@+id/intro"
         android:layout_width="110dp"
         android:layout_height="49dp"
+        android:layout_marginStart="50dp"
         android:gravity="center"
         android:text="Intro"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
 
     <Button
@@ -117,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         app:layout_constraintBottom_toTopOf="@+id/intro"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonLFirstStep"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_explain"
         app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
 
@@ -128,7 +104,7 @@
         android:layout_marginEnd="60dp"
         app:layout_constraintBottom_toTopOf="@+id/intro"
         app:layout_constraintEnd_toEndOf="@+id/txt_explain"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonRFirstStep"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
 
     <TextView
@@ -145,9 +121,9 @@
         android:id="@+id/imageButtonStep4Listen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/intro"
-        app:layout_constraintEnd_toStartOf="@+id/intro"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/intro"
         app:layout_constraintTop_toTopOf="@+id/intro"
         app:srcCompat="@drawable/listen" />
 

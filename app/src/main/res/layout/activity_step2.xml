@@ -41,28 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Les autres vues de votre activité -->
-        <ImageButton
-            android:id="@+id/imageButtonL"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="button left"
-            android:rotation="90"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/arrow_down_float" />
-
-        <ImageButton
-            android:id="@+id/imageButtonRStep2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="button right"
-            android:rotation="-90"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.407"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/arrow_down_float" />
 
         <TextView
             android:id="@+id/title"
@@ -103,8 +81,8 @@
             android:layout_height="0dp"
             android:contentDescription="scrollView"
             app:layout_constraintBottom_toTopOf="@+id/addButton"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonRStep2"
-            app:layout_constraintStart_toEndOf="@+id/imageButtonL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_explain">
 
             <LinearLayout

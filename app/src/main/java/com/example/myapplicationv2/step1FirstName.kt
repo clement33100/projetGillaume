@@ -87,9 +87,9 @@ class step1FirstName : AppCompatActivity() {
             }
         }
 
-        val imageButtonLRules = findViewById<ImageButton>(R.id.imageButtonRStep1)
+        val OkButton = findViewById<Button>(R.id.buttonOkStep1)
         // Définir les listeners pour les boutons
-        imageButtonLRules.setOnClickListener {
+        OkButton.setOnClickListener {
             val text = editText.text.toString()
 
             // Créez une intention pour lancer Stage2

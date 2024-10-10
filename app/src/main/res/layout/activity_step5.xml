@@ -52,9 +52,9 @@
         android:layout_height="67dp"
         android:text="Télécharger le fichier audio de mes affirmations Personalisés"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonR"
+        app:layout_constraintEnd_toEndOf="@+id/imageButtonRStep5"
         app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonL"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintVertical_bias="0.422" />
 </androidx.constraintlayout.widget.ConstraintLayout>
