@@ -39,8 +39,8 @@
 
         <ScrollView
             android:id="@+id/scrollView"
-            android:layout_width="312dp"
-            android:layout_height="228dp"
+            android:layout_width="266dp"
+            android:layout_height="135dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic">
@@ -252,7 +252,7 @@
             android:id="@+id/btn_okmusic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="80dp"
             android:text="ok"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
