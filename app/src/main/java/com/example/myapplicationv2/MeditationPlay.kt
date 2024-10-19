@@ -154,6 +154,7 @@ class MeditationPlay : AppCompatActivity() {
             setDataSource(voice)
             prepare()
             start()
+            affirmationAudioPlayer?.setVolume(1.0f, 1.0f)
         }
 
     }
@@ -239,6 +240,7 @@ class MeditationPlay : AppCompatActivity() {
                 setDataSource(filePath)
                 prepare()
                 start()
+                mediaPlayer?.setVolume(0.8f, 0.8f)
             }
         } else {
             if (mediaPlayer?.isPlaying == true ) {
@@ -251,6 +253,7 @@ class MeditationPlay : AppCompatActivity() {
                 mediaPlayer?.setDataSource(filePath)
                 mediaPlayer?.prepare()
                 mediaPlayer?.start()
+                mediaPlayer?.setVolume(0.8f, 0.8f)
             }
         }
 

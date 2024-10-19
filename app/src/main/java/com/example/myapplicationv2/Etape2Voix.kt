@@ -42,7 +42,7 @@ class Etape2Voix : AppCompatActivity() {
     private lateinit var voicehomme2: ImageButton
 
     private var curentVoice: String?=null
-
+    private var currentApiKey: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,36 +87,39 @@ class Etape2Voix : AppCompatActivity() {
 
 
         voicefemme1.setOnClickListener{
-            playAudio("$basePath/voiceFemale1.mp3")
+            playAudioFromRaw(R.raw.bonjournicole)
         }
         voicefemme2.setOnClickListener{
-            playAudio("$basePath/voiceFemale2.mp3")
+            playAudioFromRaw(R.raw.bonjourdorothy)
         }
         voicehomme1.setOnClickListener{
-            playAudio("$basePath/voiceMale1.mp3")
+            playAudioFromRaw(R.raw.bonjourarnaud)
         }
         voicehomme2.setOnClickListener{
-            playAudio("$basePath/voiceMale2.mp3")
+            playAudioFromRaw(R.raw.bonjourdrew)
         }
 
         btn_ChoixVoiceFemme1.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
-
+            currentApiKey="pMsXgVXv3BLzUgSXRplE"
         }
         btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
+            currentApiKey="ThT5KcBeYPX3keUQqHPh"
 
 
         }
         btn_ChoixVoiceHomme1.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
+            currentApiKey="VR6AewLTigWG4xSOukaG"
 
 
         }
         btn_ChoixVoiceHomme2.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceHomme2.text.toString(),"$basePath/voiceMale2.mp3")
+            currentApiKey="29vD33N1CtxCmqQRPOHJ"
 
         }
 
@@ -130,6 +133,7 @@ class Etape2Voix : AppCompatActivity() {
                 intent.putExtra("curentVoice", curentVoice)
                 Log.i("test12345678", "onCreate: "+curentVoice.toString())
                 intent.putExtra("nom", nom)
+                intent.putExtra("curentAPIKey", currentApiKey)
 
                 startActivity(intent)
 

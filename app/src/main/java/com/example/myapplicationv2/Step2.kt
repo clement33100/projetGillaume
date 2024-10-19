@@ -75,10 +75,12 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val curentVoice = intent.getStringExtra("curentVoice")
         Log.i("test123456", "onCreate: "+curentVoice.toString())
         val nom = intent.getStringExtra("nom")
+        val curentAPIKey = intent.getStringExtra("curentAPIKey")
 
 
         buttonOk.setOnClickListener{
-            generateTTSFilesForAllTexts(nom)
+
+            generateTTSFilesForAllTexts(nom,curentAPIKey)
 
             //textToSpeech(userTexts.get(0),"VR6AewLTigWG4xSOukaG")
 
@@ -106,10 +108,10 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
 
 
-    private fun generateTTSFilesForAllTexts(nom :String?) {
+    private fun generateTTSFilesForAllTexts(nom :String?,apikey:String?) {
         for ((index, text) in userTexts.withIndex()) {
             //generateAudioFileForText(text, index)
-            if(nom!=null) textToSpeech(text,nom, index,"VR6AewLTigWG4xSOukaG")
+            if(nom!=null) apikey?.let { textToSpeech(text,nom, index, it) }
         }
     }
 
@@ -270,69 +272,6 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         })
     }
-
-    /*private  fun textToSpeech(text: String,voiceId: String) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
-
-        val client = OkHttpClient()
-
-
-
-
-        // Créer le corps de la requête en JSON
-        val bodyJson = JSONObject().apply {
-            put("text", text)
-            put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
-                put("similarity_boost", 0.75)
-            })
-        }
-
-        val requestBody = RequestBody.create(
-            "application/json; charset=utf-8".toMediaType(),
-            bodyJson.toString()
-        )
-
-        val request = Request.Builder()
-            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
-            .addHeader("Content-Type", "application/json")
-            .addHeader("xi-api-key", apiKey)
-            .post(requestBody)
-            .build()
-
-        // Enqueue la requête pour qu'elle se fasse de manière asynchrone
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body
-
-                if (responseBody != null) {
-                    // Sauvegarder le fichier audio
-                    val audioFile = File(getExternalFilesDir(Environment.DIRECTORY_MUSIC), "output_audio.mp3")
-
-                    try {
-                        val outputStream = FileOutputStream(audioFile)
-                        outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
-                        outputStream.close()
-
-                        Log.d("testApi", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
-
-                        // Lecture de l'audio après avoir sauvegardé le fichier
-                      //playAudio(audioFile)
-
-                    } catch (e: IOException) {
-                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
-                    }
-
-                } else {
-                    Log.d("testApi", "Le corps de la réponse est null")
-                }
-            }
-        })
-    }*/
 
 
 

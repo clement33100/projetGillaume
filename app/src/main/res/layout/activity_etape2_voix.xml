@@ -72,7 +72,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Option 1" />
+                        android:text="Nicole" />
                     <ImageButton
                         android:id="@+id/listenFemme1"
                         android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Option 2" />
+                        android:text="Dorothy" />
                     <ImageButton
                         android:id="@+id/listenFemme2"
                         android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Option 1" />
+                        android:text="Arnaud" />
 
                     <ImageButton
                         android:id="@+id/listenHomme1"
@@ -155,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Option 2" />
+                        android:text="Drew" />
                     <ImageButton
                         android:id="@+id/listenHomme2"
                         android:layout_width="wrap_content"
