@@ -240,7 +240,7 @@ class MeditationPlay : AppCompatActivity() {
                 setDataSource(filePath)
                 prepare()
                 start()
-                mediaPlayer?.setVolume(0.8f, 0.8f)
+                mediaPlayer?.setVolume(0.6f, 0.6f)
             }
         } else {
             if (mediaPlayer?.isPlaying == true ) {
@@ -253,7 +253,7 @@ class MeditationPlay : AppCompatActivity() {
                 mediaPlayer?.setDataSource(filePath)
                 mediaPlayer?.prepare()
                 mediaPlayer?.start()
-                mediaPlayer?.setVolume(0.8f, 0.8f)
+                mediaPlayer?.setVolume(0.6f, 0.6f)
             }
         }
 
