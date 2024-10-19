@@ -85,9 +85,6 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             //textToSpeech(userTexts.get(0),"VR6AewLTigWG4xSOukaG")
 
             if(curentVoice!=null){
-
-
-
                 val intent = Intent(this, step3Music::class.java)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", generateFiles)
@@ -205,7 +202,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         //val file = File(generatedFilePath)
         generateFiles.add(generatedFilePath)
 
-        val fullText = "$nom, $text"
+        val fullText = "moi $nom, $text"
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
