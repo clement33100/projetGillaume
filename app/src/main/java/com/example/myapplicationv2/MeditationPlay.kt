@@ -240,7 +240,6 @@ class MeditationPlay : AppCompatActivity() {
                 setDataSource(filePath)
                 prepare()
                 start()
-                mediaPlayer?.setVolume(0.6f, 0.6f)
             }
         } else {
             if (mediaPlayer?.isPlaying == true ) {
@@ -253,7 +252,6 @@ class MeditationPlay : AppCompatActivity() {
                 mediaPlayer?.setDataSource(filePath)
                 mediaPlayer?.prepare()
                 mediaPlayer?.start()
-                mediaPlayer?.setVolume(0.6f, 0.6f)
             }
         }
 
@@ -380,7 +378,7 @@ class MeditationPlay : AppCompatActivity() {
     private fun fadeInAudio() {
         val fadeDuration = 20000L // 5 seconds fade-in duration
         val fadeStep = 50L  // Step time in milliseconds
-        val maxVolume = 1.0f
+        val maxVolume = 0.5f
         val increment = maxVolume / (fadeDuration / fadeStep)
 
         var volume = 0f
@@ -402,7 +400,7 @@ class MeditationPlay : AppCompatActivity() {
     private fun fadeOutAudio() {
         val fadeDuration = 23000L // 30 seconds fade-out duration
         val fadeStep = 50L  // Step time in milliseconds
-        val maxVolume = 1.0f
+        val maxVolume = 0.5f
 
         // Réduire le décrément pour rendre la baisse du volume plus douce
         val decrement = maxVolume / (fadeDuration / fadeStep)  // Diviser le décrément par 2 pour le rendre moins élevé
