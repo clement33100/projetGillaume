@@ -178,7 +178,7 @@ class MeditationPlay : AppCompatActivity() {
                     }
 
                     // Relancer le handler après 5 secondes
-                    handlerAffirmation?.postDelayed(this, 5000)  // Délai de 5 secondes
+                    handlerAffirmation?.postDelayed(this, 11000)  // Délai de 5 secondes
                 }
             }
         }

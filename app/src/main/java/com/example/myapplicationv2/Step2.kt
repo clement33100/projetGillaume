@@ -88,12 +88,22 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 val intent = Intent(this, step3Music::class.java)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", generateFiles)
+
+                if(userTexts.size>2){
+                    intent.putExtra("curentAPIKey", curentAPIKey)
+                    intent.putExtra("nom", nom)
+                    intent.putStringArrayListExtra("userTextsSplit", userTexts)
+                }
+
                 startActivity(intent)
+
 
             }else{
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
 
             }
+
+
         }
 
 
@@ -105,10 +115,14 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
 
 
-    private fun generateTTSFilesForAllTexts(nom :String?,apikey:String?) {
-        for ((index, text) in userTexts.withIndex()) {
-            //generateAudioFileForText(text, index)
-            if(nom!=null) apikey?.let { textToSpeech(text,nom, index, it) }
+    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?) {
+        for (index in 0..1) {
+            if (index < userTexts.size) {
+                val text = userTexts[index]
+                if (nom != null && apikey != null) {
+                    textToSpeech(text, nom, index, apikey)
+                }
+            }
         }
     }
 
@@ -238,10 +252,6 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                 if (responseBody != null) {
                     // Sauvegarder le fichier audio avec un nom unique basé sur l'index
-
-
-
-
                     val audioFileName = "voice_$index.mp3"
                     val audioFile = File(generatedFilePath)
 

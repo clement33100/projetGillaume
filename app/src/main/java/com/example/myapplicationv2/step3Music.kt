@@ -27,6 +27,15 @@ import java.io.InputStream
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import org.json.JSONObject
+import java.io.IOException
 
 class step3Music : AppCompatActivity() {
 
@@ -87,8 +96,18 @@ class step3Music : AppCompatActivity() {
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
         val curentVoice = intent.getStringExtra("curentVoice")
         val userTexts = intent.getStringArrayListExtra("userTexts")
-        Log.i("test123456", "onCreate: "+userTexts.toString())
 
+        val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
+        val nom = intent.getStringExtra("nom")
+        val curentAPIKey = intent.getStringExtra("curentAPIKey")
+
+        if (userTextsSplit != null) {
+            for (text in userTextsSplit) {
+                Log.d("test12345", "Received text: $text")
+            }
+        } else {
+            Log.d("test12345", "No texts received")
+        }
 
         scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
         scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
@@ -237,6 +256,9 @@ class step3Music : AppCompatActivity() {
 
 
         btn_ok.setOnClickListener {
+
+            generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+
             if (songChoose == null) {
                 Toast.makeText(this, "Selectionner une musique", Toast.LENGTH_SHORT).show()
 
@@ -246,6 +268,16 @@ class step3Music : AppCompatActivity() {
                 intent.putExtra("filePaths", songChoose)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", userTexts)
+
+                if (userTextsSplit != null) {
+                    if(userTextsSplit.size>4){
+                        intent.putExtra("curentAPIKey", curentAPIKey)
+                        intent.putExtra("nom", nom)
+                        intent.putStringArrayListExtra("userTextsSplit", userTextsSplit)
+                    }
+                }
+
+
 
                 startActivity(intent)
 
@@ -276,6 +308,19 @@ class step3Music : AppCompatActivity() {
                 playAudio(it)
             } ?: Toast.makeText(this, "No audio file selected", Toast.LENGTH_SHORT).show()
         }*/
+    }
+
+    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,userTextsSplit: ArrayList<String>?,userTexts: ArrayList<String>?) {
+        if (userTextsSplit != null) {
+            for (index in 2..3) {
+                if (index < userTextsSplit.size) {
+                    val text = userTextsSplit[index]
+                    if (nom != null && apikey != null) {
+                        textToSpeech(text, nom, index, apikey,userTexts)
+                    }
+                }
+            }
+        }
     }
 
     private fun openAudioFilePicker() {
@@ -443,6 +488,86 @@ class step3Music : AppCompatActivity() {
             scrollview.visibility = View.GONE
         }
     }
+
+    private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String,userTexts: ArrayList<String>?) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+
+        val client = OkHttpClient()
+        val basePath = filesDir.absolutePath + "/audio/"
+        val audioDir = File(basePath)
+        if (!audioDir.exists()) {
+            audioDir.mkdirs()  // Créer le dossier si nécessaire
+        }
+
+        // Générer un fichier avec un nom unique basé sur l'index
+        val generatedFilePath = "$basePath/voice_$index.mp3"
+        //val file = File(generatedFilePath)
+        userTexts?.add(generatedFilePath)
+
+        val fullText = "moi $nom, $text"
+
+        // Créer le corps de la requête en JSON
+        val bodyJson = JSONObject().apply {
+            put("text", fullText)
+            put("voice_settings", JSONObject().apply {
+                put("stability", 0.5)
+                put("similarity_boost", 0.75)
+            })
+        }
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaType(),
+            bodyJson.toString()
+        )
+
+        val request = Request.Builder()
+            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
+            .addHeader("Content-Type", "application/json")
+            .addHeader("xi-api-key", apiKey)
+            .post(requestBody)
+            .build()
+
+        // Enqueue la requête pour qu'elle se fasse de manière asynchrone
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body
+
+
+
+                if (responseBody != null) {
+                    // Sauvegarder le fichier audio avec un nom unique basé sur l'index
+                    val audioFileName = "voice_$index.mp3"
+                    val audioFile = File(generatedFilePath)
+
+                    try {
+                        val outputStream = FileOutputStream(audioFile)
+                        outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
+                        outputStream.close()
+
+                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
+
+                        // Ajouter le chemin du fichier généré à la liste `generateFiles`
+
+                        // Notification de succès
+                        runOnUiThread {
+                            Toast.makeText(this@step3Music, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } catch (e: IOException) {
+                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                    }
+
+                } else {
+                    Log.d("testApi", "Le corps de la réponse est null")
+                }
+            }
+        })
+    }
+
 
 
     override fun onPause() {
