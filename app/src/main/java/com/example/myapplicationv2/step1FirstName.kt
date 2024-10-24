@@ -95,7 +95,6 @@ class step1FirstName : AppCompatActivity() {
             // Créez une intention pour lancer Stage2
             val intent = Intent(this, Etape2Voix::class.java)
             intent.putExtra("nom", text)
-
             startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

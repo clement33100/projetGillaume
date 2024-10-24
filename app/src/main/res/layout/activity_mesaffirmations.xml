@@ -18,8 +18,8 @@
         <!-- Bouton Menu Burger en haut à gauche -->
         <TextView
             android:id="@+id/title"
-            android:layout_width="281dp"
-            android:layout_height="72dp"
+            android:layout_width="291dp"
+            android:layout_height="132dp"
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="Mes Affirmations"

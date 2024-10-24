@@ -203,7 +203,7 @@ class step3Music : AppCompatActivity() {
         }
 
         btn_ChoixEpic1.setOnClickListener {
-        // Jouer le fichier audio en utilisant la fonction playAudio
+            // Jouer le fichier audio en utilisant la fonction playAudio
             setTextInfo(btn_ChoixEpic1.text.toString(),savedFilePathPuissanceinterieure)
 
 

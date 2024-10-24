@@ -9,6 +9,9 @@
     tools:context=".hdiw1">
 
     <!-- Contenu principal de l'activité -->
+
+    <!-- Menu Latéral (Navigation View) -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -17,32 +20,10 @@
 
         <!-- Bouton Menu Burger en haut à gauche -->
 
-        <ImageView
-            android:id="@+id/btnImg_rulesright"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/rightarrow" />
-
-        <TextView
-            android:id="@+id/txt_explain"
-            android:layout_width="324dp"
-            android:layout_height="566dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Imagine qu'à ta naissance, ton cerveau est comme une jungle dense. Avancer dans cette jungle est difficile. Lorsque tu as une pensée pour la première fois, c'est comme ouvrir un nouveau sentier dans cette jungle. Plus tu as cette pensée, plus il devient facile de passer par ce sentier, et plus il devient facile de passer par ce sentier, plus tu as cette pensée. Peu à peu, ce sentier devient un chemin, puis une route, et finalement une autoroute."
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.538"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
-
         <TextView
             android:id="@+id/title"
-            android:layout_width="281dp"
-            android:layout_height="72dp"
+            android:layout_width="301dp"
+            android:layout_height="120dp"
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="Comment ça Marche?"
@@ -75,11 +56,83 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="392dp"
+            android:layout_height="620dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_explain"
+                    android:layout_width="match_parent"
+                    android:layout_height="916dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Imagine qu'à ta naissance, ton cerveau est comme une jungle dense. Avancer dans cette jungle est difficile. Lorsque tu as une pensée pour la première fois, c'est comme ouvrir un nouveau sentier dans cette jungle. Plus tu as cette pensée, plus il devient facile de passer par ce sentier, et plus il devient facile de passer par ce sentier, plus tu as cette pensée. Peu à peu, ce sentier devient un chemin, puis une route, et finalement une autoroute."
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/txt_explain2"
+                    android:layout_width="match_parent"
+                    android:layout_height="684dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Changer ton système de croyances, c'est comme tracer un nouveau sentier dans la jungle. Ton cerveau, par souci d'économie d'énergie, préfère utiliser l'autoroute neuronale qu'il a patiemment créée. Cela demande donc un effort conscient pour créer ce nouveau chemin."
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/txt_explain3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1015dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Si tu connais la derstination d'une ancienne autoroute et qu'elle ne te convient plus, il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi. Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l'ancienne, n'étant plus utilisée, disparaîtra dans la jungle, permettant ainsi l'émergence d'un nouveau sentiment d'identité et une perception renouvelée de toi-même."
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.54"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                <TextView
+                    android:id="@+id/txt_explain4"
+                    android:layout_width="match_parent"
+                    android:layout_height="936dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Solène Rige illustre parfaitement cette idée: &quot; Imaginons notre cerveau comme une prairie enneigée où chaque pensée est représentée par une luge. En dévalant la piste les unes après les autres, les luges tracent un petit nombre de voies principales. A chaque nouvelle descente, une luge est naturellement attirée par ces pistes déjà formées. Au fil du temps, la neige se tasse, rendant ardue la création de nouveaux chemins, c'est-à-dire de nouvelles manières de penser.&quot;"
+                    android:textSize="30sp" />
+
+                <Button
+                    android:id="@+id/btnNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Créer Nouveau" />
+
+                <TextView
+                    android:id="@+id/spaceBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Menu Principal" />
+
+            </LinearLayout>
+        </ScrollView>
+
         <!-- Autres vues spécifiques à l'activité hdiw1 peuvent être ajoutées ici -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Menu Latéral (Navigation View) -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

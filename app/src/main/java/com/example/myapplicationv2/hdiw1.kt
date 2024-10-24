@@ -2,12 +2,12 @@ package com.example.myapplicationv2
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class hdiw1 : Base() {  // Hérite de Base au lieu de AppCompatActivity
+class hdiw1 : Base() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_hdiw1  // Retourne le layout spécifique à cette activité
@@ -17,16 +17,29 @@ class hdiw1 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val btnImgRulesRight = findViewById<ImageView>(R.id.btnImg_rulesright)
+        // Trouver les boutons par leur ID
+        val btnNew = findViewById<Button>(R.id.btnNew)
+        val btnMenu = findViewById<Button>(R.id.btnMenu)
 
-        // Définir un OnClickListener pour ouvrir l'activité Step2
-        btnImgRulesRight.setOnClickListener {
-            val intent = Intent(this, hdiw2::class.java)
+        // Définir les OnClickListener
+        btnNew.setOnClickListener {
+            val intent = Intent(this, Rules::class.java)
             startActivity(intent)
         }
+
+        btnMenu.setOnClickListener {
+            val intent = Intent(this, mesAffirmations::class.java)
+            startActivity(intent)
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
     }

@@ -64,8 +64,10 @@ class testApi : AppCompatActivity() {
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", text)
+            put("model_id", "eleven_turbo_v2_5")
+            put("language_code", "fr")
             put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
+                put("stability", 0.75)
                 put("similarity_boost", 0.75)
             })
         }
