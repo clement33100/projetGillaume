@@ -257,7 +257,13 @@ class step3Music : AppCompatActivity() {
 
         btn_ok.setOnClickListener {
 
-            generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+
+            if (userTextsSplit != null) {
+
+                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+
+
+            }
 
             if (songChoose == null) {
                 Toast.makeText(this, "Selectionner une musique", Toast.LENGTH_SHORT).show()

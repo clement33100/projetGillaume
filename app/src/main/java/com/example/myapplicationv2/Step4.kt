@@ -93,8 +93,11 @@ class Step4 : AppCompatActivity() {
         introSwitch = findViewById(R.id.intro)
 
         btn_valider.setOnClickListener {
-            generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+            if(userTextsSplit!=null) {
 
+                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+
+            }
 
             val hours = numberPickerHours.value
             val minutes = numberPickerMinutes.value
