@@ -15,7 +15,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import org.json.JSONObject
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.Locale
 
 class Step4 : AppCompatActivity() {
@@ -59,6 +69,19 @@ class Step4 : AppCompatActivity() {
 
         val userTexts = intent.getStringArrayListExtra("userTexts")
 
+        val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
+        val nom = intent.getStringExtra("nom")
+        val curentAPIKey = intent.getStringExtra("curentAPIKey")
+
+        if (userTextsSplit != null) {
+            for (text in userTextsSplit) {
+                Log.d("test123456", "Received text: $text")
+            }
+        } else {
+            Log.d("test123456", "No texts received")
+        }
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -70,6 +93,12 @@ class Step4 : AppCompatActivity() {
         introSwitch = findViewById(R.id.intro)
 
         btn_valider.setOnClickListener {
+            if(userTextsSplit!=null) {
+
+                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+
+            }
+
             val hours = numberPickerHours.value
             val minutes = numberPickerMinutes.value
             val seconds = numberPickerSeconds.value
@@ -97,6 +126,7 @@ class Step4 : AppCompatActivity() {
         btn_listenIntro.setOnClickListener{
 
 
+
             playAudioFromRaw(R.raw.intromeditation)
 
         }
@@ -104,7 +134,18 @@ class Step4 : AppCompatActivity() {
 
     }
 
-
+    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,userTextsSplit: ArrayList<String>?,userTexts: ArrayList<String>?) {
+        if (userTextsSplit != null) {
+            for (index in 4..5) {
+                if (index < userTextsSplit.size) {
+                    val text = userTextsSplit[index]
+                    if (nom != null && apikey != null) {
+                        textToSpeech(text, nom, index, apikey,userTexts)
+                    }
+                }
+            }
+        }
+    }
 
     private fun playAudioFromRaw(audioResId: Int) {
         if (mediaPlayer == null) {
@@ -126,6 +167,88 @@ class Step4 : AppCompatActivity() {
                 Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String,userTexts: ArrayList<String>?) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+
+        val client = OkHttpClient()
+        val basePath = filesDir.absolutePath + "/audio/"
+        val audioDir = File(basePath)
+        if (!audioDir.exists()) {
+            audioDir.mkdirs()  // Créer le dossier si nécessaire
+        }
+
+        // Générer un fichier avec un nom unique basé sur l'index
+        val generatedFilePath = "$basePath/voice_$index.mp3"
+        //val file = File(generatedFilePath)
+        userTexts?.add(generatedFilePath)
+
+        val fullText = "moi $nom, $text"
+
+        // Créer le corps de la requête en JSON
+        val bodyJson = JSONObject().apply {
+            put("text", fullText)
+            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
+            put("language_code", "fr") // Set language code to French
+            put("voice_settings", JSONObject().apply {
+                put("stability", 0.5)
+                put("similarity_boost", 0.75)
+                // You can adjust these values to fine-tune the accent
+            })
+        }
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaType(),
+            bodyJson.toString()
+        )
+
+        val request = Request.Builder()
+            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
+            .addHeader("Content-Type", "application/json")
+            .addHeader("xi-api-key", apiKey)
+            .post(requestBody)
+            .build()
+
+        // Enqueue la requête pour qu'elle se fasse de manière asynchrone
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body
+
+
+
+                if (responseBody != null) {
+                    // Sauvegarder le fichier audio avec un nom unique basé sur l'index
+                    val audioFileName = "voice_$index.mp3"
+                    val audioFile = File(generatedFilePath)
+
+                    try {
+                        val outputStream = FileOutputStream(audioFile)
+                        outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
+                        outputStream.close()
+
+                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
+
+                        // Ajouter le chemin du fichier généré à la liste `generateFiles`
+
+                        // Notification de succès
+                        runOnUiThread {
+                            Toast.makeText(this@Step4, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } catch (e: IOException) {
+                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                    }
+
+                } else {
+                    Log.d("testApi", "Le corps de la réponse est null")
+                }
+            }
+        })
     }
 
 }

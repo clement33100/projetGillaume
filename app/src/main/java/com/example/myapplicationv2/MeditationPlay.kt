@@ -58,7 +58,7 @@ class MeditationPlay : AppCompatActivity() {
         val selectedDurationInSeconds = intent.getIntExtra("selectedDuration", 0)
         val curentVoice = intent.getStringExtra("curentVoice")// prenom de la personne
 
-        val userTexts = intent.getStringArrayListExtra("userTexts")
+        val userTexts = intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
         if (userTexts != null) {
             for (text in userTexts) {
                 Log.d("test1234888", "Received text: $text")
@@ -178,7 +178,7 @@ class MeditationPlay : AppCompatActivity() {
                     }
 
                     // Relancer le handler après 5 secondes
-                    handlerAffirmation?.postDelayed(this, 5000)  // Délai de 5 secondes
+                    handlerAffirmation?.postDelayed(this, 11000)  // Délai de 5 secondes
                 }
             }
         }
