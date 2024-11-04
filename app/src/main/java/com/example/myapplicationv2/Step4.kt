@@ -189,9 +189,12 @@ class Step4 : AppCompatActivity() {
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", fullText)
+            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
+            put("language_code", "fr") // Set language code to French
             put("voice_settings", JSONObject().apply {
                 put("stability", 0.5)
                 put("similarity_boost", 0.75)
+                // You can adjust these values to fine-tune the accent
             })
         }
 

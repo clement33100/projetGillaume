@@ -78,6 +78,12 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
 
 
+        val predefinedTexts = listOf("test1", "test2")
+        predefinedTexts.forEach {
+            userTexts.add(it) // Add to list
+            addTextView(it) // Display in layout
+        }
+
         buttonOk.setOnClickListener{
 
             generateTTSFilesForAllTexts(nom,curentAPIKey)
@@ -183,6 +189,14 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         textView.text = numberedText
         textView.textSize = 18f
         textView.setPadding(8, 30, 8, 0)
+        textView.setBackgroundColor(getColor(android.R.color.white)) // Set white background
+        textView.setTextColor(getColor(R.color.green)) // Set text color to custom green
+        textView.setBackgroundResource(R.drawable.plaintext_white)
+
+        // Enable editing when clicking the TextView
+        textView.setOnClickListener {
+            showEditTextDialog(textView, text)
+        }
 
         // Create the delete ImageButton
         val deleteButton = ImageButton(this)
@@ -190,7 +204,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         deleteButton.setBackgroundColor(0x00000000)  // Make background transparent
         deleteButton.setOnClickListener {
             container.removeView(linearLayout)
-            userTexts.remove(text)  // Supprimer le texte de la liste
+            userTexts.remove(text)  // Remove the text from the list
         }
 
         // Add TextView and ImageButton to the horizontal LinearLayout
@@ -199,6 +213,32 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Add the horizontal LinearLayout to the container
         container.addView(linearLayout)
+    }
+
+    // Function to show dialog and edit the text
+    private fun showEditTextDialog(textView: TextView, oldText: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Modifier le texte")
+
+        // Set up the input
+        val input = EditText(this)
+        input.setText(oldText) // Set current text in EditText
+        builder.setView(input)
+
+        // Set up the buttons
+        builder.setPositiveButton("Valider") { dialog, which ->
+            val newText = input.text.toString()
+            if (newText.isNotEmpty()) {
+                val textIndex = userTexts.indexOf(oldText)
+                if (textIndex != -1) {
+                    userTexts[textIndex] = newText  // Update in userTexts list
+                }
+                textView.text = "Affirmation ${textIndex + 1} : $newText" // Update TextView
+            }
+        }
+        builder.setNegativeButton("Annuler") { dialog, which -> dialog.cancel() }
+
+        builder.show()
     }
 
     private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String) {
@@ -221,9 +261,12 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", fullText)
+            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
+            put("language_code", "fr") // Set language code to French
             put("voice_settings", JSONObject().apply {
                 put("stability", 0.5)
                 put("similarity_boost", 0.75)
+                // You can adjust these values to fine-tune the accent
             })
         }
 
