@@ -58,7 +58,7 @@
             android:id="@+id/txt_explain"
             android:layout_width="176dp"
             android:layout_height="148dp"
-            android:text="Ecris tes affirmations sous la forme : 'Tu es ...' Comme si tu t'adressais à un ami."
+            android:text="Ecris tes affirmations sous la forme : 'Je ...'."
             android:gravity="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
