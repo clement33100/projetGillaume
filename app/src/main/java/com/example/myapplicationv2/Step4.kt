@@ -251,4 +251,11 @@ class Step4 : AppCompatActivity() {
         })
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
 }
