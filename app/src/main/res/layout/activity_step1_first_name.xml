@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Etape 1"
+        android:text="Étape 1"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textColorLink="@color/black"
