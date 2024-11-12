@@ -152,7 +152,7 @@ class step3Music : AppCompatActivity() {
         }
 
         val puissanceinterieure = "puissanceinterieure.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
-        val savedFilePathPuissanceinterieure = copyRawResourceToInternalStorage(R.raw.puissanceinterieure, puissanceinterieure)
+        val savedFilePathPuissanceinterieure = copyRawResourceToInternalStorage(R.raw.puissance, puissanceinterieure)
 
         val renaissance = "renaissance.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
         val savedFilePathRenaissance = copyRawResourceToInternalStorage(R.raw.renaissance, renaissance)

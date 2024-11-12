@@ -37,7 +37,7 @@ class Step4 : AppCompatActivity() {
     private lateinit var numberPickerSeconds: NumberPicker
     private lateinit var numberPickerHours: NumberPicker
     private var selectedDurationInSeconds: Int = 0
-    private var mediaPlayer: MediaPlayer? = null
+    private var mediaPlayer1: MediaPlayer? = null
     private lateinit var introSwitch: Switch
 
 
@@ -93,6 +93,8 @@ class Step4 : AppCompatActivity() {
         introSwitch = findViewById(R.id.intro)
 
         btn_valider.setOnClickListener {
+
+            stopAudio()
             if(userTextsSplit!=null) {
 
                 generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
@@ -148,25 +150,30 @@ class Step4 : AppCompatActivity() {
     }
 
     private fun playAudioFromRaw(audioResId: Int) {
-        if (mediaPlayer == null) {
+        if (mediaPlayer1 == null) {
             // Initialize and start playback
-            mediaPlayer = MediaPlayer.create(this, audioResId)
-            mediaPlayer?.start()
+            mediaPlayer1 = MediaPlayer.create(this, audioResId)
+            mediaPlayer1?.start()
             Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
         } else {
-            if (mediaPlayer?.isPlaying == true) {
+            if (mediaPlayer1?.isPlaying == true) {
                 // Stop playback
-                mediaPlayer?.stop()
-                mediaPlayer?.reset()
-                mediaPlayer = null
+                mediaPlayer1?.stop()
+                mediaPlayer1?.reset()
+                mediaPlayer1 = null
                 Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
             } else {
                 // Restart playback
-                mediaPlayer = MediaPlayer.create(this, audioResId)
-                mediaPlayer?.start()
+                mediaPlayer1 = MediaPlayer.create(this, audioResId)
+                mediaPlayer1?.start()
                 Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun stopAudio() {
+        mediaPlayer1?.stop()
+        mediaPlayer1?.release()
+        mediaPlayer1 = null
     }
 
     private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String,userTexts: ArrayList<String>?) {
@@ -254,8 +261,10 @@ class Step4 : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release()
-        mediaPlayer = null
+        mediaPlayer1?.stop()
+        mediaPlayer1?.release()
+        mediaPlayer1 = null
     }
+
 
 }

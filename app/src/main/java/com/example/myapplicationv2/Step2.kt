@@ -1,12 +1,20 @@
 package com.example.myapplicationv2
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
+import android.os.Environment
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
@@ -15,26 +23,31 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 
-class Step2 : Base() {
+
+class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private lateinit var container: LinearLayout
     private var textViewCount = 0
-    private lateinit var buttonOk: Button
-    private val userTexts = ArrayList<String>()
-    private var currentIndex = 0
+    private lateinit var buttonOk:Button
+    private val userTexts = ArrayList<String>()  // Liste pour stocker les textes saisis
+    private var currentIndex = 0 // Pour suivre l'élément en cours de traitement
     private lateinit var textToSpeech: TextToSpeech
-    private val generateFiles = ArrayList<String>()
+    private val generateFiles = ArrayList<String>()  // Liste pour stocker les textes saisis
+
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_step2
+        return R.layout.activity_step2  // Retourne le layout spécifique à cette activité
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Configuration du bouton de navigation dans Base, ne plus toucher à btn_burger ici
+
 
         textToSpeech = TextToSpeech(this) { status ->
             if (status != TextToSpeech.ERROR) {
@@ -42,6 +55,7 @@ class Step2 : Base() {
                 textToSpeech.setPitch(1.0f)
             }
         }
+
 
         buttonOk = findViewById(R.id.step2ok)
         container = findViewById(R.id.container)
@@ -57,26 +71,46 @@ class Step2 : Base() {
             insets
         }
 
+
         val curentVoice = intent.getStringExtra("curentVoice")
-        Log.i("Step2", "onCreate: $curentVoice")
+        Log.i("test123456", "onCreate: "+curentVoice.toString())
         val nom = intent.getStringExtra("nom")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
 
-        // **Ajouter les affirmations par défaut**
-        addDefaultAffirmations()
 
-        buttonOk.setOnClickListener {
-            generateTTSFilesForAllTexts(nom, curentAPIKey)
+        val predefinedTexts = listOf("test1", "test2")
+        predefinedTexts.forEach {
+            userTexts.add(it) // Add to list
+            addTextView(it) // Display in layout
+        }
+        buttonOk.setOnClickListener{
 
-            if (curentVoice != null) {
+            generateTTSFilesForAllTexts(nom,curentAPIKey)
+
+            //textToSpeech(userTexts.get(0),"VR6AewLTigWG4xSOukaG")
+
+            if(curentVoice!=null){
                 val intent = Intent(this, step3Music::class.java)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", generateFiles)
+
+                if(userTexts.size>2){
+                    intent.putExtra("curentAPIKey", curentAPIKey)
+                    intent.putExtra("nom", nom)
+                    intent.putStringArrayListExtra("userTextsSplit", userTexts)
+                }
+
                 startActivity(intent)
-            } else {
+
+
+            }else{
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+
             }
+
+
         }
+
 
         addButton.setOnClickListener {
             Log.d("Step2", "Button clicked")
@@ -84,24 +118,48 @@ class Step2 : Base() {
         }
     }
 
-    private fun addDefaultAffirmations() {
-        // Vos affirmations par défaut
-        val defaultAffirmations = listOf(
-            "Je suis confiant(e) et capable.",
-            "Chaque jour est une nouvelle opportunité."
-        )
 
-        for (affirmation in defaultAffirmations) {
-            userTexts.add(affirmation)
-            addTextView(affirmation)
-        }
-    }
 
     private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?) {
-        for ((index, text) in userTexts.withIndex()) {
-            if (nom != null) apikey?.let { textToSpeechAPI(text, nom, index, it) }
+        for (index in 0..1) {
+            if (index < userTexts.size) {
+                val text = userTexts[index]
+                if (nom != null && apikey != null) {
+                    textToSpeech(text, nom, index, apikey)
+                }
+            }
         }
     }
+    private fun updateTextNumbers() {
+        var count = 1
+        for (i in 0 until container.childCount) {
+            val linearLayout = container.getChildAt(i) as LinearLayout
+            val textView = linearLayout.getChildAt(0) as TextView
+            val text = userTexts[i]
+            textView.text = "Affirmation $count : $text"
+            count++
+        }
+    }
+    // Générer un fichier audio pour un texte donné avec un nom unique
+    private fun generateAudioFileForText(text: String, index: Int) {
+        val basePath = filesDir.absolutePath + "/audio/"
+        val audioDir = File(basePath)
+        if (!audioDir.exists()) {
+            audioDir.mkdirs()  // Créer le dossier si nécessaire
+        }
+
+        // Générer un fichier avec un nom unique basé sur l'index
+        val generatedFilePath = "$basePath/voice_$index.mp3"
+        val file = File(generatedFilePath)
+        generateFiles.add(generatedFilePath)
+        Log.i("test12345", "generateAudioFileForText: "+generatedFilePath)
+        // Utiliser TextToSpeech pour synthétiser le fichier
+        textToSpeech.synthesizeToFile(text, null, file, null)
+
+        // Notification utilisateur
+        Toast.makeText(this, "Fichier audio généré pour le texte $index", Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun showAddTextDialog() {
         Log.d("Step2", "Showing dialog")
@@ -139,11 +197,13 @@ class Step2 : Base() {
         textView.text = numberedText
         textView.textSize = 18f
         textView.setPadding(8, 30, 8, 0)
-        textView.layoutParams = LinearLayout.LayoutParams(
-            0,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1f
-        )
+        textView.setBackgroundColor(getColor(android.R.color.white)) // Set white background
+        textView.setTextColor(getColor(R.color.green)) // Set text color to custom green
+        textView.setBackgroundResource(R.drawable.plaintext_white)
+        // Enable editing when clicking the TextView
+        textView.setOnClickListener {
+            showEditTextDialog(textView, text)
+        }
 
         // Create the delete ImageButton
         val deleteButton = ImageButton(this)
@@ -164,19 +224,30 @@ class Step2 : Base() {
         container.addView(linearLayout)
     }
 
-    private fun updateTextNumbers() {
-        var count = 1
-        for (i in 0 until container.childCount) {
-            val linearLayout = container.getChildAt(i) as LinearLayout
-            val textView = linearLayout.getChildAt(0) as TextView
-            val text = userTexts[i]
-            textView.text = "Affirmation $count : $text"
-            count++
+    // Function to show dialog and edit the text
+    private fun showEditTextDialog(textView: TextView, oldText: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Modifier le texte")
+        // Set up the input
+        val input = EditText(this)
+        input.setText(oldText) // Set current text in EditText
+        builder.setView(input)
+        // Set up the buttons
+        builder.setPositiveButton("Valider") { dialog, which ->
+            val newText = input.text.toString()
+            if (newText.isNotEmpty()) {
+                val textIndex = userTexts.indexOf(oldText)
+                if (textIndex != -1) {
+                    userTexts[textIndex] = newText  // Update in userTexts list
+                }
+                textView.text = "Affirmation ${textIndex + 1} : $newText" // Update TextView
+            }
         }
+        builder.setNegativeButton("Annuler") { dialog, which -> dialog.cancel() }
+        builder.show()
     }
-
-    private fun textToSpeechAPI(text: String, nom: String, index: Int, voiceId: String) {
-        val apiKey = "VOTRE_CLE_API"  // Remplacez par votre clé API
+    private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
 
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
@@ -187,16 +258,20 @@ class Step2 : Base() {
 
         // Générer un fichier avec un nom unique basé sur l'index
         val generatedFilePath = "$basePath/voice_$index.mp3"
+        //val file = File(generatedFilePath)
         generateFiles.add(generatedFilePath)
 
-        val fullText = "Moi $nom, $text"
+        val fullText = "moi $nom, $text"
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", fullText)
+            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
+            put("language_code", "fr") // Set language code to French
             put("voice_settings", JSONObject().apply {
                 put("stability", 0.5)
                 put("similarity_boost", 0.75)
+                // You can adjust these values to fine-tune the accent
             })
         }
 
@@ -215,13 +290,17 @@ class Step2 : Base() {
         // Enqueue la requête pour qu'elle se fasse de manière asynchrone
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("Step2", "Erreur lors de l'appel API : ${e.message}")
+                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body
 
+
+
                 if (responseBody != null) {
+                    // Sauvegarder le fichier audio avec un nom unique basé sur l'index
+                    val audioFileName = "voice_$index.mp3"
                     val audioFile = File(generatedFilePath)
 
                     try {
@@ -229,25 +308,26 @@ class Step2 : Base() {
                         outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
                         outputStream.close()
 
-                        Log.d("Step2", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
+                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
+
+                        // Ajouter le chemin du fichier généré à la liste `generateFiles`
 
                         // Notification de succès
                         runOnUiThread {
-                            Toast.makeText(
-                                this@Step2,
-                                "Fichier audio généré pour l'index $index",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this@Step2, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
                         }
 
                     } catch (e: IOException) {
-                        Log.e("Step2", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
                     }
 
                 } else {
-                    Log.d("Step2", "Le corps de la réponse est null")
+                    Log.d("testApi", "Le corps de la réponse est null")
                 }
             }
         })
     }
+
+
+
 }
