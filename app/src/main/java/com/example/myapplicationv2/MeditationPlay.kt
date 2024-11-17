@@ -240,6 +240,7 @@ class MeditationPlay : AppCompatActivity() {
                 setDataSource(filePath)
                 prepare()
                 start()
+                setVolume(0.1778f, 0.1778f)
             }
         } else {
             if (mediaPlayer?.isPlaying == true ) {
