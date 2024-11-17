@@ -3,6 +3,7 @@ package com.example.myapplicationv2
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.media.Image
 import android.os.Bundle
 import android.os.Environment
@@ -16,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -171,16 +173,65 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         builder.setView(input)
 
         // Set up the buttons
-        builder.setPositiveButton("Valider") { dialog, which ->
+        builder.setPositiveButton("Valider") { dialogInterface, which ->
             val text = input.text.toString()
             if (text.isNotEmpty()) {
                 userTexts.add(text)  // Ajouter le texte à la liste
                 addTextView(text)
             }
         }
-        builder.setNegativeButton("Annuler") { dialog, which -> dialog.cancel() }
+        builder.setNegativeButton("Annuler") { dialogInterface, which -> dialogInterface.cancel() }
 
-        builder.show()
+        // Créer le dialog
+        val dialog = builder.create()
+
+        // Afficher le dialog
+        dialog.show()
+
+        // Personnaliser les boutons après affichage
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        // Appliquer le style aux boutons
+        customizeDialogButton(positiveButton)
+        customizeDialogButton(negativeButton)
+        addSpaceBetweenDialogButtons(positiveButton, negativeButton)
+    }
+
+    private fun customizeDialogButton(button: Button) {
+        // Définir la couleur de fond
+        button.setBackgroundColor(Color.parseColor("#27c485")) // Couleur verte
+
+        // Définir la couleur du texte
+        button.setTextColor(Color.WHITE)
+
+        // Ajouter du padding (convertir 15dp en pixels)
+        val paddingInDp = 15
+        val scale = resources.displayMetrics.density
+        val paddingInPx = (paddingInDp * scale + 0.5f).toInt()
+        button.setPadding(paddingInPx, paddingInPx, paddingInPx, paddingInPx)
+
+        // Appliquer un style de coin arrondi si nécessaire
+        val drawable = ContextCompat.getDrawable(this, R.drawable.button_background)
+        button.background = drawable
+    }
+    private fun addSpaceBetweenDialogButtons(positiveButton: Button, negativeButton: Button) {
+        // Convertir 8dp en pixels pour les marges
+        val marginInDp = 8
+        val scale = resources.displayMetrics.density
+        val marginInPx = (marginInDp * scale + 0.5f).toInt()
+
+        // Récupérer les LayoutParams des boutons
+        val positiveButtonLP = positiveButton.layoutParams as LinearLayout.LayoutParams
+        val negativeButtonLP = negativeButton.layoutParams as LinearLayout.LayoutParams
+
+        // Ajouter une marge à gauche du bouton positif (Valider)
+        positiveButtonLP.marginStart = marginInPx
+        positiveButton.layoutParams = positiveButtonLP
+
+        // Si vous le souhaitez, vous pouvez également ajouter une marge à droite du bouton négatif (Annuler)
+        negativeButtonLP.marginEnd = marginInPx
+        negativeButton.layoutParams = negativeButtonLP
     }
 
     private fun addTextView(text: String) {

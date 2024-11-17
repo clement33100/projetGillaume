@@ -10,14 +10,8 @@
         android:id="@+id/btn_affirm"
         android:title="Mes Affirmations"/>
     <item
-        android:id="@+id/btn_challenge"
-        android:title="Mes Challenges"/>
-    <item
         android:id="@+id/btn_advices"
-        android:title="Conseils"/>
-    <item
-        android:id="@+id/btn_visu"
-        android:title="Visualisation"/>
+        android:title="Conseil Pratiques" />
     <item
         android:id="@+id/btn_hdiw"
         android:title="Comment ça Marche?"/>

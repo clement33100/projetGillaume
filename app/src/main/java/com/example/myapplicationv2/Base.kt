@@ -88,10 +88,6 @@ abstract class Base : AppCompatActivity() {
                 val intent = Intent(this, Advices::class.java)
                 startActivity(intent)
             }
-            R.id.btn_visu -> {
-                val intent = Intent(this, Visualize::class.java)
-                startActivity(intent)
-            }
             R.id.btn_hdiw -> {
                 val intent = Intent(this, hdiw1::class.java)
                 startActivity(intent)
