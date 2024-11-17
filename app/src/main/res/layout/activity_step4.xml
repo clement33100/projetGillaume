@@ -127,7 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/intro"
         app:layout_constraintStart_toEndOf="@+id/intro"
         app:layout_constraintTop_toTopOf="@+id/intro"
-        app:srcCompat="@drawable/listen" />
+        app:srcCompat="@drawable/test" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

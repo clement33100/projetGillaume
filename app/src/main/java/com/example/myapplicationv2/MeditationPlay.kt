@@ -247,12 +247,16 @@ class MeditationPlay : AppCompatActivity() {
                 // Stop playback
                 mediaPlayer?.stop()
                 mediaPlayer?.reset()
+                mediaPlayer?.setVolume(0.1778f, 0.1778f)
+
             } else {
                 // Switch to new audio file or restart current one
                 mediaPlayer?.reset()
                 mediaPlayer?.setDataSource(filePath)
                 mediaPlayer?.prepare()
                 mediaPlayer?.start()
+                mediaPlayer?.setVolume(0.1778f, 0.1778f)
+
             }
         }
 
@@ -301,6 +305,7 @@ class MeditationPlay : AppCompatActivity() {
             mediaPlayer?.setOnCompletionListener(null)  // Disable looping
             mediaPlayer?.seekTo(0)  // Reset to the beginning
             mediaPlayer?.start()
+            mediaPlayer?.setVolume(0.1778f, 0.1778f)
 
             mediaPlayer?.let {
                 //handler = Handler(Looper.getMainLooper())
