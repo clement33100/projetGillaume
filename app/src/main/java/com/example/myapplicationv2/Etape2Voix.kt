@@ -102,24 +102,24 @@ class Etape2Voix : AppCompatActivity() {
         btn_ChoixVoiceFemme1.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
-            currentApiKey="pMsXgVXv3BLzUgSXRplE"
+            currentApiKey="PLF9iqQhzBVpMoW6O9ja"
         }
         btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
-            currentApiKey="ThT5KcBeYPX3keUQqHPh"
+            currentApiKey="PLF9iqQhzBVpMoW6O9ja"
 
 
         }
         btn_ChoixVoiceHomme1.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
-            currentApiKey="VR6AewLTigWG4xSOukaG"
+            currentApiKey="qUsB63LIpy65fSmt72zk"
 
 
         }
         btn_ChoixVoiceHomme2.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceHomme2.text.toString(),"$basePath/voiceMale2.mp3")
-            currentApiKey="29vD33N1CtxCmqQRPOHJ"
+            currentApiKey="JoAXY9Z9JBJC8OP2xjtB"
 
         }
 
