@@ -21,24 +21,24 @@
             android:id="@+id/btn_burger"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/menu"
-            android:contentDescription="@string/menu"
             android:layout_margin="8dp"
+            android:contentDescription="@string/menu"
             android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:src="@drawable/menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Bouton de sélection de la langue en haut à droite -->
         <ImageButton
             android:id="@+id/btn_language"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/eng"
-            android:contentDescription="@string/select_language"
             android:layout_margin="8dp"
+            android:contentDescription="@string/select_language"
             android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:src="@drawable/eng"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Les autres vues de votre activité -->
 
@@ -58,8 +58,8 @@
             android:id="@+id/txt_explain"
             android:layout_width="176dp"
             android:layout_height="148dp"
-            android:text="Écris tes affirmations sous la forme : 'Je ...'."
             android:gravity="center"
+            android:text="Écris tes affirmations sous la forme : 'Je ...'."
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,10 +69,9 @@
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
             android:text="NEW"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.092"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ScrollView
@@ -101,8 +100,10 @@
             android:text="ok"
             app:layout_constraintBottom_toBottomOf="@+id/addButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.371"
             app:layout_constraintStart_toEndOf="@+id/addButton"
-            app:layout_constraintTop_toTopOf="@+id/addButton" />
+            app:layout_constraintTop_toTopOf="@+id/addButton"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Menu Latéral (Navigation View) -->

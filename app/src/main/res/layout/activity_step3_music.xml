@@ -109,7 +109,7 @@
                     <ImageButton
                         android:id="@+id/listenfrequence1"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
@@ -126,12 +126,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Focus" />
+                        android:text="     Focus     " />
 
                     <ImageButton
                         android:id="@+id/listenfrequence2"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
@@ -148,12 +148,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Intuition" />
+                        android:text="   Intuition   " />
 
                     <ImageButton
                         android:id="@+id/listenfrequence3"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
@@ -165,7 +165,7 @@
             android:id="@+id/scrollViewEpic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_epic">
@@ -192,7 +192,7 @@
                     <ImageButton
                         android:id="@+id/listenepic1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
@@ -209,12 +209,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Renaissance" />
+                        android:text="     Renaissance       "/>
 
                     <ImageButton
                         android:id="@+id/listenepic2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
@@ -231,12 +231,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Ressource infinie" />
+                        android:text="  Ressource infinie  " />
 
                     <ImageButton
                         android:id="@+id/listenepic3"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
@@ -258,6 +258,7 @@
             android:id="@+id/btn_okmusic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="80dp"
             android:text="ok"
             app:layout_constraintBottom_toBottomOf="parent"
