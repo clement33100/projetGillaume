@@ -73,10 +73,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Nicole" />
+
                     <ImageButton
                         android:id="@+id/listenFemme1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -92,10 +94,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Dorothy" />
+
                     <ImageButton
                         android:id="@+id/listenFemme2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -141,7 +145,8 @@
                     <ImageButton
                         android:id="@+id/listenHomme1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen homme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -156,10 +161,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Drew" />
+
                     <ImageButton
                         android:id="@+id/listenHomme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen homme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>

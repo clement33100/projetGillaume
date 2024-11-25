@@ -109,7 +109,8 @@
                     <ImageButton
                         android:id="@+id/listenfrequence1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -130,7 +131,8 @@
                     <ImageButton
                         android:id="@+id/listenfrequence2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -151,7 +153,8 @@
                     <ImageButton
                         android:id="@+id/listenfrequence3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -188,8 +191,9 @@
 
                     <ImageButton
                         android:id="@+id/listenepic1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -209,8 +213,9 @@
 
                     <ImageButton
                         android:id="@+id/listenepic2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>
@@ -231,7 +236,8 @@
                     <ImageButton
                         android:id="@+id/listenepic3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listen" />
                 </LinearLayout>

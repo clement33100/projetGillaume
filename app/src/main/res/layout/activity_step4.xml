@@ -119,13 +119,15 @@
 
     <ImageButton
         android:id="@+id/imageButtonStep4Listen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="49dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Play the introduction audio"
         app:layout_constraintBottom_toBottomOf="@+id/intro"
         app:layout_constraintStart_toEndOf="@+id/intro"
         app:layout_constraintTop_toTopOf="@+id/intro"
-        app:srcCompat="@drawable/listen" />
+        app:srcCompat="@drawable/test" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
