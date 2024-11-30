@@ -32,6 +32,7 @@
             android:id="@+id/scrollView"
             android:layout_width="350dp"
             android:layout_height="135dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic">
@@ -202,7 +203,7 @@
                         android:padding="10dp"
                         android:textColor="@color/grey"
                         android:textSize="19dp"
-                        android:text="Puissance intérieur" />
+                        android:text="Puissance" />
 
                     <ImageButton
                         android:id="@+id/listenepic1"
@@ -256,7 +257,7 @@
                         android:padding="10dp"
                         android:textColor="@color/grey"
                         android:textSize="19dp"
-                        android:text="  Ressource infinie  " />
+                        android:text="Ressource infinie" />
 
                     <ImageButton
                         android:id="@+id/listenepic3"
@@ -273,7 +274,7 @@
             android:id="@+id/btn_epic"
             android:layout_width="316dp"
             android:layout_height="74dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:backgroundTint="@color/green"
             android:text="Epic"
             android:textSize="24dp"
