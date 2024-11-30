@@ -10,36 +10,27 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/yellow"
+        android:background="@drawable/activity_background"
         tools:context=".step3Music">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Étape 4"
+            android:layout_marginTop="20dp"
+            android:text="CHOISIS TA \n MUSIQUE"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="48sp"
+            android:textColor="@color/grey"
+            android:textSize="27sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Choisis ta Musique"
-            android:textSize="34sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
         <ScrollView
             android:id="@+id/scrollView"
-            android:layout_width="266dp"
+            android:layout_width="350dp"
             android:layout_height="135dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,9 +45,11 @@
 
                 <Button
                     android:id="@+id/uploadButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload MP3" />
+                    android:layout_width="316dp"
+                    android:layout_height="74dp"
+                    android:backgroundTint="@color/green"
+                    android:text="Upload MP3"
+                    android:textSize="24dp" />
 
                 <LinearLayout
                     android:id="@+id/dynamicButtonContainer"
@@ -69,13 +62,15 @@
 
         <Button
             android:id="@+id/btn_frequence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_width="316dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="77dp"
+            android:backgroundTint="@color/green"
             android:text="Fréquence vibratoire"
+            android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <ScrollView
             android:id="@+id/scrollViewFrequenceVibratoire"
@@ -101,18 +96,23 @@
 
                     <Button
                         android:id="@+id/frequence1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="30dp"
+                        android:backgroundTint="@color/yellow"
+                        android:padding="10dp"
+                        android:textColor="@color/grey"
+                        android:textSize="19dp"
                         android:text="Abondance" />
 
                     <ImageButton
                         android:id="@+id/listenfrequence1"
                         android:layout_width="wrap_content"
-                        android:layout_height="80dp"
+                        android:layout_height="110dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listen" />
+                        app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,18 +123,23 @@
 
                     <Button
                         android:id="@+id/frequence2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="0dp"
+                        android:backgroundTint="@color/yellow"
+                        android:padding="10dp"
+                        android:textColor="@color/grey"
+                        android:textSize="19dp"
                         android:text="     Focus     " />
 
                     <ImageButton
                         android:id="@+id/listenfrequence2"
                         android:layout_width="wrap_content"
-                        android:layout_height="80dp"
+                        android:layout_height="50dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listen" />
+                        app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,18 +150,23 @@
 
                     <Button
                         android:id="@+id/frequence3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="30dp"
+                        android:backgroundTint="@color/yellow"
+                        android:padding="10dp"
+                        android:textColor="@color/grey"
+                        android:textSize="19dp"
                         android:text="   Intuition   " />
 
                     <ImageButton
                         android:id="@+id/listenfrequence3"
                         android:layout_width="wrap_content"
-                        android:layout_height="80dp"
+                        android:layout_height="110dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listen" />
+                        app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -165,7 +175,7 @@
             android:id="@+id/scrollViewEpic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_epic">
@@ -184,18 +194,23 @@
 
                     <Button
                         android:id="@+id/epic1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="30dp"
+                        android:backgroundTint="@color/yellow"
+                        android:padding="10dp"
+                        android:textColor="@color/grey"
+                        android:textSize="19dp"
                         android:text="Puissance intérieur" />
 
                     <ImageButton
                         android:id="@+id/listenepic1"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="110dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listen" />
+                        app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -206,18 +221,23 @@
 
                     <Button
                         android:id="@+id/epic2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="     Renaissance       "/>
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="00dp"
+                        android:backgroundTint="@color/yellow"
+                        android:padding="10dp"
+                        android:textColor="@color/grey"
+                        android:textSize="19dp"
+                        android:text="     Renaissance       " />
 
                     <ImageButton
                         android:id="@+id/listenepic2"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="50dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listen" />
+                        app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -228,28 +248,35 @@
 
                     <Button
                         android:id="@+id/epic3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginTop="30dp"
+                        android:backgroundTint="@color/yellow"
+                        android:padding="10dp"
+                        android:textColor="@color/grey"
+                        android:textSize="19dp"
                         android:text="  Ressource infinie  " />
 
                     <ImageButton
                         android:id="@+id/listenepic3"
                         android:layout_width="wrap_content"
-                        android:layout_height="80dp"
+                        android:layout_height="110dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listen" />
+                        app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
         <Button
             android:id="@+id/btn_epic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="316dp"
+            android:layout_height="74dp"
             android:layout_marginTop="20dp"
+            android:backgroundTint="@color/green"
             android:text="Epic"
+            android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollViewFrequenceVibratoire" />
@@ -257,12 +284,12 @@
 
         <Button
             android:id="@+id/btn_okmusic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="90dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:padding="10dp"
             android:text="ok"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="19dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -271,11 +298,28 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Ton choix :"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="clic sur la musique \n de ton choix"
+            android:textAlignment="center"
+            android:textColor="@color/green"
+            android:textSize="19sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:text="Ton choix :"
+            android:textColor="@color/grey"
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

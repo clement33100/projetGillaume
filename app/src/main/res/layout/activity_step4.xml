@@ -29,27 +29,14 @@
 
     <TextView
         android:id="@+id/txt_explain"
-        android:layout_width="176dp"
-        android:layout_height="148dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="242dp"
+        android:layout_height="150dp"
         android:gravity="center"
-        android:text="Choisis la durée de ton fichier audio et si tu veux activer l'intro"
-        android:textSize="20sp"
+        android:text="CHOISIS LA DURÉE DE TON FICHIER AUDIO"
+        android:textSize="27sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="111dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
-        android:text="Étape 5"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,13 +44,14 @@
         android:id="@+id/intro"
         android:layout_width="110dp"
         android:layout_height="49dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="64dp"
         android:gravity="center"
         android:text="Intro"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+        app:layout_constraintVertical_bias="0.723" />
 
     <Button
         android:id="@+id/btn_Valid"
@@ -84,8 +72,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/intro"
         app:layout_constraintEnd_toStartOf="@+id/numberPickerSeconds"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toEndOf="@+id/numberPickerHours"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+        app:layout_constraintVertical_bias="0.336" />
 
     <NumberPicker
         android:id="@+id/numberPickerSeconds"
@@ -94,8 +84,10 @@
         android:layout_marginStart="60dp"
         app:layout_constraintBottom_toTopOf="@+id/intro"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
         app:layout_constraintStart_toStartOf="@+id/txt_explain"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+        app:layout_constraintVertical_bias="0.336" />
 
     <NumberPicker
         android:id="@+id/numberPickerHours"
@@ -104,8 +96,10 @@
         android:layout_marginEnd="60dp"
         app:layout_constraintBottom_toTopOf="@+id/intro"
         app:layout_constraintEnd_toEndOf="@+id/txt_explain"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+        app:layout_constraintVertical_bias="0.336" />
 
     <TextView
         android:id="@+id/textView5"
@@ -127,7 +121,31 @@
         app:layout_constraintBottom_toBottomOf="@+id/intro"
         app:layout_constraintStart_toEndOf="@+id/intro"
         app:layout_constraintTop_toTopOf="@+id/intro"
-        app:srcCompat="@drawable/test" />
+        app:srcCompat="@drawable/listengrey" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:text="Durée :"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/intro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberPickerHours"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textViewHoursEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="00 heures 00 minutes 00 secondes "
+        android:textColor="@color/green"
+        android:textSize="19dp"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

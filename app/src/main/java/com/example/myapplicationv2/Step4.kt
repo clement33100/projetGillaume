@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.NumberPicker
 import android.widget.Switch
 import android.widget.TextClock
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,7 @@ class Step4 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_step4)
+        val textViewDuration: TextView = findViewById(R.id.textViewHoursEdit)
 
         numberPickerMinutes = findViewById(R.id.numberPickerMinutes)
         numberPickerSeconds = findViewById(R.id.numberPickerSeconds)
@@ -60,6 +62,19 @@ class Step4 : AppCompatActivity() {
         numberPickerHours.maxValue=23
 
 
+        val updateDuration = {
+            val hours = numberPickerHours.value
+            val minutes = numberPickerMinutes.value
+            val seconds = numberPickerSeconds.value
+            textViewDuration.text = "$hours heures $minutes minutes $seconds secondes"
+        }
+
+        numberPickerHours.setOnValueChangedListener { _, _, _ -> updateDuration() }
+        numberPickerMinutes.setOnValueChangedListener { _, _, _ -> updateDuration() }
+        numberPickerSeconds.setOnValueChangedListener { _, _, _ -> updateDuration() }
+
+        // Appel initial pour afficher la durée de départ
+        updateDuration()
 
 
 
