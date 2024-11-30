@@ -148,7 +148,7 @@ class Etape2Voix : AppCompatActivity() {
     private fun setTextInfo(text : String,currentVoice : String){
         val textInfo = findViewById<TextView>(R.id.textViewStep2)
         curentVoice = currentVoice
-        textInfo.setText("Ton choix : "+text)
+        textInfo.setText(text)
     }
 
     private fun setViewVisibility(scrollview : ScrollView){

@@ -5,36 +5,39 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow"
+    android:background="@drawable/activity_background"
     tools:context=".step1FirstName">
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Étape 1"
+        android:layout_marginTop="44dp"
+        android:text="TON PRÉNOM"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:textColorLink="@color/black"
-        android:textSize="48sp"
+        android:textSize="27sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/editTextTextStep1"
         android:layout_width="316dp"
         android:layout_height="74dp"
         android:background="@drawable/plaintext_white"
+        android:backgroundTint="@color/yellow"
         android:ems="10"
-        android:hint="Ton prénom"
+        android:hint="Ton Prénom"
         android:inputType="text"
         android:textAlignment="center"
-        android:textColor="@color/green"
-        android:textColorLink="@color/green"
+        android:textColor="@color/grey"
+        android:textColorLink="@color/grey"
         android:textSize="24sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -44,22 +47,15 @@
 
     <Button
         android:id="@+id/buttonOkStep1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
         android:text="ok"
+        android:textSize="19dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextStep1" />
 
-    <Button
-        android:id="@+id/buttonOkStep11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonOkStep1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

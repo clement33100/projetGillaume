@@ -1,6 +1,7 @@
 package com.example.myapplicationv2
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.ImageButton
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.speech.tts.TextToSpeech
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import java.io.File
@@ -27,7 +30,6 @@ class step1FirstName : AppCompatActivity() {
 
     private lateinit var editText: EditText
     private lateinit var generateButton: Button
-    private lateinit var test: Button
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var generatedFilePathMale1: String
     private lateinit var generatedFilePathMale2: String
@@ -43,7 +45,6 @@ class step1FirstName : AppCompatActivity() {
 
         editText = findViewById(R.id.editTextTextStep1)
         generateButton = findViewById(R.id.buttonOkStep1)
-        test= findViewById(R.id.buttonOkStep11)
 
 
         textToSpeechMale1 = TextToSpeech(this) { status ->
@@ -79,13 +80,25 @@ class step1FirstName : AppCompatActivity() {
             generateAudioFile(text)
         }
 
-        test.setOnClickListener {
-            if (this::generatedFilePathMale1.isInitialized) {
-                playAudio(generatedFilePathMale2)
-            } else {
-                Toast.makeText(this, "Generate an audio file first", Toast.LENGTH_SHORT).show()
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Si le texte est non vide, retirer l'italique
+                if (!s.isNullOrEmpty()) {
+                    editText.setTypeface(null, Typeface.NORMAL)
+                }
             }
-        }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Si le texte est vide, remettre l'italique
+                if (s.isNullOrEmpty()) {
+                    editText.setTypeface(null, Typeface.ITALIC)
+                }
+            }
+        })
+
 
         val OkButton = findViewById<Button>(R.id.buttonOkStep1)
         // Définir les listeners pour les boutons
@@ -131,6 +144,8 @@ class step1FirstName : AppCompatActivity() {
 
 
     }
+
+
 
 
 

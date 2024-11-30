@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Personnalisez votre thème ici. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">        <!-- Personnalisez votre thème ici. -->
         <item name="android:textViewStyle">@style/CustomTextView</item>
         <!-- Appliquer le style de bouton personnalisé globalement -->
         <item name="buttonStyle">@style/MyButtonStyle</item>
