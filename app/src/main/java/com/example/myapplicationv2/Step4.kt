@@ -238,6 +238,7 @@ class Step4 : AppCompatActivity() {
                 Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
             }
 
+
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body
 

@@ -225,33 +225,39 @@ class step3Music : AppCompatActivity() {
             // Jouer le fichier audio en utilisant la fonction playAudio
             setTextInfo(btn_ChoixEpic1.text.toString(),savedFilePathPuissanceinterieure)
 
-
+            setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
 
         }
         btn_ChoixEpic2.setOnClickListener {
             setTextInfo(btn_ChoixEpic2.text.toString(),savedFilePathRenaissance)
-
+            setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
 
         }
         btn_ChoixEpic3.setOnClickListener {
             setTextInfo(btn_ChoixEpic3.text.toString(),savedFilePathRessourceinfinie)
-
+            setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
 
         }
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
             setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),savedFilePathAbondance)
-
+            setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
 
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
 
             setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),savedFilePathFocus)
-
+            setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire3.setOnClickListener {
 
             setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(),savedFilePathIntuition)
-
+            setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
 
 
@@ -403,6 +409,14 @@ class step3Music : AppCompatActivity() {
     private fun copyRawResourceToInternalStorage(resourceId: Int, fileName: String): String? {
         val uri = Uri.parse("android.resource://${packageName}/$resourceId")
         return saveFileToInternalStorage(uri, fileName)
+    }
+
+    private fun setViewVisibilityGone(scrollview : ScrollView){
+
+        if(scrollview.visibility== View.VISIBLE){
+            scrollview.visibility = View.GONE
+        }
+
     }
 
     private fun createDynamicButton(fileName: String, filePath: String) {
