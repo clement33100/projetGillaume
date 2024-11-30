@@ -103,16 +103,24 @@ class Etape2Voix : AppCompatActivity() {
 
             setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
             currentApiKey="PLF9iqQhzBVpMoW6O9ja"
+            setViewVisibilityGone(scrollview_FemmeVoice)
+            setViewVisibilityGone(scrollview_HommeVoice)
+
+
         }
         btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
             currentApiKey="PLF9iqQhzBVpMoW6O9ja"
+            setViewVisibilityGone(scrollview_FemmeVoice)
+            setViewVisibilityGone(scrollview_HommeVoice)
 
 
         }
         btn_ChoixVoiceHomme1.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
             currentApiKey="qUsB63LIpy65fSmt72zk"
+            setViewVisibilityGone(scrollview_HommeVoice)
+            setViewVisibilityGone(scrollview_FemmeVoice)
 
 
         }
@@ -120,6 +128,8 @@ class Etape2Voix : AppCompatActivity() {
 
             setTextInfo(btn_ChoixVoiceHomme2.text.toString(),"$basePath/voiceMale2.mp3")
             currentApiKey="JoAXY9Z9JBJC8OP2xjtB"
+            setViewVisibilityGone(scrollview_HommeVoice)
+            setViewVisibilityGone(scrollview_FemmeVoice)
 
         }
 
@@ -159,6 +169,13 @@ class Etape2Voix : AppCompatActivity() {
         else {
             scrollview.visibility = View.GONE
         }
+    }
+    private fun setViewVisibilityGone(scrollview : ScrollView){
+
+        if(scrollview.visibility== View.VISIBLE){
+            scrollview.visibility = View.GONE
+        }
+
     }
 
     private fun playAudioFromRaw(audioResId: Int) {
