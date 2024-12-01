@@ -342,7 +342,7 @@ class step3Music : AppCompatActivity() {
     private fun setTextInfo(text : String,curentSong: String?){
         val textInfo = findViewById<TextView>(R.id.textView4)
         songChoose = curentSong
-        textInfo.setText("Ton choix : "+text)
+        textInfo.setText(text)
     }
 
 
