@@ -31,13 +31,13 @@
         android:id="@+id/txt_explain"
         android:layout_width="237dp"
         android:layout_height="108dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="CHOISIS LA DURÉE DE TON FICHIER AUDIO"
         android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
