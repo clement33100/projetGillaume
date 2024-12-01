@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow"
+    android:background="@drawable/activity_background"
     tools:context=".Step5">
 
     <ImageButton
@@ -35,12 +35,14 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="111dp"
-        android:layout_height="41dp"
+        android:layout_width="273dp"
+        android:layout_height="72dp"
         android:layout_marginTop="48dp"
         android:gravity="center"
-        android:text="Etape 5"
-        android:textSize="24sp"
+        android:text="C'EST PRÊT !"
+        android:textColor="@color/grey"
+        android:textSize="27sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
