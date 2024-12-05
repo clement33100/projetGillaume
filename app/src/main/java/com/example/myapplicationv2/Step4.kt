@@ -1,5 +1,6 @@
 package com.example.myapplicationv2
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -27,6 +28,7 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.Calendar
 import java.util.Locale
 
 class Step4 : AppCompatActivity() {
@@ -149,7 +151,11 @@ class Step4 : AppCompatActivity() {
         }
 
 
+
+
     }
+
+
 
     private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,userTextsSplit: ArrayList<String>?,userTexts: ArrayList<String>?) {
         if (userTextsSplit != null) {

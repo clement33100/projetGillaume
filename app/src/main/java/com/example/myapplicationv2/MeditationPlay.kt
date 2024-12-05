@@ -7,7 +7,10 @@ import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +35,9 @@ class MeditationPlay : AppCompatActivity() {
     private var handler: Handler? = null
     private var handlerAffirmation: Handler? = null
 
+    private lateinit var buttonPause: ImageButton
+    private var isPlaying = true // Variable pour suivre l'état du lecteur
+
     private var currentIndex = 0 // Ajout d'un index pour suivre l'élément actuel de userTexts
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +58,9 @@ class MeditationPlay : AppCompatActivity() {
         val savedFilePathBolTibetain = copyRawResourceToInternalStorage(R.raw.boltibetainson, boltibetain)
 
 
+        buttonPause = findViewById<ImageButton>(R.id.imageButtonPause)
+
+
 
 
         val filePaths = intent.getStringExtra("filePaths")
@@ -67,6 +76,34 @@ class MeditationPlay : AppCompatActivity() {
             Log.d("test1234888", "No texts received")
         }
 
+        buttonPause.setOnClickListener {
+            if (isPlaying) {
+                // Mettre en pause les lecteurs audio
+                mediaPlayer?.pause()
+                preAudioPlayer?.pause()
+                afterAudioPlayer?.pause()
+                affirmationAudioPlayer?.pause()
+                EndAudioPlayer?.pause()
+                // Supprime les callbacks en pause
+                handlerAffirmation?.removeCallbacksAndMessages(null)
+
+                // Change l'icône en "play"
+                buttonPause.setImageResource(R.drawable.play)
+            } else {
+                // Reprendre les lecteurs audio
+                mediaPlayer?.start()
+                preAudioPlayer?.start()
+                afterAudioPlayer?.start()
+                affirmationAudioPlayer?.start()
+
+                // Relancer les affirmations
+
+
+                // Change l'icône en "pause"
+                buttonPause.setImageResource(R.drawable.pause)
+            }
+            isPlaying = !isPlaying // Basculer l'état
+        }
 
 
 
@@ -84,7 +121,13 @@ class MeditationPlay : AppCompatActivity() {
             playMainAudio(filePaths,savedFilePathBolTibetain,selectedDurationInSeconds)
 
         }
+
+
+
+
     }
+
+
 
 
     private fun copyRawResourceToInternalStorage(resourceId: Int, fileName: String): String? {
@@ -378,6 +421,9 @@ class MeditationPlay : AppCompatActivity() {
         handlerAffirmation?.removeCallbacksAndMessages(null) // Remove any pending callbacks
         handlerAffirmation = null
         handler?.removeCallbacksAndMessages(null) // Remove any pending callbacks
+        isPlaying = false
+        buttonPause.setImageResource(R.drawable.pause) // Réinitialise à l'icône de lecture
+
         handler = null
     }
 
@@ -428,6 +474,7 @@ class MeditationPlay : AppCompatActivity() {
             }
         })
     }
+
 
 
 

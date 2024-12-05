@@ -13,7 +13,7 @@
         android:id="@+id/txt_meditation"
         android:layout_width="160dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="C'EST PRÊT !"
         android:textColor="@color/grey"
@@ -26,16 +26,15 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="420dp"
+        android:layout_width="317dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="192dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_meditation">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Other UI elements -->
 
@@ -62,5 +61,15 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/cassette_audio" />
+
+    <ImageButton
+        android:id="@+id/imageButtonPause"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/pause"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        tools:srcCompat="@drawable/pause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
