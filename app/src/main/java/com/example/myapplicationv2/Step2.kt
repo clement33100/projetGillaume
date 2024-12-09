@@ -67,27 +67,26 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         btnShowAdvices.isAllCaps = false
         btnShowAdvices.setOnClickListener {
 
-            // Texte personnalisé
-            val title = "<b>Conseil Pratique</b>"
-            val advice1 = "<b>Formule au présent</b> comme si c’était déjà une réalité.<i> \"Je suis confiant.\"</i>"
-            val advice2 = "<b>Sois positif</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter."
-            val advice3 = "<b>Choisis des mots riches de sens</b> pour toi."
-            val advice4 = "<b>Sois clair.</b>"
-            val advice5 = "<b>Renforce tes affirmations avec des exemples concrets</b> de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai atteint 'cet objectif' que je m’étais fixé.\"</i>"
+        // Texte personnalisé
+        val title = "<b>CONSEIL PRATIQUE</b>"
+        val advice1 = "<b>Formule au présent</b> comme si c’était déjà une réalité.<i> \"Je suis confiant.\"</i>"
+        val advice2 = "<b>Sois positif</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter."
+        val advice3 = "<b>Choisis des mots riches de sens</b> pour toi."
+        val advice4 = "<b>Sois clair.</b>"
+        val advice5 = "<b>Renforce tes affirmations avec des exemples concrets</b> de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai atteint 'cet objectif' que je m’étais fixé.\"</i>"
 
-            if (!isAdviceExpanded) {
-                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0) // Retire la flèche
+        if (!isAdviceExpanded) {
+            btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0) // Retire la flèche
 
-                // Texte enrichi
-                val enrichedText = """
-        $title <img src='arrow_up'/> <br/><br/>
+            // Texte enrichi
+        val enrichedText = """
+        $title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src='arrow_up'/> <br/><br/>
         ${advice1}<br/>
         ${advice2}<br/>
         ${advice3}<br/>
         ${advice4}<br/>
         ${advice5}
         """.trimIndent()
-
                 btnShowAdvices.text = Html.fromHtml(enrichedText, Html.FROM_HTML_MODE_COMPACT, object : Html.ImageGetter {
                     override fun getDrawable(source: String?): Drawable? {
                         if (source == "arrow_up") {
@@ -109,7 +108,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             } else {
                 // Revenir à l'état initial
                 val initialText = """
-        $title <img src='arrow_down'/>
+        $title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src='arrow_down'/>
         """.trimIndent()
 
                 btnShowAdvices.text = Html.fromHtml(initialText, Html.FROM_HTML_MODE_COMPACT, object : Html.ImageGetter {
