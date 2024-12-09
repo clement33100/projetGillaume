@@ -8,7 +8,7 @@
     </item>
 
     <!-- Fond blanc en dessous -->
-    <item android:top="170dp"> <!-- Ajustez la hauteur du rectangle jaune ici -->
+    <item android:top="200dp"> <!-- Ajustez la hauteur du rectangle jaune ici -->
         <shape android:shape="rectangle">
             <solid android:color="#EFEFEF " /> <!-- Blanc -->
 <!-- #EFEFEF (gris très clair) #FFFFFF (Blanc pour contraste)

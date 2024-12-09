@@ -4,16 +4,19 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.media.Image
 import android.os.Bundle
 import android.os.Environment
 import android.speech.tts.TextToSpeech
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -58,7 +61,77 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         }
 
+        val btnShowAdvices = findViewById<Button>(R.id.btn_show_advices)
+        val scrollView = findViewById<ScrollView>(R.id.scrollViewAffirm)
+        var isAdviceExpanded = false
+        btnShowAdvices.isAllCaps = false
+        btnShowAdvices.setOnClickListener {
 
+            // Texte personnalisé
+            val title = "<b>Conseil Pratique</b>"
+            val advice1 = "<b>Formule au présent</b> comme si c’était déjà une réalité.<i> \"Je suis confiant.\"</i>"
+            val advice2 = "<b>Sois positif</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter."
+            val advice3 = "<b>Choisis des mots riches de sens</b> pour toi."
+            val advice4 = "<b>Sois clair.</b>"
+            val advice5 = "<b>Renforce tes affirmations avec des exemples concrets</b> de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai atteint 'cet objectif' que je m’étais fixé.\"</i>"
+
+            if (!isAdviceExpanded) {
+                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0) // Retire la flèche
+
+                // Texte enrichi
+                val enrichedText = """
+        $title <img src='arrow_up'/> <br/><br/>
+        ${advice1}<br/>
+        ${advice2}<br/>
+        ${advice3}<br/>
+        ${advice4}<br/>
+        ${advice5}
+        """.trimIndent()
+
+                btnShowAdvices.text = Html.fromHtml(enrichedText, Html.FROM_HTML_MODE_COMPACT, object : Html.ImageGetter {
+                    override fun getDrawable(source: String?): Drawable? {
+                        if (source == "arrow_up") {
+                            val drawable = ContextCompat.getDrawable(this@Step2, R.drawable.arrowtop)
+                            drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                            return drawable
+                        }
+                        return null
+                    }
+                }, null)
+
+                // Ajuste la ScrollView après l'expansion
+                btnShowAdvices.post {
+                    scrollView.post {
+                        scrollView.smoothScrollTo(0, btnShowAdvices.bottom)
+                    }
+                }
+
+            } else {
+                // Revenir à l'état initial
+                val initialText = """
+        $title <img src='arrow_down'/>
+        """.trimIndent()
+
+                btnShowAdvices.text = Html.fromHtml(initialText, Html.FROM_HTML_MODE_COMPACT, object : Html.ImageGetter {
+                    override fun getDrawable(source: String?): Drawable? {
+                        if (source == "arrow_down") {
+                            val drawable = ContextCompat.getDrawable(this@Step2, R.drawable.arrowdown)
+                            drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                            return drawable
+                        }
+                        return null
+                    }
+                }, null)
+
+                // Revenir à la position initiale
+                scrollView.post {
+                    scrollView.smoothScrollTo(0, scrollView.top)
+                }
+            }
+
+            // Basculer l'état
+            isAdviceExpanded = !isAdviceExpanded
+        }
         buttonOk = findViewById(R.id.step2ok)
         container = findViewById(R.id.container)
         val addButton = findViewById<Button>(R.id.addButton)
@@ -80,7 +153,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
 
 
-        val predefinedTexts = listOf("test1", "test2")
+        val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
         predefinedTexts.forEach {
             userTexts.add(it) // Add to list
             addTextView(it) // Display in layout
@@ -116,7 +189,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         addButton.setOnClickListener {
             Log.d("Step2", "Button clicked")
-            showAddTextDialog()
+            addTextView("")
         }
     }
 
@@ -236,67 +309,93 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     private fun addTextView(text: String) {
         textViewCount++
-        val numberedText = "Affirmation $textViewCount : $text"
-        Log.d("Step2", "Adding TextView with text: $numberedText")
-
-        // Create a new horizontal LinearLayout
-        val linearLayout = LinearLayout(this)
-        linearLayout.orientation = LinearLayout.HORIZONTAL
-
-        // Create the TextView
-        val textView = TextView(this)
-        textView.text = numberedText
-        textView.textSize = 18f
-        textView.setPadding(8, 30, 8, 0)
-        textView.setBackgroundColor(getColor(android.R.color.white)) // Set white background
-        textView.setTextColor(getColor(R.color.green)) // Set text color to custom green
-        textView.setBackgroundResource(R.drawable.plaintext_white)
-        // Enable editing when clicking the TextView
-        textView.setOnClickListener {
-            showEditTextDialog(textView, text)
+        val placeholderText = if (text.isEmpty()) {
+            "Je \"affirmation $textViewCount\""
+        } else {
+            text
         }
 
-        // Create the delete ImageButton
+        // Crée un conteneur horizontal pour l'EditText et le ImageButton
+        val horizontalContainer = LinearLayout(this)
+        horizontalContainer.orientation = LinearLayout.HORIZONTAL
+        horizontalContainer.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            setMargins(16, 16, 16, 16) // Marges autour du conteneur
+        }
+
+        // Crée un EditText pour l'affirmation
+        val affirmationEditText = EditText(this)
+        affirmationEditText.hint = placeholderText
+        affirmationEditText.textSize = 24f
+        affirmationEditText.setHintTextColor(Color.parseColor("#808080")) // Couleur grise pour le hint
+        affirmationEditText.setTextColor(Color.parseColor("#333333")) // Couleur du texte
+        affirmationEditText.setBackgroundResource(R.drawable.rounded_corners) // Fond avec coins arrondis
+        affirmationEditText.setPadding(16, 40, 16, 40) // Padding interne
+        affirmationEditText.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        affirmationEditText.setTypeface(null, android.graphics.Typeface.ITALIC) // Texte en italique
+        affirmationEditText.layoutParams = LinearLayout.LayoutParams(
+            0,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1f // L'EditText prend tout l'espace disponible
+        )
+
+        // Ajoute un TextWatcher pour gérer le style du texte
+        affirmationEditText.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    // Retire l'italique lorsque du texte est saisi
+                    affirmationEditText.setTypeface(null, android.graphics.Typeface.NORMAL)
+                } else {
+                    // Remet l'italique lorsque le champ est vide
+                    affirmationEditText.setTypeface(null, android.graphics.Typeface.ITALIC)
+                }
+            }
+
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
+
+        // Crée un ImageButton pour supprimer l'affirmation
         val deleteButton = ImageButton(this)
-        deleteButton.setImageResource(R.drawable.imgbtn_delete)
-        deleteButton.setBackgroundColor(0x00000000)  // Make background transparent
+        deleteButton.setImageResource(R.drawable.croixgris) // Icône en forme de croix
+        deleteButton.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            setMargins(16, 0, 0, 0) // Marges à gauche du bouton
+        }
+        deleteButton.setBackgroundColor(Color.TRANSPARENT) // Fond transparent
         deleteButton.setOnClickListener {
-            container.removeView(linearLayout)
-            userTexts.remove(text)  // Supprimer le texte de la liste
-            textViewCount--
-            updateTextNumbers()
+            container.removeView(horizontalContainer) // Supprime le conteneur parent
+            updateTextViewNumbers() // Met à jour les numéros des affirmations
         }
 
-        // Add TextView and ImageButton to the horizontal LinearLayout
-        linearLayout.addView(textView)
-        linearLayout.addView(deleteButton)
+        // Ajoute l'EditText et le bouton dans le conteneur horizontal
+        horizontalContainer.addView(affirmationEditText)
+        horizontalContainer.addView(deleteButton)
 
-        // Add the horizontal LinearLayout to the container
-        container.addView(linearLayout)
+        // Ajoute le conteneur horizontal au conteneur principal
+        container.addView(horizontalContainer)
     }
 
-    // Function to show dialog and edit the text
-    private fun showEditTextDialog(textView: TextView, oldText: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Modifier le texte")
-        // Set up the input
-        val input = EditText(this)
-        input.setText(oldText) // Set current text in EditText
-        builder.setView(input)
-        // Set up the buttons
-        builder.setPositiveButton("Valider") { dialog, which ->
-            val newText = input.text.toString()
-            if (newText.isNotEmpty()) {
-                val textIndex = userTexts.indexOf(oldText)
-                if (textIndex != -1) {
-                    userTexts[textIndex] = newText  // Update in userTexts list
-                }
-                textView.text = "Affirmation ${textIndex + 1} : $newText" // Update TextView
+    // Méthode pour mettre à jour les numéros des affirmations
+    private fun updateTextViewNumbers() {
+        var currentNumber = 1
+        for (i in 0 until container.childCount) {
+            val child = container.getChildAt(i)
+            if (child is LinearLayout) {
+                val editText = (child.getChildAt(0) as? EditText)
+                editText?.hint = "Je \"affirmation $currentNumber\""
+                currentNumber++
             }
         }
-        builder.setNegativeButton("Annuler") { dialog, which -> dialog.cancel() }
-        builder.show()
+        textViewCount = currentNumber - 1 // Ajuste le compteur global
     }
+
+
     private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String) {
         val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
 

@@ -7,4 +7,13 @@
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
     <string name="menu">Menu</string>
+    <string name="advices_text">
+    <![CDATA[
+    <b>1/ Formule au présent </b> comme si c’était déjà une réalité. "Je suis confiant." <br/>
+    <b>2/ Sois positif </b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter. <br/>
+    <b>3/ Choisis des mots riches de sens </b> pour toi. <br/>
+    <b>4/ Sois clair. </b> <br/>
+    <b>5/ Renforce tes affirmations avec des exemples concrets </b> de ta vie qui les confirment : "Je suis organisé parce que je planifie mes journées et termine mes projets à temps."
+    ]]>
+</string>
 </resources>
