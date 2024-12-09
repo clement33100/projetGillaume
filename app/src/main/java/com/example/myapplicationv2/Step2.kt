@@ -51,7 +51,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Configuration du bouton de navigation dans Base, ne plus toucher à btn_burger ici
+        // Configuration du bouton de navigation dans Base, ne plus toucher à btn_burger iciee
 
 
         textToSpeech = TextToSpeech(this) { status ->
