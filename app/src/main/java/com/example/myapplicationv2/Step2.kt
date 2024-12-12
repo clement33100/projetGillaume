@@ -109,8 +109,9 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val advice5 = formatHtmlText("<b>RENFORCE TES AFFIRMATIONS</b> avec des exemples concrets de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai déjà atteint 'cet objectif' que je m’étais fixé.\"</i>", 0.8f)
 
 // Dessins pour les flèches haut/bas
-        val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowtop)
-        arrowUpDrawable?.setBounds(0, 0, arrowUpDrawable.intrinsicWidth, arrowUpDrawable.intrinsicHeight)
+        val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowbottomtom)
+        val insetArrow = InsetDrawable(arrowUpDrawable, 0, -28, 0, 0)
+        insetArrow?.setBounds(0, 0, insetArrow.intrinsicWidth, insetArrow.intrinsicHeight)
 
         val arrowDownDrawable = ContextCompat.getDrawable(this, R.drawable.arrowdown)
         arrowDownDrawable?.setBounds(0, 0, arrowDownDrawable.intrinsicWidth, arrowDownDrawable.intrinsicHeight)
@@ -118,17 +119,24 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         btnShowAdvices.setOnClickListener {
             if (!isAdviceExpanded) {
-                val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowtop)
+                // État déplié : montrer tout le texte
+                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0) // Retire la flèche du bouton lui-même
 
-
-                val insetArrowUp = InsetDrawable(arrowUpDrawable, 0, -1250, 0, 0) // Par exemple, 20px de padding top
-
-// Maintenant, appliquez ce drawable modifié comme compoundDrawable à droite
-                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(null, null, insetArrowUp, null)
+                // On utilise SpannableStringBuilder pour construire un texte complet
                 val finalTextBuilder = SpannableStringBuilder()
                 finalTextBuilder.append(title)
 
-// On ajoute un saut de ligne après le titre
+                // Insérer un espace + l'image flèche haut
+                if (arrowUpDrawable != null) {
+                    finalTextBuilder.append("              ")
+                    finalTextBuilder.setSpan(
+                        ImageSpan(insetArrow, ImageSpan.ALIGN_BASELINE),
+                        finalTextBuilder.length - 1,
+                        finalTextBuilder.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+
                 finalTextBuilder.append("\n\n")
                 finalTextBuilder.append(advice1).append("\n\n")
                 finalTextBuilder.append(advice2).append("\n\n")
@@ -136,15 +144,16 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 finalTextBuilder.append(advice4).append("\n\n")
                 finalTextBuilder.append(advice5)
 
-// Appliquer le texte complet
+                // Appliquer le texte complet
                 btnShowAdvices.text = finalTextBuilder
 
-// Ajuste la ScrollView après l'expansion
+                // Ajuste la ScrollView après l'expansion
                 btnShowAdvices.post {
                     scrollView.post {
                         scrollView.smoothScrollTo(0, btnShowAdvices.bottom)
                     }
                 }
+
             } else {
                 // État réduit : uniquement le titre
                 val minimalTextBuilder = SpannableStringBuilder()
@@ -357,7 +366,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             setMargins(16, 16, 16, 16) // Marges autour du conteneur
         }
 
-        // Crée un EditText pour l'affirmation
+// Crée un EditText pour l'affirmation
         val affirmationEditText = EditText(this)
         affirmationEditText.hint = placeholderText
         affirmationEditText.textSize = 24f
@@ -367,11 +376,13 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         affirmationEditText.setPadding(16, 40, 16, 40) // Padding interne
         affirmationEditText.textAlignment = View.TEXT_ALIGNMENT_CENTER
         affirmationEditText.setTypeface(null, android.graphics.Typeface.ITALIC) // Texte en italique
-        affirmationEditText.layoutParams = LinearLayout.LayoutParams(
+        val layoutParams = LinearLayout.LayoutParams(
             0,
             LinearLayout.LayoutParams.WRAP_CONTENT,
             1f // L'EditText prend tout l'espace disponible
         )
+        layoutParams.setMargins(0, 30, 0, 0) // Marge supérieure de 30dp
+        affirmationEditText.layoutParams = layoutParams
 
         // Ajoute un TextWatcher pour gérer le style du texte
         affirmationEditText.addTextChangedListener(object : android.text.TextWatcher {
@@ -397,7 +408,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            setMargins(16, 0, 0, 0) // Marges à gauche du bouton
+            setMargins(16, 20, 0, 0) // Marges à gauche du bouton
         }
         deleteButton.setBackgroundColor(Color.TRANSPARENT) // Fond transparent
         deleteButton.setOnClickListener {

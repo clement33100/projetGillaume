@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/activity_background"
-        tools:context=".Step2">
+        tools:context=".Step2"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="30dp">
 
         <!-- Bouton Menu Burger en haut à gauche -->
         <ImageButton
@@ -45,7 +47,7 @@
         <!-- ScrollView -->
 
 
-            <!-- Texte Conseil pratique -->
+        <!-- Texte Conseil pratique -->
 
         <TextView
             android:id="@+id/title"
@@ -66,15 +68,17 @@
             android:id="@+id/btn_show_advices"
             android:layout_width="370dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:background="@drawable/button_background"
             android:drawableEnd="@drawable/arrowdown"
             android:drawablePadding="8dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="Conseils Pratiques"
+            android:text="CONSEIL PRATIQUE"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.39"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -82,8 +86,10 @@
             android:id="@+id/scrollViewAffirm"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintBottom_toTopOf="@+id/addButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_show_advices">
 
@@ -102,25 +108,26 @@
             android:id="@+id/addButton"
             android:layout_width="90dp"
             android:layout_height="50dp"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="72dp"
             android:padding="10dp"
             android:text="NEW"
             android:textSize="19dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewAffirm"/>
+            app:layout_constraintTop_toBottomOf="@+id/scrollViewAffirm" />
 
         <Button
             android:id="@+id/step2ok"
             android:layout_width="90dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="84dp"
             android:padding="10dp"
             android:text="OK"
             android:textSize="19dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewAffirm" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollViewAffirm"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
