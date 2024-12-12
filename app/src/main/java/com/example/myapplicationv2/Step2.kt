@@ -4,13 +4,22 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.InsetDrawable
 import android.media.Image
 import android.os.Bundle
 import android.os.Environment
 import android.speech.tts.TextToSpeech
 import android.text.Html
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ImageSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -61,66 +70,90 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         }
 
+        // Fonction pour créer du texte formaté
+        fun formatText(text: String, sizeMultiplier: Float, isBold: Boolean = false): SpannableString {
+            val spannable = SpannableString(text)
+            spannable.setSpan(RelativeSizeSpan(sizeMultiplier), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (isBold) {
+                spannable.setSpan(StyleSpan(Typeface.BOLD), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            return spannable
+        }
+        fun formatHtmlText(htmlText: String, sizeMultiplier: Float = 1.0f): SpannableStringBuilder {
+            // Convertir le HTML en Spannable
+            val spannable = SpannableStringBuilder(Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY))
+
+            // Appliquer la taille relative à tout le texte
+            spannable.setSpan(
+                RelativeSizeSpan(sizeMultiplier),
+                0,
+                spannable.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            return spannable
+        }
+
+// Dans votre Activity ou Fragment
         val btnShowAdvices = findViewById<Button>(R.id.btn_show_advices)
         val scrollView = findViewById<ScrollView>(R.id.scrollViewAffirm)
         var isAdviceExpanded = false
         btnShowAdvices.isAllCaps = false
+
+// Préparation du texte
+        val title = formatHtmlText("<b>CONSEIL PRATIQUE</b>", 1f)
+        val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.8f)
+        val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.8f)
+        val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.8f)
+        val advice4 = formatHtmlText("<b>SOIS CLAIR</b>, simple et précis", 0.8f)
+        val advice5 = formatHtmlText("<b>RENFORCE TES AFFIRMATIONS</b> avec des exemples concrets de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai déjà atteint 'cet objectif' que je m’étais fixé.\"</i>", 0.8f)
+
+// Dessins pour les flèches haut/bas
+        val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowtop)
+        arrowUpDrawable?.setBounds(0, 0, arrowUpDrawable.intrinsicWidth, arrowUpDrawable.intrinsicHeight)
+
+        val arrowDownDrawable = ContextCompat.getDrawable(this, R.drawable.arrowdown)
+        arrowDownDrawable?.setBounds(0, 0, arrowDownDrawable.intrinsicWidth, arrowDownDrawable.intrinsicHeight)
+
+
         btnShowAdvices.setOnClickListener {
+            if (!isAdviceExpanded) {
+                val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowtop)
 
-        // Texte personnalisé
-        val title = "<b>CONSEIL PRATIQUE</b>"
-        val advice1 = "<b>Formule au présent</b> comme si c’était déjà une réalité.<i> \"Je suis confiant.\"</i>"
-        val advice2 = "<b>Sois positif</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter."
-        val advice3 = "<b>Choisis des mots riches de sens</b> pour toi."
-        val advice4 = "<b>Sois clair.</b>"
-        val advice5 = "<b>Renforce tes affirmations avec des exemples concrets</b> de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai atteint 'cet objectif' que je m’étais fixé.\"</i>"
 
-        if (!isAdviceExpanded) {
-            btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0) // Retire la flèche
+                val insetArrowUp = InsetDrawable(arrowUpDrawable, 0, -1250, 0, 0) // Par exemple, 20px de padding top
 
-            // Texte enrichi
-        val enrichedText = """
-        $title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src='arrow_up'/> <br/><br/>
-        ${advice1}<br/>
-        ${advice2}<br/>
-        ${advice3}<br/>
-        ${advice4}<br/>
-        ${advice5}
-        """.trimIndent()
-                btnShowAdvices.text = Html.fromHtml(enrichedText, Html.FROM_HTML_MODE_COMPACT, object : Html.ImageGetter {
-                    override fun getDrawable(source: String?): Drawable? {
-                        if (source == "arrow_up") {
-                            val drawable = ContextCompat.getDrawable(this@Step2, R.drawable.arrowtop)
-                            drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-                            return drawable
-                        }
-                        return null
-                    }
-                }, null)
+// Maintenant, appliquez ce drawable modifié comme compoundDrawable à droite
+                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(null, null, insetArrowUp, null)
+                val finalTextBuilder = SpannableStringBuilder()
+                finalTextBuilder.append(title)
 
-                // Ajuste la ScrollView après l'expansion
+// On ajoute un saut de ligne après le titre
+                finalTextBuilder.append("\n\n")
+                finalTextBuilder.append(advice1).append("\n\n")
+                finalTextBuilder.append(advice2).append("\n\n")
+                finalTextBuilder.append(advice3).append("\n\n")
+                finalTextBuilder.append(advice4).append("\n\n")
+                finalTextBuilder.append(advice5)
+
+// Appliquer le texte complet
+                btnShowAdvices.text = finalTextBuilder
+
+// Ajuste la ScrollView après l'expansion
                 btnShowAdvices.post {
                     scrollView.post {
                         scrollView.smoothScrollTo(0, btnShowAdvices.bottom)
                     }
                 }
-
             } else {
-                // Revenir à l'état initial
-                val initialText = """
-        $title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src='arrow_down'/>
-        """.trimIndent()
+                // État réduit : uniquement le titre
+                val minimalTextBuilder = SpannableStringBuilder()
+                minimalTextBuilder.append(title)
 
-                btnShowAdvices.text = Html.fromHtml(initialText, Html.FROM_HTML_MODE_COMPACT, object : Html.ImageGetter {
-                    override fun getDrawable(source: String?): Drawable? {
-                        if (source == "arrow_down") {
-                            val drawable = ContextCompat.getDrawable(this@Step2, R.drawable.arrowdown)
-                            drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-                            return drawable
-                        }
-                        return null
-                    }
-                }, null)
+                // Définir l'image à droite du texte grâce aux compoundDrawables
+                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrowdown, 0)
+
+                btnShowAdvices.text = minimalTextBuilder
 
                 // Revenir à la position initiale
                 scrollView.post {
@@ -128,7 +161,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 }
             }
 
-            // Basculer l'état
+            btnShowAdvices.gravity = Gravity.CENTER_VERTICAL
             isAdviceExpanded = !isAdviceExpanded
         }
         buttonOk = findViewById(R.id.step2ok)
