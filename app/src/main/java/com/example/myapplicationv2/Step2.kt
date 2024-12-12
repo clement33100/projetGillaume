@@ -408,7 +408,7 @@ class Step2 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            setMargins(16, 20, 0, 0) // Marges à gauche du bouton
+            setMargins(16, 30, 0, 0) // Marges à gauche du bouton
         }
         deleteButton.setBackgroundColor(Color.TRANSPARENT) // Fond transparent
         deleteButton.setOnClickListener {
