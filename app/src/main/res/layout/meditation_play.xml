@@ -26,14 +26,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="317dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="192dp"
+        android:layout_width="318dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nameAffirm"
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Other UI elements -->
@@ -42,11 +42,14 @@
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="40dp"
+            android:scaleY="2"
+            android:layout_margin="16dp"
+            android:indeterminateOnly="false"
             android:max="100"
-            android:progress="0" />
-
+            android:progress="0"
+            android:progressBackgroundTint="@color/light_green"
+            android:progressTint="@color/green" />
         <!-- Other UI elements -->
 
     </LinearLayout>
@@ -55,21 +58,71 @@
         android:id="@+id/imageView4"
         android:layout_width="254dp"
         android:layout_height="233dp"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/tv_felicitation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_meditation"
         app:srcCompat="@drawable/cassette_audio" />
 
     <ImageButton
         android:id="@+id/imageButtonPause"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/pause"
+        android:layout_marginStart="36dp"
+        android:background="#EFEFEF"
+        android:src="@drawable/imgunpause"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        tools:srcCompat="@drawable/pause" />
+        app:layout_constraintVertical_bias="0.533"
+        tools:srcCompat="@drawable/imgpause" />
+
+    <EditText
+        android:id="@+id/nameAffirm"
+        android:layout_width="316dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/plaintext_white"
+        android:backgroundTint="@color/yellow"
+        android:ems="10"
+        android:hint="Donne un nom à ta création"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textColorLink="@color/grey"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOkStep1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buttonOkStep1"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:text="ok"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_felicitation"
+        android:layout_width="351dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Félicitations ! Tu peux maintenant écouter ta création. Bonne écoute ! "
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
