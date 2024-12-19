@@ -28,6 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <!-- Bouton de sélection de la langue en haut à droite -->
         <ImageButton
             android:id="@+id/btn_language"
