@@ -103,28 +103,28 @@ class Etape2Voix : AppCompatActivity() {
 
 
         voicefemme1.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjournicole)
+            playAudioFromRaw(R.raw.voicefemme1bonjour)
         }
         voicefemme2.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjourdorothy)
+            playAudioFromRaw(R.raw.voicefemme2bonjour)
         }
         voicefemme3.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjournicole)
+            playAudioFromRaw(R.raw.voicefemme3bonjour)
         }
         voicefemme4.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjourdorothy)
+            playAudioFromRaw(R.raw.voicefemme4bonjour)
         }
         voicehomme1.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjourarnaud)
+            playAudioFromRaw(R.raw.voicehomme1bonjour)
         }
         voicehomme2.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjourdrew)
+            playAudioFromRaw(R.raw.voicehomme2bonjour)
         }
         voicehomme3.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjourarnaud)
+            playAudioFromRaw(R.raw.voicehomme3bonjour)
         }
         voicehomme4.setOnClickListener{
-            playAudioFromRaw(R.raw.bonjourdrew)
+            playAudioFromRaw(R.raw.voicehomme4bonjour)
         }
 
         btn_ChoixVoiceFemme1.setOnClickListener {
@@ -138,7 +138,7 @@ class Etape2Voix : AppCompatActivity() {
         }
         btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
-            currentApiKey="PLF9iqQhzBVpMoW6O9ja"
+            currentApiKey="ECwDrhqw5hpzmlbcIzto"
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
 
@@ -147,7 +147,7 @@ class Etape2Voix : AppCompatActivity() {
         btn_ChoixVoiceFemme3.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
-            currentApiKey="PLF9iqQhzBVpMoW6O9ja"
+            currentApiKey="rkuaKPXfXecaq04fVRwp"
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
 
@@ -155,7 +155,7 @@ class Etape2Voix : AppCompatActivity() {
         }
         btn_ChoixVoiceFemme4.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
-            currentApiKey="PLF9iqQhzBVpMoW6O9ja"
+            currentApiKey="vPWvudfmcERCT22lGQ09"
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
 
@@ -179,7 +179,7 @@ class Etape2Voix : AppCompatActivity() {
         }
         btn_ChoixVoiceHomme3.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
-            currentApiKey="qUsB63LIpy65fSmt72zk"
+            currentApiKey="DFNAdQgS6iGcQrnb7YDy"
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
 
@@ -188,7 +188,7 @@ class Etape2Voix : AppCompatActivity() {
         btn_ChoixVoiceHomme4.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceHomme2.text.toString(),"$basePath/voiceMale2.mp3")
-            currentApiKey="JoAXY9Z9JBJC8OP2xjtB"
+            currentApiKey="N3JujXoDbbcHGwOGpdAp"
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
 
