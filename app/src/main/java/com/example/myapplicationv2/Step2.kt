@@ -375,8 +375,7 @@ class Step2 : Base() {
         val generatedFilePath = "$basePath/voice_$index.mp3"
         generateFiles.add(generatedFilePath)
 
-        //val fullText = "moi $nom, $text"
-        val fullText = "Bonjour"
+        val fullText = "moi $nom, $text"
 
         val bodyJson = JSONObject().apply {
             put("text", fullText)
