@@ -163,7 +163,8 @@ class Etape2Voix : AppCompatActivity() {
 
         btn_ChoixVoiceHomme1.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
-            currentApiKey="qUsB63LIpy65fSmt72zk"
+            //currentApiKey="qUsB63LIpy65fSmt72zk"
+            currentApiKey="mInzqBAaPI3P4wEbi9DD"
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
 
