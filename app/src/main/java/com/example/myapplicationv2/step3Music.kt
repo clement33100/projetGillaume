@@ -108,6 +108,13 @@ class step3Music : AppCompatActivity() {
         } else {
             Log.d("test12345", "No texts received")
         }
+        if (userTexts != null) {
+            for (text in userTexts) {
+                Log.d("test123", "Received text: $text")
+            }
+        } else {
+            Log.d("test123", "No texts received")
+        }
 
         scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
         scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
