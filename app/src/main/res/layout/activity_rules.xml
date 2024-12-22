@@ -5,126 +5,139 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow"
+    android:background="@drawable/activity_background"
     tools:context=".Rules">
-
-    <ImageView
-        android:id="@+id/btnImg_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@drawable/leftarrow" />
-
-    <ImageView
-        android:id="@+id/btnImg_rulesright"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/rightarrow" />
-
-    <TextView
-        android:id="@+id/txt_descstep6"
-        android:layout_width="178dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
-        android:text="Télécharge tes affirmations a écouter chaque jour"
-        app:layout_constraintStart_toEndOf="@+id/txt_step6"
-        app:layout_constraintTop_toBottomOf="@+id/txt_descstep5" />
-
-    <TextView
-        android:id="@+id/txt_descstep5"
-        android:layout_width="172dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        android:text="Choisis la durée de ton fichier audio"
-        app:layout_constraintStart_toEndOf="@+id/txt_step5"
-        app:layout_constraintTop_toBottomOf="@+id/txt_descstep4" />
-
-    <TextView
-        android:id="@+id/txt_descstep3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        android:text="Écris tes affirmations"
-        app:layout_constraintStart_toEndOf="@+id/txt_step3"
-        app:layout_constraintTop_toBottomOf="@+id/txt_descstep2" />
 
     <TextView
         android:id="@+id/txt_descstep4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        android:text="Choisis ta musique de fond"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Choisis ta musique\n de fond"
+        android:textSize="24dp"
         app:layout_constraintStart_toEndOf="@+id/txt_step4"
-        app:layout_constraintTop_toBottomOf="@+id/txt_descstep3" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep3"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txt_descstep1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="120dp"
+        android:text="Écris ton prénom"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/txt_step1"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txt_descstep2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Choisis une voix off"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/txt_step2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep1"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txt_descstep3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Écris tes affirmations"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/txt_step3"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txt_descstep5"
+        android:layout_width="272dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Choisis la durée de ton fichier audio"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/txt_step5"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep4"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txt_descstep6"
+        android:layout_width="263dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Écoute tes affirmations chaque jour"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/txt_step6"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep5"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/txt_step3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Étape 3:"
+        android:layout_marginStart="20dp"
+        android:text="Étape 3 :"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_step2" />
+        app:layout_constraintTop_toTopOf="@+id/txt_descstep3" />
 
     <TextView
         android:id="@+id/txt_step5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Étape 5:"
+        android:layout_marginStart="20dp"
+        android:text="Étape 5 :"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_step4" />
+        app:layout_constraintTop_toTopOf="@+id/txt_descstep5" />
 
     <TextView
         android:id="@+id/txt_step6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Étape 6:"
+        android:layout_marginStart="20dp"
+        android:text="Étape 6 :"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_step5" />
+        app:layout_constraintTop_toTopOf="@+id/txt_descstep6" />
 
     <TextView
         android:id="@+id/txt_step4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Étape 4:"
+        android:layout_marginStart="20dp"
+        android:text="Étape 4 :"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_step3" />
+        app:layout_constraintTop_toTopOf="@+id/txt_descstep4" />
 
     <TextView
         android:id="@+id/txt_step2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Étape 2:"
+        android:layout_marginStart="20dp"
+        android:text="Étape 2 :"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_step1" />
+        app:layout_constraintTop_toTopOf="@+id/txt_descstep2" />
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="126dp"
-        android:layout_height="72dp"
+        android:layout_width="251dp"
+        android:layout_height="57dp"
         android:layout_marginTop="56dp"
         android:gravity="center"
         android:text="Créer Nouveau"
-        android:textSize="24sp"
+        android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,40 +147,22 @@
         android:id="@+id/txt_step1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="200dp"
-        android:text="Étape 1:"
+        android:layout_marginStart="20dp"
+        android:text="Étape 1 :"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_descstep1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="200dp"
-        android:text="Écris ton prénom"
-        app:layout_constraintStart_toEndOf="@+id/txt_step1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_descstep2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        android:text="Choisis une voix off"
-        app:layout_constraintStart_toEndOf="@+id/txt_step2"
-        app:layout_constraintTop_toBottomOf="@+id/txt_descstep1" />
+        app:layout_constraintTop_toTopOf="@+id/txt_descstep1" />
 
     <Button
         android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_width="136dp"
+        android:layout_height="61dp"
+        android:padding="10dp"
         android:text="C'est Partie!"
+        android:textSize="19dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_descstep6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
