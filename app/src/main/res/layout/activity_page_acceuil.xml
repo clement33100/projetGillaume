@@ -13,8 +13,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="MES \n AFFIRMATIONS"
+        android:layout_marginTop="76dp"
+        android:text="MyAffirmations"
         android:textAlignment="center"
         android:textColor="@color/grey"
         android:textColorLink="@color/black"
@@ -32,14 +32,13 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="L'application pour Créer tes \n Affirmations Positives et Transformer \n tes Croyances"
+        android:text="L'application pour Aligner\n tes Pensées à tes\n Aspirations "
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        app:layout_constraintVertical_bias="0.49" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView8"
