@@ -17,6 +17,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".step1FirstName"
+            android:exported="false" />
+        <activity
             android:name=".hdiw1"
             android:exported="false" />
         <activity
@@ -61,12 +64,12 @@
         <activity
             android:name=".mesAffirmations"
             android:exported="false" />
-
         <activity
             android:name=".Etape2Voix"
             android:exported="false" />
+
         <activity
-            android:name=".step1FirstName"
+            android:name=".PageAcceuil"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
