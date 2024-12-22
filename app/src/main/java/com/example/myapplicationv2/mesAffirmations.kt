@@ -36,6 +36,14 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
             val intent = Intent(this, Rules::class.java)
             startActivity(intent)
         }
+        btnHowItWorks.setOnClickListener {
+            val intent = Intent(this, hdiw1::class.java)
+            startActivity(intent)
+        }
+        btnAdvices.setOnClickListener {
+            val intent = Intent(this, Advices::class.java)
+            startActivity(intent)
+        }
 
 
     }
