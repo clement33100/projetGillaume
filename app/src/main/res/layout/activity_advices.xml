@@ -27,7 +27,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="392dp"
         android:layout_height="620dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="-70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,23 +36,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_explain"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="340dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
                 android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="Écoute pendant 21 jours cet audio autant que tu le peux, veux, au moins une fois par jour, et répète les phrases à voix haute pendant les moments de silence que tu as laissés. Dis les phrases avec la conviction qu'elles sont vraies. Ressens que tu es déjà ce que tu veux devenir. Ressens de la gratitude pour cet être illimité que tu es."
                 android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/txt_explain2"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="490dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="50dp"
                 android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="Pour renforcer l'imprégnation dans ton système nerveux de ces nouvelles croyances que TU as choisies pour atteindre tes objectifs, Bouge ton Corps, contracte tes muscles. Ce ne sont pas seulement des affirmations, ce sont des INCANTATIONS. Trouve l’énergie de la conviction. Cet exercice change tes pensées, donc ta vibration, et par conséquent tes actions, ce qui attire l'expérience que tu as choisie. Pour encore plus d'efficacité, utilise la Visualisation."
                 android:textSize="22sp" />
 
@@ -61,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:text="La Visualisation"
                 android:textSize="27dp"
@@ -69,26 +77,34 @@
             <TextView
                 android:id="@+id/txt_explain4"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="270dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
                 android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="Ton cerveau ne fait pas la différence entre l'imagination et la réalité. Si tu imagines ton plat préféré, tu vas saliver. Si tu imagines des situations joyeuses, tu vas vraiment te sentir heureux. L'imagination permet donc de modifier ton état vibratoire."
                 android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/txt_explain5"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="620dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
                 android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="Pour changer ta vibration de manière encore plus puissante, tu dois aller au-delà des mots. Lorsque tu écoutes tes affirmations et que tu les répètes à voix haute, visualise-toi en train de vivre ces affirmations. \nUtilise ton imagination pour les vivre pleinement et les ressentir. Plus tu expérimentes tes affirmations par l'imagination, plus tu modifies ta vibration, attirant ainsi l'expérience réelle dans ta vie.\n\nPour t'aider, focalise-toi sur tes sens : qu'est-ce que tu vois, sens, entends, touches, goûtes ?"
                 android:textSize="22sp" />
 
             <Button
                 android:id="@+id/btnNew"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mes Affirmations" />
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginBottom="10dp"
+                android:text="Mes Affirmations"
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/spaceBtn"
@@ -97,9 +113,10 @@
 
             <Button
                 android:id="@+id/btnMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Menu Principal" />
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:text="Menu Principal"
+                android:textSize="24dp" />
 
         </LinearLayout>
     </ScrollView>
