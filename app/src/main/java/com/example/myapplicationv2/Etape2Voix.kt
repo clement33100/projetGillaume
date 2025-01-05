@@ -259,6 +259,9 @@ class Etape2Voix : AppCompatActivity() {
                 mediaPlayer?.reset()
                 mediaPlayer = null
                 Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
+                mediaPlayer = MediaPlayer.create(this, audioResId)
+                mediaPlayer?.start()
+
             } else {
                 // Restart playback
                 mediaPlayer = MediaPlayer.create(this, audioResId)
