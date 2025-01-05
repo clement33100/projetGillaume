@@ -23,13 +23,13 @@ class Etape2Voix : AppCompatActivity() {
 
     private lateinit var btn_ChoixVoiceHomme1: Button
     private lateinit var btn_ChoixVoiceHomme2: Button
-    private lateinit var btn_ChoixVoiceHomme3: Button
-    private lateinit var btn_ChoixVoiceHomme4: Button
+    /*private lateinit var btn_ChoixVoiceHomme3: Button
+    private lateinit var btn_ChoixVoiceHomme4: Button*/
 
     private lateinit var btn_ChoixVoiceFemme1: Button
     private lateinit var btn_ChoixVoiceFemme2: Button
-    private lateinit var btn_ChoixVoiceFemme3: Button
-    private lateinit var btn_ChoixVoiceFemme4: Button
+    /*private lateinit var btn_ChoixVoiceFemme3: Button
+    private lateinit var btn_ChoixVoiceFemme4: Button*/
 
     private lateinit var btn_ok: Button
     private var currentFilePath: String? = null
@@ -41,13 +41,13 @@ class Etape2Voix : AppCompatActivity() {
 
     private lateinit var voicefemme1: ImageButton
     private lateinit var voicefemme2: ImageButton
-    private lateinit var voicefemme3: ImageButton
-    private lateinit var voicefemme4: ImageButton
+    /*private lateinit var voicefemme3: ImageButton
+    private lateinit var voicefemme4: ImageButton*/
 
     private lateinit var voicehomme1: ImageButton
     private lateinit var voicehomme2: ImageButton
-    private lateinit var voicehomme3: ImageButton
-    private lateinit var voicehomme4: ImageButton
+    /*private lateinit var voicehomme3: ImageButton
+    private lateinit var voicehomme4: ImageButton*/
 
     private var curentVoice: String?=null
     private var currentApiKey: String? = null
@@ -68,22 +68,22 @@ class Etape2Voix : AppCompatActivity() {
         scrollview_HommeVoice = findViewById<ScrollView>(R.id.scrollViewHommeVoice)
         voicefemme1 = findViewById<ImageButton>(R.id.listenFemme1)
         voicefemme2 = findViewById<ImageButton>(R.id.listenFemme2)
-        voicefemme3 = findViewById<ImageButton>(R.id.listenFemme3)
-        voicefemme4 = findViewById<ImageButton>(R.id.listenFemme4)
+        /*voicefemme3 = findViewById<ImageButton>(R.id.listenFemme3)
+        voicefemme4 = findViewById<ImageButton>(R.id.listenFemme4)*/
         voicehomme1 = findViewById<ImageButton>(R.id.listenHomme1)
         voicehomme2 = findViewById<ImageButton>(R.id.listenHomme2)
-        voicehomme3 = findViewById<ImageButton>(R.id.listenHomme3)
-        voicehomme4 = findViewById<ImageButton>(R.id.listenHomme4)
+       /*voicehomme3 = findViewById<ImageButton>(R.id.listenHomme3)
+        voicehomme4 = findViewById<ImageButton>(R.id.listenHomme4)*/
 
         btn_ChoixVoiceFemme1 = findViewById<Button>(R.id.voixFemme1)
         btn_ChoixVoiceFemme2 = findViewById<Button>(R.id.voixFemme2)
-        btn_ChoixVoiceFemme3 = findViewById<Button>(R.id.voixFemme3)
-        btn_ChoixVoiceFemme4 = findViewById<Button>(R.id.voixFemme4)
+        /*btn_ChoixVoiceFemme3 = findViewById<Button>(R.id.voixFemme3)
+        btn_ChoixVoiceFemme4 = findViewById<Button>(R.id.voixFemme4)*/
 
         btn_ChoixVoiceHomme1 = findViewById<Button>(R.id.voixHomme1)
         btn_ChoixVoiceHomme2 = findViewById<Button>(R.id.voixHomme2)
-        btn_ChoixVoiceHomme3 = findViewById<Button>(R.id.voixHomme3)
-        btn_ChoixVoiceHomme4 = findViewById<Button>(R.id.voixHomme4)
+        /*btn_ChoixVoiceHomme3 = findViewById<Button>(R.id.voixHomme3)
+        btn_ChoixVoiceHomme4 = findViewById<Button>(R.id.voixHomme4)*/
 
         btn_ok = findViewById<Button>(R.id.btn_ok_step2)
 
@@ -108,29 +108,29 @@ class Etape2Voix : AppCompatActivity() {
         voicefemme2.setOnClickListener{
             playAudioFromRaw(R.raw.voicefemme2bonjour)
         }
-        voicefemme3.setOnClickListener{
+        /*voicefemme3.setOnClickListener{
             playAudioFromRaw(R.raw.voicefemme3bonjour)
         }
         voicefemme4.setOnClickListener{
             playAudioFromRaw(R.raw.voicefemme4bonjour)
-        }
+        }*/
         voicehomme1.setOnClickListener{
             playAudioFromRaw(R.raw.voicehomme1bonjour)
         }
         voicehomme2.setOnClickListener{
             playAudioFromRaw(R.raw.voicehomme2bonjour)
         }
-        voicehomme3.setOnClickListener{
+        /*voicehomme3.setOnClickListener{
             playAudioFromRaw(R.raw.voicehomme3bonjour)
         }
         voicehomme4.setOnClickListener{
             playAudioFromRaw(R.raw.voicehomme4bonjour)
-        }
+        }*/
 
         btn_ChoixVoiceFemme1.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
-            currentApiKey="PLF9iqQhzBVpMoW6O9ja"
+            currentApiKey="hGwGBgvO4Leffvcjs2vm"
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
 
@@ -138,13 +138,13 @@ class Etape2Voix : AppCompatActivity() {
         }
         btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(),"$basePath/voiceFemale2.mp3")
-            currentApiKey="ECwDrhqw5hpzmlbcIzto"
+            currentApiKey="huLASkSLzY35zexSYP1g "
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
 
 
         }
-        btn_ChoixVoiceFemme3.setOnClickListener {
+        /*btn_ChoixVoiceFemme3.setOnClickListener {
 
             setTextInfo(btn_ChoixVoiceFemme1.text.toString(),"$basePath/voiceFemale1.mp3")
             currentApiKey="rkuaKPXfXecaq04fVRwp"
@@ -159,15 +159,14 @@ class Etape2Voix : AppCompatActivity() {
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
 
-        }
+        }*/
 
         btn_ChoixVoiceHomme1.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
             //currentApiKey="qUsB63LIpy65fSmt72zk"
-            currentApiKey="mInzqBAaPI3P4wEbi9DD"
+            currentApiKey="D2iqIAl6i5hrD9q2faCp"
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
-
 
         }
         btn_ChoixVoiceHomme2.setOnClickListener {
@@ -178,7 +177,7 @@ class Etape2Voix : AppCompatActivity() {
             setViewVisibilityGone(scrollview_FemmeVoice)
 
         }
-        btn_ChoixVoiceHomme3.setOnClickListener {
+        /*btn_ChoixVoiceHomme3.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(),"$basePath/voiceMale1.mp3")
             currentApiKey="DFNAdQgS6iGcQrnb7YDy"
             setViewVisibilityGone(scrollview_HommeVoice)
@@ -193,7 +192,7 @@ class Etape2Voix : AppCompatActivity() {
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
 
-        }
+        }*/
 
         btn_ok.setOnClickListener {
             if(curentVoice==null){

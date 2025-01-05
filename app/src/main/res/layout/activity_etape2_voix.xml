@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_voix_homme"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@+id/btn_voix_femme">
 
             <LinearLayout
@@ -121,7 +121,7 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="Nicole"
+                        android:text="La gardienne"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -148,7 +148,7 @@
                         android:layout_marginTop="0dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="Dorothy"
+                        android:text="L'amazone"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -160,7 +160,7 @@
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
@@ -213,7 +213,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
                         app:srcCompat="@drawable/listengrey" />
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
         </ScrollView>
 
@@ -222,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_voix_homme"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme">
 
             <LinearLayout
@@ -245,7 +245,7 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="orc"
+                        android:text="Le guerrier"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -272,7 +272,7 @@
                         android:layout_marginTop="0dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="Drew"
+                        android:text="Le sage"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -284,64 +284,63 @@
                         android:contentDescription="listen homme"
                         app:srcCompat="@drawable/listengrey" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/voixHomme3"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="test1"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
+                <!--<LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="16dp"
+                   android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/listenHomme3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="110dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen homme"
-                        app:srcCompat="@drawable/listengrey" />
-                </LinearLayout>
+                   <Button
+                       android:id="@+id/voixHomme3"
+                       android:layout_width="200dp"
+                       android:layout_height="50dp"
+                       android:layout_marginLeft="120dp"
+                       android:layout_marginTop="30dp"
+                       android:backgroundTint="@color/yellow"
+                       android:padding="10dp"
+                       android:text="test1"
+                       android:textColor="@color/grey"
+                       android:textSize="19dp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
+                   <ImageButton
+                       android:id="@+id/listenHomme3"
+                       android:layout_width="wrap_content"
+                       android:layout_height="110dp"
+                       android:background="@android:color/transparent"
+                       android:contentDescription="listen homme"
+                       app:srcCompat="@drawable/listengrey" />
+               </LinearLayout>
 
-                    <Button
-                        android:id="@+id/voixHomme4"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="0dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="test22"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="16dp"
+                   android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/listenHomme4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen homme"
-                        app:srcCompat="@drawable/listengrey" />
-                </LinearLayout>
+                   <Button
+                       android:id="@+id/voixHomme4"
+                       android:layout_width="200dp"
+                       android:layout_height="50dp"
+                       android:layout_marginLeft="120dp"
+                       android:layout_marginTop="0dp"
+                       android:backgroundTint="@color/yellow"
+                       android:padding="10dp"
+                       android:text="test22"
+                       android:textColor="@color/grey"
+                       android:textSize="19dp" />
 
+                   <ImageButton
+                       android:id="@+id/listenHomme4"
+                       android:layout_width="wrap_content"
+                       android:layout_height="50dp"
+                       android:background="@android:color/transparent"
+                       android:contentDescription="listen homme"
+                       app:srcCompat="@drawable/listengrey" />
+               </LinearLayout>-->
+           </LinearLayout>
+       </ScrollView>
 
-            </LinearLayout>
-        </ScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
