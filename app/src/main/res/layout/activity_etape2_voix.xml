@@ -125,13 +125,13 @@
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
-                    <ImageButton
+                    <!--<ImageButton
                         android:id="@+id/listenFemme1"
                         android:layout_width="wrap_content"
                         android:layout_height="110dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listengrey" />
+                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,20 +145,20 @@
                         android:layout_width="200dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="120dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
                         android:text="L'amazone"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
-                    <ImageButton
+                    <!--<ImageButton
                         android:id="@+id/listenFemme2"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listengrey" />
+                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
                 <!--<LinearLayout
                     android:layout_width="wrap_content"
@@ -249,13 +249,13 @@
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
-                    <ImageButton
+                    <!--<ImageButton
                         android:id="@+id/listenHomme1"
                         android:layout_width="wrap_content"
                         android:layout_height="110dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen homme"
-                        app:srcCompat="@drawable/listengrey" />
+                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -269,20 +269,20 @@
                         android:layout_width="200dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="120dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
                         android:text="Le sage"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
-                    <ImageButton
+                    <!--<ImageButton
                         android:id="@+id/listenHomme2"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="listen homme"
-                        app:srcCompat="@drawable/listengrey" />
+                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
 
                 <!--<LinearLayout
