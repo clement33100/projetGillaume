@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_voix_homme"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/btn_voix_femme">
 
             <LinearLayout
@@ -121,7 +121,7 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="La gardienne"
+                        android:text="La Gardienne"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -148,7 +148,7 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="L'amazone"
+                        android:text="L'Amazone"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -222,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_voix_homme"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme">
 
             <LinearLayout
@@ -245,7 +245,7 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="Le guerrier"
+                        android:text="Le Guerrier"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 
@@ -272,7 +272,7 @@
                         android:layout_marginTop="30dp"
                         android:backgroundTint="@color/yellow"
                         android:padding="10dp"
-                        android:text="Le sage"
+                        android:text="Le Sage"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
 

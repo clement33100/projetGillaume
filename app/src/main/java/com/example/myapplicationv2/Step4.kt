@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.NumberPicker
@@ -89,6 +90,8 @@ class Step4 : AppCompatActivity() {
         val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
         val nom = intent.getStringExtra("nom")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
+        val intention = intent.getBooleanExtra("intention", false)
+
 
         if (userTextsSplit != null) {
             for (text in userTextsSplit) {
@@ -109,12 +112,21 @@ class Step4 : AppCompatActivity() {
         btn_listenIntro=findViewById<ImageButton>(R.id.imageButtonStep4Listen)
         introSwitch = findViewById(R.id.intro)
 
+        if (intention) {
+            btn_listenIntro.visibility = View.GONE // Cache le TextView
+            introSwitch.visibility = View.GONE  // Cache le Button
+        } else {
+            btn_listenIntro.visibility = View.VISIBLE // Affiche le TextView
+            introSwitch.visibility = View.VISIBLE  // Affiche le Button
+        }
+
+
         btn_valider.setOnClickListener {
 
             stopAudio()
             if(userTextsSplit!=null) {
 
-                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts)
+                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts,intention)
 
             }
 
@@ -134,6 +146,7 @@ class Step4 : AppCompatActivity() {
                     putExtra("isIntroEnabled", isIntroEnabled)
                     putExtra("curentVoice", curentVoice)
                     putStringArrayListExtra("userTexts", userTexts)
+                    putExtra("intention", intention)
 
                     }
                 startActivity(intent)
@@ -157,7 +170,7 @@ class Step4 : AppCompatActivity() {
 
 
 
-    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,userTextsSplit: ArrayList<String>?,userTexts: ArrayList<String>?) {
+    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,userTextsSplit: ArrayList<String>?,userTexts: ArrayList<String>?,intention :Boolean) {
         if (userTextsSplit != null) {
             for (index in 4..5) {
                 if (index < userTextsSplit.size) {
@@ -212,7 +225,9 @@ class Step4 : AppCompatActivity() {
         //val file = File(generatedFilePath)
         userTexts?.add(generatedFilePath)
 
-        val fullText = "moi $nom, $text"
+
+
+        val fullText = "moi $nom, $text."
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
@@ -281,6 +296,90 @@ class Step4 : AppCompatActivity() {
     }
 
 
+    private fun textToSpeechIntention(text: String, index: Int, voiceId: String,userTexts: ArrayList<String>?) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+
+        val client = OkHttpClient()
+        val basePath = filesDir.absolutePath + "/audio/"
+        val audioDir = File(basePath)
+        if (!audioDir.exists()) {
+            audioDir.mkdirs()  // Créer le dossier si nécessaire
+        }
+
+        // Générer un fichier avec un nom unique basé sur l'index
+        val generatedFilePath = "$basePath/voice_$index.mp3"
+        //val file = File(generatedFilePath)
+        userTexts?.add(generatedFilePath)
+
+
+
+        val fullText = "$text."
+
+        // Créer le corps de la requête en JSON
+        val bodyJson = JSONObject().apply {
+            put("text", fullText)
+            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
+            put("language_code", "fr") // Set language code to French
+            put("voice_settings", JSONObject().apply {
+                put("stability", 0.5)
+                put("similarity_boost", 0.75)
+                // You can adjust these values to fine-tune the accent
+            })
+        }
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaType(),
+            bodyJson.toString()
+        )
+
+        val request = Request.Builder()
+            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
+            .addHeader("Content-Type", "application/json")
+            .addHeader("xi-api-key", apiKey)
+            .post(requestBody)
+            .build()
+
+        // Enqueue la requête pour qu'elle se fasse de manière asynchrone
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
+            }
+
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body
+
+
+
+                if (responseBody != null) {
+                    // Sauvegarder le fichier audio avec un nom unique basé sur l'index
+                    val audioFileName = "voice_$index.mp3"
+                    val audioFile = File(generatedFilePath)
+
+                    try {
+                        val outputStream = FileOutputStream(audioFile)
+                        outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
+                        outputStream.close()
+
+                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
+
+                        // Ajouter le chemin du fichier généré à la liste `generateFiles`
+
+                        // Notification de succès
+                        runOnUiThread {
+                            Toast.makeText(this@Step4, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } catch (e: IOException) {
+                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                    }
+
+                } else {
+                    Log.d("testApi", "Le corps de la réponse est null")
+                }
+            }
+        })
+    }
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer1?.stop()

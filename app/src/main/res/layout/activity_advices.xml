@@ -54,13 +54,14 @@
             <TextView
                 android:id="@+id/txt_explain2"
                 android:layout_width="match_parent"
-                android:layout_height="490dp"
+                android:layout_height="640dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="50dp"
                 android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Pour renforcer l'imprégnation dans ton système nerveux de ces nouvelles croyances que TU as choisies pour atteindre tes objectifs, Bouge ton Corps, contracte tes muscles. Ce ne sont pas seulement des affirmations, ce sont des INCANTATIONS. Trouve l’énergie de la conviction. Cet exercice change tes pensées, donc ta vibration, et par conséquent tes actions, ce qui attire l'expérience que tu as choisie. Pour encore plus d'efficacité, utilise la Visualisation."
+                android:text="Pour renforcer l’imprégnation dans ton système nerveux de ces affirmations – ces nouvelles croyances que TU as choisies pour atteindre tes objectifs – bouge ton corps et contracte tes muscles. Ce ne sont pas de simples affirmations : ce sont des Déclarations Puissantes. Trouve l’Énergie de la Conviction en toi.
+Ressens ce que cette nouvelle vérité éveille en toi : sensations, émotions, pensées et images. Cet exercice transforme tes pensées, donc ta vibration, et par conséquent tes actions, attirant ainsi l’expérience que tu as choisie. Intègre la visualisation à cette pratique pour en amplifier l’effet."
                 android:textSize="22sp" />
 
             <TextView

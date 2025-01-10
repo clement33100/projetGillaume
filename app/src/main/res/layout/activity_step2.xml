@@ -51,7 +51,7 @@
         <!-- Texte Conseil pratique -->
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titlestep2"
             android:layout_width="277dp"
             android:layout_height="170dp"
             android:gravity="center"
@@ -75,13 +75,13 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="CONSEIL PRATIQUE"
+            android:text="CONSEILS PRATIQUES"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/titlestep2" />
 
         <ScrollView
             android:id="@+id/scrollViewAffirm"

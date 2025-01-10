@@ -10,44 +10,31 @@
 
 
     <Button
-        android:id="@+id/btn_intention"
+        android:id="@+id/btn_intention_menu"
         android:layout_width="316dp"
         android:layout_height="74dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="@color/green"
-        android:text="Mes intentions"
+        android:text="Menu principal"
         android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_affirmation" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
-        android:id="@+id/btn_affirmation"
+        android:id="@+id/btn_intention_new"
         android:layout_width="316dp"
         android:layout_height="74dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/green"
-        android:text="Mes affirmations"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_new" />
-
-    <Button
-        android:id="@+id/btn_new"
-        android:layout_width="316dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="@color/green"
         android:text="Créer Nouveau"
         android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_intention_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -73,37 +60,11 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="L'application pour Aligner\n tes Pensées à tes\n Aspirations "
+        android:text="Vous n'avez encore aucune Intentions. Créez votre fichier audio personalisé en cliquant sur Créer nouveau."
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/btn_howitworks"
-        android:layout_width="316dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/green"
-        android:text="Comment ça marche?"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_intention" />
-
-    <Button
-        android:id="@+id/btn_advicesaffirmations"
-        android:layout_width="316dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/green"
-        android:text="Conseils pratiques"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_howitworks" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

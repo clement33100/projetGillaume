@@ -201,6 +201,9 @@ class Etape2Voix : AppCompatActivity() {
 
         }*/
 
+
+        val intention = intent.getBooleanExtra("intention", false)
+
         btn_ok.setOnClickListener {
             if(curentVoice==null){
                 Toast.makeText(this, "Selectionner une voix", Toast.LENGTH_SHORT).show()
@@ -212,7 +215,7 @@ class Etape2Voix : AppCompatActivity() {
                 Log.i("test12345678", "onCreate: "+curentVoice.toString())
                 intent.putExtra("nom", nom)
                 intent.putExtra("curentAPIKey", currentApiKey)
-
+                intent.putExtra("intention", intention)
                 startActivity(intent)
 
 
@@ -273,35 +276,21 @@ class Etape2Voix : AppCompatActivity() {
 
 
 
-    private fun playAudio(filePath: String) {
-        if (mediaPlayer == null) {
-            // Initialize and start playback
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(filePath)
-                prepare()
-                start()
-            }
-            currentFilePath = filePath
-            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
-        } else {
-            if (mediaPlayer?.isPlaying == true && currentFilePath == filePath) {
-                // Stop playback
-                mediaPlayer?.stop()
-                mediaPlayer?.reset()
-                currentFilePath = null
-                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
-            } else {
-                // Switch to new audio file or restart current one
-                mediaPlayer?.reset()
-                mediaPlayer?.setDataSource(filePath)
-                mediaPlayer?.prepare()
-                mediaPlayer?.start()
-                currentFilePath = filePath
-                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
-            }
-        }
+
+    override fun onPause() {
+        super.onPause()
+        stopAudio()
     }
 
+    private fun stopAudio() {
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.release()
+        }
+        mediaPlayer = null
+    }
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer?.release()

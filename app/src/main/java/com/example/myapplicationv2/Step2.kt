@@ -39,7 +39,7 @@ class Step2 : Base() {
     private val userTexts = ArrayList<String>()  // Liste pour stocker les textes saisis
     private lateinit var textToSpeech: TextToSpeech
     private val generateFiles = ArrayList<String>()  // Liste pour stocker les chemins des fichiers générés
-
+    private lateinit var titleStep2: TextView
     override fun getLayoutId(): Int {
         return R.layout.activity_step2  // Retourne le layout spécifique à cette activité
     }
@@ -82,12 +82,15 @@ class Step2 : Base() {
         btnShowAdvices.isAllCaps = false
 
         // Préparation du texte de conseils
-        val title = formatHtmlText("<b>CONSEIL PRATIQUE</b>", 1f)
+        var title = formatHtmlText("<b>CONSEILS PRATIQUES</b>", 1f)
         val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.8f)
         val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.8f)
         val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.8f)
         val advice4 = formatHtmlText("<b>SOIS CLAIR</b>, simple et précis", 0.8f)
         val advice5 = formatHtmlText("<b>RENFORCE TES AFFIRMATIONS</b> avec des exemples concrets de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai déjà atteint 'cet objectif' que je m’étais fixé.\"</i>", 0.8f)
+        val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : « Je m’ouvre à la possibilité de... ».", 0.8f)
+        val advice7 = formatHtmlText("<b>ÉVOLUE EN DOUCEUR</b> en ajoutant : « À mon juste rythme, en douceur. »", 0.8f)
+
 
         val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowbottomtom)
         val insetArrow = InsetDrawable(arrowUpDrawable, 0, -28, 0, 0)
@@ -103,7 +106,7 @@ class Step2 : Base() {
                 finalTextBuilder.append(title)
 
                 if (arrowUpDrawable != null) {
-                    finalTextBuilder.append("              ")
+                    finalTextBuilder.append("         ")
                     finalTextBuilder.setSpan(
                         ImageSpan(insetArrow, ImageSpan.ALIGN_BASELINE),
                         finalTextBuilder.length - 1,
@@ -117,7 +120,9 @@ class Step2 : Base() {
                 finalTextBuilder.append(advice2).append("\n\n")
                 finalTextBuilder.append(advice3).append("\n\n")
                 finalTextBuilder.append(advice4).append("\n\n")
-                finalTextBuilder.append(advice5)
+                finalTextBuilder.append(advice5).append("\n\n")
+                finalTextBuilder.append(advice6).append("\n\n")
+                finalTextBuilder.append(advice7)
 
                 btnShowAdvices.text = finalTextBuilder
 
@@ -158,21 +163,51 @@ class Step2 : Base() {
         val curentVoice = intent.getStringExtra("curentVoice")
         val nom = intent.getStringExtra("nom")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
+        val intention = intent.getBooleanExtra("intention", false)
 
-        val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
-        predefinedTexts.forEach {
-            userTexts.add(it) // on ajoute le texte à userTexts
-            addTextView(it, userTexts) // on affiche dans le layout
+        titleStep2 = findViewById(R.id.titlestep2) // Assurez-vous que `R.id.title` est défini dans votre layout
+
+        if(intention){
+            titleStep2.setText("ÉCRIS TES INTENTIONS")
+            btnShowAdvices.visibility = View.GONE
+
+            val predefinedTexts = listOf("Intention 1", "Intention 2")
+            predefinedTexts.forEach {
+                userTexts.add(it) // on ajoute le texte à userTexts
+                addTextView(it, userTexts,intention) // on affiche dans le layout
+            }
+
+
+
+        }else{
+            val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
+            predefinedTexts.forEach {
+                userTexts.add(it) // on ajoute le texte à userTexts
+                addTextView(it, userTexts,intention) // on affiche dans le layout
+            }
+
+
         }
+
+
+        addButton.setOnClickListener {
+            // Ajout d'une nouvelle affirmation vide
+            val newText = ""
+            userTexts.add(newText)
+            addTextView(newText, userTexts,intention)
+        }
+
+
 
         buttonOk.setOnClickListener {
             // userTexts est déjà mis à jour grâce aux TextWatcher
-            generateTTSFilesForAllTexts(nom, curentAPIKey)
+            generateTTSFilesForAllTexts(nom, curentAPIKey,intention)
 
             if (curentVoice != null) {
                 val intent = Intent(this, step3Music::class.java)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", generateFiles)
+                intent.putExtra("intention", intention)
 
                 if (userTexts.size > 2) {
                     intent.putExtra("curentAPIKey", curentAPIKey)
@@ -186,32 +221,39 @@ class Step2 : Base() {
             }
         }
 
-        addButton.setOnClickListener {
-            // Ajout d'une nouvelle affirmation vide
-            val newText = ""
-            userTexts.add(newText)
-            addTextView(newText, userTexts)
-        }
+
     }
 
-    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?) {
+    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,intention:Boolean) {
         // Dans cet exemple, on ne génère que pour les 2 premiers textes
         for (index in 0..1) {
             if (index < userTexts.size) {
                 val text = userTexts[index]
-                if (nom != null && apikey != null) {
+                if (nom != null && apikey != null && intention==false) {
                     textToSpeech(text, nom, index, apikey)
+                }else{
+                    if(intention==true && apikey != null){
+                        textToSpeechIntention(text, index, apikey)
+
+                    }
                 }
+
             }
         }
     }
 
-    private fun updateTextNumbers() {
+    private fun updateTextNumbers(intention:Boolean) {
         var count = 1
         for (i in 0 until container.childCount) {
             val linearLayout = container.getChildAt(i) as LinearLayout
             val editText = linearLayout.getChildAt(0) as? EditText
-            editText?.hint = "Je \"affirmation $count\""
+            if(intention){
+                editText?.hint = "Intention $count"
+
+            }else{
+                editText?.hint = "Je \"affirmation $count\""
+
+            }
             count++
         }
         textViewCount = count - 1
@@ -232,7 +274,7 @@ class Step2 : Base() {
         Toast.makeText(this, "Fichier audio généré pour le texte $index", Toast.LENGTH_SHORT).show()
     }
 
-    private fun showAddTextDialog() {
+   /* private fun showAddTextDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Ajouter un texte")
 
@@ -257,7 +299,7 @@ class Step2 : Base() {
         customizeDialogButton(positiveButton)
         customizeDialogButton(negativeButton)
         addSpaceBetweenDialogButtons(positiveButton, negativeButton)
-    }
+    }*/
 
     private fun customizeDialogButton(button: Button) {
         button.setBackgroundColor(Color.parseColor("#27c485"))
@@ -287,13 +329,24 @@ class Step2 : Base() {
         negativeButton.layoutParams = negativeButtonLP
     }
 
-    private fun addTextView(text: String, userText: ArrayList<String>) {
+    private fun addTextView(text: String, userText: ArrayList<String>,intention :Boolean) {
         textViewCount++
-        val placeholderText = if (text.isEmpty()) {
-            "Je \"affirmation $textViewCount\""
+        val placeholderText: String
+
+        if (intention) {
+            placeholderText = if (text.isEmpty()) {
+                "Intention $textViewCount"
+            } else {
+                text
+            }
         } else {
-            text
+            placeholderText = if (text.isEmpty()) {
+                "Je \"affirmation $textViewCount\""
+            } else {
+                text
+            }
         }
+
 
         // position du texte actuel dans userTexts : c'est le dernier ajouté
         val position = userTexts.size - 1
@@ -352,10 +405,16 @@ class Step2 : Base() {
             setMargins(16, 30, 0, 0)
         }
         deleteButton.setBackgroundColor(Color.TRANSPARENT)
+
         deleteButton.setOnClickListener {
-            container.removeView(horizontalContainer)
-            userTexts.removeAt(position)
-            updateTextNumbers()
+            val position = userTexts.indexOf(text) // Récupère la position exacte
+            if (position >= 0 && position < userTexts.size) {
+                userTexts.removeAt(position)
+                container.removeView(horizontalContainer)
+                updateTextNumbers(intention)
+            } else {
+                Log.e("Error", "Position invalide pour la suppression : $position")
+            }
         }
 
         horizontalContainer.addView(affirmationEditText)
@@ -375,7 +434,11 @@ class Step2 : Base() {
         val generatedFilePath = "$basePath/voice_$index.mp3"
         generateFiles.add(generatedFilePath)
 
+
         val fullText = "moi $nom, $text."
+
+        Log.d("test1234", "textToSpeech: "+fullText)
+        Log.i("test1234", "textToSpeech: "+fullText)
 
         val bodyJson = JSONObject().apply {
             put("text", fullText)
@@ -391,6 +454,7 @@ class Step2 : Base() {
             "application/json; charset=utf-8".toMediaType(),
             bodyJson.toString()
         )
+
 
 
         val request = Request.Builder()
@@ -429,4 +493,78 @@ class Step2 : Base() {
             }
         })
     }
+
+
+    private fun textToSpeechIntention(text: String, index: Int, voiceId: String) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+        val client = OkHttpClient()
+        val basePath = filesDir.absolutePath + "/audio/"
+        val audioDir = File(basePath)
+        if (!audioDir.exists()) {
+            audioDir.mkdirs()
+        }
+
+        val generatedFilePath = "$basePath/voice_$index.mp3"
+        generateFiles.add(generatedFilePath)
+
+
+        val fullText = "$text."
+
+        Log.d("test1234", "textToSpeech: "+fullText)
+        Log.i("test1234", "textToSpeech: "+fullText)
+
+        val bodyJson = JSONObject().apply {
+            put("text", fullText)
+            put("model_id", "eleven_turbo_v2_5")
+            put("language_code", "fr")
+            put("voice_settings", JSONObject().apply {
+                put("stability", 0.5)
+                put("similarity_boost", 0.75)
+            })
+        }
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaType(),
+            bodyJson.toString()
+        )
+
+
+
+        val request = Request.Builder()
+            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
+            .addHeader("Content-Type", "application/json")
+            .addHeader("xi-api-key", apiKey)
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body
+                if (responseBody != null) {
+                    val audioFile = File(generatedFilePath)
+                    try {
+                        val outputStream = FileOutputStream(audioFile)
+                        outputStream.write(responseBody.bytes())
+                        outputStream.close()
+
+                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
+
+                        runOnUiThread {
+                            Toast.makeText(this@Step2, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } catch (e: IOException) {
+                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                    }
+                } else {
+                    Log.d("testApi", "Le corps de la réponse est null")
+                }
+            }
+        })
+    }
+
 }
