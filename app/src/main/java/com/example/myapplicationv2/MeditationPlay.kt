@@ -38,7 +38,7 @@ class MeditationPlay : AppCompatActivity() {
     // Constants
     companion object {
         private const val FADE_IN_DURATION_SECONDS = 5 // 5 secondes
-        private const val FADE_OUT_DURATION_SECONDS = 5 // 5 secondes
+        private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
         private const val AFFIRMATION_DELAY_SECONDS = 10 // 10 secondes
         private const val INTRO_DELAY_MS = 3000L // 3 secondes (peut être ajusté si nécessaire)
     }
@@ -111,7 +111,6 @@ class MeditationPlay : AppCompatActivity() {
                         bowlEndPath = bowlEndFilePath,
                         affirmationPaths = userTexts ?: emptyList(), // Passer les affirmations
                         outputPath = finalOutputPath,
-                        fadeDurationSeconds = FADE_OUT_DURATION_SECONDS, // Durée du fade en secondes
                         selectedDurationInSeconds = selectedDurationInSeconds,
                         introPath = introFilePath, // Passer l'intro (peut être null)
                         callback = { mixSuccess ->
@@ -208,7 +207,7 @@ class MeditationPlay : AppCompatActivity() {
     }
 
     /**
-     * Mixe le son du bol tibétain, de la musique principale, et des affirmations avec fade-in et fade-out sur la musique,
+     * Mixe le son du bol tibétain, de la musique principale, et des affirmations avec fade-in et fade-out,
      * ajoute le bol tibétain au début et à la fin de l'enregistrement, et ajuste la durée totale.
      *
      * @param bowlStartPath Chemin du fichier audio du bol tibétain (début).
@@ -216,7 +215,6 @@ class MeditationPlay : AppCompatActivity() {
      * @param bowlEndPath Chemin du fichier audio du bol tibétain (fin).
      * @param affirmationPaths Liste des chemins des fichiers audio des affirmations.
      * @param outputPath Chemin de sortie pour le fichier audio mixé.
-     * @param fadeDurationSeconds Durée du fade-out en secondes.
      * @param selectedDurationInSeconds Durée totale sélectionnée en secondes.
      * @param introPath Chemin de l'intro (peut être null).
      * @param callback Fonction de rappel pour indiquer le succès ou l'échec du mixage.
@@ -227,7 +225,6 @@ class MeditationPlay : AppCompatActivity() {
         bowlEndPath: String,
         affirmationPaths: List<String>,
         outputPath: String,
-        fadeDurationSeconds: Int,
         selectedDurationInSeconds: Int,
         introPath: String?, // Chemin de l'intro (peut être null)
         callback: (Boolean) -> Unit
@@ -278,26 +275,7 @@ class MeditationPlay : AppCompatActivity() {
 
         Log.d("MeditationPlay", "Looped Music Duration: $loopedMusicDuration seconds")
 
-        // Vérifier que la durée de la musique bouclée permet les fades
-        if (loopedMusicDuration < (FADE_IN_DURATION_SECONDS + FADE_OUT_DURATION_SECONDS)) {
-            Log.e(
-                "MeditationPlay",
-                "Durée de la musique bouclée ($loopedMusicDuration s) est inférieure à la somme des fades (${FADE_IN_DURATION_SECONDS + FADE_OUT_DURATION_SECONDS} s)."
-            )
-            runOnUiThread {
-                Toast.makeText(this, "Durée de la musique insuffisante pour les fades.", Toast.LENGTH_SHORT).show()
-            }
-            callback(false)
-            return
-        }
-
-        // Calculer la durée des fades
-        val fadeInDuration = FADE_IN_DURATION_SECONDS
-        val fadeOutStartTime = loopedMusicDuration - fadeDurationSeconds
-
-        Log.d("MeditationPlay", "Fade Out Start Time: $fadeOutStartTime seconds")
-
-        // Calculer les points d'insertion des affirmations
+        // Calculer la durée des affirmations
         val affirmationIntervalSeconds = AFFIRMATION_DELAY_SECONDS  // 10 secondes
         val numberOfAffirmations = selectedDurationInSeconds / affirmationIntervalSeconds
 
@@ -328,25 +306,35 @@ class MeditationPlay : AppCompatActivity() {
             // 3: intro
             // 4+: affirmations
 
-            // Concaténer bowl_start et intro
-            filterComplexBuilder.append("[0:a][3:a]concat=n=2:v=0:a=1[start_intro]; ")
+            // Appliquer une réduction de volume uniquement à la musique
+            filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ") // music_looped (réduction supplémentaire de 6dB)
 
-            // Trim et appliquer fade à la musique
-            filterComplexBuilder.append("[1:a]atrim=duration=$loopedMusicDuration,asetpts=PTS-STARTPTS[music_trimmed]; ")
-            filterComplexBuilder.append("[music_trimmed]afade=t=in:st=0:d=$fadeInDuration,afade=t=out:st=$fadeOutStartTime:d=$fadeDurationSeconds[music_faded]; ")
+            // Appliquer le fade-in et fade-out à la musique
+            filterComplexBuilder.append("[music_scaled]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
+
+            // Concaténer bowl_start et intro sans réduction de volume
+            filterComplexBuilder.append("[0:a][3:a]concat=n=2:v=0:a=1[start_intro]; ")
 
             // Mixer bowl_start + intro avec musique fadeée
             filterComplexBuilder.append("[start_intro][music_faded]amix=inputs=2:duration=longest[mix1]; ")
         } else {
-            // Trim et appliquer fade à la musique
-            filterComplexBuilder.append("[1:a]atrim=duration=$loopedMusicDuration,asetpts=PTS-STARTPTS[music_trimmed]; ")
-            filterComplexBuilder.append("[music_trimmed]afade=t=in:st=0:d=$fadeInDuration,afade=t=out:st=$fadeOutStartTime:d=$fadeDurationSeconds[music_faded]; ")
+            // Input indices sans intro:
+            // 0: bowl_start
+            // 1: music_looped
+            // 2: bowl_end
+            // 3+: affirmations
 
-            // Mixer bowl_start avec musique fadeée
+            // Appliquer une réduction de volume uniquement à la musique
+            filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ") // music_looped (réduction supplémentaire de 6dB)
+
+            // Appliquer le fade-in et fade-out à la musique
+            filterComplexBuilder.append("[music_scaled]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
+
+            // Mixer bowl_start avec musique fadeée sans réduction de volume
             filterComplexBuilder.append("[0:a][music_faded]amix=inputs=2:duration=longest[mix1]; ")
         }
 
-        // Ajouter les affirmations avec delay
+        // Ajouter les affirmations avec delay et maintien du volume original
         for (i in 0 until limitedNumberOfAffirmations) {
             val affirmationPath = affirmationPaths[i % affirmationPaths.size] // Boucler si nécessaire
 
@@ -357,8 +345,8 @@ class MeditationPlay : AppCompatActivity() {
             // Calculer l'index des inputs pour les affirmations
             val inputIndex = if (introPath != null) 4 + i else 3 + i
 
-            // Ajouter l'affirmation au filtre complexe
-            filterComplexBuilder.append("[$inputIndex:a]atrim=duration=$fadeDurationSeconds,asetpts=PTS-STARTPTS,adelay=${delayMs}|${delayMs}[aff_delayed_$i]; ")
+            // Appliquer le trim et le delay sans réduire le volume
+            filterComplexBuilder.append("[$inputIndex:a]atrim=duration=5,asetpts=PTS-STARTPTS,adelay=${delayMs}|${delayMs}[aff_delayed_$i]; ")
         }
 
         // Construire la liste des streams à mixer
@@ -376,12 +364,16 @@ class MeditationPlay : AppCompatActivity() {
 
         // Ajouter bowl_end avec delay
         // Calculer le délai pour bowl_end afin qu'il soit joué à la fin
-        val bowlEndDelayMs = (loopedMusicDuration - fadeDurationSeconds) * 1000
+        val bowlEndDelayMs = (loopedMusicDuration - bowlEndDurationSeconds) * 1000
 
-        filterComplexBuilder.append("[2:a]atrim=duration=$fadeDurationSeconds,asetpts=PTS-STARTPTS,adelay=${bowlEndDelayMs}|${bowlEndDelayMs}[bowl_end_delayed]; ")
+        // Appliquer le trim et le delay à bowl_end sans réduire le volume
+        filterComplexBuilder.append("[2:a]atrim=duration=$bowlEndDurationSeconds,asetpts=PTS-STARTPTS,adelay=${bowlEndDelayMs}|${bowlEndDelayMs}[bowl_end_delayed]; ")
 
-        // Mixer bowl_end avec le mix final
-        filterComplexBuilder.append("[aout][bowl_end_delayed]amix=inputs=2:duration=longest[afinal]")
+        // Mixer bowl_end avec le mix final sans réduire le volume
+        filterComplexBuilder.append("[aout][bowl_end_delayed]amix=inputs=2:duration=longest[afinal]; ")
+
+        // Appliquer une normalisation globale
+        filterComplexBuilder.append("[afinal]loudnorm=I=-16:TP=-1.5:LRA=11[aout_normalized]")
 
         val filterComplex = filterComplexBuilder.toString()
 
@@ -412,7 +404,7 @@ class MeditationPlay : AppCompatActivity() {
         ffmpegCommandBuilder.append("-t \"$selectedDurationInSeconds\" ")
 
         // Mapping et encodage
-        ffmpegCommandBuilder.append("-map \"[afinal]\" ")
+        ffmpegCommandBuilder.append("-map \"[aout_normalized]\" ")
         ffmpegCommandBuilder.append("-c:a libmp3lame -b:a 192k ")
         ffmpegCommandBuilder.append("\"$outputPath\"")
 
@@ -488,7 +480,7 @@ class MeditationPlay : AppCompatActivity() {
                     setDataSource(it)
                     prepare()
                     start()
-                    setVolume(1f, 1f) // Volume complet car les fades sont déjà appliqués via FFmpeg
+                    setVolume(0.6f, 0.6f) // Volume réduit davantage pour compenser les ajustements de volume
                 }
 
                 // Configuration de la ProgressBar
@@ -528,10 +520,6 @@ class MeditationPlay : AppCompatActivity() {
                     mainHandler.postDelayed(this, 1000) // Mise à jour toutes les secondes
 
                     when (remainingTime) {
-                        FADE_OUT_DURATION_SECONDS -> { // 5 secondes avant la fin
-                            Log.d("MeditationPlay", "Fade-out commence. Le son du bol tibétain est déjà intégré via FFmpeg.")
-                            // Pas besoin de jouer le bol tibétain séparément
-                        }
                         0 -> { // Fin de la lecture
                             Log.d("MeditationPlay", "Playback duration completed. Stopping audio.")
                             stopAllAudio()

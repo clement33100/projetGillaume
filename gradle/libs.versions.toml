@@ -9,7 +9,9 @@ appcompat = "1.6.1"
 material = "1.10.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
-okhttp = "4.9.3"  # Ajout de la version OkHttp
+okhttp = "4.9.3"  # Version d'OkHttp
+ffmpegkit = "4.5.LTS" # ou la version souhaitée
+googleAuthLibrary = "1.14.0"  # Ajout de la version de google-auth-library
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -20,7 +22,9 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }  # Ajout de la dépendance OkHttp
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }  # Déjà ajouté
+ffmpegkitfull = { group = "com.arthenica", name = "ffmpeg-kit-full", version.ref = "ffmpegkit" }
+google-auth-library-oauth2-http = { group = "com.google.auth", name = "google-auth-library-oauth2-http", version.ref = "googleAuthLibrary" }  # Ajout de la dépendance google-auth-library
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
