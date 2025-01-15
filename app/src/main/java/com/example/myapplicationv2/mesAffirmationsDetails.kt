@@ -1,5 +1,6 @@
 package com.example.myapplicationv2
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -65,8 +66,11 @@ class mesAffirmationsDetails : AppCompatActivity() {
                 val fileButton = Button(this).apply {
                     text = fileName
                     setOnClickListener {
-                        Toast.makeText(this@mesAffirmationsDetails, "Fichier : $fileName", Toast.LENGTH_SHORT).show()
-                        // Vous pouvez ajouter une action pour lire ou supprimer le fichier
+                        // Créer une Intent pour lancer l'activité ManageAffirmationActivity
+                        val intent = Intent(this@mesAffirmationsDetails, ManageAffirmationActivity::class.java).apply {
+                            putExtra("filePath", file.absolutePath) // Passer le chemin du fichier sélectionné
+                        }
+                        startActivity(intent)
                     }
                 }
 
