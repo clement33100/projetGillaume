@@ -1,5 +1,6 @@
 package com.example.myapplicationv2
 
+import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -25,9 +28,13 @@ class MeditationPlay : AppCompatActivity() {
     // MediaPlayer Principal
     private var mediaPlayer: MediaPlayer? = null
 
+
+
     // UI Elements
     private lateinit var progressBar: ProgressBar
     private lateinit var pauseButton: ImageButton
+    private lateinit var btnOK: Button
+    private lateinit var editText: EditText
 
     // Handlers
     private val mainHandler = Handler(Looper.getMainLooper())
@@ -58,6 +65,64 @@ class MeditationPlay : AppCompatActivity() {
         // Initialisation des éléments UI
         progressBar = findViewById(R.id.progressBar)
         pauseButton = findViewById(R.id.imageButtonPause)
+        btnOK = findViewById(R.id.buttonOkMeditation)
+        editText = findViewById(R.id.nameAffirm)
+
+        var name :String
+
+        btnOK.setOnClickListener {
+
+            val intent = Intent(this, Advices::class.java)
+
+            // Récupérer le nom saisi ou utiliser "affirmation" par défaut
+            val name = if (!editText.text.isNullOrEmpty()) {
+                editText.text.toString()
+            } else {
+                "affirmation"
+            }
+
+            // Chemins source et destination
+            val sourceFile = File(filesDir, "recorded_music.mp3")
+            val destinationDir = File(filesDir, "affirmation")
+
+            // Créer le dossier "affirmation" s'il n'existe pas
+            if (!destinationDir.exists()) {
+                val created = destinationDir.mkdirs()
+                if (!created) {
+                    Log.e("MeditationPlay", "Impossible de créer le dossier affirmation")
+                    Toast.makeText(this, "Erreur lors de la création du dossier affirmation.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
+            // Générer un nom unique pour éviter d'écraser les fichiers existants
+            var destinationFile = File(destinationDir, "$name.mp3")
+            var counter = 1
+            while (destinationFile.exists()) {
+                destinationFile = File(destinationDir, "$name$counter.mp3")
+                counter++
+            }
+
+            try {
+                // Copier le fichier source dans le dossier de destination
+                if (sourceFile.exists()) {
+                    sourceFile.copyTo(destinationFile, overwrite = false)
+                    Log.d("MeditationPlay", "Fichier enregistré dans le dossier affirmation : ${destinationFile.absolutePath}")
+                    Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name} dans le dossier affirmation.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e("MeditationPlay", "Le fichier source n'existe pas : ${sourceFile.absolutePath}")
+                    Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("MeditationPlay", "Erreur lors de la copie du fichier : ${e.message}")
+                Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
+            }
+
+            // Lancer l'activité suivante
+            startActivity(intent)
+        }
+
+
 
         // Copie des ressources brutes vers le stockage interne
         val bowlStartFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")

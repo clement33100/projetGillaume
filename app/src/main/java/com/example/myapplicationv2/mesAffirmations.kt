@@ -19,6 +19,7 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
     private lateinit var btnHowItWorks: Button
     private lateinit var btnAdvices: Button
     private lateinit var btnIntentions: Button
+    private lateinit var btnAffirmationsDetails: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,7 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
         btnHowItWorks = findViewById<Button>(R.id.btn_howitworks)
         btnAdvices = findViewById<Button>(R.id.btn_advicesaffirmations)
         btnIntentions = findViewById<Button>(R.id.btn_intention)
-
+        btnAffirmationsDetails = findViewById(R.id.btn_affirmation)
         btnNew.setOnClickListener{
 
             // Créez une intention pour lancer Stage2
@@ -47,6 +48,11 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
         }
         btnIntentions.setOnClickListener {
             val intent = Intent(this, mesIntentions::class.java)
+            startActivity(intent)
+        }
+
+        btnAffirmationsDetails.setOnClickListener {
+            val intent = Intent(this, mesAffirmationsDetails::class.java)
             startActivity(intent)
         }
 
