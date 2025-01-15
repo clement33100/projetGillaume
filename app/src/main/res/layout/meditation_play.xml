@@ -26,14 +26,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="318dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="317dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="192dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameAffirm"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Other UI elements -->
@@ -58,7 +58,8 @@
         android:id="@+id/imageView4"
         android:layout_width="254dp"
         android:layout_height="233dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_felicitation"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,14 +94,14 @@
         android:textColorLink="@color/grey"
         android:textSize="24sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/buttonOkStep1"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOkMeditation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/buttonOkStep1"
+        android:id="@+id/buttonOkMeditation"
         android:layout_width="90dp"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
