@@ -82,7 +82,7 @@ class MeditationPlay : AppCompatActivity() {
             }
 
             // Chemins source et destination
-            val sourceFile = File(filesDir, "recorded_music.mp3")
+            val sourceFile = File(filesDir, "final_audio.mp3")
             val destinationDir = File(filesDir, "affirmation")
 
             // Créer le dossier "affirmation" s'il n'existe pas
