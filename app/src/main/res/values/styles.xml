@@ -20,4 +20,24 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:padding">15dp</item> <!-- Ajouter du padding -->
     </style>
+
+
+    <style name="DialogButton.Confirm" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_confirm_background</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="DialogButton.Cancel" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_cancel_background</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@drawable/rounded_background</item>
+    </style>
+
 </resources>

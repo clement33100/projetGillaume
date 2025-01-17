@@ -13,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginTop
 import java.io.File
 
 class mesAffirmationsDetails : AppCompatActivity() {
@@ -38,10 +39,7 @@ class mesAffirmationsDetails : AppCompatActivity() {
 
     }
 
-    private fun displayAffirmationFiles(textEdit:TextView) {
-
-
-
+    private fun displayAffirmationFiles(textEdit: TextView) {
         // Dossier "affirmation"
         val affirmationDir = File(filesDir, "affirmation")
 
@@ -58,13 +56,15 @@ class mesAffirmationsDetails : AppCompatActivity() {
 
             // Parcourir les fichiers du dossier
             for (file in files) {
-                textEdit.visibility=View.GONE
+                textEdit.visibility = View.GONE
 
                 val fileName = file.name
 
                 // Créer un bouton pour chaque fichier
                 val fileButton = Button(this).apply {
                     text = fileName
+                    setBackgroundResource(R.drawable.button_yellow_rounded) // Set the custom background
+                    setPadding(0, 50, 0, 50) // Optional: Adjust padding for better appearance
                     setOnClickListener {
                         // Créer une Intent pour lancer l'activité ManageAffirmationActivity
                         val intent = Intent(this@mesAffirmationsDetails, ManageAffirmationActivity::class.java).apply {
@@ -74,11 +74,21 @@ class mesAffirmationsDetails : AppCompatActivity() {
                     }
                 }
 
+                // Ajouter des marges au bouton
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, // Width
+                    LinearLayout.LayoutParams.WRAP_CONTENT  // Height
+                ).apply {
+                    setMargins(20, 20, 20, 20) // Left, top, right, bottom margins
+                }
+                fileButton.layoutParams = params
+
+
                 // Ajouter le bouton au conteneur
                 container.addView(fileButton)
             }
         } else {
-            textEdit.visibility=View.VISIBLE
+            textEdit.visibility = View.VISIBLE
 
             // Si le dossier est vide
             Toast.makeText(this, "Aucun fichier dans le dossier affirmations.", Toast.LENGTH_SHORT).show()
