@@ -12,6 +12,7 @@
 
     <!-- Menu Latéral (Navigation View) -->
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
