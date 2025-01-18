@@ -18,7 +18,6 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
     private lateinit var btnMyaffirmations: Button
     private lateinit var btnHowItWorks: Button
     private lateinit var btnAdvices: Button
-    private lateinit var btnIntentions: Button
     private lateinit var btnAffirmationsDetails: Button
 
 
@@ -30,7 +29,6 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
         btnMyaffirmations = findViewById<Button>(R.id.btn_affirmation)
         btnHowItWorks = findViewById<Button>(R.id.btn_howitworks)
         btnAdvices = findViewById<Button>(R.id.btn_advicesaffirmations)
-        btnIntentions = findViewById<Button>(R.id.btn_intention)
         btnAffirmationsDetails = findViewById(R.id.btn_affirmation)
         btnNew.setOnClickListener{
 
@@ -44,10 +42,6 @@ class mesAffirmations :  AppCompatActivity() {  // Hérite de Base au lieu de Ap
         }
         btnAdvices.setOnClickListener {
             val intent = Intent(this, Advices::class.java)
-            startActivity(intent)
-        }
-        btnIntentions.setOnClickListener {
-            val intent = Intent(this, mesIntentions::class.java)
             startActivity(intent)
         }
 

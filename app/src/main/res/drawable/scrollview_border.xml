@@ -1,0 +1,11 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Couleur de fond transparente -->
+    <solid android:color="#EFEFEF" /> <!-- Blanc (modifiable) -->
+
+    <!-- Ajout d'un contour -->
+    <stroke
+        android:width="2dp"
+        android:color="#333333" /> <!-- Couleur orange (modifiable) -->
+
+    <!-- Coins arrondis -->
+</shape>

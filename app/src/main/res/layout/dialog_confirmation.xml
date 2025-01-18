@@ -28,7 +28,7 @@
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirmer"
+            android:text="Supprimer"
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_confirm_background"
             android:textColor="#FFFFFF" />

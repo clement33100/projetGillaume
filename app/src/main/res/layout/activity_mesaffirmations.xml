@@ -10,19 +10,6 @@
 
 
     <Button
-        android:id="@+id/btn_intention"
-        android:layout_width="316dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/green"
-        android:text="Mes intentions"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_affirmation" />
-
-    <Button
         android:id="@+id/btn_affirmation"
         android:layout_width="316dp"
         android:layout_height="74dp"
@@ -50,34 +37,19 @@
 
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="MyAffirmations"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textColorLink="@color/black"
-        android:textSize="27sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="L'application pour Aligner\n tes Pensées à tes\n Aspirations "
+        android:text="Tes Mots, Ta Transformation, Ton Histoire "
+        android:textColor="@color/grey"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <Button
         android:id="@+id/btn_howitworks"
@@ -85,12 +57,12 @@
         android:layout_height="74dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/green"
-        android:text="Comment ça marche?"
+        android:text="Comment ça marche ?"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_intention" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_affirmation" />
 
     <Button
         android:id="@+id/btn_advicesaffirmations"
@@ -104,6 +76,16 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_howitworks" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="328dp"
+        android:layout_height="127dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/titlemyaffirmation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

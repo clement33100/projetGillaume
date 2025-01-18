@@ -17,6 +17,21 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ManageAffirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mesAffirmationsDetails"
+            android:exported="false" />
+        <activity
+            android:name=".rulesIntention"
+            android:exported="false" />
+        <activity
+            android:name=".choixIntentionAffirmation"
+            android:exported="false" />
+        <activity
+            android:name=".mesIntentions"
+            android:exported="false" />
+        <activity
             android:name=".step1FirstName"
             android:exported="false" />
         <activity
@@ -35,15 +50,6 @@
             android:name=".MeditationPlay"
             android:exported="false" />
         <activity
-            android:name=".MainPage"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Visualize"
-            android:exported="false" />
-        <activity
             android:name=".Advices"
             android:exported="false" />
         <activity
@@ -52,9 +58,7 @@
         <activity
             android:name=".Step4"
             android:exported="false" />
-        <activity
-            android:name=".testApi"
-            android:exported="false" />
+
         <activity
             android:name=".ChoseBelieve"
             android:exported="false" />
@@ -67,7 +71,6 @@
         <activity
             android:name=".Etape2Voix"
             android:exported="false" />
-
         <activity
             android:name=".PageAcceuil"
             android:exported="true">

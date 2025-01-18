@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.WebSettings.TextSize
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -58,13 +59,14 @@ class mesAffirmationsDetails : AppCompatActivity() {
             for (file in files) {
                 textEdit.visibility = View.GONE
 
-                val fileName = file.name
+                val fileName = file.nameWithoutExtension
 
                 // Créer un bouton pour chaque fichier
                 val fileButton = Button(this).apply {
                     text = fileName
+                    setTextSize(24f)
                     setBackgroundResource(R.drawable.button_yellow_rounded) // Set the custom background
-                    setPadding(0, 50, 0, 50) // Optional: Adjust padding for better appearance
+                    setPadding(20, 80, 20, 80) // Optional: Adjust padding for better appearance
                     setOnClickListener {
                         // Créer une Intent pour lancer l'activité ManageAffirmationActivity
                         val intent = Intent(this@mesAffirmationsDetails, ManageAffirmationActivity::class.java).apply {
@@ -79,7 +81,7 @@ class mesAffirmationsDetails : AppCompatActivity() {
                     LinearLayout.LayoutParams.MATCH_PARENT, // Width
                     LinearLayout.LayoutParams.WRAP_CONTENT  // Height
                 ).apply {
-                    setMargins(20, 20, 20, 20) // Left, top, right, bottom margins
+                    setMargins(120, 20, 120, 20) // Left, top, right, bottom margins
                 }
                 fileButton.layoutParams = params
 

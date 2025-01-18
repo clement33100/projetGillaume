@@ -39,7 +39,7 @@ class ManageAffirmationActivity : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.backButton)
         val downloadButton = findViewById<Button>(R.id.downloadButton) // Add download button in XML
         // Afficher le nom du fichier
-        fileNameTextView.text = file.name
+        fileNameTextView.text = file.nameWithoutExtension
 
         // Initialiser le MediaPlayer mais ne pas démarrer la musique
         if (file.exists()) {
@@ -64,8 +64,14 @@ class ManageAffirmationActivity : AppCompatActivity() {
 
         // Bouton pour télécharger le fichier
         downloadButton.setOnClickListener {
-            downloadFile(file)
+            val fileToDownload = File(filePath) // Utiliser le chemin mis à jour
+            if (fileToDownload.exists()) {
+                downloadFile(fileToDownload)
+            } else {
+                Toast.makeText(this, "Fichier introuvable pour le téléchargement.", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
         // Bouton pour supprimer le fichier
         deleteButton.setOnClickListener {
@@ -160,8 +166,6 @@ class ManageAffirmationActivity : AppCompatActivity() {
     }
 
     private fun showRenameDialog(file: File) {
-
-
         val dialogView = layoutInflater.inflate(R.layout.dialog_rename_file, null)
         val editText = dialogView.findViewById<EditText>(R.id.renameEditText)
         editText.setText(file.nameWithoutExtension)
@@ -173,6 +177,7 @@ class ManageAffirmationActivity : AppCompatActivity() {
         val alertDialog = android.app.AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
+        alertDialog.window?.setBackgroundDrawableResource(R.drawable.rounded_background)
 
         // Action pour le bouton "Renommer"
         confirmButton.setOnClickListener {
@@ -181,9 +186,9 @@ class ManageAffirmationActivity : AppCompatActivity() {
                 val newFile = File(file.parent, "$newName.mp3")
                 if (file.renameTo(newFile)) {
                     Toast.makeText(this, "Fichier renommé en $newName.mp3", Toast.LENGTH_SHORT).show()
-                    filePath = newFile.absolutePath // Met à jour le chemin
-                    findViewById<TextView>(R.id.fileNameTextView).text = newFile.name
-                    alertDialog.dismiss() // Ferme la boîte de dialogue
+                    filePath = newFile.absolutePath // Met à jour le chemin du fichier
+                    findViewById<TextView>(R.id.fileNameTextView).text = newFile.nameWithoutExtension
+                    alertDialog.dismiss()
                 } else {
                     Toast.makeText(this, "Erreur lors du renommage.", Toast.LENGTH_SHORT).show()
                 }
@@ -194,11 +199,10 @@ class ManageAffirmationActivity : AppCompatActivity() {
 
         // Action pour le bouton "Annuler"
         cancelButton.setOnClickListener {
-            alertDialog.dismiss() // Ferme la boîte de dialogue
+            alertDialog.dismiss()
         }
 
         alertDialog.show()
-
     }
 
     override fun onBackPressed() {

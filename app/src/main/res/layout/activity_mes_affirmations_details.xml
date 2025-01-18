@@ -8,76 +8,100 @@
     android:background="@drawable/activity_background"
     tools:context=".step1FirstName">
 
-
-    <Button
-        android:id="@+id/btn_intention_menu"
-        android:layout_width="316dp"
-        android:layout_height="74dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="@color/green"
-        android:text="Menu principal"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!-- Titre principal -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/customfont"
+        android:text="Mes Affirmations"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="27sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Message secondaire -->
+    <TextView
+        android:id="@+id/textViewmesaffirmationdetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Vous n'avez encore aucune Intentions. Créez votre fichier audio personalisé en cliquant sur Créer nouveau."
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
+    <!-- ScrollView pour le contenu défilable -->
+
+    <LinearLayout
+        android:id="@+id/scrollContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/scrollview_border"
+        android:orientation="vertical"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_intention_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Conteneur de fichiers -->
+                <LinearLayout
+                    android:id="@+id/fileContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <!-- Boutons fixes en bas -->
     <Button
         android:id="@+id/btn_intention_new"
         android:layout_width="316dp"
         android:layout_height="74dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/green"
         android:text="Créer Nouveau"
         android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_intention_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/fileContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="Mes affirmations"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textColorLink="@color/black"
-        android:textSize="27sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewmesaffirmationdetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:gravity="center"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="Vous n'avez encore aucune Intentions. Créez votre fichier audio personalisé en cliquant sur Créer nouveau."
+    <Button
+        android:id="@+id/btn_intention_menu"
+        android:layout_width="316dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/green"
+        android:text="Menu principal"
         android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
