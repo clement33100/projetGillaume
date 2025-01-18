@@ -20,6 +20,8 @@ import java.io.File
 class mesAffirmationsDetails : AppCompatActivity() {
 
     private lateinit var textEmpty: TextView
+    private lateinit var btnmainpage: Button
+    private lateinit var btnnewAffirmation: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,19 @@ class mesAffirmationsDetails : AppCompatActivity() {
 
         // Appeler la fonction pour afficher les fichiers
         displayAffirmationFiles(textEmpty)
+
+        btnnewAffirmation = findViewById(R.id.btn_affirmation_new)
+        btnmainpage = findViewById(R.id.btn_affirmation_menu)
+
+        btnnewAffirmation.setOnClickListener {
+            val intent = Intent(this, Rules::class.java)
+            startActivity(intent)
+        }
+
+        btnmainpage.setOnClickListener {
+            val intent = Intent(this, mesAffirmations::class.java)
+            startActivity(intent)
+        }
 
 
     }
