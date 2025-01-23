@@ -1,18 +1,35 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@drawable/activity_background"
+    tools:context=".Etape2Voix">
 
+    <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/activity_background"
         tools:context=".Etape2Voix">
 
+        <!-- Bouton Menu Burger en haut à droite -->
+        <ImageButton
+            android:id="@+id/btn_burger"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:contentDescription="@string/menu"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_3_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Titre de l'activité -->
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -28,6 +45,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Boutons pour choisir la voix -->
         <Button
             android:id="@+id/btn_voix_femme"
             android:layout_width="316dp"
@@ -52,6 +70,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollViewFemmeVoice" />
 
+        <!-- TextViews pour les étapes et descriptions -->
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
@@ -92,11 +111,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewStep2" />
 
+        <!-- ScrollView pour les voix féminines -->
         <ScrollView
             android:id="@+id/scrollViewFemmeVoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_voix_homme"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/btn_voix_femme">
 
@@ -112,7 +131,6 @@
                     android:layout_marginRight="16dp"
                     android:orientation="horizontal">
 
-
                     <Button
                         android:id="@+id/voixFemme1"
                         android:layout_width="200dp"
@@ -124,14 +142,6 @@
                         android:text="La Gardienne"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
-
-                    <!--<ImageButton
-                        android:id="@+id/listenFemme1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="110dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -151,77 +161,15 @@
                         android:text="L'Amazone"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
-
-                    <!--<ImageButton
-                        android:id="@+id/listenFemme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
-                <!--<LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
-
-
-                    <Button
-                        android:id="@+id/voixFemme3"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="test3"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
-
-                    <ImageButton
-                        android:id="@+id/listenFemme3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="110dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listengrey" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
-
-
-                    <Button
-                        android:id="@+id/voixFemme4"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="0dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="test4"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
-
-                    <ImageButton
-                        android:id="@+id/listenFemme4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen femme"
-                        app:srcCompat="@drawable/listengrey" />
-                </LinearLayout>-->
             </LinearLayout>
         </ScrollView>
 
+        <!-- ScrollView pour les voix masculines -->
         <ScrollView
             android:id="@+id/scrollViewHommeVoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_voix_homme"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme">
 
@@ -248,14 +196,6 @@
                         android:text="Le Guerrier"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
-
-                    <!--<ImageButton
-                        android:id="@+id/listenHomme1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="110dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen homme"
-                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -275,72 +215,19 @@
                         android:text="Le Sage"
                         android:textColor="@color/grey"
                         android:textSize="19dp" />
-
-                    <!--<ImageButton
-                        android:id="@+id/listenHomme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="listen homme"
-                        app:srcCompat="@drawable/listengrey" />-->
                 </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
-                <!--<LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginRight="16dp"
-                   android:orientation="horizontal">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                   <Button
-                       android:id="@+id/voixHomme3"
-                       android:layout_width="200dp"
-                       android:layout_height="50dp"
-                       android:layout_marginLeft="120dp"
-                       android:layout_marginTop="30dp"
-                       android:backgroundTint="@color/yellow"
-                       android:padding="10dp"
-                       android:text="test1"
-                       android:textColor="@color/grey"
-                       android:textSize="19dp" />
+    <!-- Menu de navigation latéral -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:fitsSystemWindows="true"
+    app:menu="@menu/drawer_menu" />
 
-                   <ImageButton
-                       android:id="@+id/listenHomme3"
-                       android:layout_width="wrap_content"
-                       android:layout_height="110dp"
-                       android:background="@android:color/transparent"
-                       android:contentDescription="listen homme"
-                       app:srcCompat="@drawable/listengrey" />
-               </LinearLayout>
-
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginRight="16dp"
-                   android:orientation="horizontal">
-
-                   <Button
-                       android:id="@+id/voixHomme4"
-                       android:layout_width="200dp"
-                       android:layout_height="50dp"
-                       android:layout_marginLeft="120dp"
-                       android:layout_marginTop="0dp"
-                       android:backgroundTint="@color/yellow"
-                       android:padding="10dp"
-                       android:text="test22"
-                       android:textColor="@color/grey"
-                       android:textSize="19dp" />
-
-                   <ImageButton
-                       android:id="@+id/listenHomme4"
-                       android:layout_width="wrap_content"
-                       android:layout_height="50dp"
-                       android:background="@android:color/transparent"
-                       android:contentDescription="listen homme"
-                       app:srcCompat="@drawable/listengrey" />
-               </LinearLayout>-->
-           </LinearLayout>
-       </ScrollView>
-
-   </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.drawerlayout.widget.DrawerLayout>

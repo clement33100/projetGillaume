@@ -1,45 +1,30 @@
 package com.example.myapplicationv2
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
-import android.provider.MediaStore
-import android.provider.OpenableColumns
-import android.widget.Button
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import com.example.myapplicationv2.R.id.uploadButton
-import kotlin.math.log
 import android.media.MediaPlayer
+import android.net.Uri
+import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.*
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.navigation.NavigationView
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.Response
-import org.json.JSONObject
 import java.io.IOException
+import java.io.InputStream
 
-class step3Music : AppCompatActivity() {
+class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
-
+    // UI Elements
     private lateinit var uploadButton: Button
     private lateinit var dynamicButtonContainer: LinearLayout
     private var savedFilePath: String? = null
@@ -59,7 +44,6 @@ class step3Music : AppCompatActivity() {
 
     private lateinit var btn_ok: Button
 
-
     private lateinit var scrollview_Epic: ScrollView
     private lateinit var scrollview_FrequenceVibratoire: ScrollView
 
@@ -71,10 +55,12 @@ class step3Music : AppCompatActivity() {
     private lateinit var FrequenceVibratoire2: ImageButton
     private lateinit var FrequenceVibratoire3: ImageButton
 
+    private lateinit var btn_silence: Button // Ajout du bouton Silence
 
+    // Variable pour stocker le chemin du fichier silencieux
+    private var savedFilePathSilence: String? = null
 
-
-
+    // Activity Result Launcher pour la sélection de fichiers audio
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
@@ -83,42 +69,39 @@ class step3Music : AppCompatActivity() {
                 fileList.add(Pair(audioFileName.toString(), savedFilePath.toString()))
                 createDynamicButton(audioFileName.toString(), savedFilePath.toString())
                 Toast.makeText(this, "Selected: $audioFileName", Toast.LENGTH_SHORT).show()
-                // Here you can handle the MP3 file (e.g., upload it to a server, play it, etc.)
+                // Ici, vous pouvez gérer le fichier MP3 (téléchargement, lecture, etc.)
             }
         }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_step3_music  // Fournit le layout spécifique à cette activité
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_step3_music)
 
-        val ButtonEpic = findViewById<Button>(R.id.btn_epic)
-        val ButtonVib = findViewById<Button>(R.id.btn_frequence)
-        val curentVoice = intent.getStringExtra("curentVoice")
-        val userTexts = intent.getStringArrayListExtra("userTexts")
-
-        val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
-        val nom = intent.getStringExtra("nom")
-        val curentAPIKey = intent.getStringExtra("curentAPIKey")
-
-        val intention = intent.getBooleanExtra("intention", false)
-
-
-
-        if (userTextsSplit != null) {
-            for (text in userTextsSplit) {
-                Log.d("test12345", "Received text: $text")
-            }
-        } else {
-            Log.d("test12345", "No texts received")
+        // Configuration des Insets UI
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
         }
-        if (userTexts != null) {
-            for (text in userTexts) {
-                Log.d("test123", "Received text: $text")
-            }
-        } else {
-            Log.d("test123", "No texts received")
+
+        // Initialisation des éléments UI existants
+        uploadButton = findViewById(R.id.uploadButton)
+        dynamicButtonContainer = findViewById(R.id.dynamicButtonContainer)
+        uploadButton.setOnClickListener {
+            openAudioFilePicker()
         }
+
+        btn_ok = findViewById(R.id.btn_okmusic)
+        btn_silence = findViewById(R.id.btn_silence) // Initialisation du bouton Silence
 
         scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
         scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
@@ -138,52 +121,58 @@ class step3Music : AppCompatActivity() {
         btn_ChoixFrequenceVibratoire2 = findViewById<Button>(R.id.frequence2)
         btn_ChoixFrequenceVibratoire3 = findViewById<Button>(R.id.frequence3)
 
-        btn_ok = findViewById<Button>(R.id.btn_okmusic)
+        val ButtonEpic = findViewById<Button>(R.id.btn_epic)
+        val ButtonVib = findViewById<Button>(R.id.btn_frequence)
+        val curentVoice = intent.getStringExtra("curentVoice")
+        val userTexts = intent.getStringArrayListExtra("userTexts")
 
-        /*ImageButton.setOnClickListener {
-            if (fileList.isNotEmpty()) {
-                val intent = Intent(this, Step4::class.java)
-                val filePaths = fileList.map { it.second }.toTypedArray()
-                intent.putExtra("filePaths", filePaths)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "No files to pass", Toast.LENGTH_SHORT).show()
+        val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
+        val nom = intent.getStringExtra("nom")
+        val curentAPIKey = intent.getStringExtra("curentAPIKey")
+
+        val intention = intent.getBooleanExtra("intention", false)
+
+        if (userTextsSplit != null) {
+            for (text in userTextsSplit) {
+                Log.d("test12345", "Received text: $text")
             }
-        }*/
-
-
-        ButtonEpic.setOnClickListener{
-            setViewVisibility(scrollview_Epic)
-
-
+        } else {
+            Log.d("test12345", "No texts received")
         }
-        ButtonVib.setOnClickListener {
-            setViewVisibility(scrollview_FrequenceVibratoire)
-
+        if (userTexts != null) {
+            for (text in userTexts) {
+                Log.d("test123", "Received text: $text")
+            }
+        } else {
+            Log.d("test123", "No texts received")
         }
 
-        val puissanceinterieure = "puissanceinterieure.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        // Copier les fichiers audio dans le stockage interne
+        val puissanceinterieure = "puissanceinterieure.mp3"  // Nom du fichier dans le stockage interne
         val savedFilePathPuissanceinterieure = copyRawResourceToInternalStorage(R.raw.puissance, puissanceinterieure)
 
-        val renaissance = "renaissance.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val renaissance = "renaissance.mp3"
         val savedFilePathRenaissance = copyRawResourceToInternalStorage(R.raw.renaissance, renaissance)
 
-        val ressourceinfinie = "ressourceinfinie.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val ressourceinfinie = "ressourceinfinie.mp3"
         val savedFilePathRessourceinfinie = copyRawResourceToInternalStorage(R.raw.ressourceinfinie, ressourceinfinie)
 
-        val abondance = "abondance.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val abondance = "abondance.mp3"
         val savedFilePathAbondance = copyRawResourceToInternalStorage(R.raw.abondance, abondance)
 
-        val focus = "focus.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val focus = "focus.mp3"
         val savedFilePathFocus = copyRawResourceToInternalStorage(R.raw.focus, focus)
 
-        val intuition = "intuition.mp3"  // Le nom que vous souhaitez donner au fichier dans le stockage interne
+        val intuition = "intuition.mp3"
         val savedFilePathIntuition = copyRawResourceToInternalStorage(R.raw.intuition, intuition)
 
+        // Copier le fichier silence dans le stockage interne
+        val silence = "silence.mp3"
+        savedFilePathSilence = copyRawResourceToInternalStorage(R.raw.silence, silence)
+
+        // Configuration des boutons d'écoute pour les musiques Epic
         epicMusic1.setOnClickListener{
-            //playAudioFromRaw(R.raw.epicinstantcrush)
             if (savedFilePathPuissanceinterieure != null) {
-                // Jouer le fichier audio en utilisant la fonction playAudio
                 playAudio(savedFilePathPuissanceinterieure)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
@@ -191,7 +180,6 @@ class step3Music : AppCompatActivity() {
         }
         epicMusic2.setOnClickListener{
             if (savedFilePathRenaissance != null) {
-                // Jouer le fichier audio en utilisant la fonction playAudio
                 playAudio(savedFilePathRenaissance)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
@@ -200,16 +188,15 @@ class step3Music : AppCompatActivity() {
 
         epicMusic3.setOnClickListener{
             if (savedFilePathRessourceinfinie != null) {
-                // Jouer le fichier audio en utilisant la fonction playAudio
                 playAudio(savedFilePathRessourceinfinie)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
 
+        // Configuration des boutons d'écoute pour les fréquences vibratoires
         FrequenceVibratoire1.setOnClickListener{
             if (savedFilePathAbondance != null) {
-                // Jouer le fichier audio en utilisant la fonction playAudio
                 playAudio(savedFilePathAbondance)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
@@ -217,7 +204,6 @@ class step3Music : AppCompatActivity() {
         }
         FrequenceVibratoire2.setOnClickListener{
             if (savedFilePathFocus != null) {
-                // Jouer le fichier audio en utilisant la fonction playAudio
                 playAudio(savedFilePathFocus)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
@@ -225,139 +211,126 @@ class step3Music : AppCompatActivity() {
         }
         FrequenceVibratoire3.setOnClickListener{
             if (savedFilePathIntuition != null) {
-                // Jouer le fichier audio en utilisant la fonction playAudio
                 playAudio(savedFilePathIntuition)
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
 
+        // Configuration des boutons de choix pour les musiques Epic
         btn_ChoixEpic1.setOnClickListener {
-            // Jouer le fichier audio en utilisant la fonction playAudio
-            setTextInfo(btn_ChoixEpic1.text.toString(),savedFilePathPuissanceinterieure)
-
+            setTextInfo(btn_ChoixEpic1.text.toString(), savedFilePathPuissanceinterieure)
             setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
-
         }
         btn_ChoixEpic2.setOnClickListener {
-            setTextInfo(btn_ChoixEpic2.text.toString(),savedFilePathRenaissance)
+            setTextInfo(btn_ChoixEpic2.text.toString(), savedFilePathRenaissance)
             setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
-
         }
         btn_ChoixEpic3.setOnClickListener {
-            setTextInfo(btn_ChoixEpic3.text.toString(),savedFilePathRessourceinfinie)
+            setTextInfo(btn_ChoixEpic3.text.toString(), savedFilePathRessourceinfinie)
             setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
-
         }
+
+        // Configuration des boutons de choix pour les fréquences vibratoires
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
-            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(),savedFilePathAbondance)
+            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathAbondance)
             setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
-
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
-
-            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(),savedFilePathFocus)
+            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(), savedFilePathFocus)
             setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire3.setOnClickListener {
-
-            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(),savedFilePathIntuition)
+            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathIntuition)
             setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
 
+        // Configuration du bouton Silence
+        btn_silence.setOnClickListener {
+            if (savedFilePathSilence != null) {
+                setTextInfo("Silence", savedFilePathSilence)
+                setViewVisibilityGone(scrollview_Epic)
+                setViewVisibilityGone(scrollview_FrequenceVibratoire)
+                Toast.makeText(this, "Silence sélectionné", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Échec de la sauvegarde du fichier silencieux.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         btn_ok.setOnClickListener {
-
-
             if (userTextsSplit != null) {
-
-                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts,intention)
-
-
+                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts, intention)
             }
 
             if (songChoose == null) {
-                Toast.makeText(this, "Selectionner une musique", Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this, "Sélectionnez une musique", Toast.LENGTH_SHORT).show()
             } else {
-
                 val intent = Intent(this, Step4::class.java)
                 intent.putExtra("filePaths", songChoose)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", userTexts)
                 intent.putExtra("intention", intention)
 
-                if (userTextsSplit != null) {
-                    if(userTextsSplit.size>4){
-                        intent.putExtra("curentAPIKey", curentAPIKey)
-                        intent.putExtra("nom", nom)
-                        intent.putStringArrayListExtra("userTextsSplit", userTextsSplit)
-                    }
+                if (userTextsSplit != null && userTextsSplit.size > 4) {
+                    intent.putExtra("curentAPIKey", curentAPIKey)
+                    intent.putExtra("nom", nom)
+                    intent.putStringArrayListExtra("userTextsSplit", userTextsSplit)
                 }
 
-
-
                 startActivity(intent)
-
             }
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,-
-                systemBars.bottom
-            )
-            insets
+        // Initialisation des boutons Epic et Vibration
+        ButtonEpic.setOnClickListener{
+            setViewVisibility(scrollview_Epic)
         }
-
-        dynamicButtonContainer = findViewById(R.id.dynamicButtonContainer)
-        uploadButton = findViewById(R.id.uploadButton)
-        uploadButton.setOnClickListener {
-            openAudioFilePicker()
+        ButtonVib.setOnClickListener {
+            setViewVisibility(scrollview_FrequenceVibratoire)
         }
-
-        /*anotherButton.setOnClickListener {
-            // Ajouter une action pour un autre bouton si nécessaire
-            //Toast.makeText(this, anotherButton.text, Toast.LENGTH_SHORT).show()
-            savedFilePath?.let {
-                playAudio(it)
-            } ?: Toast.makeText(this, "No audio file selected", Toast.LENGTH_SHORT).show()
-        }*/
     }
 
-    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?,userTextsSplit: ArrayList<String>?,userTexts: ArrayList<String>?,intention: Boolean) {
+    /**
+     * Génère les fichiers TTS pour tous les textes.
+     */
+    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?, userTextsSplit: ArrayList<String>?, userTexts: ArrayList<String>?, intention: Boolean) {
         if (userTextsSplit != null) {
-            for (index in 2..3) {
+            for (index in 2..3) {  // Exemple : Générer pour les indices 2 et 3
                 if (index < userTextsSplit.size) {
                     val text = userTextsSplit[index]
                     if (nom != null && apikey != null) {
-                        textToSpeech(text, nom, index, apikey,userTexts)
+                        textToSpeech(text, nom, index, apikey, userTexts)
                     }
                 }
             }
         }
     }
 
+    /**
+     * Ouvre le sélecteur de fichiers audio.
+     */
     private fun openAudioFilePicker() {
         getContent.launch("audio/mpeg")
     }
 
-    private fun setTextInfo(text : String,curentSong: String?){
+    /**
+     * Met à jour l'information de sélection et le texte affiché.
+     */
+    private fun setTextInfo(text: String, curentSong: String?) {
         val textInfo = findViewById<TextView>(R.id.textView4)
         songChoose = curentSong
-        textInfo.setText(text)
+        textInfo.text = text
     }
 
-
+    /**
+     * Récupère le nom du fichier à partir de son URI.
+     */
     private fun getFileName(uri: Uri): String? {
         var result: String? = null
         if (uri.scheme == "content") {
@@ -378,6 +351,9 @@ class step3Music : AppCompatActivity() {
         return result
     }
 
+    /**
+     * Sauvegarde un fichier dans le stockage interne.
+     */
     private fun saveFileToInternalStorage(uri: Uri, fileName: String): String {
         val inputStream: InputStream? = contentResolver.openInputStream(uri)
         val file = File(filesDir, fileName)
@@ -397,40 +373,31 @@ class step3Music : AppCompatActivity() {
         return file.absolutePath
     }
 
-
-    /*private fun createDynamicButton(fileName: String, filePath: String) {
-
-        val button = Button(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply {
-                topMargin = 16
-            }
-            text = "Play: $fileName"
-        }
-
-        button.setOnClickListener {
-            playAudio(filePath)
-        }
-
-        dynamicButtonContainer.addView(button)
-    }*/
-
-
+    /**
+     * Copie une ressource brute dans le stockage interne et retourne son chemin.
+     */
     private fun copyRawResourceToInternalStorage(resourceId: Int, fileName: String): String? {
         val uri = Uri.parse("android.resource://${packageName}/$resourceId")
-        return saveFileToInternalStorage(uri, fileName)
+        return try {
+            saveFileToInternalStorage(uri, fileName)
+        } catch (e: Exception) {
+            Log.e("step3Music", "Error copying resource $fileName: ${e.message}")
+            null
+        }
     }
 
-    private fun setViewVisibilityGone(scrollview : ScrollView){
-
-        if(scrollview.visibility== View.VISIBLE){
+    /**
+     * Cache une ScrollView si elle est visible.
+     */
+    private fun setViewVisibilityGone(scrollview: ScrollView) {
+        if (scrollview.visibility == View.VISIBLE) {
             scrollview.visibility = View.GONE
         }
-
     }
 
+    /**
+     * Crée dynamiquement un bouton pour un fichier audio sélectionné.
+     */
     private fun createDynamicButton(fileName: String, filePath: String) {
         // Charger la disposition personnalisée
         val inflater = LayoutInflater.from(this)
@@ -447,7 +414,7 @@ class step3Music : AppCompatActivity() {
         btnMusicText.setOnClickListener {
             // Action lorsque le bouton texte est cliqué
             Toast.makeText(this, "You clicked on $fileName", Toast.LENGTH_SHORT).show()
-            setTextInfo(btnMusicText.text.toString(),filePath)
+            setTextInfo(btnMusicText.text.toString(), filePath)
         }
 
         // Définir l'action de clic sur l'ImageButton pour jouer la musique
@@ -459,32 +426,12 @@ class step3Music : AppCompatActivity() {
         dynamicButtonContainer.addView(rowView)
     }
 
-
-    private fun playAudioFromRaw(audioResId: Int) {
-        if (mediaPlayer == null) {
-            // Initialize and start playback
-            mediaPlayer = MediaPlayer.create(this, audioResId)
-            mediaPlayer?.start()
-            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
-        } else {
-            if (mediaPlayer?.isPlaying == true) {
-                // Stop playback
-                mediaPlayer?.stop()
-                mediaPlayer?.reset()
-                mediaPlayer = null
-                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
-            } else {
-                // Restart playback
-                mediaPlayer = MediaPlayer.create(this, audioResId)
-                mediaPlayer?.start()
-                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
+    /**
+     * Joue un fichier audio à partir de son chemin.
+     */
     private fun playAudio(filePath: String) {
         if (mediaPlayer == null) {
-            // Initialize and start playback
+            // Initialiser et démarrer la lecture
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(filePath)
                 prepare()
@@ -494,13 +441,13 @@ class step3Music : AppCompatActivity() {
             Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
         } else {
             if (mediaPlayer?.isPlaying == true && currentFilePath == filePath) {
-                // Stop playback
+                // Arrêter la lecture
                 mediaPlayer?.stop()
                 mediaPlayer?.reset()
                 currentFilePath = null
                 Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
             } else {
-                // Switch to new audio file or restart current one
+                // Changer de fichier audio ou redémarrer la lecture
                 mediaPlayer?.reset()
                 mediaPlayer?.setDataSource(filePath)
                 mediaPlayer?.prepare()
@@ -511,18 +458,22 @@ class step3Music : AppCompatActivity() {
         }
     }
 
-    private fun setViewVisibility(scrollview : ScrollView){
-
-        if(scrollview.visibility== View.GONE){
+    /**
+     * Change la visibilité d'une ScrollView.
+     */
+    private fun setViewVisibility(scrollview: ScrollView) {
+        if (scrollview.visibility == View.GONE) {
             scrollview.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             scrollview.visibility = View.GONE
         }
     }
 
-    private fun textToSpeech(text: String,nom:String, index: Int, voiceId: String,userTexts: ArrayList<String>?) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+    /**
+     * Texte à la synthèse vocale via l'API ElevenLabs.
+     */
+    private fun textToSpeech(text: String, nom: String, index: Int, voiceId: String, userTexts: ArrayList<String>?) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplacez avec votre clé API
 
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
@@ -533,22 +484,19 @@ class step3Music : AppCompatActivity() {
 
         // Générer un fichier avec un nom unique basé sur l'index
         val generatedFilePath = "$basePath/voice_$index.mp3"
-        //val file = File(generatedFilePath)
         userTexts?.add(generatedFilePath)
 
-
         val fullText = "moi $nom, $text."
-
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
-            put("language_code", "fr") // Set language code to French
+            put("model_id", "eleven_turbo_v2_5") // Utiliser un modèle multilingue
+            put("language_code", "fr") // Définir le code langue en français
             put("voice_settings", JSONObject().apply {
                 put("stability", 0.5)
                 put("similarity_boost", 0.75)
-                // You can adjust these values to fine-tune the accent
+                // Vous pouvez ajuster ces valeurs pour affiner l'accent
             })
         }
 
@@ -567,13 +515,11 @@ class step3Music : AppCompatActivity() {
         // Enqueue la requête pour qu'elle se fasse de manière asynchrone
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
+                Log.e("step3Music", "Erreur lors de l'appel API : ${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body
-
-
 
                 if (responseBody != null) {
                     // Sauvegarder le fichier audio avec un nom unique basé sur l'index
@@ -585,9 +531,7 @@ class step3Music : AppCompatActivity() {
                         outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
                         outputStream.close()
 
-                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
-
-                        // Ajouter le chemin du fichier généré à la liste `generateFiles`
+                        Log.d("step3Music", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
 
                         // Notification de succès
                         runOnUiThread {
@@ -595,19 +539,21 @@ class step3Music : AppCompatActivity() {
                         }
 
                     } catch (e: IOException) {
-                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                        Log.e("step3Music", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
                     }
 
                 } else {
-                    Log.d("testApi", "Le corps de la réponse est null")
+                    Log.d("step3Music", "Le corps de la réponse est null")
                 }
             }
         })
     }
 
-
-    private fun textToSpeechIntention(text: String,index: Int, voiceId: String,userTexts: ArrayList<String>?) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+    /**
+     * Texte à la synthèse vocale pour les intentions.
+     */
+    private fun textToSpeechIntention(text: String, index: Int, voiceId: String, userTexts: ArrayList<String>?) {
+        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplacez avec votre clé API
 
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
@@ -618,22 +564,19 @@ class step3Music : AppCompatActivity() {
 
         // Générer un fichier avec un nom unique basé sur l'index
         val generatedFilePath = "$basePath/voice_$index.mp3"
-        //val file = File(generatedFilePath)
         userTexts?.add(generatedFilePath)
 
-
         val fullText = "$text."
-
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
-            put("language_code", "fr") // Set language code to French
+            put("model_id", "eleven_turbo_v2_5") // Utiliser un modèle multilingue
+            put("language_code", "fr") // Définir le code langue en français
             put("voice_settings", JSONObject().apply {
                 put("stability", 0.5)
                 put("similarity_boost", 0.75)
-                // You can adjust these values to fine-tune the accent
+                // Vous pouvez ajuster ces valeurs pour affiner l'accent
             })
         }
 
@@ -652,13 +595,11 @@ class step3Music : AppCompatActivity() {
         // Enqueue la requête pour qu'elle se fasse de manière asynchrone
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
+                Log.e("step3Music", "Erreur lors de l'appel API : ${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body
-
-
 
                 if (responseBody != null) {
                     // Sauvegarder le fichier audio avec un nom unique basé sur l'index
@@ -670,9 +611,7 @@ class step3Music : AppCompatActivity() {
                         outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
                         outputStream.close()
 
-                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
-
-                        // Ajouter le chemin du fichier généré à la liste `generateFiles`
+                        Log.d("step3Music", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
 
                         // Notification de succès
                         runOnUiThread {
@@ -680,11 +619,11 @@ class step3Music : AppCompatActivity() {
                         }
 
                     } catch (e: IOException) {
-                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
+                        Log.e("step3Music", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
                     }
 
                 } else {
-                    Log.d("testApi", "Le corps de la réponse est null")
+                    Log.d("step3Music", "Le corps de la réponse est null")
                 }
             }
         })
@@ -695,6 +634,9 @@ class step3Music : AppCompatActivity() {
         stopAudio()
     }
 
+    /**
+     * Arrête la lecture audio si en cours.
+     */
     private fun stopAudio() {
         mediaPlayer?.let {
             if (it.isPlaying) {
@@ -711,5 +653,4 @@ class step3Music : AppCompatActivity() {
         mediaPlayer?.release()
         mediaPlayer = null
     }
-
 }

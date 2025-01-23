@@ -1,125 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
     tools:context=".Advices">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="208dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="Conseils Pratiques"
-        android:textSize="27sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="392dp"
-        android:layout_height="620dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <!-- Contenu principal de l'activité -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/activity_background"
+        tools:context=".Advices">
+        <ImageButton
+            android:id="@+id/btn_burger"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:contentDescription="@string/menu"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_3_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- Titre -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="208dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="32dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:text="Conseils Pratiques"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txt_explain"
-                android:layout_width="match_parent"
-                android:layout_height="340dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Écoute pendant 21 jours cet audio autant que tu le peux, veux, au moins une fois par jour, et répète les phrases à voix haute pendant les moments de silence que tu as laissés. Dis les phrases avec la conviction qu'elles sont vraies. Ressens que tu es déjà ce que tu veux devenir. Ressens de la gratitude pour cet être illimité que tu es."
-                android:textSize="22sp" />
+        <!-- ScrollView Principal -->
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
 
-            <TextView
-                android:id="@+id/txt_explain2"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="640dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Pour renforcer l’imprégnation dans ton système nerveux de ces affirmations – ces nouvelles croyances que TU as choisies pour atteindre tes objectifs – bouge ton corps et contracte tes muscles. Ce ne sont pas de simples affirmations : ce sont des Déclarations Puissantes. Trouve l’Énergie de la Conviction en toi.
+                android:orientation="vertical">
+
+                <!-- Texte Explicatif 1 -->
+                <TextView
+                    android:id="@+id/txt_explain"
+                    android:layout_width="match_parent"
+                    android:layout_height="340dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Écoute pendant 21 jours cet audio autant que tu le peux, veux, au moins une fois par jour, et répète les phrases à voix haute pendant les moments de silence que tu as laissés. Dis les phrases avec la conviction qu'elles sont vraies. Ressens que tu es déjà ce que tu veux devenir. Ressens de la gratitude pour cet être illimité que tu es."
+                    android:textSize="22sp" />
+
+                <!-- Texte Explicatif 2 -->
+                <TextView
+                    android:id="@+id/txt_explain2"
+                    android:layout_width="match_parent"
+                    android:layout_height="640dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="50dp"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Pour renforcer l’imprégnation dans ton système nerveux de ces affirmations – ces nouvelles croyances que TU as choisies pour atteindre tes objectifs – bouge ton corps et contracte tes muscles. Ce ne sont pas de simples affirmations : ce sont des Déclarations Puissantes. Trouve l’Énergie de la Conviction en toi.
 Ressens ce que cette nouvelle vérité éveille en toi : sensations, émotions, pensées et images. Cet exercice transforme tes pensées, donc ta vibration, et par conséquent tes actions, attirant ainsi l’expérience que tu as choisie. Intègre la visualisation à cette pratique pour en amplifier l’effet."
-                android:textSize="22sp" />
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/txt_explain3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:text="La Visualisation"
-                android:textSize="27dp"
-                android:textStyle="bold" />
+                <!-- Titre de la Visualisation -->
+                <TextView
+                    android:id="@+id/txt_explain3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="La Visualisation"
+                    android:textSize="27dp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_explain4"
-                android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Ton cerveau ne fait pas la différence entre l'imagination et la réalité. Si tu imagines ton plat préféré, tu vas saliver. Si tu imagines des situations joyeuses, tu vas vraiment te sentir heureux. L'imagination permet donc de modifier ton état vibratoire."
-                android:textSize="22sp" />
+                <!-- Texte Explicatif 3 -->
+                <TextView
+                    android:id="@+id/txt_explain4"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Ton cerveau ne fait pas la différence entre l'imagination et la réalité. Si tu imagines ton plat préféré, tu vas saliver. Si tu imagines des situations joyeuses, tu vas vraiment te sentir heureux. L'imagination permet donc de modifier ton état vibratoire."
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/txt_explain5"
-                android:layout_width="match_parent"
-                android:layout_height="620dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Pour changer ta vibration de manière encore plus puissante, tu dois aller au-delà des mots. Lorsque tu écoutes tes affirmations et que tu les répètes à voix haute, visualise-toi en train de vivre ces affirmations. \nUtilise ton imagination pour les vivre pleinement et les ressentir. Plus tu expérimentes tes affirmations par l'imagination, plus tu modifies ta vibration, attirant ainsi l'expérience réelle dans ta vie.\n\nPour t'aider, focalise-toi sur tes sens : qu'est-ce que tu vois, sens, entends, touches, goûtes ?"
-                android:textSize="22sp" />
+                <!-- Texte Explicatif 4 -->
+                <TextView
+                    android:id="@+id/txt_explain5"
+                    android:layout_width="match_parent"
+                    android:layout_height="620dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Pour changer ta vibration de manière encore plus puissante, tu dois aller au-delà des mots. Lorsque tu écoutes tes affirmations et que tu les répètes à voix haute, visualise-toi en train de vivre ces affirmations.
+Utilise ton imagination pour les vivre pleinement et les ressentir. Plus tu expérimentes tes affirmations par l'imagination, plus tu modifies ta vibration, attirant ainsi l'expérience réelle dans ta vie.
 
-            <Button
-                android:id="@+id/btnNewAdvice"
-                android:layout_width="316dp"
-                android:layout_height="74dp"
-                android:layout_marginBottom="10dp"
-                android:text="Mes Affirmations"
-                android:textSize="24dp" />
+Pour t'aider, focalise-toi sur tes sens : qu'est-ce que tu vois, sens, entends, touches, goûtes ?"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/spaceBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <!-- Bouton Mes Affirmations -->
+                <Button
+                    android:id="@+id/btnNewAdvice"
+                    android:layout_width="316dp"
+                    android:layout_height="74dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Mes Affirmations"
+                    android:textSize="24dp" />
 
-            <Button
-                android:id="@+id/btnMenu"
-                android:layout_width="316dp"
-                android:layout_height="74dp"
-                android:text="Menu Principal"
-                android:textSize="24dp" />
+                <!-- Espace (Optionnel) -->
+                <TextView
+                    android:id="@+id/spaceBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-        </LinearLayout>
-    </ScrollView>
+                <!-- Bouton Menu Principal -->
+                <Button
+                    android:id="@+id/btnMenu"
+                    android:layout_width="316dp"
+                    android:layout_height="74dp"
+                    android:text="Menu Principal"
+                    android:textSize="24dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Menu de navigation latéral -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

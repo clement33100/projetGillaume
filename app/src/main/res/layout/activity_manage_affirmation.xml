@@ -1,100 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
-    tools:context=".step1FirstName">
+    tools:context=".ManageAffirmationActivity">
 
-
-    <ProgressBar
-        android:id="@+id/progressBarManageAffirmation"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="227dp"
-        android:layout_height="75dp"
-        android:layout_margin="16dp"
-        android:indeterminateOnly="false"
-        android:max="100"
-        android:progress="0"
-        android:progressBackgroundTint="@color/light_green"
-        android:progressTint="@color/green"
-        android:scaleY="2"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonPauseManageAffirmation" />
-
-    <ImageButton
-        android:id="@+id/imageButtonPauseManageAffirmation"
-        android:layout_width="65dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="50dp"
-        android:background="#EFEFEF"
-        android:contentDescription="TODO"
-        android:src="@drawable/imgpause"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progressBarManageAffirmation"
-        tools:srcCompat="@drawable/imgunpause" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <!-- Contenu principal de l'activité -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="320dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@drawable/activity_background"
+        tools:context=".ManageAffirmationActivity">
 
-        <Button
-            android:id="@+id/downloadButton"
-            android:layout_width="316dp"
+        <ImageButton
+            android:id="@+id/btn_burger"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:contentDescription="@string/menu"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_3_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- ProgressBar -->
+        <ProgressBar
+            android:id="@+id/progressBarManageAffirmation"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="227dp"
+            android:layout_height="75dp"
+            android:layout_margin="16dp"
+            android:indeterminateOnly="false"
+            android:max="100"
+            android:progress="0"
+            android:progressBackgroundTint="@color/light_green"
+            android:progressTint="@color/green"
+            android:scaleY="2"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonPauseManageAffirmation" />
+
+        <!-- ImageButton pour Play/Pause -->
+        <ImageButton
+            android:id="@+id/imageButtonPauseManageAffirmation"
+            android:layout_width="65dp"
             android:layout_height="74dp"
-            android:layout_marginTop="16dp"
-            android:text="Télécharger"
-            android:textColor="@color/white"
-            android:textSize="24dp" />
+            android:layout_marginStart="50dp"
+            android:background="#EFEFEF"
+            android:contentDescription="TODO"
+            android:src="@drawable/imgpause"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/progressBarManageAffirmation"
+            tools:srcCompat="@drawable/imgunpause" />
 
-        <Button
-            android:id="@+id/renameButton"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="30dp"
-            android:text="Renommer"
-            android:textSize="24dp" />
+        <!-- LinearLayout pour les boutons -->
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="320dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/red"
-            android:text="Supprimer"
-            android:textColor="@color/white"
-            android:textSize="24dp"
-            android:textStyle="bold" />
+            <!-- Bouton Télécharger -->
+            <Button
+                android:id="@+id/downloadButton"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="16dp"
+                android:text="Télécharger"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="50dp"
-            android:text="Menu principal"
-            android:textSize="24dp" />
-    </LinearLayout>
+            <!-- Bouton Renommer -->
+            <Button
+                android:id="@+id/renameButton"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="30dp"
+                android:text="Renommer"
+                android:textSize="24dp" />
 
-    <TextView
-        android:id="@+id/fileNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="27dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <!-- Bouton Supprimer -->
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/red"
+                android:text="Supprimer"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Bouton Menu Principal -->
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="50dp"
+                android:text="Menu principal"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <!-- TextView pour le nom du fichier -->
+        <TextView
+            android:id="@+id/fileNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="27dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Menu de navigation latéral -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

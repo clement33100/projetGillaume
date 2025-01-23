@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/btn_menu"
-        android:title="Menu Principale"/>
-    <item
-        android:id="@+id/btn_new"
-        android:title="Créer Nouveau"/>
-    <item
         android:id="@+id/btn_affirm"
-        android:title="Mes Affirmations"/>
+        android:title="Menu Principal" />
     <item
         android:id="@+id/btn_advices"
         android:title="Conseil Pratiques" />

@@ -5,12 +5,17 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.Gravity
+import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import java.io.File
 import java.io.IOException
 
-class ManageAffirmationActivity : AppCompatActivity() {
+class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     private lateinit var filePath: String
     private var mediaPlayer: MediaPlayer? = null
@@ -19,9 +24,40 @@ class ManageAffirmationActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private val handler = android.os.Handler()
 
+    private lateinit var downloadButton: Button
+    private lateinit var renameButton: Button
+    private lateinit var deleteButton: Button
+    private lateinit var backButton: Button
+    private lateinit var fileNameTextView: TextView
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_manage_affirmation  // Fournit le layout spécifique à cette activité
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_manage_affirmation)
+        enableEdgeToEdge()
+
+        // Configuration des Insets UI
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
+        }
+
+        // Initialisation des éléments UI
+        fileNameTextView = findViewById(R.id.fileNameTextView)
+        playPauseButton = findViewById(R.id.imageButtonPauseManageAffirmation)
+        progressBar = findViewById(R.id.progressBarManageAffirmation)
+        downloadButton = findViewById(R.id.downloadButton)
+        renameButton = findViewById(R.id.renameButton)
+        deleteButton = findViewById(R.id.deleteButton)
+        backButton = findViewById(R.id.backButton)
 
         // Récupérer le chemin du fichier depuis l'intent
         filePath = intent.getStringExtra("filePath") ?: run {
@@ -31,13 +67,7 @@ class ManageAffirmationActivity : AppCompatActivity() {
         }
 
         val file = File(filePath)
-        val fileNameTextView = findViewById<TextView>(R.id.fileNameTextView)
-        playPauseButton = findViewById(R.id.imageButtonPauseManageAffirmation)
-        progressBar = findViewById(R.id.progressBarManageAffirmation)
-        val deleteButton = findViewById<Button>(R.id.deleteButton)
-        val renameButton = findViewById<Button>(R.id.renameButton)
-        val backButton = findViewById<Button>(R.id.backButton)
-        val downloadButton = findViewById<Button>(R.id.downloadButton) // Add download button in XML
+
         // Afficher le nom du fichier
         fileNameTextView.text = file.nameWithoutExtension
 
@@ -61,7 +91,6 @@ class ManageAffirmationActivity : AppCompatActivity() {
             }
         }
 
-
         // Bouton pour télécharger le fichier
         downloadButton.setOnClickListener {
             val fileToDownload = File(filePath) // Utiliser le chemin mis à jour
@@ -71,7 +100,6 @@ class ManageAffirmationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Fichier introuvable pour le téléchargement.", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         // Bouton pour supprimer le fichier
         deleteButton.setOnClickListener {
@@ -113,12 +141,8 @@ class ManageAffirmationActivity : AppCompatActivity() {
             showRenameDialog(file)
         }
 
-        // Bouton pour retourner au menu principal
-        backButton.setOnClickListener {
-            val intent = Intent(this, mesAffirmations::class.java)
-            startActivity(intent)
-        }
     }
+
     private fun downloadFile(file: File) {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Toast.makeText(this, "Stockage externe non disponible.", Toast.LENGTH_SHORT).show()
@@ -136,8 +160,6 @@ class ManageAffirmationActivity : AppCompatActivity() {
             Log.e("ManageAffirmationActivity", "Erreur : ${e.message}")
         }
     }
-
-
 
     private fun playMusic() {
         mediaPlayer?.let {
@@ -206,12 +228,9 @@ class ManageAffirmationActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
         val intent = Intent(this, mesAffirmationsDetails::class.java)
         startActivity(intent)
-        finish() // Optional, to remove this activity from the back stack
-
-        // Call the default back button behavior
+        finish() // Optionnel, pour retirer cette activité de la pile
         super.onBackPressed()
     }
 

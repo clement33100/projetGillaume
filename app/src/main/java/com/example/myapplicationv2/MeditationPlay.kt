@@ -8,27 +8,28 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import com.arthenica.ffmpegkit.FFmpegKit
 import com.arthenica.ffmpegkit.ReturnCode
 
-class MeditationPlay : AppCompatActivity() {
+class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     // MediaPlayer Principal
     private var mediaPlayer: MediaPlayer? = null
-
-
 
     // UI Elements
     private lateinit var progressBar: ProgressBar
@@ -36,42 +37,58 @@ class MeditationPlay : AppCompatActivity() {
     private lateinit var btnOK: Button
     private lateinit var editText: EditText
 
+    // Overlay UI Elements
+    private lateinit var circularProgressContainer: View
+    private lateinit var circularProgressIndicator: CircularProgressIndicator
+    private lateinit var circularProgressText: TextView
+
     // Handlers
     private val mainHandler = Handler(Looper.getMainLooper())
 
     // State
     private var isPaused = false
+    private var isTrackingProgress = false
 
     // Constants
     companion object {
-        private const val FADE_IN_DURATION_SECONDS = 5 // 5 secondes
         private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
         private const val AFFIRMATION_DELAY_SECONDS = 10 // 10 secondes
         private const val INTRO_DELAY_MS = 3000L // 3 secondes (peut être ajusté si nécessaire)
     }
 
+    override fun getLayoutId(): Int {
+        return R.layout.meditation_play  // Utilisez le layout adapté
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.meditation_play)
 
         // Configuration des Insets UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
 
-        // Initialisation des éléments UI
+        // Initialisation des éléments UI existants
         progressBar = findViewById(R.id.progressBar)
         pauseButton = findViewById(R.id.imageButtonPause)
         btnOK = findViewById(R.id.buttonOkMeditation)
         editText = findViewById(R.id.nameAffirm)
 
-        var name :String
+        // Initialisation des vues Overlay
+        circularProgressContainer = findViewById(R.id.circularProgressContainer)
+        circularProgressIndicator = findViewById(R.id.circularProgressIndicator)
+        circularProgressText = findViewById(R.id.circularProgressText)
 
+        // Configuration du listener pour le bouton OK
         btnOK.setOnClickListener {
-
             val intent = Intent(this, Advices::class.java)
 
             // Récupérer le nom saisi ou utiliser "affirmation" par défaut
@@ -122,8 +139,6 @@ class MeditationPlay : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
         // Copie des ressources brutes vers le stockage interne
         val bowlStartFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")
         val bowlEndFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
@@ -168,6 +183,14 @@ class MeditationPlay : AppCompatActivity() {
             // Copier la musique sélectionnée dans le stockage interne
             copyExternalMusic(filePaths, "recorded_music.mp3") { copySuccess ->
                 if (copySuccess) {
+                    runOnUiThread {
+                        // Afficher le logo gris pendant le chargement
+                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappligrey)
+
+                        // Afficher l'Overlay avec indicateur circulaire
+                        showOverlay()
+                    }
+
                     // Mixage du bol + musique avec fade et intégration des affirmations et intro
                     val finalOutputPath = "${filesDir.absolutePath}/final_audio.mp3"
                     mixAudioFilesWithFade(
@@ -182,6 +205,14 @@ class MeditationPlay : AppCompatActivity() {
                             if (mixSuccess) {
                                 // Lecture de l'audio mixé final
                                 playMainAudio(finalOutputPath, selectedDurationInSeconds)
+                            } else {
+                                // Masquer l'Overlay en cas d'échec
+                                runOnUiThread {
+                                    // Remplacer le logo gris par le logo normal
+                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+
+                                    hideOverlay()
+                                }
                             }
                         }
                     )
@@ -195,6 +226,8 @@ class MeditationPlay : AppCompatActivity() {
         // Configuration du listener pour le bouton pause
         setupPauseButton()
     }
+
+    // Fonctions existantes
 
     /**
      * Copie une ressource brute dans le stockage interne et retourne son chemin absolu.
@@ -272,7 +305,27 @@ class MeditationPlay : AppCompatActivity() {
     }
 
     /**
-     * Mixe le son du bol tibétain, de la musique principale, et des affirmations avec fade-in et fade-out,
+     * Affiche l'overlay avec l'indicateur de progression.
+     */
+    private fun showOverlay() {
+        runOnUiThread {
+            circularProgressContainer.visibility = View.VISIBLE
+            circularProgressIndicator.progress = 0
+            circularProgressText.text = "0%"
+        }
+    }
+
+    /**
+     * Masque l'overlay.
+     */
+    private fun hideOverlay() {
+        runOnUiThread {
+            circularProgressContainer.visibility = View.GONE
+        }
+    }
+
+    /**
+     * Mixe le son du bol tibétain, de la musique principale, et des affirmations avec fade-out,
      * ajoute le bol tibétain au début et à la fin de l'enregistrement, et ajuste la durée totale.
      *
      * @param bowlStartPath Chemin du fichier audio du bol tibétain (début).
@@ -294,6 +347,8 @@ class MeditationPlay : AppCompatActivity() {
         introPath: String?, // Chemin de l'intro (peut être null)
         callback: (Boolean) -> Unit
     ) {
+        showOverlay() // Afficher l'overlay avant de commencer le mixage
+
         // Vérifier que les fichiers existent
         val bowlStartFile = File(bowlStartPath)
         val musicFile = File(musicPath)
@@ -303,6 +358,7 @@ class MeditationPlay : AppCompatActivity() {
             Log.e("MeditationPlay", "Fichier du bol tibétain de début introuvable: $bowlStartPath")
             runOnUiThread {
                 Toast.makeText(this, "Fichier du bol tibétain de début introuvable.", Toast.LENGTH_SHORT).show()
+                hideOverlay()
             }
             callback(false)
             return
@@ -312,6 +368,7 @@ class MeditationPlay : AppCompatActivity() {
             Log.e("MeditationPlay", "Fichier de musique introuvable: $musicPath")
             runOnUiThread {
                 Toast.makeText(this, "Fichier de musique introuvable.", Toast.LENGTH_SHORT).show()
+                hideOverlay()
             }
             callback(false)
             return
@@ -321,6 +378,7 @@ class MeditationPlay : AppCompatActivity() {
             Log.e("MeditationPlay", "Fichier du bol tibétain de fin introuvable: $bowlEndPath")
             runOnUiThread {
                 Toast.makeText(this, "Fichier du bol tibétain de fin introuvable.", Toast.LENGTH_SHORT).show()
+                hideOverlay()
             }
             callback(false)
             return
@@ -364,18 +422,11 @@ class MeditationPlay : AppCompatActivity() {
 
         // Ajouter l'intro si disponible
         if (introPath != null) {
-            // Input indices:
-            // 0: bowl_start
-            // 1: music_looped
-            // 2: bowl_end
-            // 3: intro
-            // 4+: affirmations
-
             // Appliquer une réduction de volume uniquement à la musique
             filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ") // music_looped (réduction supplémentaire de 6dB)
 
-            // Appliquer le fade-in et fade-out à la musique
-            filterComplexBuilder.append("[music_scaled]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
+            // Appliquer le fade-out à la musique
+            filterComplexBuilder.append("[music_scaled]afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
 
             // Concaténer bowl_start et intro sans réduction de volume
             filterComplexBuilder.append("[0:a][3:a]concat=n=2:v=0:a=1[start_intro]; ")
@@ -383,17 +434,11 @@ class MeditationPlay : AppCompatActivity() {
             // Mixer bowl_start + intro avec musique fadeée
             filterComplexBuilder.append("[start_intro][music_faded]amix=inputs=2:duration=longest[mix1]; ")
         } else {
-            // Input indices sans intro:
-            // 0: bowl_start
-            // 1: music_looped
-            // 2: bowl_end
-            // 3+: affirmations
-
             // Appliquer une réduction de volume uniquement à la musique
             filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ") // music_looped (réduction supplémentaire de 6dB)
 
-            // Appliquer le fade-in et fade-out à la musique
-            filterComplexBuilder.append("[music_scaled]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
+            // Appliquer le fade-out à la musique
+            filterComplexBuilder.append("[music_scaled]afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
 
             // Mixer bowl_start avec musique fadeée sans réduction de volume
             filterComplexBuilder.append("[0:a][music_faded]amix=inputs=2:duration=longest[mix1]; ")
@@ -459,7 +504,7 @@ class MeditationPlay : AppCompatActivity() {
         // Ajouter les affirmations
         for (i in 0 until limitedNumberOfAffirmations) {
             val affirmationPath = affirmationPaths[i % affirmationPaths.size] // Boucler si nécessaire
-            ffmpegCommandBuilder.append("-i \"$affirmationPath\" ") // Inputs 4+: affirmations si intro est activé, sinon 3+
+            ffmpegCommandBuilder.append("-i \"$affirmationPath\" ") // Inputs 4+: affirmations
         }
 
         // Filter complex
@@ -477,8 +522,8 @@ class MeditationPlay : AppCompatActivity() {
 
         Log.d("MeditationPlay", "Executing FFmpeg command: $ffmpegCommand")
 
-        // Exécuter la commande FFmpeg
-        FFmpegKit.executeAsync(ffmpegCommand) { session ->
+        // Exécuter la commande FFmpeg avec un LogCallback pour capturer les logs en temps réel
+        FFmpegKit.executeAsync(ffmpegCommand, { session ->
             val returnCode = session.returnCode
             val logs = session.allLogsAsString
 
@@ -486,16 +531,58 @@ class MeditationPlay : AppCompatActivity() {
                 runOnUiThread {
                     Toast.makeText(this, "Mixage réussi.", Toast.LENGTH_SHORT).show()
                     Log.d("MeditationPlay", "Mixage réussi. Fichier final à: $outputPath")
-                    callback(true)
+
+                    hideOverlay() // Masquer l'overlay après le succès
+
+                    // Remplacer le logo gris par le logo normal
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+
+                    // Mettre à jour le pourcentage à 100%
+                    circularProgressIndicator.progress = 100
+                    circularProgressText.text = "100%"
+                    circularProgressText.contentDescription = "Progression de l'audio : 100 pour cent"
+
+                    // Masquer le conteneur circulaire après un délai sans animation
+                    mainHandler.postDelayed({
+                        hideOverlay()
+                    }, 1000)
                 }
+                callback(true)
             } else {
                 runOnUiThread {
                     Toast.makeText(this, "Échec du mixage.", Toast.LENGTH_SHORT).show()
                     Log.e("MeditationPlay", "Échec du mixage: $logs")
-                    callback(false)
+
+                    hideOverlay() // Masquer l'overlay en cas d'échec
+
+                    // Remplacer le logo gris par le logo normal même en cas d'échec
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                }
+                callback(false)
+            }
+        }, { log ->
+            // Mise à jour du pourcentage de progression
+            val message = log.message
+
+            val timeRegex = Regex("time=(\\d+):(\\d+):(\\d+\\.\\d+)")
+            val matchResult = timeRegex.find(message)
+
+            if (matchResult != null) {
+                val (hours, minutes, seconds) = matchResult.destructured
+                val currentTimeSeconds = hours.toInt() * 3600 + minutes.toInt() * 60 + seconds.toFloat()
+
+                val percentage = ((currentTimeSeconds / selectedDurationInSeconds) * 100).toInt().coerceIn(0, 100)
+
+                runOnUiThread {
+                    circularProgressIndicator.progress = percentage
+                    circularProgressText.text = "$percentage%"
+                    circularProgressText.contentDescription = "Progression de l'audio : $percentage pour cent"
+                    Log.d("MeditationPlay", "Progression FFmpeg: $percentage%")
                 }
             }
-        }
+        }, { statistics ->
+            // Vous pouvez utiliser ce callback pour des statistiques supplémentaires si nécessaire
+        })
     }
 
     /**
@@ -548,12 +635,15 @@ class MeditationPlay : AppCompatActivity() {
                     setVolume(0.6f, 0.6f) // Volume réduit davantage pour compenser les ajustements de volume
                 }
 
-                // Configuration de la ProgressBar
-                progressBar.max = durationTime
-                progressBar.progress = 0
+                // **Supprimer ou commenter l'appel à showOverlay()**
+                /*
+                runOnUiThread {
+                    showOverlay()
+                }
+                */
 
-                // Démarrer le suivi de la progression
-                startProgressTracking(durationTime)
+                // Démarrer le suivi de la progression avec le cercle
+                startProgressTrackingWithCircularIndicator(durationTime)
 
                 mediaPlayer?.setOnCompletionListener {
                     Log.d("MeditationPlay", "Main audio playback completed.")
@@ -570,28 +660,44 @@ class MeditationPlay : AppCompatActivity() {
     }
 
     /**
-     * Démarre le suivi de la progression de la lecture principale de l'audio.
+     * Démarre le suivi de la progression de la lecture principale de l'audio en utilisant le CircularProgressIndicator.
      *
      * @param durationTime Durée de la lecture en secondes.
      */
-    private fun startProgressTracking(durationTime: Int) {
+    private fun startProgressTrackingWithCircularIndicator(durationTime: Int) {
+        if (isTrackingProgress) {
+            Log.d("MeditationPlay", "Progress tracking already in progress. Skipping.")
+            return
+        }
+
+        isTrackingProgress = true
         var remainingTime = durationTime
 
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (remainingTime > 0) {
                     remainingTime--
-                    progressBar.progress = durationTime - remainingTime
+                    val currentProgress = durationTime - remainingTime
+                    val percentage = ((currentProgress / durationTime.toFloat()) * 100).toInt().coerceIn(0, 100)
+
+                    runOnUiThread {
+                        circularProgressIndicator.progress = percentage
+                        circularProgressText.text = "$percentage%"
+                        circularProgressText.contentDescription = "Progression de l'audio : $percentage pour cent"
+                    }
+
                     mainHandler.postDelayed(this, 1000) // Mise à jour toutes les secondes
 
-                    when (remainingTime) {
-                        0 -> { // Fin de la lecture
-                            Log.d("MeditationPlay", "Playback duration completed. Stopping audio.")
-                            stopAllAudio()
-                        }
+                    if (remainingTime == 0) {
+                        Log.d("MeditationPlay", "Playback duration completed. Stopping audio.")
+                        stopAllAudio()
                     }
                 } else {
-                    progressBar.progress = durationTime
+                    runOnUiThread {
+                        circularProgressIndicator.progress = 100
+                        circularProgressText.text = "100%"
+                        circularProgressText.contentDescription = "Progression de l'audio : 100 pour cent"
+                    }
                     Log.d("MeditationPlay", "Playback duration completed. Stopping audio.")
                     stopAllAudio()
                 }
@@ -644,6 +750,15 @@ class MeditationPlay : AppCompatActivity() {
 
         // Supprimer tous les callbacks
         mainHandler.removeCallbacksAndMessages(null)
+        isTrackingProgress = false
+
+        // Masquer l'overlay et les autres éléments
+        hideOverlay()
+
+        runOnUiThread {
+            // Masquer la ProgressBar si nécessaire
+            progressBar.visibility = View.GONE
+        }
 
         Log.d("MeditationPlay", "All audio players stopped and released.")
     }

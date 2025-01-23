@@ -1,154 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
     tools:context=".Step4">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="min"
-        app:layout_constraintBottom_toBottomOf="@+id/numberPickerMinutes"
-        app:layout_constraintEnd_toEndOf="@+id/numberPickerSeconds"
-        app:layout_constraintStart_toStartOf="@+id/numberPickerMinutes"
-        app:layout_constraintTop_toTopOf="@+id/numberPickerMinutes" />
+    <!-- Contenu principal de l'activité -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <!-- Bouton Menu Burger en haut à gauche -->
+        <ImageButton
+            android:id="@+id/btn_burger"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:contentDescription="@string/menu"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu_3_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Votre contenu existant -->
+        <TextView
+            android:id="@+id/txt_explain"
+            android:layout_width="237dp"
+            android:layout_height="108dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="CHOISIS LA DURÉE DE TON FICHIER AUDIO"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sec"
-        app:layout_constraintBottom_toBottomOf="@+id/numberPickerSeconds"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/numberPickerMinutes"
-        app:layout_constraintTop_toTopOf="@+id/numberPickerSeconds" />
+        <!-- NumberPickers pour Heures, Minutes, Secondes -->
+        <NumberPicker
+            android:id="@+id/numberPickerHours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/intro"
+            app:layout_constraintEnd_toEndOf="@+id/txt_explain"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+            app:layout_constraintVertical_bias="0.336" />
 
-    <TextView
-        android:id="@+id/txt_explain"
-        android:layout_width="237dp"
-        android:layout_height="108dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="CHOISIS LA DURÉE DE TON FICHIER AUDIO"
-        android:textSize="27sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <NumberPicker
+            android:id="@+id/numberPickerMinutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/intro"
+            app:layout_constraintEnd_toStartOf="@+id/numberPickerSeconds"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toEndOf="@+id/numberPickerHours"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+            app:layout_constraintVertical_bias="0.336" />
 
-    <Switch
-        android:id="@+id/intro"
-        android:layout_width="110dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="64dp"
-        android:gravity="center"
-        android:text="Intro"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-        app:layout_constraintVertical_bias="0.723" />
+        <NumberPicker
+            android:id="@+id/numberPickerSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/intro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.443"
+            app:layout_constraintStart_toStartOf="@+id/txt_explain"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+            app:layout_constraintVertical_bias="0.336" />
 
-    <Button
-        android:id="@+id/btn_Valid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ok"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro"
-        app:layout_constraintVertical_bias="0.825" />
+        <!-- Labels des NumberPickers -->
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="h"
+            app:layout_constraintBottom_toBottomOf="@+id/numberPickerHours"
+            app:layout_constraintEnd_toEndOf="@+id/numberPickerMinutes"
+            app:layout_constraintStart_toStartOf="@+id/numberPickerHours"
+            app:layout_constraintTop_toTopOf="@+id/numberPickerHours" />
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="min"
+            app:layout_constraintBottom_toBottomOf="@+id/numberPickerMinutes"
+            app:layout_constraintEnd_toEndOf="@+id/numberPickerSeconds"
+            app:layout_constraintStart_toStartOf="@+id/numberPickerMinutes"
+            app:layout_constraintTop_toTopOf="@+id/numberPickerMinutes" />
 
-    <NumberPicker
-        android:id="@+id/numberPickerMinutes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/intro"
-        app:layout_constraintEnd_toStartOf="@+id/numberPickerSeconds"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toEndOf="@+id/numberPickerHours"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-        app:layout_constraintVertical_bias="0.336" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sec"
+            app:layout_constraintBottom_toBottomOf="@+id/numberPickerSeconds"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/numberPickerMinutes"
+            app:layout_constraintTop_toTopOf="@+id/numberPickerSeconds" />
 
-    <NumberPicker
-        android:id="@+id/numberPickerSeconds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/intro"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.443"
-        app:layout_constraintStart_toStartOf="@+id/txt_explain"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-        app:layout_constraintVertical_bias="0.336" />
+        <!-- Switch Intro -->
+        <Switch
+            android:id="@+id/intro"
+            android:layout_width="110dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="64dp"
+            android:gravity="center"
+            android:text="Intro"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain"
+            app:layout_constraintVertical_bias="0.723" />
 
-    <NumberPicker
-        android:id="@+id/numberPickerHours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/intro"
-        app:layout_constraintEnd_toEndOf="@+id/txt_explain"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-        app:layout_constraintVertical_bias="0.336" />
+        <!-- Bouton Valider -->
+        <Button
+            android:id="@+id/btn_Valid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/intro"
+            app:layout_constraintVertical_bias="0.825" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="h"
-        app:layout_constraintBottom_toBottomOf="@+id/numberPickerHours"
-        app:layout_constraintEnd_toEndOf="@+id/numberPickerMinutes"
-        app:layout_constraintStart_toStartOf="@+id/numberPickerHours"
-        app:layout_constraintTop_toTopOf="@+id/numberPickerHours" />
+        <!-- Bouton Écouter l'Intro -->
+        <ImageButton
+            android:id="@+id/imageButtonStep4Listen"
+            android:layout_width="49dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Play the introduction audio"
+            app:layout_constraintBottom_toBottomOf="@+id/intro"
+            app:layout_constraintStart_toEndOf="@+id/intro"
+            app:layout_constraintTop_toTopOf="@+id/intro"
+            app:srcCompat="@drawable/listengrey" />
 
-    <ImageButton
-        android:id="@+id/imageButtonStep4Listen"
-        android:layout_width="49dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Play the introduction audio"
-        app:layout_constraintBottom_toBottomOf="@+id/intro"
-        app:layout_constraintStart_toEndOf="@+id/intro"
-        app:layout_constraintTop_toTopOf="@+id/intro"
-        app:srcCompat="@drawable/listengrey" />
+        <!-- Description de la Durée Sélectionnée -->
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="64dp"
+            android:text="Durée :"
+            android:textSize="19dp"
+            app:layout_constraintBottom_toTopOf="@+id/intro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/numberPickerHours"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="64dp"
-        android:text="Durée :"
-        android:textSize="19dp"
-        app:layout_constraintBottom_toTopOf="@+id/intro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numberPickerHours"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/textViewHoursEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="00 heures 00 minutes 00 secondes "
+            android:textColor="@color/green"
+            android:textSize="19dp"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-    <TextView
-        android:id="@+id/textViewHoursEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="00 heures 00 minutes 00 secondes "
-        android:textColor="@color/green"
-        android:textSize="19dp"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Menu de navigation latéral -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

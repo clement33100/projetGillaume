@@ -20,7 +20,8 @@
             android:id="@+id/btn_burger"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/menu"
+            android:background="@null"
+            android:src="@drawable/menu_3_points"
             android:contentDescription="@string/menu"
             android:layout_margin="8dp"
             android:scaleType="fitCenter"
@@ -28,16 +29,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Bouton de sélection de la langue en haut à droite -->
-        <ImageButton
-            android:id="@+id/btn_language"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/eng"
-            android:contentDescription="@string/select_language"
-            android:layout_margin="8dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Autres vues spécifiques à l'activité -->
         <FrameLayout
