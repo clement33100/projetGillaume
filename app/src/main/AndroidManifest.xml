@@ -23,15 +23,6 @@
             android:name=".mesAffirmationsDetails"
             android:exported="false" />
         <activity
-            android:name=".rulesIntention"
-            android:exported="false" />
-        <activity
-            android:name=".choixIntentionAffirmation"
-            android:exported="false" />
-        <activity
-            android:name=".mesIntentions"
-            android:exported="false" />
-        <activity
             android:name=".step1FirstName"
             android:exported="false" />
         <activity
@@ -66,13 +57,13 @@
             android:name=".hdiw1"
             android:exported="false" />
         <activity
-            android:name=".PageAcceuil"
+            android:name=".mesAffirmations"
             android:exported="false" />
         <activity
             android:name=".Etape2Voix"
             android:exported="false" />
         <activity
-            android:name=".mesAffirmations"
+            android:name=".PageAcceuil"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

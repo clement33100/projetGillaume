@@ -4,6 +4,13 @@
         android:id="@+id/btn_affirm"
         android:title="Menu Principal" />
     <item
+        android:id="@+id/btn_new"
+        android:title="Créer Nouveau" />
+    <item
+        android:id="@+id/btn_myAffirm"
+        android:title="Mes Affirmations" />
+
+    <item
         android:id="@+id/btn_advices"
         android:title="Conseil Pratiques" />
     <item

@@ -57,6 +57,14 @@ abstract class Base : AppCompatActivity() {
                 val intent = Intent(this, mesAffirmations::class.java)
                 startActivity(intent)
             }
+            R.id.btn_new -> {
+                val intent = Intent(this, Rules::class.java)
+                startActivity(intent)
+            }
+            R.id.btn_myAffirm -> {
+                val intent = Intent(this, mesAffirmationsDetails::class.java)
+                startActivity(intent)
+            }
             R.id.btn_advices -> {
                 val intent = Intent(this, Advices::class.java)
                 startActivity(intent)

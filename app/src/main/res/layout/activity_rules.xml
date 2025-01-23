@@ -48,10 +48,12 @@
             android:id="@+id/txt_descstep2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="-50dp"
             android:layout_marginTop="120dp"
+            android:layout_marginEnd="30dp"
             android:text="Choisis une voix off"
             android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_step2"
             app:layout_constraintTop_toBottomOf="@+id/title"
             tools:ignore="MissingConstraints" />
@@ -60,10 +62,12 @@
             android:id="@+id/txt_descstep3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="-40dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
             android:text="Écris tes affirmations"
             android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_step3"
             app:layout_constraintTop_toBottomOf="@+id/txt_descstep2"
             tools:ignore="MissingConstraints" />
@@ -72,10 +76,12 @@
             android:id="@+id/txt_descstep4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="-60dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
             android:text="Choisis ta musique\n de fond"
             android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_step4"
             app:layout_constraintTop_toBottomOf="@+id/txt_descstep3"
             tools:ignore="MissingConstraints" />
@@ -84,11 +90,14 @@
             android:id="@+id/txt_descstep5"
             android:layout_width="272dp"
             android:layout_height="68dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="89dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
             android:text="Choisis la durée de ton fichier audio"
             android:textSize="24dp"
-            app:layout_constraintStart_toEndOf="@+id/txt_step5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/txt_step5"
             app:layout_constraintTop_toBottomOf="@+id/txt_descstep4"
             tools:ignore="MissingConstraints" />
 
@@ -96,10 +105,11 @@
             android:id="@+id/txt_descstep6"
             android:layout_width="263dp"
             android:layout_height="73dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
             android:text="Écoute tes affirmations chaque jour"
             android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_step6"
             app:layout_constraintTop_toBottomOf="@+id/txt_descstep5"
             tools:ignore="MissingConstraints" />
@@ -111,6 +121,7 @@
             android:layout_marginStart="20dp"
             android:text="Étape 1 :"
             android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_descstep2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_descstep2" />
 
@@ -121,6 +132,7 @@
             android:layout_marginStart="20dp"
             android:text="Étape 2 :"
             android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_descstep3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_descstep3" />
 
@@ -131,6 +143,7 @@
             android:layout_marginStart="20dp"
             android:text="Étape 3 :"
             android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_descstep4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_descstep4" />
 
@@ -141,6 +154,7 @@
             android:layout_marginStart="20dp"
             android:text="Étape 4:"
             android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_descstep5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_descstep5" />
 
@@ -151,6 +165,7 @@
             android:layout_marginStart="20dp"
             android:text="Étape 5:"
             android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_descstep6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_descstep6" />
 
