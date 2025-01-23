@@ -28,6 +28,7 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
     private lateinit var btnMainPage: Button
     private lateinit var btnNewAffirmation: Button
     private lateinit var fileContainer: LinearLayout
+    private lateinit var mesaffirmationContour: LinearLayout
 
     override fun getLayoutId(): Int {
         return R.layout.activity_mes_affirmations_details  // Fournit le layout spécifique à cette activité
@@ -51,24 +52,33 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
 
         // Initialisation des éléments UI
         textEmpty = findViewById(R.id.textViewmesaffirmationdetails)
+
         btnNewAffirmation = findViewById(R.id.btn_affirmation_new)
         btnMainPage = findViewById(R.id.btn_affirmation_menu)
         fileContainer = findViewById(R.id.fileContainer)
+        mesaffirmationContour=findViewById(R.id.scrollContainermesaffirmationdetail)
 
         // Appeler la fonction pour afficher les fichiers
-        displayAffirmationFiles(textEmpty)
+        displayAffirmationFiles(textEmpty,mesaffirmationContour)
 
         btnNewAffirmation.setOnClickListener {
             val intent = Intent(this, Rules::class.java)
             startActivity(intent)
         }
 
+        btnMainPage.setOnClickListener {
+            val intent = Intent(this, mesAffirmations::class.java)
+            startActivity(intent)
+
+        }
+
+
     }
 
     /**
      * Affiche les fichiers d'affirmations présents dans le dossier "affirmation".
      */
-    private fun displayAffirmationFiles(textEdit: TextView) {
+    private fun displayAffirmationFiles(textEdit: TextView,contour:LinearLayout) {
         // Dossier "affirmation"
         val affirmationDir = File(filesDir, "affirmation")
 
@@ -115,6 +125,8 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
                 fileContainer.addView(fileButton)
             }
         } else {
+            contour.visibility=View.GONE
+
             textEdit.visibility = View.VISIBLE
 
             // Si le dossier est vide

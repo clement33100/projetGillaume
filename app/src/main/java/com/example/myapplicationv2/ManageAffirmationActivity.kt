@@ -101,6 +101,11 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
             }
         }
 
+        backButton.setOnClickListener {
+            val intent = Intent(this, mesAffirmations::class.java)
+            startActivity(intent)
+        }
+
         // Bouton pour supprimer le fichier
         deleteButton.setOnClickListener {
             val alertDialog = android.app.AlertDialog.Builder(this)
@@ -186,6 +191,7 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
             }
         }
     }
+
 
     private fun showRenameDialog(file: File) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_rename_file, null)

@@ -61,7 +61,7 @@
 
         <!-- ScrollView pour le contenu défilable -->
         <LinearLayout
-            android:id="@+id/scrollContainer"
+            android:id="@+id/scrollContainermesaffirmationdetail"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="85dp"
