@@ -30,7 +30,7 @@ import java.io.InputStream
 class Advices : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     // UI Elements
-    private lateinit var btnOK: Button
+    private lateinit var btnNewAdvice: Button
     private lateinit var btnMenu: Button
 
     override fun getLayoutId(): Int {
@@ -54,13 +54,16 @@ class Advices : Base() {  // Hérite de Base au lieu de AppCompatActivity
         }
 
         // Initialisation des éléments UI existants
-        btnOK = findViewById(R.id.btnNewAdvice)
+        btnNewAdvice = findViewById(R.id.btnNewAdvice)
         btnMenu = findViewById(R.id.btnMenu)
 
-        btnOK.setOnClickListener {
+        btnNewAdvice.setOnClickListener {
             val intent = Intent(this, mesAffirmationsDetails::class.java)
             startActivity(intent)
         }
-
+        btnMenu.setOnClickListener {
+            val intent = Intent(this, mesAffirmations::class.java)
+            startActivity(intent)
+        }
     }
 }

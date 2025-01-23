@@ -18,12 +18,12 @@ class hdiw1 : Base() {
         enableEdgeToEdge()
 
         // Trouver les boutons par leur ID
-        val btnNew = findViewById<Button>(R.id.btnNew)
+        val btnNew = findViewById<Button>(R.id.btnNewAdvice)
         val btnMenu = findViewById<Button>(R.id.btnMenu)
 
         // Définir les OnClickListener
         btnNew.setOnClickListener {
-            val intent = Intent(this, Rules::class.java)
+            val intent = Intent(this, mesAffirmationsDetails::class.java)
             startActivity(intent)
         }
 

@@ -25,7 +25,8 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="Comment ça Marche ?"
-            android:textSize="40sp"
+            android:textSize="27sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +50,11 @@
             android:id="@+id/scrollView2"
             android:layout_width="392dp"
             android:layout_height="620dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title">
@@ -56,65 +62,78 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_explain"
-                    android:layout_width="match_parent"
-                    android:layout_height="916dp"
+                    android:layout_width="373dp"
+                    android:layout_height="444dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
                     android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:text="Imagine qu'à ta naissance, ton cerveau est comme une jungle dense. Avancer dans cette jungle est difficile. Lorsque tu as une pensée pour la première fois, c'est comme ouvrir un nouveau sentier dans cette jungle. Plus tu as cette pensée, plus il devient facile de passer par ce sentier, et plus il devient facile de passer par ce sentier, plus tu as cette pensée. Peu à peu, ce sentier devient un chemin, puis une route, et finalement une autoroute."
-                    android:textSize="30sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/txt_explain2"
-                    android:layout_width="match_parent"
-                    android:layout_height="684dp"
+                    android:layout_width="370dp"
+                    android:layout_height="310dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="50dp"
                     android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:text="Changer ton système de croyances, c'est comme tracer un nouveau sentier dans la jungle. Ton cerveau, par souci d'économie d'énergie, préfère utiliser l'autoroute neuronale qu'il a patiemment créée. Cela demande donc un effort conscient pour créer ce nouveau chemin."
-                    android:textSize="30sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/txt_explain3"
-                    android:layout_width="match_parent"
-                    android:layout_height="1015dp"
+                    android:layout_width="380dp"
+                    android:layout_height="467dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
                     android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:text="Si tu connais la derstination d'une ancienne autoroute et qu'elle ne te convient plus, il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi. Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l'ancienne, n'étant plus utilisée, disparaîtra dans la jungle, permettant ainsi l'émergence d'un nouveau sentiment d'identité et une perception renouvelée de toi-même."
-                    android:textSize="30sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.54"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/txt_explain4"
-                    android:layout_width="match_parent"
-                    android:layout_height="936dp"
+                    android:layout_width="381dp"
+                    android:layout_height="533dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="30dp"
                     android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:text="Solène Rige illustre parfaitement cette idée: &quot; Imaginons notre cerveau comme une prairie enneigée où chaque pensée est représentée par une luge. En dévalant la piste les unes après les autres, les luges tracent un petit nombre de voies principales. A chaque nouvelle descente, une luge est naturellement attirée par ces pistes déjà formées. Au fil du temps, la neige se tasse, rendant ardue la création de nouveaux chemins, c'est-à-dire de nouvelles manières de penser.&quot;"
-                    android:textSize="30sp" />
+                    android:textSize="22sp" />
 
                 <Button
-                    android:id="@+id/btnNew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Créer Nouveau" />
+                    android:id="@+id/btnNewAdvice"
+                    android:layout_width="316dp"
+                    android:layout_height="74dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Mes Affirmations"
+                    android:textSize="24dp" />
 
+                <!-- Espace (Optionnel) -->
                 <TextView
                     android:id="@+id/spaceBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <!-- Bouton Menu Principal -->
                 <Button
                     android:id="@+id/btnMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Menu Principal" />
-
+                    android:layout_width="316dp"
+                    android:layout_height="74dp"
+                    android:text="Menu Principal"
+                    android:textSize="24dp" />
             </LinearLayout>
         </ScrollView>
 
