@@ -29,26 +29,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Titre de l'activité -->
+
+        <!-- Description de l'application -->
+
         <TextView
             android:id="@+id/title"
             android:layout_width="257dp"
             android:layout_height="72dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="76dp"
             android:gravity="center"
             android:text="Crée Tes Nouvelles Affirmations"
             android:textSize="27sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Description de l'application -->
         <TextView
             android:id="@+id/txt_descstep2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-50dp"
+            android:layout_marginStart="-30dp"
             android:layout_marginTop="120dp"
             android:layout_marginEnd="30dp"
             android:text="Choisis une voix off"
@@ -62,7 +63,6 @@
             android:id="@+id/txt_descstep3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-40dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:text="Écris tes affirmations"
@@ -76,7 +76,7 @@
             android:id="@+id/txt_descstep4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-60dp"
+            android:layout_marginStart="-40dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:text="Choisis ta musique\n de fond"
@@ -90,21 +90,21 @@
             android:id="@+id/txt_descstep5"
             android:layout_width="272dp"
             android:layout_height="68dp"
-            android:layout_marginStart="89dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:text="Choisis la durée de ton fichier audio"
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/txt_step5"
+            app:layout_constraintStart_toEndOf="@+id/txt_step5"
             app:layout_constraintTop_toBottomOf="@+id/txt_descstep4"
             tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/txt_descstep6"
-            android:layout_width="263dp"
-            android:layout_height="73dp"
+            android:layout_width="261dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:text="Écoute tes affirmations chaque jour"

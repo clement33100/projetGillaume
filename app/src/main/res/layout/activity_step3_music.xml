@@ -306,6 +306,7 @@
                 android:id="@+id/btn_silence"
                 android:layout_width="316dp"
                 android:layout_height="74dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/green"
                 android:text="Silence"
                 android:textSize="24dp"

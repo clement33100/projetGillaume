@@ -53,7 +53,7 @@
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="L'application pour Aligner\n tes Pensées à tes\n Aspirations "
+            android:text="Tes Mots, ta Tranfomartion, ton Histoire "
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

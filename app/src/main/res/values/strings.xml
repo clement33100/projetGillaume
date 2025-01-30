@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Applicationv2</string>
     <string name="select_language">Select Language</string>
@@ -8,13 +9,40 @@
     <string name="close">Close Drawer</string>
     <string name="menu">Menu</string>
     <string name="advices_text">
-    <![CDATA[
-    <b>1/ Formule au présent </b> comme si c’était déjà une réalité. "Je suis confiant." <br/>
-    <b>2/ Sois positif </b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter. <br/>
-    <b>3/ Choisis des mots riches de sens </b> pour toi. <br/>
-    <b>4/ Sois clair. </b> <br/>
-    <b>5/ Renforce tes affirmations avec des exemples concrets </b> de ta vie qui les confirment : "Je suis organisé parce que je planifie mes journées et termine mes projets à temps."
-    ]]>
-</string>
-        <string name="subtitle_text"><i> «Moi, [ton Prénom], je...»</i></string>
+        <![CDATA[
+        <b>1/ Formule au présent </b> comme si c’était déjà une réalité. "Je suis confiant." <br/>
+        <b>2/ Sois positif </b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter. <br/>
+        <b>3/ Choisis des mots riches de sens </b> pour toi. <br/>
+        <b>4/ Sois clair. </b> <br/>
+        <b>5/ Renforce tes affirmations avec des exemples concrets </b> de ta vie qui les confirment : "Je suis organisé parce que je planifie mes journées et termine mes projets à temps."
+        ]]>
+    </string>
+
+    <string name="subtitle_text"><i> «Moi, [ton Prénom], je...»</i></string>
+
+    <string name="txt_explainhdiw">
+        Imagine qu"'"à ta naissance, ton <b>cerveau</b> est comme une <b>jungle</b> dense. Avancer dans cette jungle est difficile. Lorsque tu as une <b>pensée pour la première fois</b>, c"'"est comme <b>ouvrir un nouveau sentier</b> dans cette jungle. Plus tu as cette pensée, plus il devient facile de passer par ce sentier, et plus il devient facile de passer par ce sentier, plus tu as cette pensée. Peu à peu, <b>ce sentier devient</b> un chemin, puis une route, et finalement <b>une autoroute</b>.
+    </string>
+
+    <string name="txt_explainhdiw2">
+        <b> Changer ton système de croyances</b>, c"'"est comme <b>tracer un nouveau sentier dans la jungle</b>. Ton cerveau, par souci d"'"économie d"'"énergie, préfère utiliser l"'"autoroute neuronale qu"'"il a patiemment créée. Cela demande donc un <b>effort conscient</b> pour créer ce nouveau chemin.
+    </string>
+
+      <string name="txt_explainhdiw3">
+          Si tu connais la destination d"'"une ancienne autoroute et qu"'"elle ne te convient plus (<b>une croyance limitante que tu as identifiée</b>), il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi (<b>affirmation positive</b>). Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l"'"ancienne, n"'"étant plus utilisée, disparaîtra dans la jungle, permettant ainsi l"'"émergence d"'"un <b>nouveau sentiment d"'"identité</b> et une perception renouvelée de toi-même.
+      </string>
+
+    <string name="txt_explainadive">
+        <b>Écoute pendant 21 jours cet audio</b> autant que tu le peux, veux, au moins une fois par jour, et <b>répète les phrases à voix haute pendant les moments de silence</b>. Dis les phrases avec la <b>conviction</b> qu"'"elles sont vraies. <b>Ressens que tu es déjà ce que tu veux devenir</b>. Ressens de la <b>gratitude</b> pour cet être illimité que tu es.
+    </string>
+    <string name="txt_explainadive2">
+        Pour <b>renforcer l"’"imprégnation dans ton système nerveux</b> de ces affirmations – ces nouvelles croyances que TU as choisies pour atteindre tes objectifs – <b>bouge ton corps</b> et contracte tes muscles. Ce ne sont pas de simples affirmations : ce sont des <b>Déclarations Puissantes</b>. Trouve l’Énergie de la <b>Conviction</b> en toi. <b>Ressens</b> ce que cette nouvelle vérité éveille en toi : <b>sensations</b>, <b>émotions</b> et <b>images</b>. Cet exercice <b>transforme tes pensées</b>, donc ta <b>vibration</b>, et par conséquent tes <b>actions</b>, <b>attirant</b> ainsi l"’"<b>expérience que tu as choisie</b>. Intègre la visualisation à cette pratique pour en amplifier l"’"effet."
+    </string>
+    <string name="txt_explainadive3">
+        Ton cerveau ne fait pas la différence entre l"'"imagination et la réalité. Si tu imagines ton plat préféré, tu vas saliver. Si tu imagines des situations joyeuses, tu vas vraiment te sentir heureux. <b>L"'"imagination permet</b> donc de <b>modifier ton état vibratoire</b>.
+    </string>
+    <string name="txt_explainadive4">
+        Pour changer ta vibration de manière encore plus puissante, tu dois <b>aller au-delà des mots</b>. Lorsque tu écoutes tes affirmations et que tu les répètes à voix haute, <b>visualise-toi en train de vivre ces affirmations</b>. Utilise ton imagination pour les vivre pleinement et les ressentir. Plus tu expérimentes tes affirmations par l"'"imagination, plus tu modifies ta vibration, attirant ainsi l"'"expérience réelle dans ta vie. Pour t"'"aider, <b>focalise-toi sur tes 5 sens</b> : qu"'"est-ce que tu vois, sens, entends, touches, goûtes ?"
+    </string>
+
 </resources>

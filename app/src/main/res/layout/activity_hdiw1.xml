@@ -22,9 +22,9 @@
             android:id="@+id/title"
             android:layout_width="301dp"
             android:layout_height="120dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Comment ça Marche ?"
+            android:text="COMMENT ÇA MARCHE?"
             android:textSize="27sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,9 +51,9 @@
             android:layout_width="392dp"
             android:layout_height="620dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,10 +71,11 @@
                     android:layout_height="444dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Imagine qu'à ta naissance, ton cerveau est comme une jungle dense. Avancer dans cette jungle est difficile. Lorsque tu as une pensée pour la première fois, c'est comme ouvrir un nouveau sentier dans cette jungle. Plus tu as cette pensée, plus il devient facile de passer par ce sentier, et plus il devient facile de passer par ce sentier, plus tu as cette pensée. Peu à peu, ce sentier devient un chemin, puis une route, et finalement une autoroute."
+                    android:text="@string/txt_explainhdiw"
                     android:textSize="22sp" />
 
                 <TextView
@@ -86,31 +87,19 @@
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Changer ton système de croyances, c'est comme tracer un nouveau sentier dans la jungle. Ton cerveau, par souci d'économie d'énergie, préfère utiliser l'autoroute neuronale qu'il a patiemment créée. Cela demande donc un effort conscient pour créer ce nouveau chemin."
+                    android:text="@string/txt_explainhdiw2"
                     android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/txt_explain3"
-                    android:layout_width="380dp"
-                    android:layout_height="467dp"
+                    android:layout_width="374dp"
+                    android:layout_height="536dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Si tu connais la derstination d'une ancienne autoroute et qu'elle ne te convient plus, il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi. Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l'ancienne, n'étant plus utilisée, disparaîtra dans la jungle, permettant ainsi l'émergence d'un nouveau sentiment d'identité et une perception renouvelée de toi-même."
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:id="@+id/txt_explain4"
-                    android:layout_width="381dp"
-                    android:layout_height="533dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Solène Rige illustre parfaitement cette idée: &quot; Imaginons notre cerveau comme une prairie enneigée où chaque pensée est représentée par une luge. En dévalant la piste les unes après les autres, les luges tracent un petit nombre de voies principales. A chaque nouvelle descente, une luge est naturellement attirée par ces pistes déjà formées. Au fil du temps, la neige se tasse, rendant ardue la création de nouveaux chemins, c'est-à-dire de nouvelles manières de penser.&quot;"
+                    android:text="@string/txt_explainhdiw"
                     android:textSize="22sp" />
 
                 <Button
