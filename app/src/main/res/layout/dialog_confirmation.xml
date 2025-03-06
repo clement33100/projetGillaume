@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/rounded_background"> <!-- Appliquer le fond ici -->
-    <!--android:elevation="8dp"-->
+    android:background="@drawable/rounded_background">
 
     <TextView
         android:id="@+id/dialogMessage"
@@ -26,8 +25,9 @@
 
         <Button
             android:id="@+id/confirmButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Supprimer"
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_confirm_background"
@@ -35,8 +35,9 @@
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Annuler"
             android:background="@drawable/button_cancel_background"
             android:textColor="#FFFFFF" />

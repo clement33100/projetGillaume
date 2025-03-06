@@ -44,5 +44,20 @@
     <string name="txt_explainadive4">
         Pour changer ta vibration de manière encore plus puissante, tu dois <b>aller au-delà des mots</b>. Lorsque tu écoutes tes affirmations et que tu les répètes à voix haute, <b>visualise-toi en train de vivre ces affirmations</b>. Utilise ton imagination pour les vivre pleinement et les ressentir. Plus tu expérimentes tes affirmations par l"'"imagination, plus tu modifies ta vibration, attirant ainsi l"'"expérience réelle dans ta vie. Pour t"'"aider, <b>focalise-toi sur tes 5 sens</b> : qu"'"est-ce que tu vois, sens, entends, touches, goûtes ?"
     </string>
+    <string name="txt_rules1">
+        Choisis une <b>Voix Off</b>
+    </string>
+    <string name="txt_rules2">
+        Écris tes <b>Affirmations</b>
+    </string>
+    <string name="txt_rules3">
+        Choisis ta <b>Musique</b> \n de fond
+    </string>
+    <string name="txt_rules4">
+        Choisis la <b>Durée</b> de ton \n fichier audio
+    </string>
+    <string name="txt_rules5">
+        <b>Écoute</b> tes \n affirmations chaque \n jour
+    </string>
 
 </resources>

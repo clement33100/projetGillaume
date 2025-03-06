@@ -33,7 +33,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/customfont"
             android:text="Mes Affirmations"
             android:textAlignment="center"

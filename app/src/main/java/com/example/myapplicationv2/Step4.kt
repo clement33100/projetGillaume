@@ -33,7 +33,6 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     private lateinit var numberPickerMinutes: NumberPicker
     private lateinit var numberPickerSeconds: NumberPicker
-    private lateinit var numberPickerHours: NumberPicker
     private var selectedDurationInSeconds: Int = 0
     private var mediaPlayer1: MediaPlayer? = null
     private lateinit var introSwitch: Switch
@@ -47,30 +46,24 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         enableEdgeToEdge()
 
         // Configuration des vues
-        val textViewDuration: TextView = findViewById(R.id.textViewHoursEdit)
+        val textViewDuration: TextView = findViewById(R.id.textViewMinutesEdit)
 
         numberPickerMinutes = findViewById(R.id.numberPickerMinutes)
         numberPickerSeconds = findViewById(R.id.numberPickerSeconds)
-        numberPickerHours = findViewById(R.id.numberPickerHours)
 
         // Configurer les NumberPickers dans le code
         numberPickerMinutes.minValue = 0
-        numberPickerMinutes.maxValue = 59
+        numberPickerMinutes.maxValue = 22  // Max 22 minutes
 
         numberPickerSeconds.minValue = 0
         numberPickerSeconds.maxValue = 59
 
-        numberPickerHours.minValue = 0
-        numberPickerHours.maxValue = 23
-
         val updateDuration = {
-            val hours = numberPickerHours.value
             val minutes = numberPickerMinutes.value
             val seconds = numberPickerSeconds.value
-            textViewDuration.text = "$hours heures $minutes minutes $seconds secondes"
+            textViewDuration.text = "$minutes minutes $seconds secondes"
         }
 
-        numberPickerHours.setOnValueChangedListener { _, _, _ -> updateDuration() }
         numberPickerMinutes.setOnValueChangedListener { _, _, _ -> updateDuration() }
         numberPickerSeconds.setOnValueChangedListener { _, _, _ -> updateDuration() }
 
@@ -125,14 +118,22 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Définir le listener pour le bouton Valider
         btn_valider.setOnClickListener {
             stopAudio()
-            if (userTextsSplit != null) {
-                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts, intention)
-            }
 
-            val hours = numberPickerHours.value
+            // Récupérer les valeurs des NumberPickers
             val minutes = numberPickerMinutes.value
             val seconds = numberPickerSeconds.value
-            selectedDurationInSeconds = hours * 3600 + minutes * 60 + seconds
+
+            // Calculer la durée totale en secondes
+            val totalDurationInSeconds = (minutes * 60) + seconds
+
+            // Vérifier si la durée dépasse 22 minutes (1320 secondes)
+            if (totalDurationInSeconds > 1320) {
+                // Afficher un message d'erreur si la durée est trop longue
+                Toast.makeText(this, "La durée ne doit pas dépasser 22 minutes.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener  // Empêche la suite de l'exécution si la durée est trop longue
+            }
+
+            selectedDurationInSeconds = totalDurationInSeconds
             val isIntroEnabled = introSwitch.isChecked
 
             // Passer directement les données à MeditationPlay
@@ -148,7 +149,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 startActivity(intent)
             } else {
                 // Afficher un message d'erreur
-                Toast.makeText(this, "Please select a valid time.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Veuillez sélectionner une durée valide.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -156,8 +157,6 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         btn_listenIntro.setOnClickListener {
             playAudioFromRaw(R.raw.intromeditation)
         }
-
-        
     }
 
     // Fonctions existantes
@@ -229,88 +228,6 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         userTexts?.add(generatedFilePath)
 
         val fullText = "moi $nom, $text."
-
-        // Créer le corps de la requête en JSON
-        val bodyJson = JSONObject().apply {
-            put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
-            put("language_code", "fr") // Set language code to French
-            put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
-                put("similarity_boost", 0.75)
-                // You can adjust these values to fine-tune the accent
-            })
-        }
-
-        val requestBody = RequestBody.create(
-            "application/json; charset=utf-8".toMediaType(),
-            bodyJson.toString()
-        )
-
-        val request = Request.Builder()
-            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
-            .addHeader("Content-Type", "application/json")
-            .addHeader("xi-api-key", apiKey)
-            .post(requestBody)
-            .build()
-
-        // Enqueue la requête pour qu'elle se fasse de manière asynchrone
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body
-
-                if (responseBody != null) {
-                    // Sauvegarder le fichier audio avec un nom unique basé sur l'index
-                    val audioFileName = "voice_$index.mp3"
-                    val audioFile = File(generatedFilePath)
-
-                    try {
-                        val outputStream = FileOutputStream(audioFile)
-                        outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
-                        outputStream.close()
-
-                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
-
-                        // Notification de succès
-                        runOnUiThread {
-                            Toast.makeText(this@Step4, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
-                        }
-
-                    } catch (e: IOException) {
-                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
-                    }
-
-                } else {
-                    Log.d("testApi", "Le corps de la réponse est null")
-                }
-            }
-        })
-    }
-
-    private fun textToSpeechIntention(
-        text: String,
-        index: Int,
-        voiceId: String,
-        userTexts: ArrayList<String>?
-    ) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
-
-        val client = OkHttpClient()
-        val basePath = filesDir.absolutePath + "/audio/"
-        val audioDir = File(basePath)
-        if (!audioDir.exists()) {
-            audioDir.mkdirs()  // Créer le dossier si nécessaire
-        }
-
-        // Générer un fichier avec un nom unique basé sur l'index
-        val generatedFilePath = "$basePath/voice_$index.mp3"
-        userTexts?.add(generatedFilePath)
-
-        val fullText = "$text."
 
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {

@@ -17,6 +17,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -96,6 +97,11 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 editText.text.toString()
             } else {
                 "affirmation"
+            }
+            // Vérifier si le titre est plus long que 50 caractères
+            if (name.length > 44) {
+                Toast.makeText(this, "La longueur maximum du titre est de 44 caractères.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             // Chemins source et destination
@@ -185,7 +191,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 if (copySuccess) {
                     runOnUiThread {
                         // Afficher le logo gris pendant le chargement
-                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappligrey)
+                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_final_nb)
 
                         // Afficher l'Overlay avec indicateur circulaire
                         showOverlay()
@@ -209,7 +215,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                                 // Masquer l'Overlay en cas d'échec
                                 runOnUiThread {
                                     // Remplacer le logo gris par le logo normal
-                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
 
                                     hideOverlay()
                                 }
@@ -535,7 +541,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     hideOverlay() // Masquer l'overlay après le succès
 
                     // Remplacer le logo gris par le logo normal
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
 
                     // Mettre à jour le pourcentage à 100%
                     circularProgressIndicator.progress = 100
@@ -556,7 +562,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     hideOverlay() // Masquer l'overlay en cas d'échec
 
                     // Remplacer le logo gris par le logo normal même en cas d'échec
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                 }
                 callback(false)
             }

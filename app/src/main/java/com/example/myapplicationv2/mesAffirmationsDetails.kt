@@ -101,8 +101,9 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
                 val fileButton = Button(this).apply {
                     text = fileName
                     textSize = 24f
+                    isAllCaps = false
                     setBackgroundResource(R.drawable.button_yellow_rounded) // Définir le fond personnalisé
-                    setPadding(20, 80, 20, 80) // Optionnel : Ajuster le padding pour une meilleure apparence
+                    setPadding(20, 20, 20, 20) // Optionnel : Ajuster le padding pour une meilleure apparence
                     setOnClickListener {
                         // Créer une Intent pour lancer l'activité ManageAffirmationActivity
                         val intent = Intent(this@mesAffirmationsDetails, ManageAffirmationActivity::class.java).apply {
@@ -117,7 +118,7 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
                     LinearLayout.LayoutParams.MATCH_PARENT, // Largeur
                     LinearLayout.LayoutParams.WRAP_CONTENT  // Hauteur
                 ).apply {
-                    setMargins(120, 20, 120, 20) // Marges gauche, haut, droite, bas
+                    setMargins(40, 20, 40, 20) // Marges gauche, haut, droite, bas
                 }
                 fileButton.layoutParams = params
 

@@ -21,7 +21,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:src="@drawable/menu_3_points"
+            android:src="@drawable/menu_3_pointssvg"
             android:contentDescription="@string/menu"
             android:layout_margin="8dp"
             android:scaleType="fitCenter"

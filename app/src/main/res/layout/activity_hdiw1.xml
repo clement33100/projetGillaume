@@ -20,8 +20,8 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="301dp"
-            android:layout_height="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="COMMENT ÇA MARCHE?"
@@ -40,7 +40,7 @@
             android:background="@null"
             android:contentDescription="@string/menu"
             android:scaleType="fitCenter"
-            android:src="@drawable/menu_3_points"
+            android:src="@drawable/menu_3_pointssvg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,8 @@
             android:layout_width="392dp"
             android:layout_height="620dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
+            android:paddingTop="35dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="100dp"
             app:layout_constraintBottom_toBottomOf="parent"

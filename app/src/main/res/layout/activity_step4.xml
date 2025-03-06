@@ -23,18 +23,18 @@
             android:background="@null"
             android:contentDescription="@string/menu"
             android:scaleType="fitCenter"
-            android:src="@drawable/menu_3_points"
+            android:src="@drawable/menu_3_pointssvg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Votre contenu existant -->
+        <!-- Texte expliquant la durée -->
         <TextView
             android:id="@+id/txt_explain"
-            android:layout_width="237dp"
-            android:layout_height="108dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="336dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="CHOISIS LA DURÉE DE TON FICHIER AUDIO"
+            android:text="Choisis la Durée de ton Fichier Audio"
             android:textSize="27sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,19 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- NumberPickers pour Heures, Minutes, Secondes -->
-        <NumberPicker
-            android:id="@+id/numberPickerHours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/intro"
-            app:layout_constraintEnd_toEndOf="@+id/txt_explain"
-            app:layout_constraintHorizontal_bias="0.48"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-            app:layout_constraintVertical_bias="0.336" />
-
+        <!-- NumberPickers pour Minutes et Secondes -->
         <NumberPicker
             android:id="@+id/numberPickerMinutes"
             android:layout_width="wrap_content"
@@ -62,7 +50,7 @@
             app:layout_constraintBottom_toTopOf="@+id/intro"
             app:layout_constraintEnd_toStartOf="@+id/numberPickerSeconds"
             app:layout_constraintHorizontal_bias="0.428"
-            app:layout_constraintStart_toEndOf="@+id/numberPickerHours"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_explain"
             app:layout_constraintVertical_bias="0.336" />
 
@@ -80,16 +68,6 @@
 
         <!-- Labels des NumberPickers -->
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="h"
-            app:layout_constraintBottom_toBottomOf="@+id/numberPickerHours"
-            app:layout_constraintEnd_toEndOf="@+id/numberPickerMinutes"
-            app:layout_constraintStart_toStartOf="@+id/numberPickerHours"
-            app:layout_constraintTop_toTopOf="@+id/numberPickerHours" />
-
-        <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +83,7 @@
             android:text="sec"
             app:layout_constraintBottom_toBottomOf="@+id/numberPickerSeconds"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/numberPickerMinutes"
+            app:layout_constraintStart_toEndOf="@+id/numberPickerSeconds"
             app:layout_constraintTop_toTopOf="@+id/numberPickerSeconds" />
 
         <!-- Switch Intro -->
@@ -159,15 +137,15 @@
             android:textSize="19dp"
             app:layout_constraintBottom_toTopOf="@+id/intro"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/numberPickerHours"
+            app:layout_constraintTop_toBottomOf="@+id/numberPickerMinutes"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textViewHoursEdit"
+            android:id="@+id/textViewMinutesEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="00 heures 00 minutes 00 secondes "
+            android:text="00 minutes 00 secondes"
             android:textColor="@color/green"
             android:textSize="19dp"
             app:layout_constraintStart_toEndOf="@+id/textView8"
