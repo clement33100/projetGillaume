@@ -10,10 +10,22 @@
     tools:context=".MeditationPlay">
 
     <!-- Contenu principal de l'activité -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/imageButtonPause"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#EFEFEF"
+            android:src="@drawable/imgpause"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout"
+            tools:srcCompat="@drawable/imgunpause" />
 
         <ImageButton
             android:id="@+id/btn_burger"
@@ -83,18 +95,6 @@
                 android:progressTint="@color/green" />
 
             <!-- Bouton pause -->
-            <ImageButton
-                android:id="@+id/imageButtonPause"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="36dp"
-                android:background="#EFEFEF"
-                android:src="@drawable/imgunpause"
-                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout"
-                app:layout_constraintVertical_bias="0.533"
-                tools:srcCompat="@drawable/imgpause" />
 
         </LinearLayout>
 
@@ -194,6 +194,7 @@
                     android:textColor="@color/green"
                     android:textSize="50sp"
                     android:textStyle="bold" />
+
 
             </LinearLayout>
 

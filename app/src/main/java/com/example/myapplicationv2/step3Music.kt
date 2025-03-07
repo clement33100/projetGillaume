@@ -265,7 +265,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         btn_ok.setOnClickListener {
             if (userTextsSplit != null) {
-                generateTTSFilesForAllTexts(nom, curentAPIKey, userTextsSplit, userTexts, intention)
+                generateTTSFilesForAllTexts(curentAPIKey, userTextsSplit, userTexts)
             }
 
             if (songChoose == null) {
@@ -299,13 +299,13 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     /**
      * Génère les fichiers TTS pour tous les textes.
      */
-    private fun generateTTSFilesForAllTexts(nom: String?, apikey: String?, userTextsSplit: ArrayList<String>?, userTexts: ArrayList<String>?, intention: Boolean) {
+    private fun generateTTSFilesForAllTexts(apikey: String?, userTextsSplit: ArrayList<String>?, userTexts: ArrayList<String>?) {
         if (userTextsSplit != null) {
             for (index in 2..3) {  // Exemple : Générer pour les indices 2 et 3
                 if (index < userTextsSplit.size) {
                     val text = userTextsSplit[index]
-                    if (nom != null && apikey != null) {
-                        textToSpeech(text, nom, index, apikey, userTexts)
+                    if ( apikey != null) {
+                        textToSpeech(text, index, apikey, userTexts)
                     }
                 }
             }
@@ -472,87 +472,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     /**
      * Texte à la synthèse vocale via l'API ElevenLabs.
      */
-    private fun textToSpeech(text: String, nom: String, index: Int, voiceId: String, userTexts: ArrayList<String>?) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplacez avec votre clé API
-
-        val client = OkHttpClient()
-        val basePath = filesDir.absolutePath + "/audio/"
-        val audioDir = File(basePath)
-        if (!audioDir.exists()) {
-            audioDir.mkdirs()  // Créer le dossier si nécessaire
-        }
-
-        // Générer un fichier avec un nom unique basé sur l'index
-        val generatedFilePath = "$basePath/voice_$index.mp3"
-        userTexts?.add(generatedFilePath)
-
-        val fullText = "moi $nom, $text."
-
-        // Créer le corps de la requête en JSON
-        val bodyJson = JSONObject().apply {
-            put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5") // Utiliser un modèle multilingue
-            put("language_code", "fr") // Définir le code langue en français
-            put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
-                put("similarity_boost", 0.75)
-                // Vous pouvez ajuster ces valeurs pour affiner l'accent
-            })
-        }
-
-        val requestBody = RequestBody.create(
-            "application/json; charset=utf-8".toMediaType(),
-            bodyJson.toString()
-        )
-
-        val request = Request.Builder()
-            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
-            .addHeader("Content-Type", "application/json")
-            .addHeader("xi-api-key", apiKey)
-            .post(requestBody)
-            .build()
-
-        // Enqueue la requête pour qu'elle se fasse de manière asynchrone
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("step3Music", "Erreur lors de l'appel API : ${e.message}")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body
-
-                if (responseBody != null) {
-                    // Sauvegarder le fichier audio avec un nom unique basé sur l'index
-                    val audioFileName = "voice_$index.mp3"
-                    val audioFile = File(generatedFilePath)
-
-                    try {
-                        val outputStream = FileOutputStream(audioFile)
-                        outputStream.write(responseBody.bytes()) // Écrire les octets dans le fichier
-                        outputStream.close()
-
-                        Log.d("step3Music", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
-
-                        // Notification de succès
-                        runOnUiThread {
-                            Toast.makeText(this@step3Music, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
-                        }
-
-                    } catch (e: IOException) {
-                        Log.e("step3Music", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
-                    }
-
-                } else {
-                    Log.d("step3Music", "Le corps de la réponse est null")
-                }
-            }
-        })
-    }
-
-    /**
-     * Texte à la synthèse vocale pour les intentions.
-     */
-    private fun textToSpeechIntention(text: String, index: Int, voiceId: String, userTexts: ArrayList<String>?) {
+    private fun textToSpeech(text: String, index: Int, voiceId: String, userTexts: ArrayList<String>?) {
         val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplacez avec votre clé API
 
         val client = OkHttpClient()
@@ -628,6 +548,8 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         })
     }
+
+
 
     override fun onPause() {
         super.onPause()

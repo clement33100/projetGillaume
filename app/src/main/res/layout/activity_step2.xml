@@ -25,7 +25,7 @@
             android:background="@null"
             android:contentDescription="@string/menu"
             android:scaleType="fitCenter"
-            android:src="@drawable/menu_3_pointssvg"
+            android:src="@drawable/menu_3_points"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,9 +34,9 @@
         <!-- Titre -->
         <TextView
             android:id="@+id/titlestep2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_width="352dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:padding="16dp"
             android:text="Écris tes Affirmations"

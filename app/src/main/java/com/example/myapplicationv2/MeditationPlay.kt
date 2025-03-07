@@ -17,7 +17,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -42,12 +41,12 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private lateinit var circularProgressContainer: View
     private lateinit var circularProgressIndicator: CircularProgressIndicator
     private lateinit var circularProgressText: TextView
-
-    // Handlers
+    private var progressRunnable: Runnable? = null
+    // Handler pour la mise à jour périodique
     private val mainHandler = Handler(Looper.getMainLooper())
 
-    // State
-    private var isPaused = false
+    // États
+    private var isPaused = true
     private var isTrackingProgress = false
 
     // Constants
@@ -98,11 +97,6 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             } else {
                 "affirmation"
             }
-            // Vérifier si le titre est plus long que 50 caractères
-            if (name.length > 44) {
-                Toast.makeText(this, "La longueur maximum du titre est de 44 caractères.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
 
             // Chemins source et destination
             val sourceFile = File(filesDir, "final_audio.mp3")
@@ -113,7 +107,11 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 val created = destinationDir.mkdirs()
                 if (!created) {
                     Log.e("MeditationPlay", "Impossible de créer le dossier affirmation")
-                    Toast.makeText(this, "Erreur lors de la création du dossier affirmation.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Erreur lors de la création du dossier affirmation.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
             }
@@ -130,15 +128,27 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 // Copier le fichier source dans le dossier de destination
                 if (sourceFile.exists()) {
                     sourceFile.copyTo(destinationFile, overwrite = false)
-                    Log.d("MeditationPlay", "Fichier enregistré dans le dossier affirmation : ${destinationFile.absolutePath}")
-                    Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name} dans le dossier affirmation.", Toast.LENGTH_SHORT).show()
+                    Log.d(
+                        "MeditationPlay",
+                        "Fichier enregistré dans le dossier affirmation : ${destinationFile.absolutePath}"
+                    )
+                    Toast.makeText(
+                        this,
+                        "Fichier copié sous le nom ${destinationFile.name} dans le dossier affirmation.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Log.e("MeditationPlay", "Le fichier source n'existe pas : ${sourceFile.absolutePath}")
-                    Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT).show()
+                    Log.e(
+                        "MeditationPlay",
+                        "Le fichier source n'existe pas : ${sourceFile.absolutePath}"
+                    )
+                    Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } catch (e: Exception) {
                 Log.e("MeditationPlay", "Erreur lors de la copie du fichier : ${e.message}")
-                Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             // Lancer l'activité suivante
@@ -146,12 +156,18 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         }
 
         // Copie des ressources brutes vers le stockage interne
-        val bowlStartFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")
-        val bowlEndFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
+        val bowlStartFilePath =
+            copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")
+        val bowlEndFilePath =
+            copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
 
         // Vérification de la copie des fichiers audio
         if (bowlStartFilePath == null || bowlEndFilePath == null) {
-            Toast.makeText(this, "Erreur lors de la copie des fichiers audio du bol tibétain.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Erreur lors de la copie des fichiers audio du bol tibétain.",
+                Toast.LENGTH_SHORT
+            ).show()
             Log.e("MeditationPlay", "Échec de la copie des fichiers audio du bol tibétain.")
             return
         }
@@ -160,7 +176,8 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val filePaths = intent.getStringExtra("filePaths") // Chemin vers la musique sélectionnée
         val selectedDurationInSeconds = intent.getIntExtra("selectedDuration", 0)
         val currentVoice = intent.getStringExtra("curentVoice")
-        val userTexts = intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
+        val userTexts =
+            intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
 
         // Journalisation des textes reçus
         userTexts?.forEach { text ->
@@ -179,7 +196,11 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             // Copier le fichier d'intro dans le stockage interne
             introFilePath = copyRawResourceToInternalStorage(R.raw.intro, "intro.mp3")
             if (introFilePath == null) {
-                Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Erreur lors de la copie du fichier d'intro.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 Log.e("MeditationPlay", "Échec de la copie du fichier d'intro.")
                 // Optionnellement, continuer sans l'intro
             }
@@ -191,7 +212,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 if (copySuccess) {
                     runOnUiThread {
                         // Afficher le logo gris pendant le chargement
-                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_final_nb)
+                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappligrey)
 
                         // Afficher l'Overlay avec indicateur circulaire
                         showOverlay()
@@ -215,7 +236,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                                 // Masquer l'Overlay en cas d'échec
                                 runOnUiThread {
                                     // Remplacer le logo gris par le logo normal
-                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
+                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
 
                                     hideOverlay()
                                 }
@@ -224,15 +245,27 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     )
                 }
             }
+
         } else {
             Log.e("MeditationPlay", "Chemin de la musique choisi est null.")
-            Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT)
+                .show()
         }
 
-        // Configuration du listener pour le bouton pause
-        setupPauseButton()
-    }
+        pauseButton.setOnClickListener {
+            if (isPaused) {
+                pauseButton.setImageResource(R.drawable.imgunpause)
+                mediaPlayer?.start()
+                isPaused = false
+            } else {
+                mediaPlayer?.pause()
+                pauseButton.setImageResource(R.drawable.imgpause)
+                isPaused = true
 
+            }
+
+        }
+    }
     // Fonctions existantes
 
     /**
@@ -541,7 +574,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     hideOverlay() // Masquer l'overlay après le succès
 
                     // Remplacer le logo gris par le logo normal
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
 
                     // Mettre à jour le pourcentage à 100%
                     circularProgressIndicator.progress = 100
@@ -562,7 +595,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     hideOverlay() // Masquer l'overlay en cas d'échec
 
                     // Remplacer le logo gris par le logo normal même en cas d'échec
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
                 }
                 callback(false)
             }
@@ -637,8 +670,8 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 mediaPlayer = MediaPlayer().apply {
                     setDataSource(it)
                     prepare()
-                    start()
-                    setVolume(0.6f, 0.6f) // Volume réduit davantage pour compenser les ajustements de volume
+                    //start()
+                    setVolume(0.6f, 0.6f)
                 }
 
                 // **Supprimer ou commenter l'appel à showOverlay()**

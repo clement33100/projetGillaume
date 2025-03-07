@@ -78,6 +78,9 @@ class Step2 : Base() {
             return spannable
         }
 
+        buttonOk = findViewById(R.id.step2ok)
+        container = findViewById(R.id.container)
+        val addButton = findViewById<Button>(R.id.addButton)
         val btnShowAdvices = findViewById<Button>(R.id.btn_show_advices)
         val scrollView = findViewById<ScrollView>(R.id.scrollViewAffirm)
         var isAdviceExpanded = false
@@ -106,7 +109,7 @@ class Step2 : Base() {
                 val finalTextBuilder = SpannableStringBuilder()
                 finalTextBuilder.append(title)
 
-                if (arrowUpDrawable != null) {
+                arrowUpDrawable?.let {
                     finalTextBuilder.append("         ")
                     finalTextBuilder.setSpan(
                         ImageSpan(insetArrow, ImageSpan.ALIGN_BASELINE),
@@ -127,17 +130,26 @@ class Step2 : Base() {
 
                 btnShowAdvices.text = finalTextBuilder
 
+                // Forcer la mise à jour de la disposition
+                btnShowAdvices.requestLayout()
+                scrollView.requestLayout()
+
                 btnShowAdvices.post {
                     scrollView.post {
                         scrollView.smoothScrollTo(0, btnShowAdvices.bottom)
                     }
                 }
+                scrollView.visibility = View.VISIBLE
 
             } else {
                 val minimalTextBuilder = SpannableStringBuilder()
                 minimalTextBuilder.append(title)
                 btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrowdown, 0)
                 btnShowAdvices.text = minimalTextBuilder
+
+                // Forcer la mise à jour de la disposition
+                btnShowAdvices.requestLayout()
+                scrollView.requestLayout()
 
                 scrollView.post {
                     scrollView.smoothScrollTo(0, scrollView.top)
@@ -148,9 +160,7 @@ class Step2 : Base() {
             isAdviceExpanded = !isAdviceExpanded
         }
 
-        buttonOk = findViewById(R.id.step2ok)
-        container = findViewById(R.id.container)
-        val addButton = findViewById<Button>(R.id.addButton)
+
 
         // Gestion des insets
         ViewCompat.setOnApplyWindowInsetsListener(
@@ -163,44 +173,32 @@ class Step2 : Base() {
 
         val curentVoice = intent.getStringExtra("curentVoice")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
-        val intention = intent.getBooleanExtra("intention", false)
 
         titleStep2 = findViewById(R.id.titlestep2)
 
-        if(intention){
-            titleStep2.text = "ÉCRIS TES INTENTIONS"
-            btnShowAdvices.visibility = View.GONE
 
-            val predefinedTexts = listOf("Intention 1", "Intention 2")
-            predefinedTexts.forEach {
-                userTexts.add(it) // On ajoute le texte à userTexts
-                addTextView(it, userTexts, intention) // On affiche dans le layout
-            }
+        val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
+        predefinedTexts.forEach {
+            userTexts.add(it) // On ajoute le texte à userTexts
+            addTextView(it, userTexts) // On affiche dans le layout
 
-        } else {
-            val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
-            predefinedTexts.forEach {
-                userTexts.add(it) // On ajoute le texte à userTexts
-                addTextView(it, userTexts, intention) // On affiche dans le layout
-            }
         }
 
         addButton.setOnClickListener {
             // Ajout d'une nouvelle affirmation vide
             val newText = ""
             userTexts.add(newText)
-            addTextView(newText, userTexts, intention)
+            addTextView(newText, userTexts)
         }
 
         buttonOk.setOnClickListener {
             // userTexts est déjà mis à jour grâce aux TextWatcher
-            generateTTSFilesForAllTexts(curentAPIKey, intention)
+            generateTTSFilesForAllTexts(curentAPIKey)
 
             if (curentVoice != null) {
                 val intent = Intent(this, step3Music::class.java)
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", generateFiles)
-                intent.putExtra("intention", intention)
 
                 if (userTexts.size > 2) {
                     intent.putExtra("curentAPIKey", curentAPIKey)
@@ -221,18 +219,14 @@ class Step2 : Base() {
      * @param apikey Clé API pour le service TTS.
      * @param intention Indicateur si l'activité est pour des intentions ou des affirmations.
      */
-    private fun generateTTSFilesForAllTexts(apikey: String?, intention: Boolean) {
+    private fun generateTTSFilesForAllTexts(apikey: String?) {
         // Dans cet exemple, on ne génère que pour les 2 premiers textes
         for (index in 0..1) {
             if (index < userTexts.size) {
                 val text = userTexts[index]
-                if (apikey != null && !intention) {
+                if (apikey != null) {
                     // Appel de textToSpeech sans ajouter le nom
                     textToSpeech(text, index, apikey)
-                } else {
-                    if (intention && apikey != null) {
-                        textToSpeechIntention(text, index, apikey)
-                    }
                 }
             }
         }
@@ -243,16 +237,13 @@ class Step2 : Base() {
      *
      * @param intention Indicateur si l'activité est pour des intentions ou des affirmations.
      */
-    private fun updateTextNumbers(intention: Boolean) {
+    private fun updateTextNumbers() {
         var count = 1
         for (i in 0 until container.childCount) {
             val linearLayout = container.getChildAt(i) as LinearLayout
             val editText = linearLayout.getChildAt(0) as? EditText
-            if(intention){
-                editText?.hint = "Intention $count"
-            } else {
-                editText?.hint = "Je \"affirmation $count\""
-            }
+            editText?.hint = "Je \"affirmation $count\""
+
             count++
         }
         textViewCount = count - 1
@@ -265,22 +256,12 @@ class Step2 : Base() {
      * @param userText Liste des textes saisis par l'utilisateur.
      * @param intention Indicateur si l'activité est pour des intentions ou des affirmations.
      */
-    private fun addTextView(text: String, userText: ArrayList<String>, intention: Boolean) {
+    private fun addTextView(text: String, userText: ArrayList<String>,) {
         textViewCount++
-        val placeholderText: String
-
-        if (intention) {
-            placeholderText = if (text.isEmpty()) {
-                "Intention $textViewCount"
-            } else {
-                text
-            }
+        val placeholderText = if (text.isEmpty()) {
+            "Je \"affirmation $textViewCount\""
         } else {
-            placeholderText = if (text.isEmpty()) {
-                "Je \"affirmation $textViewCount\""
-            } else {
-                text
-            }
+            text
         }
 
         // Position du texte actuel dans userTexts : c'est le dernier ajouté
@@ -346,7 +327,7 @@ class Step2 : Base() {
             if (position >= 0 && position < userText.size) {
                 userText.removeAt(position)
                 container.removeView(horizontalContainer)
-                updateTextNumbers(intention)
+                updateTextNumbers()
             } else {
                 Log.e("Error", "Position invalide pour la suppression : $position")
             }
