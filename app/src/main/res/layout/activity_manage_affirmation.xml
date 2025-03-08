@@ -9,6 +9,9 @@
     android:background="@drawable/activity_background"
     tools:context=".ManageAffirmationActivity">
 
+
+
+
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -16,7 +19,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/activity_background"
         tools:context=".ManageAffirmationActivity">
-
         <ImageButton
             android:id="@+id/btn_burger"
             android:layout_width="48dp"

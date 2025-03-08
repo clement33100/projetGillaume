@@ -1,7 +1,12 @@
 package com.example.myapplicationv2
 
+import android.app.DownloadManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -9,6 +14,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -133,6 +139,12 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
                 }
             }
 
+
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1001)
+            }
+
+
             // Bouton "Annuler"
             dialogView.findViewById<Button>(R.id.cancelButton)?.apply {
                 setOnClickListener {
@@ -149,22 +161,52 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
     }
 
     private fun downloadFile(file: File) {
+        // Vérifier si le stockage externe est disponible
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Toast.makeText(this, "Stockage externe non disponible.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val destFile = File(downloadsDir, file.name)
-
         try {
-            file.copyTo(destFile, overwrite = true)
-            Toast.makeText(this, "Fichier téléchargé dans ${destFile.absolutePath}", Toast.LENGTH_LONG).show()
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                // Pour Android Q et supérieur, utiliser MediaStore pour enregistrer dans le dossier Downloads
+                // Vous pouvez modifier RELATIVE_PATH pour forcer "Téléchargements" si nécessaire.
+                val contentValues = android.content.ContentValues().apply {
+                    put(android.provider.MediaStore.Downloads.DISPLAY_NAME, file.name)
+                    put(android.provider.MediaStore.Downloads.MIME_TYPE, "audio/mpeg")
+                    // Utilisez "Download" (ou "Téléchargements" si vous préférez) pour le chemin relatif.
+                    put(android.provider.MediaStore.Downloads.RELATIVE_PATH, "Download")
+                }
+                val resolver = contentResolver
+                // Utiliser la collection principale pour le stockage externe
+                val downloadsUri = android.provider.MediaStore.Downloads.getContentUri(android.provider.MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                val uri = resolver.insert(downloadsUri, contentValues)
+                if (uri != null) {
+                    resolver.openOutputStream(uri)?.use { outputStream ->
+                        file.inputStream().use { inputStream ->
+                            inputStream.copyTo(outputStream)
+                        }
+                    }
+                    Toast.makeText(this, "Fichier téléchargé dans le dossier Téléchargements.", Toast.LENGTH_LONG).show()
+                    // Vous pouvez ici ajouter une notification renvoyant à ce fichier si besoin.
+                } else {
+                    Toast.makeText(this, "Erreur lors de l'insertion dans MediaStore.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                // Pour les versions antérieures à Android Q, utiliser le répertoire public "Download"
+                val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val destFile = File(downloadsDir, file.name)
+                file.copyTo(destFile, overwrite = true)
+                Toast.makeText(this, "Fichier téléchargé dans ${destFile.absolutePath}", Toast.LENGTH_LONG).show()
+                // Pour ouvrir le fichier avec FileProvider, assurez-vous que FileProvider est bien configuré dans votre manifeste.
+            }
         } catch (e: IOException) {
             Toast.makeText(this, "Erreur lors du téléchargement : ${e.message}", Toast.LENGTH_SHORT).show()
             Log.e("ManageAffirmationActivity", "Erreur : ${e.message}")
         }
     }
+
+
 
     private fun playMusic() {
         mediaPlayer?.let {
