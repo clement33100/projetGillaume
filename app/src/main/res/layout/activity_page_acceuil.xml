@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
-    tools:context=".step1FirstName">
+    >
 
 
     <TextView
@@ -40,6 +40,8 @@
         android:layout_width="331dp"
         android:layout_height="111dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
