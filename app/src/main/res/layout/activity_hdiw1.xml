@@ -69,10 +69,10 @@
 
                 <TextView
                     android:id="@+id/txt_explain"
-                    android:layout_width="373dp"
-                    android:layout_height="444dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:paddingLeft="20dp"
@@ -82,10 +82,10 @@
 
                 <TextView
                     android:id="@+id/txt_explain2"
-                    android:layout_width="370dp"
-                    android:layout_height="310dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -94,10 +94,10 @@
 
                 <TextView
                     android:id="@+id/txt_explain3"
-                    android:layout_width="374dp"
-                    android:layout_height="536dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -109,7 +109,7 @@
                     android:layout_width="316dp"
                     android:layout_height="74dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Mes Affirmations"
+                    android:text="Créer nouveau"
                     android:textSize="24dp" />
 
                 <!-- Espace (Optionnel) -->

@@ -67,10 +67,10 @@
                 <!-- Texte Explicatif 1 -->
                 <TextView
                     android:id="@+id/txt_explain"
-                    android:layout_width="match_parent"
-                    android:layout_height="340dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:paddingLeft="20dp"
@@ -81,10 +81,10 @@
                 <!-- Texte Explicatif 2 -->
                 <TextView
                     android:id="@+id/txt_explain2"
-                    android:layout_width="match_parent"
-                    android:layout_height="640dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:paddingLeft="20dp"
@@ -95,10 +95,10 @@
                 <!-- Titre de la Visualisation -->
                 <TextView
                     android:id="@+id/txt_explain3"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:text="La Visualisation"
@@ -108,10 +108,10 @@
                 <!-- Texte Explicatif 3 -->
                 <TextView
                     android:id="@+id/txt_explain4"
-                    android:layout_width="match_parent"
-                    android:layout_height="270dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:paddingLeft="20dp"
@@ -122,10 +122,10 @@
                 <!-- Texte Explicatif 4 -->
                 <TextView
                     android:id="@+id/txt_explain5"
-                    android:layout_width="match_parent"
-                    android:layout_height="620dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/customfont"
                     android:gravity="center"
                     android:paddingLeft="20dp"

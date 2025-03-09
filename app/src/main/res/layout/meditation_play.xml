@@ -20,10 +20,12 @@
             android:id="@+id/imageButtonPause"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="10dp"
             android:background="#EFEFEF"
             android:src="@drawable/imgpause"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/linearLayout"
             tools:srcCompat="@drawable/imgunpause" />
 

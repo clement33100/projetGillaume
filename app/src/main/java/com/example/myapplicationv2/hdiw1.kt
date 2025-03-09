@@ -23,7 +23,7 @@ class hdiw1 : Base() {
 
         // Définir les OnClickListener
         btnNew.setOnClickListener {
-            val intent = Intent(this, mesAffirmationsDetails::class.java)
+            val intent = Intent(this, Rules::class.java)
             startActivity(intent)
         }
 
