@@ -34,10 +34,10 @@
         <!-- Titre -->
         <TextView
             android:id="@+id/titlestep2"
-            android:layout_width="352dp"
-            android:layout_height="85dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
             android:gravity="center"
             android:padding="16dp"

@@ -30,17 +30,16 @@
         <!-- Texte expliquant la durée -->
         <TextView
             android:id="@+id/txt_explain"
-            android:layout_width="336dp"
-            android:layout_height="68dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
             android:gravity="center"
             android:text="Choisis la Durée de ton Fichier Audio"
             android:textSize="27sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

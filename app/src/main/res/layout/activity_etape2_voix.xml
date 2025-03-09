@@ -33,19 +33,19 @@
         <!-- Titre centré avec marges uniformes -->
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
             android:text="Choisis la Voix\nque tu Préfères"
             android:textAlignment="center"
             android:textColor="@color/grey"
             android:textSize="27sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Boutons pour choisir la voix -->
         <Button
