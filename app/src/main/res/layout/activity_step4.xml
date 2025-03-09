@@ -126,7 +126,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/intro"
             app:layout_constraintStart_toEndOf="@+id/intro"
             app:layout_constraintTop_toTopOf="@+id/intro"
-            app:srcCompat="@drawable/listengrey" />
+            app:srcCompat="@drawable/hp_vert_fusion" />
 
         <!-- Description de la Durée Sélectionnée -->
         <TextView

@@ -141,7 +141,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:contentDescription="Écouter Abondance"
-                            app:srcCompat="@drawable/haut_parleur_ok_svg" />
+                            app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
 
                     <!-- Option 2 : Focus -->
@@ -170,7 +170,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:contentDescription="Écouter Focus"
-                            app:srcCompat="@drawable/haut_parleur_ok_svg" />
+                            app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
 
                     <!-- Option 3 : Intuition -->
@@ -199,7 +199,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:contentDescription="Écouter Intuition"
-                            app:srcCompat="@drawable/haut_parleur_ok_svg" />
+                            app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -246,7 +246,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:contentDescription="Écouter Puissance"
-                            app:srcCompat="@drawable/haut_parleur_ok_svg" />
+                            app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
 
                     <!-- Option 2 : Renaissance -->
@@ -275,7 +275,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:contentDescription="Écouter Renaissance"
-                            app:srcCompat="@drawable/haut_parleur_ok_svg" />
+                            app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
 
                     <!-- Option 3 : Ressource infinie -->
@@ -304,7 +304,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@android:color/transparent"
                             android:contentDescription="Écouter Ressource infinie"
-                            app:srcCompat="@drawable/haut_parleur_ok_svg" />
+                            app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
