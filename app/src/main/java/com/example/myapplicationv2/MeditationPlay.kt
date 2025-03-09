@@ -568,7 +568,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
             if (ReturnCode.isSuccess(returnCode)) {
                 runOnUiThread {
-                    Toast.makeText(this, "Mixage réussi.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Félicitations ! Tu peux maintenant écouter ta création !", Toast.LENGTH_SHORT).show()
                     Log.d("MeditationPlay", "Mixage réussi. Fichier final à: $outputPath")
 
                     hideOverlay() // Masquer l'overlay après le succès

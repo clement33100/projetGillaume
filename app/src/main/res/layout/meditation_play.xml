@@ -63,6 +63,7 @@
             android:id="@+id/imageView4"
             android:layout_width="254dp"
             android:layout_height="233dp"
+            android:layout_marginTop="200dp"
             android:layout_marginBottom="64dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,17 +142,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Texte de félicitations -->
-        <TextView
-            android:id="@+id/tv_felicitation"
-            android:layout_width="351dp"
-            android:layout_height="69dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="Félicitations ! Tu peux maintenant écouter ta création. Bonne écoute ! "
-            android:textSize="19sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
         <!-- Overlay pour le téléchargement avec indicateur circulaire -->
         <FrameLayout
