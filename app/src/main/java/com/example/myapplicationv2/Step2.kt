@@ -41,6 +41,7 @@ class Step2 : Base() {
     private lateinit var container: LinearLayout
     private var textViewCount = 0
     private lateinit var buttonOk: Button
+    private lateinit var addButton: Button
     private val userTexts = ArrayList<String>()  // Liste pour stocker les textes saisis
     private lateinit var textToSpeech: TextToSpeech
     private val generateFiles = ArrayList<String>()  // Liste pour stocker les chemins des fichiers générés
@@ -84,8 +85,8 @@ class Step2 : Base() {
         }
 
         buttonOk = findViewById(R.id.step2ok)
+        addButton = findViewById(R.id.addButton)
         container = findViewById(R.id.container)
-        val addButton = findViewById<Button>(R.id.addButton)
         val btnShowAdvices = findViewById<Button>(R.id.btn_show_advices)
         val scrollView = findViewById<ScrollView>(R.id.scrollViewAffirm)
         var isAdviceExpanded = false
@@ -104,6 +105,22 @@ class Step2 : Base() {
 
         val arrowDownDrawable = ContextCompat.getDrawable(this, R.drawable.arrowdown)
         arrowDownDrawable?.setBounds(0, 0, arrowDownDrawable.intrinsicWidth, arrowDownDrawable.intrinsicHeight)
+
+        val rootView = findViewById<View>(R.id.main)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { v, insets ->
+            // Récupère les insets liés au clavier (IME)
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            if (imeInsets.bottom > 0) {
+                // Le clavier est affiché, masquer les boutons
+                addButton.visibility = View.GONE
+                buttonOk.visibility = View.GONE
+            } else {
+                // Le clavier est caché, afficher les boutons
+                addButton.visibility = View.VISIBLE
+                buttonOk.visibility = View.VISIBLE
+            }
+            insets
+        }
 
         var collapsedWidth = 0
         btnShowAdvices.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {

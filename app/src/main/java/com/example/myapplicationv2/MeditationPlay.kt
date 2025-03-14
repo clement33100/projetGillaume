@@ -212,7 +212,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 if (copySuccess) {
                     runOnUiThread {
                         // Afficher le logo gris pendant le chargement
-                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappligrey)
+                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_final_nb)
 
                         // Afficher l'Overlay avec indicateur circulaire
                         showOverlay()
@@ -236,7 +236,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                                 // Masquer l'Overlay en cas d'échec
                                 runOnUiThread {
                                     // Remplacer le logo gris par le logo normal
-                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
 
                                     hideOverlay()
                                 }
