@@ -46,19 +46,19 @@
     </string>
 
     <string name="txt_rules1">
-        Choisis une \n<b>Voix Off</b>
+        Choisis une \n <b>Voix Off</b>
     </string>
     <string name="txt_rules2">
-        Écris tes \n<b>Affirmations</b>
+        Écris tes \n <b>Affirmations</b>
     </string>
     <string name="txt_rules3">
-        Choisis ta    \n<b>musique</b>\nde fond
+        Choisis ta    \n <b>musique</b>\n de fond
     </string>
     <string name="txt_rules4">
-        Choisis la\n<b>Durée</b> de ton\nfichier audio
+        Choisis la\n <b>Durée</b> de ton\n fichier audio
     </string>
     <string name="txt_rules5">
-        <b>Écoute</b> tes \naffirmations\nchaque jour
+        <b>Écoute</b> tes \n affirmations\n chaque jour
     </string>
 
 
