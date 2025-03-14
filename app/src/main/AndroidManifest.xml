@@ -42,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".Step2"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".Base"

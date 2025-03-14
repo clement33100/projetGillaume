@@ -574,7 +574,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     hideOverlay() // Masquer l'overlay après le succès
 
                     // Remplacer le logo gris par le logo normal
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
 
                     // Mettre à jour le pourcentage à 100%
                     circularProgressIndicator.progress = 100
@@ -595,7 +595,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     hideOverlay() // Masquer l'overlay en cas d'échec
 
                     // Remplacer le logo gris par le logo normal même en cas d'échec
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logoappli)
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                 }
                 callback(false)
             }

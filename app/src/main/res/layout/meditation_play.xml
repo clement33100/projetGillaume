@@ -96,6 +96,7 @@
                 android:indeterminateOnly="false"
                 android:max="100"
                 android:progress="0"
+                android:fitsSystemWindows="true"
                 android:progressBackgroundTint="@color/light_green"
                 android:progressTint="@color/green" />
 
@@ -114,12 +115,12 @@
             android:paddingRight="20dp"
             android:paddingLeft="20dp"
             android:ems="10"
-            android:hint="Donne un nom à ta création"
+            android:hint="Donne un Nom à ta Création"
             android:inputType="text"
             android:textAlignment="center"
             android:textColor="@color/grey"
             android:textColorLink="@color/grey"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/buttonOkMeditation"
             app:layout_constraintEnd_toEndOf="parent"
