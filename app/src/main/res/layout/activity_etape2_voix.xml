@@ -30,6 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <!-- Titre centré avec marges uniformes -->
         <TextView
             android:id="@+id/textView"

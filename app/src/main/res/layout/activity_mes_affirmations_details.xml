@@ -9,6 +9,7 @@
     android:background="@drawable/activity_background"
     tools:context=".mesAffirmationsDetails">
 
+
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"

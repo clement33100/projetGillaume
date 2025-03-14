@@ -9,6 +9,7 @@
     android:background="@drawable/activity_background"
     tools:context=".Advices">
 
+
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"

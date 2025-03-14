@@ -9,6 +9,7 @@
     android:background="@drawable/activity_background"
     tools:context=".step3Music">
 
+
     <!-- Contenu principal de l'activité -->
     <ScrollView
         android:layout_width="match_parent"
