@@ -69,7 +69,7 @@
         <!-- Bouton pour afficher les conseils pratiques -->
         <Button
             android:id="@+id/btn_show_advices"
-            android:layout_width="370dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:background="@drawable/button_background"
@@ -77,20 +77,21 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="CONSEILS PRATIQUES"
+            android:maxWidth="320dp"
+            android:text="Conseils Pratiques"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subtitle" />
-
         <!-- ScrollView contenant les affirmations -->
         <ScrollView
             android:id="@+id/scrollViewAffirm"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/addButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -122,6 +123,7 @@
             android:id="@+id/step2ok"
             android:layout_width="90dp"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="84dp"
             android:padding="10dp"
             android:text="OK"

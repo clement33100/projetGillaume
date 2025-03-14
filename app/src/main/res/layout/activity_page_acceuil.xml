@@ -27,9 +27,9 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="379dp"
-        android:layout_height="383dp"
-        android:layout_marginTop="70dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
@@ -37,8 +37,8 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="331dp"
-        android:layout_height="111dp"
+        android:layout_width="264dp"
+        android:layout_height="77dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"

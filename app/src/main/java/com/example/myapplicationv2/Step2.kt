@@ -31,6 +31,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
+import android.text.InputType
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 
 class Step2 : Base() {
     private lateinit var container: LinearLayout
@@ -87,14 +92,11 @@ class Step2 : Base() {
         btnShowAdvices.isAllCaps = false
 
         // Préparation du texte de conseils
-        val title = formatHtmlText("<b>CONSEILS PRATIQUES</b>", 1f)
-        val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.8f)
-        val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.8f)
-        val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.8f)
-        val advice4 = formatHtmlText("<b>SOIS CLAIR</b>, simple et précis", 0.8f)
-        val advice5 = formatHtmlText("<b>RENFORCE TES AFFIRMATIONS</b> avec des exemples concrets de ta vie qui les confirment : <i>\"Je suis confiant parce que j’ai déjà atteint 'cet objectif' que je m’étais fixé.\"</i>", 0.8f)
-        val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : « Je m’ouvre à la possibilité de... ».", 0.8f)
-        val advice7 = formatHtmlText("<b>ÉVOLUE EN DOUCEUR</b> en ajoutant : « À mon juste rythme, en douceur. »", 0.8f)
+        val title = formatHtmlText("<b>Conseils Pratiques</b>", 0.95f)
+        val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.75f)
+        val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.75f)
+        val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
+        val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
 
         val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowbottomtom)
         val insetArrow = InsetDrawable(arrowUpDrawable, 0, -28, 0, 0)
@@ -103,14 +105,32 @@ class Step2 : Base() {
         val arrowDownDrawable = ContextCompat.getDrawable(this, R.drawable.arrowdown)
         arrowDownDrawable?.setBounds(0, 0, arrowDownDrawable.intrinsicWidth, arrowDownDrawable.intrinsicHeight)
 
+        var collapsedWidth = 0
+        btnShowAdvices.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                // Ici, le bouton affiche seulement "Conseils Pratiques"
+                collapsedWidth = btnShowAdvices.width
+                btnShowAdvices.minWidth = collapsedWidth
+                btnShowAdvices.maxWidth = collapsedWidth
+                btnShowAdvices.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
+
         btnShowAdvices.setOnClickListener {
+            // Ajout de marges extérieures (ici 40 pixels à gauche et à droite, vous pouvez adapter en dp si nécessaire)
+            val params = btnShowAdvices.layoutParams as ViewGroup.MarginLayoutParams
+            params.marginStart = 40
+            params.marginEnd = 40
+            btnShowAdvices.layoutParams = params
+
             if (!isAdviceExpanded) {
+                // État déplié : on affiche tous les conseils
                 btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 val finalTextBuilder = SpannableStringBuilder()
                 finalTextBuilder.append(title)
 
                 arrowUpDrawable?.let {
-                    finalTextBuilder.append("         ")
+                    finalTextBuilder.append("    ")
                     finalTextBuilder.setSpan(
                         ImageSpan(insetArrow, ImageSpan.ALIGN_BASELINE),
                         finalTextBuilder.length - 1,
@@ -123,33 +143,32 @@ class Step2 : Base() {
                 finalTextBuilder.append(advice1).append("\n\n")
                 finalTextBuilder.append(advice2).append("\n\n")
                 finalTextBuilder.append(advice3).append("\n\n")
-                finalTextBuilder.append(advice4).append("\n\n")
-                finalTextBuilder.append(advice5).append("\n\n")
-                finalTextBuilder.append(advice6).append("\n\n")
-                finalTextBuilder.append(advice7)
+                finalTextBuilder.append(advice6)
 
                 btnShowAdvices.text = finalTextBuilder
 
-                // Forcer la mise à jour de la disposition
                 btnShowAdvices.requestLayout()
                 scrollView.requestLayout()
 
-                btnShowAdvices.post {
-                    scrollView.post {
-                        scrollView.smoothScrollTo(0, btnShowAdvices.bottom)
-                    }
-                }
+                // Réappliquer la largeur initiale
+                btnShowAdvices.minWidth = collapsedWidth
+                btnShowAdvices.maxWidth = collapsedWidth
+
                 scrollView.visibility = View.VISIBLE
 
             } else {
+                // État replié : on affiche seulement le titre
                 val minimalTextBuilder = SpannableStringBuilder()
                 minimalTextBuilder.append(title)
                 btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrowdown, 0)
                 btnShowAdvices.text = minimalTextBuilder
 
-                // Forcer la mise à jour de la disposition
                 btnShowAdvices.requestLayout()
                 scrollView.requestLayout()
+
+                // Réappliquer la largeur initiale
+                btnShowAdvices.minWidth = collapsedWidth
+                btnShowAdvices.maxWidth = collapsedWidth
 
                 scrollView.post {
                     scrollView.smoothScrollTo(0, scrollView.top)
@@ -159,15 +178,18 @@ class Step2 : Base() {
             btnShowAdvices.gravity = Gravity.CENTER_VERTICAL
             isAdviceExpanded = !isAdviceExpanded
         }
-
-
-
         // Gestion des insets
         ViewCompat.setOnApplyWindowInsetsListener(
             findViewById<View>(R.id.main)
         ) { v: View, insets: WindowInsetsCompat ->
             val systemBars: Insets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom + imeInsets.bottom
+            )
             insets
         }
 
@@ -176,12 +198,10 @@ class Step2 : Base() {
 
         titleStep2 = findViewById(R.id.titlestep2)
 
-
         val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
         predefinedTexts.forEach {
             userTexts.add(it) // On ajoute le texte à userTexts
             addTextView(it, userTexts) // On affiche dans le layout
-
         }
 
         addButton.setOnClickListener {
@@ -206,7 +226,6 @@ class Step2 : Base() {
                 }
 
                 startActivity(intent)
-
             } else {
                 Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
@@ -217,7 +236,6 @@ class Step2 : Base() {
      * Génère les fichiers audio TTS pour tous les textes.
      *
      * @param apikey Clé API pour le service TTS.
-     * @param intention Indicateur si l'activité est pour des intentions ou des affirmations.
      */
     private fun generateTTSFilesForAllTexts(apikey: String?) {
         // Dans cet exemple, on ne génère que pour les 2 premiers textes
@@ -234,8 +252,6 @@ class Step2 : Base() {
 
     /**
      * Met à jour les numéros des TextViews après suppression.
-     *
-     * @param intention Indicateur si l'activité est pour des intentions ou des affirmations.
      */
     private fun updateTextNumbers() {
         var count = 1
@@ -243,7 +259,6 @@ class Step2 : Base() {
             val linearLayout = container.getChildAt(i) as LinearLayout
             val editText = linearLayout.getChildAt(0) as? EditText
             editText?.hint = "Je \"affirmation $count\""
-
             count++
         }
         textViewCount = count - 1
@@ -251,12 +266,8 @@ class Step2 : Base() {
 
     /**
      * Ajoute une nouvelle TextView pour une affirmation ou une intention.
-     *
-     * @param text Texte de l'affirmation ou de l'intention.
-     * @param userText Liste des textes saisis par l'utilisateur.
-     * @param intention Indicateur si l'activité est pour des intentions ou des affirmations.
      */
-    private fun addTextView(text: String, userText: ArrayList<String>,) {
+    private fun addTextView(text: String, userText: ArrayList<String>) {
         textViewCount++
         val placeholderText = if (text.isEmpty()) {
             "Je \"affirmation $textViewCount\""
@@ -285,6 +296,19 @@ class Step2 : Base() {
         affirmationEditText.setPadding(16, 40, 16, 40)
         affirmationEditText.textAlignment = View.TEXT_ALIGNMENT_CENTER
         affirmationEditText.setTypeface(null, Typeface.ITALIC)
+
+        // Ajout des options IME pour afficher le bouton "OK" et fermer le clavier
+        affirmationEditText.imeOptions = EditorInfo.IME_ACTION_DONE
+        affirmationEditText.inputType = InputType.TYPE_CLASS_TEXT
+        affirmationEditText.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
 
         val layoutParams = LinearLayout.LayoutParams(
             0,
@@ -323,13 +347,14 @@ class Step2 : Base() {
         deleteButton.setBackgroundColor(Color.TRANSPARENT)
 
         deleteButton.setOnClickListener {
-            val position = userText.indexOf(text) // Récupère la position exacte
-            if (position >= 0 && position < userText.size) {
-                userText.removeAt(position)
+// Récupère l'index de horizontalContainer dans le conteneur parent
+            val pos = container.indexOfChild(horizontalContainer)
+            if (pos != -1 && pos < userText.size) {
+                userText.removeAt(pos)
                 container.removeView(horizontalContainer)
                 updateTextNumbers()
             } else {
-                Log.e("Error", "Position invalide pour la suppression : $position")
+                Log.e("Error", "Position invalide pour la suppression : $pos")
             }
         }
 
@@ -340,10 +365,6 @@ class Step2 : Base() {
 
     /**
      * Génère un fichier audio TTS pour un texte spécifique sans ajouter le nom.
-     *
-     * @param text Texte à convertir en audio.
-     * @param index Index du texte (pour nommer le fichier).
-     * @param voiceId Identifiant de la voix à utiliser pour le TTS.
      */
     private fun textToSpeech(text: String, index: Int, voiceId: String) {
         val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
@@ -358,7 +379,7 @@ class Step2 : Base() {
         generateFiles.add(generatedFilePath)
 
         // Construction du texte complet sans ajouter le nom
-        val fullText = "$text."  // Modification: Suppression de l'ajout du nom
+        val fullText = "$text."
 
         Log.d("test1234", "textToSpeech: $fullText")
         Log.i("test1234", "textToSpeech: $fullText")
@@ -417,10 +438,6 @@ class Step2 : Base() {
 
     /**
      * Génère un fichier audio TTS pour une intention spécifique sans ajouter le nom.
-     *
-     * @param text Texte de l'intention à convertir en audio.
-     * @param index Index du texte (pour nommer le fichier).
-     * @param voiceId Identifiant de la voix à utiliser pour le TTS.
      */
     private fun textToSpeechIntention(text: String, index: Int, voiceId: String) {
         val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
@@ -434,7 +451,7 @@ class Step2 : Base() {
         val generatedFilePath = "$basePath/voice_$index.mp3"
         generateFiles.add(generatedFilePath)
 
-        val fullText = "$text."  // Modification: Suppression de l'ajout du nom
+        val fullText = "$text."
 
         Log.d("test1234", "textToSpeech: $fullText")
         Log.i("test1234", "textToSpeech: $fullText")
