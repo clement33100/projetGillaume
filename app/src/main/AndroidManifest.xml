@@ -49,6 +49,7 @@
             android:exported="false" />
         <activity
             android:name=".MeditationPlay"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".Advices"
