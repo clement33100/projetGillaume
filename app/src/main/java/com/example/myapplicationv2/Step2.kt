@@ -170,67 +170,30 @@ class Step2 : Base() {
         })
 
         btnShowAdvices.setOnClickListener {
-            // Ajout de marges extérieures (ici 40 pixels à gauche et à droite, vous pouvez adapter en dp si nécessaire)
-            val params = btnShowAdvices.layoutParams as ViewGroup.MarginLayoutParams
-            params.marginStart = 40
-            params.marginEnd = 40
-            btnShowAdvices.layoutParams = params
+            val dialogView = layoutInflater.inflate(R.layout.dialog_advices, null)
+            val tvAdvices = dialogView.findViewById<TextView>(R.id.tvAdvices)
 
-            if (!isAdviceExpanded) {
-                // État déplié : on affiche tous les conseils
-                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-                val finalTextBuilder = SpannableStringBuilder()
-                finalTextBuilder.append(title)
-
-                arrowUpDrawable?.let {
-                    finalTextBuilder.append("    ")
-                    finalTextBuilder.setSpan(
-                        ImageSpan(insetArrow, ImageSpan.ALIGN_BASELINE),
-                        finalTextBuilder.length - 1,
-                        finalTextBuilder.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-
-                finalTextBuilder.append("\n\n")
-                finalTextBuilder.append(advice1).append("\n\n")
-                finalTextBuilder.append(advice2).append("\n\n")
-                finalTextBuilder.append(advice3).append("\n\n")
-                finalTextBuilder.append(advice6)
-
-                btnShowAdvices.text = finalTextBuilder
-
-                btnShowAdvices.requestLayout()
-                scrollView.requestLayout()
-
-                // Réappliquer la largeur initiale
-                btnShowAdvices.minWidth = collapsedWidth
-                btnShowAdvices.maxWidth = collapsedWidth
-
-                scrollView.visibility = View.VISIBLE
-
-            } else {
-                // État replié : on affiche seulement le titre
-                val minimalTextBuilder = SpannableStringBuilder()
-                minimalTextBuilder.append(title)
-                btnShowAdvices.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrowdown, 0)
-                btnShowAdvices.text = minimalTextBuilder
-
-                btnShowAdvices.requestLayout()
-                scrollView.requestLayout()
-
-                // Réappliquer la largeur initiale
-                btnShowAdvices.minWidth = collapsedWidth
-                btnShowAdvices.maxWidth = collapsedWidth
-
-                scrollView.post {
-                    scrollView.smoothScrollTo(0, scrollView.top)
-                }
+            val adviceText = SpannableStringBuilder().apply {
+                append(formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.9f))
+                append("\n\n")
+                append(formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.9f))
+                append("\n\n")
+                append(formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.9f))
+                append("\n\n")
+                append(formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.9f))
             }
 
-            btnShowAdvices.gravity = Gravity.CENTER_VERTICAL
-            isAdviceExpanded = !isAdviceExpanded
+            tvAdvices.text = adviceText
+
+            val dialog = AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setPositiveButton("Fermer") { d, _ -> d.dismiss() }
+                .create()
+
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent) // Pour voir les coins arrondis
+            dialog.show()
         }
+
         // Gestion des insets
         ViewCompat.setOnApplyWindowInsetsListener(
             findViewById<View>(R.id.main)

@@ -68,13 +68,15 @@
             app:layout_constraintTop_toBottomOf="@+id/titlestep2" />
 
         <!-- Bouton pour afficher les conseils pratiques -->
+
+        <!--android:drawableEnd="@drawable/arrowdown"-->
+
         <Button
             android:id="@+id/btn_show_advices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:background="@drawable/button_background"
-            android:drawableEnd="@drawable/arrowdown"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="16dp"
@@ -86,7 +88,7 @@
             app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subtitle" />
-        <!-- ScrollView contenant les affirmations -->
+    <!-- ScrollView contenant les affirmations -->
         <ScrollView
             android:id="@+id/scrollViewAffirm"
             android:layout_width="match_parent"
