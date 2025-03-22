@@ -36,6 +36,8 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 
 class Step2 : Base() {
     private lateinit var container: LinearLayout
@@ -106,22 +108,56 @@ class Step2 : Base() {
         val arrowDownDrawable = ContextCompat.getDrawable(this, R.drawable.arrowdown)
         arrowDownDrawable?.setBounds(0, 0, arrowDownDrawable.intrinsicWidth, arrowDownDrawable.intrinsicHeight)
 
-        val rootView = findViewById<View>(R.id.main)
-        ViewCompat.setOnApplyWindowInsetsListener(rootView) { v, insets ->
-            // Récupère les insets liés au clavier (IME)
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
-            if (imeInsets.bottom > 0) {
-                // Le clavier est affiché, masquer les boutons
+        // Dans votre méthode onCreate, après avoir récupéré vos vues
+        val rootView = findViewById<View>(R.id.drawer_layout)  // Vue racine globale
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.main)
+        val scrollViewa = findViewById<ScrollView>(R.id.scrollViewAffirm)
+
+// Déclaration de addButton et buttonOk, qui doivent déjà être initialisées par findViewById
+// Par exemple :
+// val addButton = findViewById<Button>(R.id.addButton)
+// val buttonOk = findViewById<Button>(R.id.step2ok)
+
+// Déclaration du ConstraintSet original pour restaurer l'état initial quand le clavier est fermé
+        val originalConstraintSet = ConstraintSet()
+        originalConstraintSet.clone(constraintLayout)
+
+// Listener pour détecter l'ouverture et la fermeture du clavier
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = android.graphics.Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            // Si la hauteur du clavier dépasse 15% de la hauteur totale de l'écran
+            if (keypadHeight > screenHeight * 0.15) {
+                // Clavier affiché : masquer les boutons et fixer leur hauteur à 0
                 addButton.visibility = View.GONE
                 buttonOk.visibility = View.GONE
+                addButton.layoutParams.height = 0
+                buttonOk.layoutParams.height = 0
+
+                // Modifier les contraintes pour que le ScrollView s'étende jusqu'en bas
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(constraintLayout)
+                constraintSet.connect(
+                    scrollViewa.id, ConstraintSet.BOTTOM,
+                    ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 0
+                )
+                constraintSet.applyTo(constraintLayout)
+                constraintLayout.requestLayout()
             } else {
-                // Le clavier est caché, afficher les boutons
+                // Clavier caché : afficher les boutons et restaurer leur hauteur d'origine
                 addButton.visibility = View.VISIBLE
                 buttonOk.visibility = View.VISIBLE
-            }
-            insets
-        }
+                addButton.layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
+                buttonOk.layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
 
+                // Restaurer la configuration initiale enregistrée dans originalConstraintSet
+                originalConstraintSet.applyTo(constraintLayout)
+                constraintLayout.requestLayout()
+            }
+        }
         var collapsedWidth = 0
         btnShowAdvices.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -222,10 +258,14 @@ class Step2 : Base() {
         }
 
         addButton.setOnClickListener {
-            // Ajout d'une nouvelle affirmation vide
-            val newText = ""
-            userTexts.add(newText)
-            addTextView(newText, userTexts)
+            if (userTexts.size < 6) {
+                // Ajout d'une nouvelle affirmation vide
+                val newText = ""
+                userTexts.add(newText)
+                addTextView(newText, userTexts)
+            } else {
+                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (6).", Toast.LENGTH_SHORT).show()
+            }
         }
 
         buttonOk.setOnClickListener {
