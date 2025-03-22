@@ -301,7 +301,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
      */
     private fun generateTTSFilesForAllTexts(apikey: String?, userTextsSplit: ArrayList<String>?, userTexts: ArrayList<String>?) {
         if (userTextsSplit != null) {
-            for (index in 2..3) {  // Exemple : Générer pour les indices 2 et 3
+            for (index in 4..7) {  // Exemple : Générer pour les indices 2 et 3
                 if (index < userTextsSplit.size) {
                     val text = userTextsSplit[index]
                     if ( apikey != null) {

@@ -258,13 +258,13 @@ class Step2 : Base() {
         }
 
         addButton.setOnClickListener {
-            if (userTexts.size < 6) {
+            if (userTexts.size < 8) {
                 // Ajout d'une nouvelle affirmation vide
                 val newText = ""
                 userTexts.add(newText)
                 addTextView(newText, userTexts)
             } else {
-                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (6).", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (8).", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -277,7 +277,7 @@ class Step2 : Base() {
                 intent.putExtra("curentVoice", curentVoice)
                 intent.putStringArrayListExtra("userTexts", generateFiles)
 
-                if (userTexts.size > 2) {
+                if (userTexts.size > 3) {
                     intent.putExtra("curentAPIKey", curentAPIKey)
                     intent.putStringArrayListExtra("userTextsSplit", userTexts)
                 }
@@ -296,7 +296,7 @@ class Step2 : Base() {
      */
     private fun generateTTSFilesForAllTexts(apikey: String?) {
         // Dans cet exemple, on ne génère que pour les 2 premiers textes
-        for (index in 0..1) {
+        for (index in 0..3) {
             if (index < userTexts.size) {
                 val text = userTexts[index]
                 if (apikey != null) {
