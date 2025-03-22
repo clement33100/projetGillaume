@@ -417,7 +417,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Construire le filtre complexe
         val filterComplexBuilder = StringBuilder()
 
-        // Si une intro est présente, on l'intègr
+        // Si une intro est présente, on l'intègre
         if (introPath != null) {
             filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ")
             filterComplexBuilder.append("[music_scaled]afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
