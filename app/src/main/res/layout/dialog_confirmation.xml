@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="26dp"
     android:background="@drawable/rounded_background">
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:paddingTop="8dp">
+        android:padding="8dp">
 
         <Button
             android:id="@+id/confirmButton"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Supprimer"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/button_confirm_background"
             android:textColor="#FFFFFF" />
 
