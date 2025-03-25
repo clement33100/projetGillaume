@@ -1,33 +1,37 @@
 package com.example.myapplicationv2
 
 import android.content.Intent
-import android.graphics.Rect
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.ReturnCode
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
-import com.arthenica.ffmpegkit.FFmpegKit
-import com.arthenica.ffmpegkit.ReturnCode
 
-class MeditationPlay : Base() {
+class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     // MediaPlayer Principal
     private var mediaPlayer: MediaPlayer? = null
@@ -38,11 +42,15 @@ class MeditationPlay : Base() {
     private lateinit var btnOK: Button
     private lateinit var editText: EditText
 
+    // PopupWindow pour afficher le texte tapé
+    private lateinit var popupWindow: PopupWindow
+
     // Overlay UI Elements
     private lateinit var circularProgressContainer: View
     private lateinit var circularProgressIndicator: CircularProgressIndicator
     private lateinit var circularProgressText: TextView
     private var progressRunnable: Runnable? = null
+
     // Handler pour la mise à jour périodique
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -50,11 +58,10 @@ class MeditationPlay : Base() {
     private var isPaused = true
     private var isTrackingProgress = false
 
-    // Constants
     companion object {
         private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
-        private const val AFFIRMATION_DELAY_SECONDS = 10 // 10 secondes
-        private const val INTRO_DELAY_MS = 3000L // 3 secondes (peut être ajusté si nécessaire)
+        private const val AFFIRMATION_DELAY_SECONDS = 10   // 10 secondes
+        private const val INTRO_DELAY_MS = 3000L           // 3 secondes (peut être ajusté si nécessaire)
     }
 
     override fun getLayoutId(): Int {
@@ -68,14 +75,10 @@ class MeditationPlay : Base() {
         // Configuration des Insets UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         // Initialisation des éléments UI existants
         progressBar = findViewById(R.id.progressBar)
@@ -88,33 +91,46 @@ class MeditationPlay : Base() {
         circularProgressIndicator = findViewById(R.id.circularProgressIndicator)
         circularProgressText = findViewById(R.id.circularProgressText)
 
-        // GlobalLayoutListener pour détecter l'ouverture/fermeture du clavier
-        // Assurez-vous que R.id.main correspond à la vue racine de votre layout
-        val rootView = findViewById<View>(R.id.main)
-        rootView.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            rootView.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = rootView.rootView.height
-            val keypadHeight = screenHeight - rect.bottom
+        // --- Début de l'ajout du PopupWindow pour l'EditText ---
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        // Inflate le layout de la pop-up (défini dans res/layout/popup_view.xml)
+        val popupView = inflater.inflate(R.layout.popup_view, null)
+        // Créer le PopupWindow en spécifiant la taille fixe (316dp x 74dp convertis en pixels)
+        popupWindow = PopupWindow(
+            popupView,
+            dpToPx(316),
+            dpToPx(74)
+        ).apply {
+            isOutsideTouchable = false
+            isFocusable = false
+        }
+        // Récupère le TextView de la pop-up
+        val popupText = popupView.findViewById<TextView>(R.id.popupText)
 
-            // Si le clavier occupe plus de 15% de la hauteur de l'écran, on le considère ouvert
-            if (keypadHeight > screenHeight * 0.15) {
-                btnOK.visibility = View.GONE
+        // Met à jour le texte du popup en temps réel
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                popupText.text = s.toString()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        // Affiche le popup quand l'EditText reçoit le focus et le ferme quand il le perd
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // Ajustez l'offset pour positionner correctement la pop-up
+                popupWindow.showAsDropDown(editText, 350, -editText.height - 300)
             } else {
-                btnOK.visibility = View.VISIBLE
+                popupWindow.dismiss()
             }
         }
+        // --- Fin de l'ajout du PopupWindow ---
 
         // Listener pour le bouton OK
         btnOK.setOnClickListener {
             val intent = Intent(this, Advices::class.java)
-
-            // Récupérer le nom saisi ou utiliser "affirmation" par défaut
-            val name = if (!editText.text.isNullOrEmpty()) {
-                editText.text.toString()
-            } else {
-                "affirmation"
-            }
+            val name = if (!editText.text.isNullOrEmpty()) editText.text.toString() else "affirmation"
 
             // Chemins source et destination
             val sourceFile = File(filesDir, "final_audio.mp3")
@@ -125,11 +141,7 @@ class MeditationPlay : Base() {
                 val created = destinationDir.mkdirs()
                 if (!created) {
                     Log.e("MeditationPlay", "Impossible de créer le dossier affirmation")
-                    Toast.makeText(
-                        this,
-                        "Erreur lors de la création du dossier affirmation.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Erreur lors de la création du dossier affirmation.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
@@ -145,44 +157,27 @@ class MeditationPlay : Base() {
             try {
                 if (sourceFile.exists()) {
                     sourceFile.copyTo(destinationFile, overwrite = false)
-                    Log.d(
-                        "MeditationPlay",
-                        "Fichier enregistré dans le dossier affirmation : ${destinationFile.absolutePath}"
-                    )
-                    Toast.makeText(
-                        this,
-                        "Fichier copié sous le nom ${destinationFile.name} dans le dossier affirmation.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Log.d("MeditationPlay", "Fichier enregistré dans le dossier affirmation : ${destinationFile.absolutePath}")
+                    Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name} dans le dossier affirmation.", Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.e(
-                        "MeditationPlay",
-                        "Le fichier source n'existe pas : ${sourceFile.absolutePath}"
-                    )
-                    Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT)
-                        .show()
+                    Log.e("MeditationPlay", "Le fichier source n'existe pas : ${sourceFile.absolutePath}")
+                    Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("MeditationPlay", "Erreur lors de la copie du fichier : ${e.message}")
-                Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
             }
 
+            // Lancer l'activité suivante
             startActivity(intent)
         }
 
         // Copie des ressources brutes vers le stockage interne
-        val bowlStartFilePath =
-            copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")
-        val bowlEndFilePath =
-            copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
+        val bowlStartFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")
+        val bowlEndFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
 
         if (bowlStartFilePath == null || bowlEndFilePath == null) {
-            Toast.makeText(
-                this,
-                "Erreur lors de la copie des fichiers audio du bol tibétain.",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "Erreur lors de la copie des fichiers audio du bol tibétain.", Toast.LENGTH_SHORT).show()
             Log.e("MeditationPlay", "Échec de la copie des fichiers audio du bol tibétain.")
             return
         }
@@ -191,8 +186,7 @@ class MeditationPlay : Base() {
         val filePaths = intent.getStringExtra("filePaths")
         val selectedDurationInSeconds = intent.getIntExtra("selectedDuration", 0)
         val currentVoice = intent.getStringExtra("curentVoice")
-        val userTexts =
-            intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
+        val userTexts = intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
 
         userTexts?.forEach { text ->
             Log.d("MeditationPlay", "Received text: $text")
@@ -207,11 +201,7 @@ class MeditationPlay : Base() {
         if (isIntroEnabled) {
             introFilePath = copyRawResourceToInternalStorage(R.raw.intro, "intro.mp3")
             if (introFilePath == null) {
-                Toast.makeText(
-                    this,
-                    "Erreur lors de la copie du fichier d'intro.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
                 Log.e("MeditationPlay", "Échec de la copie du fichier d'intro.")
             }
         }
@@ -220,11 +210,9 @@ class MeditationPlay : Base() {
             copyExternalMusic(filePaths, "recorded_music.mp3") { copySuccess ->
                 if (copySuccess) {
                     runOnUiThread {
-                        findViewById<ImageView>(R.id.imageView4)
-                            .setImageResource(R.drawable.logo_final_nb)
+                        findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_final_nb)
                         showOverlay()
                     }
-
                     val finalOutputPath = "${filesDir.absolutePath}/final_audio.mp3"
                     mixAudioFilesWithFade(
                         bowlStartPath = bowlStartFilePath,
@@ -239,8 +227,7 @@ class MeditationPlay : Base() {
                                 playMainAudio(finalOutputPath, selectedDurationInSeconds)
                             } else {
                                 runOnUiThread {
-                                    findViewById<ImageView>(R.id.imageView4)
-                                        .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
+                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                                     hideOverlay()
                                 }
                             }
@@ -250,8 +237,7 @@ class MeditationPlay : Base() {
             }
         } else {
             Log.e("MeditationPlay", "Chemin de la musique choisi est null.")
-            Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT).show()
         }
 
         pauseButton.setOnClickListener {
@@ -267,7 +253,12 @@ class MeditationPlay : Base() {
         }
     }
 
-    // --- Fonctions utilitaires ---
+    // Fonction utilitaire pour convertir dp en pixels
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
+
+    // --- Méthodes existantes (copyRawResourceToInternalStorage, saveFileToInternalStorage, copyExternalMusic, etc.) ---
 
     private fun copyRawResourceToInternalStorage(resourceId: Int, fileName: String): String? {
         return try {
@@ -355,7 +346,6 @@ class MeditationPlay : Base() {
         callback: (Boolean) -> Unit
     ) {
         showOverlay()
-
         val bowlStartFile = File(bowlStartPath)
         val musicFile = File(musicPath)
         val bowlEndFile = File(bowlEndPath)
@@ -416,10 +406,8 @@ class MeditationPlay : Base() {
 
         val bowlEndDelayMs = ((loopedMusicDuration - bowlEndDurationSeconds) * 1000).toInt()
         filterComplexBuilder.append("[2:a]atrim=duration=$bowlEndDurationSeconds,asetpts=PTS-STARTPTS,adelay=${bowlEndDelayMs}|${bowlEndDelayMs}[bowl_end_delayed]; ")
-
         filterComplexBuilder.append("[aout][bowl_end_delayed]amix=inputs=2:duration=longest[afinal]; ")
         filterComplexBuilder.append("[afinal]loudnorm=I=-16:TP=-1.5:LRA=11[aout_normalized]")
-
         val filterComplex = filterComplexBuilder.toString()
 
         val ffmpegCommandBuilder = StringBuilder()
@@ -435,7 +423,6 @@ class MeditationPlay : Base() {
             if (!affIndices.contains("[aff_delayed_$i]")) continue
             ffmpegCommandBuilder.append("-i \"${affirmationPaths[i % affirmationPaths.size]}\" ")
         }
-
         ffmpegCommandBuilder.append("-filter_complex \"$filterComplex\" ")
         ffmpegCommandBuilder.append("-t \"$selectedDurationInSeconds\" ")
         ffmpegCommandBuilder.append("-map \"[aout_normalized]\" ")
@@ -452,6 +439,7 @@ class MeditationPlay : Base() {
             if (ReturnCode.isSuccess(returnCode)) {
                 runOnUiThread {
                     Toast.makeText(this, "Mixage réussi. Fichier final à: $outputPath", Toast.LENGTH_SHORT).show()
+                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                     hideOverlay()
                 }
                 callback(true)
@@ -483,13 +471,13 @@ class MeditationPlay : Base() {
 
     private fun getAudioDurationSeconds(filePath: String): Float {
         val retriever = MediaMetadataRetriever()
-        try {
+        return try {
             retriever.setDataSource(filePath)
             val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-            return durationStr?.toFloatOrNull()?.div(1000f) ?: 0f
+            durationStr?.toFloatOrNull()?.div(1000f) ?: 0f
         } catch (e: Exception) {
             Log.e("MeditationPlay", "Error retrieving duration for $filePath: ${e.message}")
-            return 0f
+            0f
         } finally {
             retriever.release()
         }
@@ -503,19 +491,15 @@ class MeditationPlay : Base() {
                 Toast.makeText(this, "Main audio file not found.", Toast.LENGTH_SHORT).show()
                 return
             }
-
             Log.d("MeditationPlay", "Final audio path: $finalAudioPath")
             Log.d("MeditationPlay", "Final audio exists: ${mainFile.exists()}")
-
             try {
                 mediaPlayer = MediaPlayer().apply {
                     setDataSource(it)
                     prepare()
                     setVolume(0.6f, 0.6f)
                 }
-
                 startProgressTrackingWithCircularIndicator(durationTime)
-
                 mediaPlayer?.setOnCompletionListener {
                     Log.d("MeditationPlay", "Main audio playback completed.")
                     stopAllAudio()
@@ -535,25 +519,20 @@ class MeditationPlay : Base() {
             Log.d("MeditationPlay", "Progress tracking already in progress. Skipping.")
             return
         }
-
         isTrackingProgress = true
         var remainingTime = durationTime
-
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (remainingTime > 0) {
                     remainingTime--
                     val currentProgress = durationTime - remainingTime
                     val percentage = ((currentProgress / durationTime.toFloat()) * 100).toInt().coerceIn(0, 100)
-
                     runOnUiThread {
                         circularProgressIndicator.progress = percentage
                         circularProgressText.text = "$percentage%"
                         circularProgressText.contentDescription = "Progression de l'audio : $percentage pour cent"
                     }
-
                     mainHandler.postDelayed(this, 1000)
-
                     if (remainingTime == 0) {
                         Log.d("MeditationPlay", "Playback duration completed. Stopping audio.")
                         stopAllAudio()
@@ -571,22 +550,42 @@ class MeditationPlay : Base() {
         })
     }
 
+    private fun setupPauseButton() {
+        pauseButton.setOnClickListener {
+            if (isPaused) {
+                resumeAllMediaPlayers()
+                pauseButton.setImageResource(R.drawable.imgunpause)
+                isPaused = false
+                Log.d("MeditationPlay", "Playback resumed")
+            } else {
+                pauseAllMediaPlayers()
+                pauseButton.setImageResource(R.drawable.imgpause)
+                isPaused = true
+                Log.d("MeditationPlay", "Playback paused")
+            }
+        }
+    }
+
+    private fun resumeAllMediaPlayers() {
+        mediaPlayer?.start()
+    }
+
+    private fun pauseAllMediaPlayers() {
+        mediaPlayer?.pause()
+    }
+
     private fun stopAllAudio() {
         mediaPlayer?.let {
             if (it.isPlaying) it.stop()
             it.release()
             mediaPlayer = null
         }
-
         mainHandler.removeCallbacksAndMessages(null)
         isTrackingProgress = false
-
         hideOverlay()
-
         runOnUiThread {
             progressBar.visibility = View.GONE
         }
-
         Log.d("MeditationPlay", "All audio players stopped and released.")
     }
 

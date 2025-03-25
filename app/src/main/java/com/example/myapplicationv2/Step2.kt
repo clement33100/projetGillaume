@@ -443,7 +443,7 @@ class Step2 : Base() {
                         Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
 
                         runOnUiThread {
-                            Toast.makeText(this@Step2, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(this@Step2, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
                         }
 
                     } catch (e: IOException) {

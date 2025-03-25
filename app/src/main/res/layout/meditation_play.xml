@@ -6,15 +6,17 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@drawable/activity_background"
     tools:context=".MeditationPlay">
 
     <!-- Contenu principal de l'activité -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false">
 
         <ImageButton
             android:id="@+id/imageButtonPause"
@@ -40,6 +42,7 @@
             android:src="@drawable/menu_3_pointssvg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <!-- Texte principal -->
         <TextView
             android:id="@+id/txt_meditation"
@@ -65,14 +68,14 @@
             android:layout_height="233dp"
             android:layout_marginTop="200dp"
             android:layout_marginBottom="64dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_meditation"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_meditation"
             app:srcCompat="@drawable/logo_final_nb" />
 
-        <!-- Layout principal contenant les éléments UI -->
+        <!-- Layout principal contenant la ProgressBar -->
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="317dp"
@@ -99,51 +102,55 @@
                 android:fitsSystemWindows="true"
                 android:progressBackgroundTint="@color/light_green"
                 android:progressTint="@color/green" />
-
-            <!-- Bouton pause -->
-
         </LinearLayout>
 
-        <!-- EditText pour le nom de l'affirmation -->
-        <EditText
-            android:id="@+id/nameAffirm"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginBottom="50dp"
-            android:background="@drawable/plaintext_white"
-            android:backgroundTint="@color/yellow"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:ems="10"
-            android:hint="Donne un Nom à ta Création"
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textColor="@color/grey"
-            android:textColorLink="@color/grey"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/buttonOkMeditation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <!-- Bouton OK -->
-        <Button
-            android:id="@+id/buttonOkMeditation"
-            android:layout_width="90dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:padding="10dp"
-            android:text="ok"
-            android:textSize="19dp"
+        <!-- ScrollView contenant l'EditText et le bouton OK -->
+        <ScrollView
+            android:id="@+id/scroll_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="450dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_meditation">
 
-        <!-- Texte de félicitations -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
+                <!-- EditText pour le nom de l'affirmation -->
+                <EditText
+                    android:id="@+id/nameAffirm"
+                    android:layout_width="316dp"
+                    android:layout_height="74dp"
+                    android:background="@drawable/plaintext_white"
+                    android:backgroundTint="@color/yellow"
+                    android:ems="10"
+                    android:hint="Donne un Nom à ta Création"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <!-- Bouton OK -->
+                <Button
+                    android:id="@+id/buttonOkMeditation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:padding="10dp"
+                    android:text="ok"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </ScrollView>
 
         <!-- Overlay pour le téléchargement avec indicateur circulaire -->
         <FrameLayout
@@ -155,10 +162,10 @@
             android:elevation="10dp"
             android:focusable="true"
             android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -190,10 +197,7 @@
                     android:textColor="@color/green"
                     android:textSize="50sp"
                     android:textStyle="bold" />
-
-
             </LinearLayout>
-
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
