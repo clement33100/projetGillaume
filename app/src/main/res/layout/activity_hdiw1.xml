@@ -23,7 +23,7 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="36dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
             android:text="COMMENT ÇA MARCHE ?"
