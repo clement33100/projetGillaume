@@ -8,6 +8,8 @@
         android:id="@+id/btn_music_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/yellow"
+        android:textColor="@color/black"
         android:layout_weight="1"
         android:text="Music Title"
         android:padding="8dp"/>
@@ -16,8 +18,8 @@
         android:id="@+id/img_btn_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/listen"
-        android:contentDescription="Play music"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"/>
+        android:contentDescription="Play music"
+        android:padding="8dp"
+        android:src="@drawable/hp_jaune_ombre_fusion" />
 </LinearLayout>

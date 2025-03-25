@@ -399,6 +399,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
      * Crée dynamiquement un bouton pour un fichier audio sélectionné.
      */
     private fun createDynamicButton(fileName: String, filePath: String) {
+        // Supprimer tout ce qui était dans le container (pour ne garder qu’un seul élément)
+        dynamicButtonContainer.removeAllViews()
+
         // Charger la disposition personnalisée
         val inflater = LayoutInflater.from(this)
         val rowView = inflater.inflate(R.layout.item_music, dynamicButtonContainer, false)
@@ -410,21 +413,29 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Définir le texte du bouton avec le nom du fichier
         btnMusicText.text = fileName
 
-        // Définir l'action de clic sur le bouton de texte si besoin (par exemple pour afficher les paroles)
+        // Définir les actions
         btnMusicText.setOnClickListener {
-            // Action lorsque le bouton texte est cliqué
-            Toast.makeText(this, "You clicked on $fileName", Toast.LENGTH_SHORT).show()
-            setTextInfo(btnMusicText.text.toString(), filePath)
+            Toast.makeText(this, "Tu as sélectionné $fileName", Toast.LENGTH_SHORT).show()
+            setTextInfo(fileName, filePath)
         }
 
-        // Définir l'action de clic sur l'ImageButton pour jouer la musique
         imgBtnPlay.setOnClickListener {
             playAudio(filePath)
         }
 
-        // Ajouter la vue à votre conteneur
+        // Ajouter la vue
         dynamicButtonContainer.addView(rowView)
+
+        // Forcer le scroll en bas pour que l'utilisateur voit la musique ajoutée
+        val scrollView = findViewById<ScrollView>(R.id.scrollView)
+        scrollView.post {
+            scrollView.fullScroll(View.FOCUS_DOWN)
+        }
+
+        // Mettre à jour la musique sélectionnée
+        setTextInfo(fileName, filePath)
     }
+
 
     /**
      * Joue un fichier audio à partir de son chemin.

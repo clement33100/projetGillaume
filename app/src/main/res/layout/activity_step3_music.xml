@@ -57,11 +57,14 @@
             <ScrollView
                 android:id="@+id/scrollView"
                 android:layout_width="350dp"
-                android:layout_height="135dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic">
+                app:layout_constraintTop_toBottomOf="@+id/btn_silence">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -315,21 +318,21 @@
                 android:id="@+id/btn_silence"
                 android:layout_width="316dp"
                 android:layout_height="74dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/green"
                 android:text="Silence"
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+                app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic" />
 
             <!-- Bouton Epic -->
             <Button
                 android:id="@+id/btn_epic"
                 android:layout_width="316dp"
                 android:layout_height="74dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/green"
                 android:text="Epic"
                 android:textSize="24dp"
@@ -363,7 +366,7 @@
                 android:textColor="@color/green"
                 android:textSize="19sp"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/btn_silence" />
+                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
             <TextView
                 android:id="@+id/textView3"
