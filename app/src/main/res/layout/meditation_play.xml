@@ -12,6 +12,7 @@
     android:padding="16dp"
     android:clipToPadding="false">
 
+
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
