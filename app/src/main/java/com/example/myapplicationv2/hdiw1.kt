@@ -15,6 +15,7 @@ class hdiw1 : Base() {
         return R.layout.activity_hdiw1  // Retourne le layout spécifique à cette activité
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

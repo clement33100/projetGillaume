@@ -16,6 +16,7 @@ class Rules : Base() {  // Hérite de Base
         return R.layout.activity_rules  // Utilisez le layout adapté
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -11,7 +11,6 @@
     android:padding="16dp"
     >
 
-
     <!-- Contenu principal de l'activité -->
     <ScrollView
         android:layout_width="match_parent"

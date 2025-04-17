@@ -9,7 +9,6 @@
     tools:context=".Step2"
     android:padding="16dp"
     android:background="@drawable/activity_background"
-
     >
 
     <!-- Contenu principal de l'activité -->

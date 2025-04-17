@@ -44,6 +44,7 @@ class Etape2Voix : Base() {  // Hérite de Base
         enableEdgeToEdge()
 
 
+
         // Icônes claires sur barre d’état sombre
         WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)

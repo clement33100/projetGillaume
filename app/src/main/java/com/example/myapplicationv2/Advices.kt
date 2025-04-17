@@ -39,6 +39,7 @@ class Advices : Base() {  // Hérite de Base au lieu de AppCompatActivity
         return R.layout.activity_advices  // Fournit le layout spécifique à cette activité
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

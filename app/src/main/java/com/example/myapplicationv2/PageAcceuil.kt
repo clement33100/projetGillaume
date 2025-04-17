@@ -15,6 +15,7 @@ class PageAcceuil : AppCompatActivity() {
 
     private val splashTimeOut: Long = 2000 // 2 secondes
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_acceuil) // Utilisez le layout fourni

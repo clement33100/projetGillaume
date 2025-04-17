@@ -46,6 +46,7 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+
         WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 

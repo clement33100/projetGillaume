@@ -40,6 +40,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowCompat
 
+
 class Step2 : Base() {
     private lateinit var container: LinearLayout
     private var textViewCount = 0

@@ -70,6 +70,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         return R.layout.meditation_play  // Utilisez le layout adapté
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

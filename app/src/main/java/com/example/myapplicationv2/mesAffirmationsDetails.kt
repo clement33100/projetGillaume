@@ -36,6 +36,7 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
         return R.layout.activity_mes_affirmations_details  // Fournit le layout spécifique à cette activité
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

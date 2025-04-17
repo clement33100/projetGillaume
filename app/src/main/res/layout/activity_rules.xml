@@ -11,6 +11,7 @@
     android:padding="16dp"
     >
 
+
     <!-- Contenu principal enveloppé dans un ScrollView -->
     <ScrollView
         android:layout_width="match_parent"

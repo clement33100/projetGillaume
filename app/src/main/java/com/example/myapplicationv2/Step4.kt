@@ -43,6 +43,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         return R.layout.activity_step4  // Utilisez le layout adapté
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
