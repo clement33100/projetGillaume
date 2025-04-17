@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Applicationv2</string>
+    <string name="app_name">MyAffirmPlay</string>
     <string name="select_language">Select Language</string>
     <string name="language_fr">French</string>
     <string name="language_eng">English</string>
