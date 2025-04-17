@@ -12,7 +12,9 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import okhttp3.Call
 import okhttp3.Callback
@@ -44,6 +46,9 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
         // Configuration des vues
         val textViewDuration: TextView = findViewById(R.id.textViewMinutesEdit)

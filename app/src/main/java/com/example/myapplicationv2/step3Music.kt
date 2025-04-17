@@ -11,7 +11,9 @@ import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.navigation.NavigationView
 import okhttp3.*
@@ -80,6 +82,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
         // Configuration des Insets UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

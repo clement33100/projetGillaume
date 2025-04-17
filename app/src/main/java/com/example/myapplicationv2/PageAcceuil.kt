@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 
 import kotlinx.coroutines.*
@@ -16,6 +18,9 @@ class PageAcceuil : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_page_acceuil) // Utilisez le layout fourni
+
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
         // Utilisation des Coroutines pour gérer le délai
         CoroutineScope(Dispatchers.Main).launch {

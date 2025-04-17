@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 
 class hdiw1 : Base() {
@@ -17,6 +19,8 @@ class hdiw1 : Base() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
         // Trouver les boutons par leur ID
         val btnNew = findViewById<Button>(R.id.btnNewAdvice)
         val btnMenu = findViewById<Button>(R.id.btnMenu)

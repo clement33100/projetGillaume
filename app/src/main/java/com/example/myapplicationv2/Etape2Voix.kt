@@ -10,7 +10,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Etape2Voix : Base() {  // Hérite de Base
@@ -40,6 +42,11 @@ class Etape2Voix : Base() {  // Hérite de Base
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
+        // Icônes claires sur barre d’état sombre
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
         // Initialisation des vues
         btn_VoiceFemme = findViewById(R.id.btn_voix_femme)
@@ -150,19 +157,19 @@ class Etape2Voix : Base() {  // Hérite de Base
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, audioResId)
             mediaPlayer?.start()
-            Toast.makeText(this, "Lecture audio", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Lecture audio", Toast.LENGTH_SHORT).show()
         } else {
             if (mediaPlayer?.isPlaying == true) {
                 mediaPlayer?.stop()
                 mediaPlayer?.reset()
                 mediaPlayer = null
-                Toast.makeText(this, "Arrêt audio", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Arrêt audio", Toast.LENGTH_SHORT).show()
                 mediaPlayer = MediaPlayer.create(this, audioResId)
                 mediaPlayer?.start()
             } else {
                 mediaPlayer = MediaPlayer.create(this, audioResId)
                 mediaPlayer?.start()
-                Toast.makeText(this, "Lecture audio", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Lecture audio", Toast.LENGTH_SHORT).show()
             }
         }
     }

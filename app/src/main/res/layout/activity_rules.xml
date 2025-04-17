@@ -7,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
-    tools:context=".Rules">
+    tools:context=".Rules"
+    android:padding="16dp"
+    >
 
     <!-- Contenu principal enveloppé dans un ScrollView -->
     <ScrollView

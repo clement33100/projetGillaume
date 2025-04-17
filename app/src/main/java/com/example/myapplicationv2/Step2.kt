@@ -38,6 +38,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.WindowCompat
 
 class Step2 : Base() {
     private lateinit var container: LinearLayout
@@ -56,6 +57,9 @@ class Step2 : Base() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
         // Initialisation de TextToSpeech
         textToSpeech = TextToSpeech(this) { status ->
@@ -235,21 +239,27 @@ class Step2 : Base() {
             // userTexts est déjà mis à jour grâce aux TextWatcher
             generateTTSFilesForAllTexts(curentAPIKey)
 
-            if (curentVoice != null) {
-                val intent = Intent(this, step3Music::class.java)
-                intent.putExtra("curentVoice", curentVoice)
-                intent.putStringArrayListExtra("userTexts", generateFiles)
+            if(userTexts.size==0){
+                Toast.makeText(this, "Vous devez selectionner au moins une affirmation positive", Toast.LENGTH_SHORT).show()
+            }else{
+                if (curentVoice != null) {
+                    val intent = Intent(this, step3Music::class.java)
+                    intent.putExtra("curentVoice", curentVoice)
+                    intent.putStringArrayListExtra("userTexts", generateFiles)
 
-                if (userTexts.size > 3) {
-                    intent.putExtra("curentAPIKey", curentAPIKey)
-                    intent.putStringArrayListExtra("userTextsSplit", userTexts)
+                    if (userTexts.size > 3) {
+                        intent.putExtra("curentAPIKey", curentAPIKey)
+                        intent.putStringArrayListExtra("userTextsSplit", userTexts)
+                    }
+
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
                 }
-
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
-        }
+            }
+
+
     }
 
     /**

@@ -8,7 +8,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/activity_background"
-    tools:context=".MeditationPlay">
+    tools:context=".MeditationPlay"
+    android:padding="16dp"
+    android:clipToPadding="false">
 
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
