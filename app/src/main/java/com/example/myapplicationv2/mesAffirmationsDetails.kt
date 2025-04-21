@@ -31,6 +31,7 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
     private lateinit var btnNewAffirmation: Button
     private lateinit var fileContainer: LinearLayout
     private lateinit var mesaffirmationContour: LinearLayout
+    private lateinit var backButton: Button
 
     override fun getLayoutId(): Int {
         return R.layout.activity_mes_affirmations_details  // Fournit le layout spécifique à cette activité
@@ -79,7 +80,17 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
         }
 
 
+
+
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, mesAffirmationsDetails::class.java)
+        startActivity(intent)
+        finish() // Optionnel, pour retirer cette activité de la pile
+        super.onBackPressed()
+    }
+
 
     /**
      * Affiche les fichiers d'affirmations présents dans le dossier "affirmation".
