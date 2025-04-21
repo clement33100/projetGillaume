@@ -181,14 +181,14 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (savedFilePathPuissanceinterieure != null) {
                 playAudio(savedFilePathPuissanceinterieure)
             } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         epicMusic2.setOnClickListener{
             if (savedFilePathRenaissance != null) {
                 playAudio(savedFilePathRenaissance)
             } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -196,7 +196,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (savedFilePathRessourceinfinie != null) {
                 playAudio(savedFilePathRessourceinfinie)
             } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -205,21 +205,21 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (savedFilePathAbondance != null) {
                 playAudio(savedFilePathAbondance)
             } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         FrequenceVibratoire2.setOnClickListener{
             if (savedFilePathFocus != null) {
                 playAudio(savedFilePathFocus)
             } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         FrequenceVibratoire3.setOnClickListener{
             if (savedFilePathIntuition != null) {
                 playAudio(savedFilePathIntuition)
             } else {
-                Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -263,9 +263,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 setTextInfo("Silence", savedFilePathSilence)
                 setViewVisibilityGone(scrollview_Epic)
                 setViewVisibilityGone(scrollview_FrequenceVibratoire)
-                Toast.makeText(this, "Silence sélectionné", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Silence sélectionné", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Échec de la sauvegarde du fichier silencieux.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Échec de la sauvegarde du fichier silencieux.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -275,7 +275,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
 
             if (songChoose == null) {
-                Toast.makeText(this, "Sélectionnez une musique", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Sélectionnez une musique", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, Step4::class.java)
                 intent.putExtra("filePaths", songChoose)
@@ -421,7 +421,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Définir les actions
         btnMusicText.setOnClickListener {
-            Toast.makeText(this, "Tu as sélectionné $fileName", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Tu as sélectionné $fileName", Toast.LENGTH_SHORT).show()
             setTextInfo(fileName, filePath)
         }
 
@@ -455,14 +455,14 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 start()
             }
             currentFilePath = filePath
-            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
         } else {
             if (mediaPlayer?.isPlaying == true && currentFilePath == filePath) {
                 // Arrêter la lecture
                 mediaPlayer?.stop()
                 mediaPlayer?.reset()
                 currentFilePath = null
-                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
             } else {
                 // Changer de fichier audio ou redémarrer la lecture
                 mediaPlayer?.reset()
@@ -470,7 +470,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 mediaPlayer?.prepare()
                 mediaPlayer?.start()
                 currentFilePath = filePath
-                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -552,7 +552,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                         // Notification de succès
                         runOnUiThread {
-                            Toast.makeText(this@step3Music, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(this@step3Music, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
                         }
 
                     } catch (e: IOException) {
