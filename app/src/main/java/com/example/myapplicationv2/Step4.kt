@@ -59,7 +59,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Configurer les NumberPickers dans le code
         numberPickerMinutes.minValue = 0
-        numberPickerMinutes.maxValue = 22  // Max 22 minutes
+        numberPickerMinutes.maxValue = 23  // Max 22 minutes
 
         numberPickerSeconds.minValue = 0
         numberPickerSeconds.maxValue = 59
@@ -133,7 +133,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             val totalDurationInSeconds = (minutes * 60) + seconds
 
             // Vérifier si la durée dépasse 22 minutes (1320 secondes)
-            if (totalDurationInSeconds > 1320) {
+            if (totalDurationInSeconds > 1440) {
                 // Afficher un message d'erreur si la durée est trop longue
                 Toast.makeText(this, "La durée ne doit pas dépasser 22 minutes.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener  // Empêche la suite de l'exécution si la durée est trop longue

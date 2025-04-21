@@ -1,5 +1,6 @@
 package com.example.myapplicationv2
 
+import android.content.Context
 import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -64,6 +66,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
         private const val AFFIRMATION_DELAY_SECONDS = 10   // 10 secondes
         private const val INTRO_DELAY_MS = 3000L           // 3 secondes (peut être ajusté si nécessaire)
+        private const val POPUP_DELAY_MS = 300L
     }
 
     override fun getLayoutId(): Int {
@@ -78,7 +81,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
-        // Configuration des Insets UI
+        // Gestion des insets système
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -86,73 +89,135 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-        // Initialisation des éléments UI existants
+        /* ----------------------------------------------------------------
+           Initialisation des vues principales
+           ---------------------------------------------------------------- */
         progressBar = findViewById(R.id.progressBar)
         pauseButton = findViewById(R.id.imageButtonPause)
-        btnOK = findViewById(R.id.buttonOkMeditation)
-        editText = findViewById(R.id.nameAffirm)
+        btnOK        = findViewById(R.id.buttonOkMeditation)
+        editText     = findViewById(R.id.nameAffirm)
 
-        // Initialisation des vues Overlay
+        /* ----------------------------------------------------------------
+           Initialisation de l’overlay circulaire
+           ---------------------------------------------------------------- */
         circularProgressContainer = findViewById(R.id.circularProgressContainer)
         circularProgressIndicator = findViewById(R.id.circularProgressIndicator)
-        circularProgressText = findViewById(R.id.circularProgressText)
+        circularProgressText      = findViewById(R.id.circularProgressText)
 
-        // --- Début de l'ajout du PopupWindow pour l'EditText ---
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        // Inflate le layout de la pop-up (défini dans res/layout/popup_view.xml)
-        val popupView = inflater.inflate(R.layout.popup_view, null)
-        // Créer le PopupWindow en spécifiant la taille fixe (316dp x 74dp convertis en pixels)
-        popupWindow = PopupWindow(
+        /* ----------------------------------------------------------------
+           Création du PopupWindow avec EditText synchronisé
+           ---------------------------------------------------------------- */
+        val inflater   = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val popupView  = inflater.inflate(R.layout.popup_view, null)
+        popupWindow    = PopupWindow(
             popupView,
             dpToPx(316),
             dpToPx(74)
         ).apply {
             isOutsideTouchable = false
-            isFocusable = false
+            isFocusable        = true   // permet au champ interne de recevoir le focus
         }
-        // Récupère le TextView de la pop-up
-        val popupText = popupView.findViewById<TextView>(R.id.popupText)
 
-        // Met à jour le texte du popup en temps réel
+        val popupEdit = popupView.findViewById<EditText>(R.id.popupEdit)
+        popupEdit.setText(editText.text.toString())
+
+        var syncInProgress = false
+        // ────────────────── Synchronisation texte ↔ popup ──────────────────
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                popupText.text = s.toString()
+                if (syncInProgress) return        // ← stop si on est déjà en copie
+                if (s?.toString() == popupEdit.text.toString()) return
+                syncInProgress = true
+                popupEdit.setText(s)
+                popupEdit.setSelection(popupEdit.text.length)
+                syncInProgress = false
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Affiche le popup quand l'EditText reçoit le focus et le ferme quand il le perd
-        editText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // Ajustez l'offset pour positionner correctement la pop-up
-                popupWindow.showAsDropDown(editText, 350, -editText.height - 300)
-            } else {
-                popupWindow.dismiss()
+        popupEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (syncInProgress) return
+                if (s?.toString() == editText.text.toString()) return
+                syncInProgress = true
+                editText.setText(s)
+                editText.setSelection(editText.text.length)
+                syncInProgress = false
             }
-        }
-        // --- Fin de l'ajout du PopupWindow ---
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
-        // Listener pour le bouton OK
+        /* ----------------------------------------------------------------
+           Fonction locale pour afficher le popup
+           ---------------------------------------------------------------- */
+        fun showPopup() {
+            if (popupWindow.isShowing) return            // déjà visible → rien à faire
+
+            // Petite temporisation avant l’affichage
+            editText.postDelayed({
+                if (!popupWindow.isShowing && editText.isFocused) {
+                    popupWindow.showAsDropDown(
+                        editText,
+                        0,
+                        -dpToPx(74) - editText.height
+                    )
+                    popupEdit.requestFocus()
+
+                    // ouverture du clavier
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE)
+                            as InputMethodManager
+                    imm.showSoftInput(popupEdit, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }, POPUP_DELAY_MS)
+        }
+
+        /* ----------------------------------------------------------------
+           Listeners liés au popup
+           ---------------------------------------------------------------- */
+        editText.setOnClickListener { showPopup() }
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) showPopup()
+        }
+        popupEdit.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) popupWindow.dismiss()
+        }
+        // ------------------- Fin gestion popup ----------------------------
+        var imeWasVisible = false            // mémorise l’état précédent
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+
+            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+            if (!imeVisible && imeWasVisible && popupWindow.isShowing) {
+                popupWindow.dismiss()        // ferme seulement si le clavier vient de se cacher
+            }
+            imeWasVisible = imeVisible       // met à jour l’état pour le prochain passage
+            insets
+        }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        /* ----------------------------------------------------------------
+           Bouton OK : copie/renommage du fichier et passage à l’activité suivante
+           ---------------------------------------------------------------- */
         btnOK.setOnClickListener {
             val intent = Intent(this, Advices::class.java)
             val name = if (!editText.text.isNullOrEmpty()) editText.text.toString() else "affirmation"
 
-            // Chemins source et destination
-            val sourceFile = File(filesDir, "final_audio.mp3")
-            val destinationDir = File(filesDir, "affirmation")
+            val sourceFile       = File(filesDir, "final_audio.mp3")
+            val destinationDir   = File(filesDir, "affirmation")
 
-            // Créer le dossier "affirmation" s'il n'existe pas
+            // création du dossier "affirmation" si nécessaire
             if (!destinationDir.exists()) {
-                val created = destinationDir.mkdirs()
-                if (!created) {
+                if (!destinationDir.mkdirs()) {
                     Log.e("MeditationPlay", "Impossible de créer le dossier affirmation")
                     Toast.makeText(this, "Erreur lors de la création du dossier affirmation.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
 
-            // Générer un nom unique pour éviter d'écraser les fichiers existants
             var destinationFile = File(destinationDir, "$name.mp3")
             var counter = 1
             while (destinationFile.exists()) {
@@ -163,47 +228,42 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             try {
                 if (sourceFile.exists()) {
                     sourceFile.copyTo(destinationFile, overwrite = false)
-                    Log.d("MeditationPlay", "Fichier enregistré dans le dossier affirmation : ${destinationFile.absolutePath}")
-                    Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name} dans le dossier affirmation.", Toast.LENGTH_SHORT).show()
+                    Log.d("MeditationPlay", "Fichier enregistré : ${destinationFile.absolutePath}")
+                    Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name}.", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e("MeditationPlay", "Le fichier source n'existe pas : ${sourceFile.absolutePath}")
                     Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Log.e("MeditationPlay", "Erreur lors de la copie du fichier : ${e.message}")
+                Log.e("MeditationPlay", "Erreur lors de la copie : ${e.message}")
                 Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
             }
-
-            // Lancer l'activité suivante
             startActivity(intent)
         }
 
-        // Copie des ressources brutes vers le stockage interne
+        /* ----------------------------------------------------------------
+           Préparation des audios (bols, intro, musique, affirmations)
+           ---------------------------------------------------------------- */
         val bowlStartFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_start.mp3")
-        val bowlEndFilePath = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
+        val bowlEndFilePath   = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
 
         if (bowlStartFilePath == null || bowlEndFilePath == null) {
             Toast.makeText(this, "Erreur lors de la copie des fichiers audio du bol tibétain.", Toast.LENGTH_SHORT).show()
-            Log.e("MeditationPlay", "Échec de la copie des fichiers audio du bol tibétain.")
+            Log.e("MeditationPlay", "Échec de la copie des fichiers bol tibétain.")
             return
         }
 
-        // Récupération des données de l'intent
-        val filePaths = intent.getStringExtra("filePaths")
+        // Récupération des données de l’intent
+        val filePaths                = intent.getStringExtra("filePaths")
         val selectedDurationInSeconds = intent.getIntExtra("selectedDuration", 0)
-        val currentVoice = intent.getStringExtra("curentVoice")
-        val userTexts = intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
+        val currentVoice             = intent.getStringExtra("curentVoice")
+        val userTexts                = intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
 
-        userTexts?.forEach { text ->
-            Log.d("MeditationPlay", "Received text: $text")
-        } ?: Log.d("MeditationPlay", "No texts received")
-
-        Log.d("MeditationPlay", "Chemin de la musique choisie: $filePaths")
-        Log.d("MeditationPlay", "Selected duration: $selectedDurationInSeconds seconds")
+        userTexts?.forEach { Log.d("MeditationPlay", "Received text: $it") }
+            ?: Log.d("MeditationPlay", "No texts received")
 
         val isIntroEnabled = intent.getBooleanExtra("isIntroEnabled", false)
         var introFilePath: String? = null
-
         if (isIntroEnabled) {
             introFilePath = copyRawResourceToInternalStorage(R.raw.intro, "intro.mp3")
             if (introFilePath == null) {
@@ -221,24 +281,24 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     }
                     val finalOutputPath = "${filesDir.absolutePath}/final_audio.mp3"
                     mixAudioFilesWithFade(
-                        bowlStartPath = bowlStartFilePath,
-                        musicPath = "${filesDir.absolutePath}/recorded_music.mp3",
-                        bowlEndPath = bowlEndFilePath,
-                        affirmationPaths = userTexts ?: emptyList(),
-                        outputPath = finalOutputPath,
+                        bowlStartPath            = bowlStartFilePath,
+                        musicPath                = "${filesDir.absolutePath}/recorded_music.mp3",
+                        bowlEndPath              = bowlEndFilePath,
+                        affirmationPaths         = userTexts ?: emptyList(),
+                        outputPath               = finalOutputPath,
                         selectedDurationInSeconds = selectedDurationInSeconds,
-                        introPath = introFilePath,
-                        callback = { mixSuccess ->
-                            if (mixSuccess) {
-                                playMainAudio(finalOutputPath, selectedDurationInSeconds)
-                            } else {
-                                runOnUiThread {
-                                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
-                                    hideOverlay()
-                                }
+                        introPath                = introFilePath
+                    ) { mixSuccess ->
+                        if (mixSuccess) {
+                            playMainAudio(finalOutputPath, selectedDurationInSeconds)
+                        } else {
+                            runOnUiThread {
+                                findViewById<ImageView>(R.id.imageView4)
+                                    .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
+                                hideOverlay()
                             }
                         }
-                    )
+                    }
                 }
             }
         } else {
@@ -246,6 +306,9 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT).show()
         }
 
+        /* ----------------------------------------------------------------
+           Bouton pause/lecture
+           ---------------------------------------------------------------- */
         pauseButton.setOnClickListener {
             if (isPaused) {
                 pauseButton.setImageResource(R.drawable.imgunpause)
@@ -258,6 +321,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         }
     }
+
 
     // Fonction utilitaire pour convertir dp en pixels
     private fun dpToPx(dp: Int): Int {
