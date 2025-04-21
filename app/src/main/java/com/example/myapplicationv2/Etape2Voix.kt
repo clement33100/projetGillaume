@@ -109,6 +109,7 @@ class Etape2Voix : Base() {  // Hérite de Base
             playAudioFromRaw(R.raw.voixhomme2)
         }
 
+
         val intention = intent.getBooleanExtra("intention", false)
 
         btn_ok.setOnClickListener {
