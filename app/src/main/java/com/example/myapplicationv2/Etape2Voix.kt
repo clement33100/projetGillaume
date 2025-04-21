@@ -95,7 +95,7 @@ class Etape2Voix : Base() {  // Hérite de Base
 
         btn_ChoixVoiceHomme1.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme1.text.toString(), "$basePath/voiceMale1.mp3")
-            currentApiKey = "D2iqIAl6i5hrD9q2faCp"
+            currentApiKey = "fEvKi2irqAeR3H9fvTgO"
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
             playAudioFromRaw(R.raw.voixhomme1)
