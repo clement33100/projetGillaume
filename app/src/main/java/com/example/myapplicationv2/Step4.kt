@@ -1,7 +1,11 @@
 package com.example.myapplicationv2
 
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -123,40 +127,48 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Définir le listener pour le bouton Valider
         btn_valider.setOnClickListener {
+
             stopAudio()
+            if (!isOnline()) {
+                Toast.makeText(this, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG).show()
+                return@setOnClickListener   // Stoppe l’exécution tant qu’il n’y a pas Internet
+            }else{
 
-            // Récupérer les valeurs des NumberPickers
-            val minutes = numberPickerMinutes.value
-            val seconds = numberPickerSeconds.value
+                // Récupérer les valeurs des NumberPickers
+                val minutes = numberPickerMinutes.value
+                val seconds = numberPickerSeconds.value
 
-            // Calculer la durée totale en secondes
-            val totalDurationInSeconds = (minutes * 60) + seconds
+                // Calculer la durée totale en secondes
+                val totalDurationInSeconds = (minutes * 60) + seconds
 
-            // Vérifier si la durée dépasse 22 minutes (1320 secondes)
-            if (totalDurationInSeconds > 1320) {
-                // Afficher un message d'erreur si la durée est trop longue
-                Toast.makeText(this, "La durée ne doit pas dépasser 22 minutes.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener  // Empêche la suite de l'exécution si la durée est trop longue
-            }
-
-            selectedDurationInSeconds = totalDurationInSeconds
-            val isIntroEnabled = introSwitch.isChecked
-
-            // Passer directement les données à MeditationPlay
-            if (filePaths != null && selectedDurationInSeconds > 30) {
-                val intent = Intent(this, MeditationPlay::class.java).apply {
-                    putExtra("filePaths", filePaths)
-                    putExtra("selectedDuration", selectedDurationInSeconds)
-                    putExtra("isIntroEnabled", isIntroEnabled)
-                    putExtra("curentVoice", curentVoice)
-                    putStringArrayListExtra("userTexts", userTexts)
-                    putExtra("intention", intention)
+                // Vérifier si la durée dépasse 23 minutes
+                if (totalDurationInSeconds > 1380) {
+                    // Afficher un message d'erreur si la durée est trop longue
+                    Toast.makeText(this, "La durée ne doit pas dépasser 23 minutes.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener  // Empêche la suite de l'exécution si la durée est trop longue
                 }
-                startActivity(intent)
-            } else {
-                // Afficher un message d'erreur
-                Toast.makeText(this, "Veuillez sélectionner une durée valide.", Toast.LENGTH_SHORT).show()
+
+                selectedDurationInSeconds = totalDurationInSeconds
+                val isIntroEnabled = introSwitch.isChecked
+
+                // Passer directement les données à MeditationPlay
+                if (filePaths != null && selectedDurationInSeconds > 30) {
+                    val intent = Intent(this, MeditationPlay::class.java).apply {
+                        putExtra("filePaths", filePaths)
+                        putExtra("selectedDuration", selectedDurationInSeconds)
+                        putExtra("isIntroEnabled", isIntroEnabled)
+                        putExtra("curentVoice", curentVoice)
+                        putStringArrayListExtra("userTexts", userTexts)
+                        putExtra("intention", intention)
+                    }
+                    startActivity(intent)
+                } else {
+                    // Afficher un message d'erreur
+                    Toast.makeText(this, "Veuillez sélectionner une durée valide.", Toast.LENGTH_SHORT).show()
+                }
             }
+
+
         }
 
         // Définir le listener pour le bouton Écouter l'Intro
@@ -164,6 +176,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             playAudioFromRaw(R.raw.intromeditation)
         }
     }
+
 
     // Fonctions existantes
     private fun generateTTSFilesForAllTexts(
@@ -183,6 +196,24 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 }
             }
         }
+    }
+
+
+    private fun isOnline(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        // Android M (23) et + : NetworkCapabilities
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = cm.activeNetwork ?: return false
+            val caps = cm.getNetworkCapabilities(network) ?: return false
+            return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                    caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        }
+        // Avant M
+        @Suppress("DEPRECATION")
+        val info = cm.activeNetworkInfo
+        @Suppress("DEPRECATION")
+        return info != null && info.isConnected
     }
 
     private fun playAudioFromRaw(audioResId: Int) {

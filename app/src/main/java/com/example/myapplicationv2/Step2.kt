@@ -238,6 +238,22 @@ class Step2 : Base() {
 
         buttonOk.setOnClickListener {
             // userTexts est déjà mis à jour grâce aux TextWatcher
+            // ─── 1. Vérifier si les deux affirmations de base sont inchangées ───
+            val def1 = "Je \"affirmation 1\""   // valeurs que tu crées au démarrage
+            val def2 = "Je \"affirmation 2\""
+
+            val base1Unchanged = userTexts.getOrNull(0).isNullOrBlank() || userTexts[0] == def1
+            val base2Unchanged = userTexts.getOrNull(1).isNullOrBlank() || userTexts[1] == def2
+
+            if (base1Unchanged && base2Unchanged) {
+                Toast.makeText(
+                    this,
+                    "Modifie au moins l’une des deux affirmations proposées avant de continuer.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener        // ⬅ stop : on ne continue pas
+            }
+
             generateTTSFilesForAllTexts(curentAPIKey)
 
             if(userTexts.size==0){
