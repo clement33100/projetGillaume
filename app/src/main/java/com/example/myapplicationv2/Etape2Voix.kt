@@ -52,62 +52,62 @@ class Etape2Voix : Base() {  // Hérite de Base
         // Initialisation des vues
         btn_VoiceFemme = findViewById(R.id.btn_voix_femme)
         btn_VoiceHomme = findViewById(R.id.btn_voix_homme)
-        scrollview_FemmeVoice = findViewById(R.id.scrollViewFemmeVoice)
-        scrollview_HommeVoice = findViewById(R.id.scrollViewHommeVoice)
+        //scrollview_FemmeVoice = findViewById(R.id.scrollViewFemmeVoice)
+        //scrollview_HommeVoice = findViewById(R.id.scrollViewHommeVoice)
 
-        btn_ChoixVoiceFemme1 = findViewById(R.id.voixFemme1)
-        btn_ChoixVoiceFemme2 = findViewById(R.id.voixFemme2)
+        //btn_ChoixVoiceFemme1 = findViewById(R.id.voixFemme1)
+        //btn_ChoixVoiceFemme2 = findViewById(R.id.voixFemme2)
 
-        btn_ChoixVoiceHomme1 = findViewById(R.id.voixHomme1)
-        btn_ChoixVoiceHomme2 = findViewById(R.id.voixHomme2)
+        //btn_ChoixVoiceHomme1 = findViewById(R.id.voixHomme1)
+        //btn_ChoixVoiceHomme2 = findViewById(R.id.voixHomme2)
 
         btn_ok = findViewById(R.id.btn_ok_step2)
 
         val nom = intent.getStringExtra("nom")
         Log.i("TAG", "onCreate: " + nom.toString())
 
-        btn_VoiceFemme.setOnClickListener {
+        /*btn_VoiceFemme.setOnClickListener {
             setViewVisibility(scrollview_FemmeVoice)
         }
 
         btn_VoiceHomme.setOnClickListener {
             setViewVisibility(scrollview_HommeVoice)
-        }
+        }*/
 
         val basePath = filesDir.absolutePath + "/audio/"
         Log.i("TEST123", "path : " + basePath)
 
-        btn_ChoixVoiceFemme1.setOnClickListener {
-            setTextInfo(btn_ChoixVoiceFemme1.text.toString(), "$basePath/voiceFemale1.mp3")
+        btn_VoiceFemme.setOnClickListener {
+            setTextInfo(btn_VoiceFemme.text.toString(), "$basePath/voiceFemale1.mp3")
             currentApiKey = "hGwGBgvO4Leffvcjs2vm"
-            setViewVisibilityGone(scrollview_FemmeVoice)
-            setViewVisibilityGone(scrollview_HommeVoice)
+            /*setViewVisibilityGone(scrollview_FemmeVoice)
+            setViewVisibilityGone(scrollview_HommeVoice)*/
             playAudioFromRaw(R.raw.voixfemme1)
         }
 
-        btn_ChoixVoiceFemme2.setOnClickListener {
+        /*btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(), "$basePath/voiceFemale2.mp3")
             currentApiKey = "huLASkSLzY35zexSYP1g "
             setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)
             playAudioFromRaw(R.raw.voixfemme2)
-        }
+        }*/
 
-        btn_ChoixVoiceHomme1.setOnClickListener {
-            setTextInfo(btn_ChoixVoiceHomme1.text.toString(), "$basePath/voiceMale1.mp3")
+        btn_VoiceHomme.setOnClickListener {
+            setTextInfo(btn_VoiceHomme.text.toString(), "$basePath/voiceMale1.mp3")
             currentApiKey = "fEvKi2irqAeR3H9fvTgO"
-            setViewVisibilityGone(scrollview_HommeVoice)
-            setViewVisibilityGone(scrollview_FemmeVoice)
+            /*setViewVisibilityGone(scrollview_HommeVoice)
+            setViewVisibilityGone(scrollview_FemmeVoice)*/
             playAudioFromRaw(R.raw.voixhomme1)
         }
 
-        btn_ChoixVoiceHomme2.setOnClickListener {
+        /*btn_ChoixVoiceHomme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceHomme2.text.toString(), "$basePath/voiceMale2.mp3")
             currentApiKey = "JoAXY9Z9JBJC8OP2xjtB"
             setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)
             playAudioFromRaw(R.raw.voixhomme2)
-        }
+        }*/
 
 
         val intention = intent.getBooleanExtra("intention", false)
