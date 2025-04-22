@@ -85,6 +85,7 @@ class Etape2Voix : Base() {  // Hérite de Base
             playAudioFromRaw(R.raw.voixfemme1)
         }
 
+
         /*btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(), "$basePath/voiceFemale2.mp3")
             currentApiKey = "huLASkSLzY35zexSYP1g "
