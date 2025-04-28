@@ -130,7 +130,6 @@
                     android:id="@+id/nameAffirm"
                     android:layout_width="316dp"
                     android:layout_height="74dp"
-                    android:layout_marginLeft="30dp"
                     android:background="@drawable/plaintext_white"
                     android:backgroundTint="@color/yellow"
                     android:ems="10"
