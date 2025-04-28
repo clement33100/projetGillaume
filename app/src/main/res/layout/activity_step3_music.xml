@@ -109,7 +109,7 @@
                 android:id="@+id/scrollViewFrequenceVibratoire"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_frequence">
@@ -135,7 +135,7 @@
                             android:layout_marginTop="30dp"
                             android:backgroundTint="@color/yellow"
                             android:padding="10dp"
-                            android:text="Abondance"
+                            android:text="Voyage Intérieur"
                             android:textColor="@color/grey"
                             android:textSize="19dp" />
 
@@ -164,7 +164,7 @@
                             android:layout_marginTop="0dp"
                             android:backgroundTint="@color/yellow"
                             android:padding="10dp"
-                            android:text="Focus"
+                            android:text="Onde Thêta"
                             android:textColor="@color/grey"
                             android:textSize="19dp" />
 
@@ -193,7 +193,7 @@
                             android:layout_marginTop="30dp"
                             android:backgroundTint="@color/yellow"
                             android:padding="10dp"
-                            android:text="Intuition"
+                            android:text="Expansion"
                             android:textColor="@color/grey"
                             android:textSize="19dp" />
 
