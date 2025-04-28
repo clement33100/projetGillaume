@@ -98,7 +98,7 @@
                 android:layout_height="74dp"
                 android:layout_marginTop="150dp"
                 android:backgroundTint="@color/green"
-                android:text="Fréquence vibratoire"
+                android:text="Musique"
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -209,7 +209,7 @@
                 </LinearLayout>
             </ScrollView>
 
-            <!-- ScrollView pour les musiques Epic -->
+            <!-- ScrollView pour les musiques Epic
             <ScrollView
                 android:id="@+id/scrollViewEpic"
                 android:layout_width="match_parent"
@@ -225,7 +225,6 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <!-- Option 1 : Puissance -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -255,7 +254,6 @@
                             app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
 
-                    <!-- Option 2 : Renaissance -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="53dp"
@@ -284,7 +282,6 @@
                             app:srcCompat="@drawable/hp_jaune_ombre_fusion" />
                     </LinearLayout>
 
-                    <!-- Option 3 : Ressource infinie -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -314,7 +311,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
-
+            -->
             <!-- Bouton Silence -->
             <Button
                 android:id="@+id/btn_silence"
@@ -327,9 +324,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollViewEpic" />
+                app:layout_constraintTop_toBottomOf="@+id/scrollViewFrequenceVibratoire" />
 
-            <!-- Bouton Epic -->
+            <!-- Bouton Epic
             <Button
                 android:id="@+id/btn_epic"
                 android:layout_width="316dp"
@@ -342,7 +339,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollViewFrequenceVibratoire" />
-
+            -->
             <!-- Bouton OK -->
             <Button
                 android:id="@+id/btn_okmusic"

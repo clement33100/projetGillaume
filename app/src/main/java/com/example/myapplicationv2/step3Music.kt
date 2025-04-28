@@ -48,10 +48,10 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     private lateinit var scrollview_Epic: ScrollView
     private lateinit var scrollview_FrequenceVibratoire: ScrollView
-
-    private lateinit var epicMusic1: ImageButton
-    private lateinit var epicMusic2: ImageButton
-    private lateinit var epicMusic3: ImageButton
+//
+//    private lateinit var epicMusic1: ImageButton
+//    private lateinit var epicMusic2: ImageButton
+//    private lateinit var epicMusic3: ImageButton
 
     private lateinit var FrequenceVibratoire1: ImageButton
     private lateinit var FrequenceVibratoire2: ImageButton
@@ -109,25 +109,25 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         btn_ok = findViewById(R.id.btn_okmusic)
         btn_silence = findViewById(R.id.btn_silence) // Initialisation du bouton Silence
 
-        scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
-        scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
-        epicMusic1 = findViewById<ImageButton>(R.id.listenepic1)
-        epicMusic2 = findViewById<ImageButton>(R.id.listenepic2)
-        epicMusic3 = findViewById<ImageButton>(R.id.listenepic3)
+//        scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
+          scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
+//        epicMusic1 = findViewById<ImageButton>(R.id.listenepic1)
+//        epicMusic2 = findViewById<ImageButton>(R.id.listenepic2)
+//        epicMusic3 = findViewById<ImageButton>(R.id.listenepic3)
 
         FrequenceVibratoire1 = findViewById<ImageButton>(R.id.listenfrequence1)
         FrequenceVibratoire2 = findViewById<ImageButton>(R.id.listenfrequence2)
         FrequenceVibratoire3 = findViewById<ImageButton>(R.id.listenfrequence3)
-
-        btn_ChoixEpic1 = findViewById<Button>(R.id.epic1)
-        btn_ChoixEpic2 = findViewById<Button>(R.id.epic2)
-        btn_ChoixEpic3 = findViewById<Button>(R.id.epic3)
+//
+//        btn_ChoixEpic1 = findViewById<Button>(R.id.epic1)
+//        btn_ChoixEpic2 = findViewById<Button>(R.id.epic2)
+//        btn_ChoixEpic3 = findViewById<Button>(R.id.epic3)
 
         btn_ChoixFrequenceVibratoire1 = findViewById<Button>(R.id.frequence1)
         btn_ChoixFrequenceVibratoire2 = findViewById<Button>(R.id.frequence2)
         btn_ChoixFrequenceVibratoire3 = findViewById<Button>(R.id.frequence3)
 
-        val ButtonEpic = findViewById<Button>(R.id.btn_epic)
+//        val ButtonEpic = findViewById<Button>(R.id.btn_epic)
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
         val curentVoice = intent.getStringExtra("curentVoice")
         val userTexts = intent.getStringArrayListExtra("userTexts")
@@ -177,28 +177,28 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         savedFilePathSilence = copyRawResourceToInternalStorage(R.raw.silence, silence)
 
         // Configuration des boutons d'écoute pour les musiques Epic
-        epicMusic1.setOnClickListener{
-            if (savedFilePathPuissanceinterieure != null) {
-                playAudio(savedFilePathPuissanceinterieure)
-            } else {
-                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        epicMusic2.setOnClickListener{
-            if (savedFilePathRenaissance != null) {
-                playAudio(savedFilePathRenaissance)
-            } else {
-                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        epicMusic3.setOnClickListener{
-            if (savedFilePathRessourceinfinie != null) {
-                playAudio(savedFilePathRessourceinfinie)
-            } else {
-                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
-            }
-        }
+//        epicMusic1.setOnClickListener{
+//            if (savedFilePathPuissanceinterieure != null) {
+//                playAudio(savedFilePathPuissanceinterieure)
+//            } else {
+//                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        epicMusic2.setOnClickListener{
+//            if (savedFilePathRenaissance != null) {
+//                playAudio(savedFilePathRenaissance)
+//            } else {
+//                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//        epicMusic3.setOnClickListener{
+//            if (savedFilePathRessourceinfinie != null) {
+//                playAudio(savedFilePathRessourceinfinie)
+//            } else {
+//                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+//            }
+//        }
 
         // Configuration des boutons d'écoute pour les fréquences vibratoires
         FrequenceVibratoire1.setOnClickListener{
@@ -224,21 +224,21 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         }
 
         // Configuration des boutons de choix pour les musiques Epic
-        btn_ChoixEpic1.setOnClickListener {
-            setTextInfo(btn_ChoixEpic1.text.toString(), savedFilePathPuissanceinterieure)
-            setViewVisibilityGone(scrollview_Epic)
-            setViewVisibilityGone(scrollview_FrequenceVibratoire)
-        }
-        btn_ChoixEpic2.setOnClickListener {
-            setTextInfo(btn_ChoixEpic2.text.toString(), savedFilePathRenaissance)
-            setViewVisibilityGone(scrollview_Epic)
-            setViewVisibilityGone(scrollview_FrequenceVibratoire)
-        }
-        btn_ChoixEpic3.setOnClickListener {
-            setTextInfo(btn_ChoixEpic3.text.toString(), savedFilePathRessourceinfinie)
-            setViewVisibilityGone(scrollview_Epic)
-            setViewVisibilityGone(scrollview_FrequenceVibratoire)
-        }
+//        btn_ChoixEpic1.setOnClickListener {
+//            setTextInfo(btn_ChoixEpic1.text.toString(), savedFilePathPuissanceinterieure)
+//            setViewVisibilityGone(scrollview_Epic)
+//            setViewVisibilityGone(scrollview_FrequenceVibratoire)
+//        }
+//        btn_ChoixEpic2.setOnClickListener {
+//            setTextInfo(btn_ChoixEpic2.text.toString(), savedFilePathRenaissance)
+//            setViewVisibilityGone(scrollview_Epic)
+//            setViewVisibilityGone(scrollview_FrequenceVibratoire)
+//        }
+//        btn_ChoixEpic3.setOnClickListener {
+//            setTextInfo(btn_ChoixEpic3.text.toString(), savedFilePathRessourceinfinie)
+//            setViewVisibilityGone(scrollview_Epic)
+//            setViewVisibilityGone(scrollview_FrequenceVibratoire)
+//        }
 
         // Configuration des boutons de choix pour les fréquences vibratoires
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
@@ -293,10 +293,10 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         }
 
-        // Initialisation des boutons Epic et Vibration
-        ButtonEpic.setOnClickListener{
-            setViewVisibility(scrollview_Epic)
-        }
+//        // Initialisation des boutons Epic et Vibration
+//        ButtonEpic.setOnClickListener{
+//            setViewVisibility(scrollview_Epic)
+//        }
         ButtonVib.setOnClickListener {
             setViewVisibility(scrollview_FrequenceVibratoire)
         }
