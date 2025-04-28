@@ -163,14 +163,14 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val ressourceinfinie = "ressourceinfinie.mp3"
         val savedFilePathRessourceinfinie = copyRawResourceToInternalStorage(R.raw.ressourceinfinie, ressourceinfinie)
 
-        val abondance = "abondance.mp3"
-        val savedFilePathAbondance = copyRawResourceToInternalStorage(R.raw.abondance, abondance)
+        val expansion = "abondance.mp3"
+        val savedFilePathExpansion = copyRawResourceToInternalStorage(R.raw.expansion, expansion)
 
-        val focus = "focus.mp3"
-        val savedFilePathFocus = copyRawResourceToInternalStorage(R.raw.focus, focus)
+        val ondeteta = "focus.mp3"
+        val savedFilePathOndeTeta = copyRawResourceToInternalStorage(R.raw.ondeteata, ondeteta)
 
-        val intuition = "intuition.mp3"
-        val savedFilePathIntuition = copyRawResourceToInternalStorage(R.raw.intuition, intuition)
+        val voyageinterieur = "intuition.mp3"
+        val savedFilePathVoyageInterieur = copyRawResourceToInternalStorage(R.raw.voyageinterieur, voyageinterieur)
 
         // Copier le fichier silence dans le stockage interne
         val silence = "silence.mp3"
@@ -202,22 +202,22 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Configuration des boutons d'écoute pour les fréquences vibratoires
         FrequenceVibratoire1.setOnClickListener{
-            if (savedFilePathAbondance != null) {
-                playAudio(savedFilePathAbondance)
+            if (savedFilePathExpansion != null) {
+                playAudio(savedFilePathExpansion)
             } else {
                 //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         FrequenceVibratoire2.setOnClickListener{
-            if (savedFilePathFocus != null) {
-                playAudio(savedFilePathFocus)
+            if (savedFilePathOndeTeta != null) {
+                playAudio(savedFilePathOndeTeta)
             } else {
                 //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
         FrequenceVibratoire3.setOnClickListener{
-            if (savedFilePathIntuition != null) {
-                playAudio(savedFilePathIntuition)
+            if (savedFilePathVoyageInterieur != null) {
+                playAudio(savedFilePathVoyageInterieur)
             } else {
                 //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
@@ -242,17 +242,17 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Configuration des boutons de choix pour les fréquences vibratoires
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
-            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathAbondance)
+            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathExpansion)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
-            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(), savedFilePathFocus)
+            setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(), savedFilePathOndeTeta)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire3.setOnClickListener {
-            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathIntuition)
+            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathVoyageInterieur)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
