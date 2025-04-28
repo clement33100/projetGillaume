@@ -243,17 +243,17 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Configuration des boutons de choix pour les fréquences vibratoires
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
             setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathAbondance)
-            setViewVisibilityGone(scrollview_Epic)
+            //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
             setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(), savedFilePathFocus)
-            setViewVisibilityGone(scrollview_Epic)
+            //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire3.setOnClickListener {
             setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathIntuition)
-            setViewVisibilityGone(scrollview_Epic)
+            //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
 
@@ -261,7 +261,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         btn_silence.setOnClickListener {
             if (savedFilePathSilence != null) {
                 setTextInfo("Silence", savedFilePathSilence)
-                setViewVisibilityGone(scrollview_Epic)
+                //setViewVisibilityGone(scrollview_Epic)
                 setViewVisibilityGone(scrollview_FrequenceVibratoire)
                 //Toast.makeText(this, "Silence sélectionné", Toast.LENGTH_SHORT).show()
             } else {
