@@ -67,6 +67,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         private const val AFFIRMATION_DELAY_SECONDS = 10   // 10 secondes
         private const val INTRO_DELAY_MS = 3000L           // 3 secondes (peut être ajusté si nécessaire)
         private const val POPUP_DELAY_MS = 300L
+        private const val FADE_IN_DURATION_SECONDS = 5
     }
 
     override fun getLayoutId(): Int {
@@ -290,7 +291,10 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                         introPath                = introFilePath
                     ) { mixSuccess ->
                         if (mixSuccess) {
+                            findViewById<ImageView>(R.id.imageView4)        // ← nouvelle ligne
+                                .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                             playMainAudio(finalOutputPath, selectedDurationInSeconds)
+
                         } else {
                             runOnUiThread {
                                 findViewById<ImageView>(R.id.imageView4)
@@ -416,127 +420,129 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         callback: (Boolean) -> Unit
     ) {
         showOverlay()
-        val bowlStartFile = File(bowlStartPath)
-        val musicFile = File(musicPath)
-        val bowlEndFile = File(bowlEndPath)
 
+        /* ───────────────────── Vérifications ───────────────────── */
+        val bowlStartFile = File(bowlStartPath)
+        val musicFile     = File(musicPath)
+        val bowlEndFile   = File(bowlEndPath)
         if (!bowlStartFile.exists() || !musicFile.exists() || !bowlEndFile.exists()) {
             runOnUiThread {
                 Toast.makeText(this, "Un des fichiers audio est introuvable.", Toast.LENGTH_SHORT).show()
                 hideOverlay()
             }
-            callback(false)
-            return
+            callback(false); return
         }
 
         val bowlStartDurationSeconds = getAudioDurationSeconds(bowlStartPath)
-        val bowlEndDurationSeconds = getAudioDurationSeconds(bowlEndPath)
-        val loopedMusicDuration = selectedDurationInSeconds
-
-        Log.d("MeditationPlay", "Bowl Start Duration: $bowlStartDurationSeconds sec")
-        Log.d("MeditationPlay", "Bowl End Duration: $bowlEndDurationSeconds sec")
-        Log.d("MeditationPlay", "Looped Music Duration: $loopedMusicDuration sec")
+        val bowlEndDurationSeconds   = getAudioDurationSeconds(bowlEndPath)
+        val loopedMusicDuration      = selectedDurationInSeconds
 
         val potentialAffirmationCount = selectedDurationInSeconds / AFFIRMATION_DELAY_SECONDS
-        val filterComplexBuilder = StringBuilder()
+        val filterComplexBuilder      = StringBuilder()
+
+        /* ───────────────────── Flux MUSIQUE (fade-in / fade-out) ───────────────────── */
+        val musicFilter = """
+        [1:a]volume=0.125,
+             atrim=duration=$loopedMusicDuration,
+             asetpts=PTS-STARTPTS[music_cut];
+        [music_cut]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,
+                   afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_ready];
+    """.trimIndent()
 
         if (introPath != null) {
-            filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ")
-            filterComplexBuilder.append("[music_scaled]afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
+            // Avec intro : bol de début = input 0, intro = input 3
+            filterComplexBuilder.append(musicFilter).append(' ')
             filterComplexBuilder.append("[0:a][3:a]concat=n=2:v=0:a=1[start_intro]; ")
-            filterComplexBuilder.append("[start_intro][music_faded]amix=inputs=2:duration=longest[mix1]; ")
+            filterComplexBuilder.append("[start_intro][music_ready]amix=inputs=2:duration=longest[mix1]; ")
         } else {
-            filterComplexBuilder.append("[1:a]volume=0.125[music_scaled]; ")
-            filterComplexBuilder.append("[music_scaled]afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_faded]; ")
-            filterComplexBuilder.append("[0:a][music_faded]amix=inputs=2:duration=longest[mix1]; ")
+            // Sans intro : bol de début = input 0
+            filterComplexBuilder.append(musicFilter).append(' ')
+            filterComplexBuilder.append("[0:a][music_ready]amix=inputs=2:duration=longest[mix1]; ")
         }
 
+        /* ───────────────────── Insertion des affirmations ───────────────────── */
         val affIndices = mutableListOf<String>()
         for (i in 0 until potentialAffirmationCount) {
-            val affirmationStartTime = AFFIRMATION_DELAY_SECONDS * (i + 1) + (if (introPath != null) getAudioDurationSeconds(introPath).toInt() else 0)
-            if (selectedDurationInSeconds - affirmationStartTime < 10) {
-                Log.d("MeditationPlay", "Affirmation $i ignorée : moins de 10 sec avant la fin")
-                continue
-            }
-            val delayMs = affirmationStartTime * 1000
-            val inputIndex = if (introPath != null) 4 + i else 3 + i
-            filterComplexBuilder.append("[$inputIndex:a]atrim=duration=5,asetpts=PTS-STARTPTS,adelay=${delayMs}|${delayMs}[aff_delayed_$i]; ")
-            affIndices.add("[aff_delayed_$i]")
+            val startOffset = AFFIRMATION_DELAY_SECONDS * (i + 1) +
+                    (introPath?.let { getAudioDurationSeconds(it).toInt() } ?: 0)
+            if (selectedDurationInSeconds - startOffset < 10) break   // marge de fin
+
+            val delayMs   = startOffset * 1000
+            val inputIdx  = if (introPath != null) 4 + i else 3 + i
+            filterComplexBuilder.append(
+                "[$inputIdx:a]atrim=duration=5,asetpts=PTS-STARTPTS," +
+                        "adelay=$delayMs|$delayMs[aff_delayed_$i]; "
+            )
+            affIndices += "[aff_delayed_$i]"
         }
 
-        var mixStreams = "[mix1]"
-        for (tag in affIndices) {
-            mixStreams += tag
-        }
+        val mixStreams = "[mix1]" + affIndices.joinToString("")
         if (affIndices.isNotEmpty()) {
             filterComplexBuilder.append("$mixStreams amix=inputs=${2 + affIndices.size}:duration=longest[aout]; ")
         } else {
             filterComplexBuilder.append("[mix1]anull[aout]; ")
         }
 
+        /* ───────────────────── Bol de fin ───────────────────── */
         val bowlEndDelayMs = ((loopedMusicDuration - bowlEndDurationSeconds) * 1000).toInt()
-        filterComplexBuilder.append("[2:a]atrim=duration=$bowlEndDurationSeconds,asetpts=PTS-STARTPTS,adelay=${bowlEndDelayMs}|${bowlEndDelayMs}[bowl_end_delayed]; ")
+        filterComplexBuilder.append(
+            "[2:a]atrim=duration=$bowlEndDurationSeconds,asetpts=PTS-STARTPTS," +
+                    "adelay=$bowlEndDelayMs|$bowlEndDelayMs[bowl_end_delayed]; "
+        )
         filterComplexBuilder.append("[aout][bowl_end_delayed]amix=inputs=2:duration=longest[afinal]; ")
         filterComplexBuilder.append("[afinal]loudnorm=I=-16:TP=-1.5:LRA=11[aout_normalized]")
+
         val filterComplex = filterComplexBuilder.toString()
 
-        val ffmpegCommandBuilder = StringBuilder()
-        ffmpegCommandBuilder.append("-y ")
-        ffmpegCommandBuilder.append("-i \"$bowlStartPath\" ")
-        ffmpegCommandBuilder.append("-stream_loop -1 -i \"$musicPath\" ")
-        ffmpegCommandBuilder.append("-i \"$bowlEndPath\" ")
-        if (introPath != null) {
-            ffmpegCommandBuilder.append("-i \"$introPath\" ")
+        /* ───────────────────── Commande FFmpeg ───────────────────── */
+        val cmd = buildString {
+            append("-y ")
+            append("-i \"$bowlStartPath\" ")
+            append("-stream_loop -1 -i \"$musicPath\" ")
+            append("-i \"$bowlEndPath\" ")
+            introPath?.let { append("-i \"$it\" ") }
+
+            for (i in 0 until potentialAffirmationCount) {
+                append("-i \"${affirmationPaths[i % affirmationPaths.size]}\" ")
+            }
+
+            append("-filter_complex \"$filterComplex\" ")
+            append("-t $selectedDurationInSeconds ")
+            append("-map \"[aout_normalized]\" -c:a libmp3lame -b:a 192k ")
+            append("\"$outputPath\"")
         }
-        val totalAffirmations = potentialAffirmationCount
-        for (i in 0 until totalAffirmations) {
-            if (!affIndices.contains("[aff_delayed_$i]")) continue
-            ffmpegCommandBuilder.append("-i \"${affirmationPaths[i % affirmationPaths.size]}\" ")
-        }
-        ffmpegCommandBuilder.append("-filter_complex \"$filterComplex\" ")
-        ffmpegCommandBuilder.append("-t \"$selectedDurationInSeconds\" ")
-        ffmpegCommandBuilder.append("-map \"[aout_normalized]\" ")
-        ffmpegCommandBuilder.append("-c:a libmp3lame -b:a 192k ")
-        ffmpegCommandBuilder.append("\"$outputPath\"")
 
-        val ffmpegCommand = ffmpegCommandBuilder.toString()
+        Log.d("MeditationPlay", "Executing FFmpeg command: $cmd")
 
-        Log.d("MeditationPlay", "Executing FFmpeg command: $ffmpegCommand")
-
-        FFmpegKit.executeAsync(ffmpegCommand, { session ->
-            val returnCode = session.returnCode
-            val logs = session.allLogsAsString
-            if (ReturnCode.isSuccess(returnCode)) {
+        /* ───────────────────── Exécution ───────────────────── */
+        FFmpegKit.executeAsync(cmd, { session ->
+            if (ReturnCode.isSuccess(session.returnCode)) {
                 runOnUiThread {
-                    Toast.makeText(this, "Mixage réussi. Fichier final à: $outputPath", Toast.LENGTH_SHORT).show()
-                    findViewById<ImageView>(R.id.imageView4).setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
+                    Toast.makeText(this, "Mixage réussi ! Fichier : $outputPath", Toast.LENGTH_SHORT).show()
+                    findViewById<ImageView>(R.id.imageView4)        // ← nouvelle ligne
+                        .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                     hideOverlay()
                 }
                 callback(true)
             } else {
                 runOnUiThread {
                     Toast.makeText(this, "Échec du mixage.", Toast.LENGTH_SHORT).show()
-                    Log.e("MeditationPlay", "Mixage échoué: $logs")
+                    Log.e("MeditationPlay", session.allLogsAsString)
                     hideOverlay()
                 }
                 callback(false)
             }
         }, { log ->
-            val timeRegex = Regex("time=(\\d+):(\\d+):(\\d+\\.\\d+)")
-            timeRegex.find(log.message)?.let { matchResult ->
-                val (hours, minutes, seconds) = matchResult.destructured
-                val currentTimeSeconds = hours.toInt() * 3600 + minutes.toInt() * 60 + seconds.toFloat()
-                val percentage = ((currentTimeSeconds / selectedDurationInSeconds) * 100).toInt().coerceIn(0, 100)
+            Regex("time=(\\d+):(\\d+):(\\d+\\.\\d+)").find(log.message)?.let { m ->
+                val (h, mnt, s) = m.destructured
+                val cur = h.toInt() * 3600 + mnt.toInt() * 60 + s.toFloat()
+                val pct = ((cur / selectedDurationInSeconds) * 100).toInt().coerceIn(0, 100)
                 runOnUiThread {
-                    circularProgressIndicator.progress = percentage
-                    circularProgressText.text = "$percentage%"
-                    circularProgressText.contentDescription = "Progression de l'audio : $percentage%"
+                    circularProgressIndicator.progress = pct
+                    circularProgressText.text = "$pct%"
                 }
-                Log.d("MeditationPlay", "Progression FFmpeg: $percentage%")
             }
-        }, { statistics ->
-            // Callback pour statistiques supplémentaires (si nécessaire)
-        })
+        }, { /* statistics callback optionnel */ })
     }
 
     private fun getAudioDurationSeconds(filePath: String): Float {
