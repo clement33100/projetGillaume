@@ -41,8 +41,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private var mediaPlayer: MediaPlayer? = null
 
     // UI Elements
-    private lateinit var progressBar: ProgressBar
-    private lateinit var pauseButton: ImageButton
+
     private lateinit var btnOK: Button
     private lateinit var editText: EditText
 
@@ -59,14 +58,11 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private val mainHandler = Handler(Looper.getMainLooper())
 
     // États
-    private var isPaused = true
     private var isTrackingProgress = false
 
     companion object {
         private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
         private const val AFFIRMATION_DELAY_SECONDS = 10   // 10 secondes
-        private const val INTRO_DELAY_MS = 3000L           // 3 secondes (peut être ajusté si nécessaire)
-        private const val POPUP_DELAY_MS = 300L
         private const val FADE_IN_DURATION_SECONDS = 5
     }
 
@@ -93,8 +89,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         /* ----------------------------------------------------------------
            Initialisation des vues principales
            ---------------------------------------------------------------- */
-        progressBar = findViewById(R.id.progressBar)
-        pauseButton = findViewById(R.id.imageButtonPause)
+
         btnOK        = findViewById(R.id.buttonOkMeditation)
         editText     = findViewById(R.id.nameAffirm)
 
@@ -105,101 +100,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         circularProgressIndicator = findViewById(R.id.circularProgressIndicator)
         circularProgressText      = findViewById(R.id.circularProgressText)
 
-        /* ----------------------------------------------------------------
-           Création du PopupWindow avec EditText synchronisé
-           ---------------------------------------------------------------- */
-        val inflater   = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView  = inflater.inflate(R.layout.popup_view, null)
-        popupWindow    = PopupWindow(
-            popupView,
-            dpToPx(316),
-            dpToPx(74)
-        ).apply {
-            isOutsideTouchable = false
-            isFocusable        = true   // permet au champ interne de recevoir le focus
-        }
-
-        val popupEdit = popupView.findViewById<EditText>(R.id.popupEdit)
-        popupEdit.setText(editText.text.toString())
-
-        var syncInProgress = false
-        // ────────────────── Synchronisation texte ↔ popup ──────────────────
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (syncInProgress) return        // ← stop si on est déjà en copie
-                if (s?.toString() == popupEdit.text.toString()) return
-                syncInProgress = true
-                popupEdit.setText(s)
-                popupEdit.setSelection(popupEdit.text.length)
-                syncInProgress = false
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        popupEdit.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (syncInProgress) return
-                if (s?.toString() == editText.text.toString()) return
-                syncInProgress = true
-                editText.setText(s)
-                editText.setSelection(editText.text.length)
-                syncInProgress = false
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        /* ----------------------------------------------------------------
-           Fonction locale pour afficher le popup
-           ---------------------------------------------------------------- */
-        fun showPopup() {
-            if (popupWindow.isShowing) return            // déjà visible → rien à faire
-
-            // Petite temporisation avant l’affichage
-            editText.postDelayed({
-                if (!popupWindow.isShowing && editText.isFocused) {
-                    popupWindow.showAsDropDown(
-                        editText,
-                        0,
-                        -dpToPx(74) - editText.height
-                    )
-                    popupEdit.requestFocus()
-
-                    // ouverture du clavier
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE)
-                            as InputMethodManager
-                    imm.showSoftInput(popupEdit, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }, POPUP_DELAY_MS)
-        }
-
-        /* ----------------------------------------------------------------
-           Listeners liés au popup
-           ---------------------------------------------------------------- */
-        editText.setOnClickListener { showPopup() }
-        editText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) showPopup()
-        }
-        popupEdit.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) popupWindow.dismiss()
-        }
-        // ------------------- Fin gestion popup ----------------------------
-        var imeWasVisible = false            // mémorise l’état précédent
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-
-            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-            if (!imeVisible && imeWasVisible && popupWindow.isShowing) {
-                popupWindow.dismiss()        // ferme seulement si le clavier vient de se cacher
-            }
-            imeWasVisible = imeVisible       // met à jour l’état pour le prochain passage
-            insets
-        }
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
+        circularProgressContainer.visibility = View.GONE
         /* ----------------------------------------------------------------
            Bouton OK : copie/renommage du fichier et passage à l’activité suivante
            ---------------------------------------------------------------- */
@@ -310,20 +211,6 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT).show()
         }
 
-        /* ----------------------------------------------------------------
-           Bouton pause/lecture
-           ---------------------------------------------------------------- */
-        pauseButton.setOnClickListener {
-            if (isPaused) {
-                pauseButton.setImageResource(R.drawable.imgunpause)
-                mediaPlayer?.start()
-                isPaused = false
-            } else {
-                mediaPlayer?.pause()
-                pauseButton.setImageResource(R.drawable.imgpause)
-                isPaused = true
-            }
-        }
     }
 
 
@@ -626,21 +513,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         })
     }
 
-    private fun setupPauseButton() {
-        pauseButton.setOnClickListener {
-            if (isPaused) {
-                resumeAllMediaPlayers()
-                pauseButton.setImageResource(R.drawable.imgunpause)
-                isPaused = false
-                Log.d("MeditationPlay", "Playback resumed")
-            } else {
-                pauseAllMediaPlayers()
-                pauseButton.setImageResource(R.drawable.imgpause)
-                isPaused = true
-                Log.d("MeditationPlay", "Playback paused")
-            }
-        }
-    }
+
 
     private fun resumeAllMediaPlayers() {
         mediaPlayer?.start()
@@ -660,7 +533,6 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         isTrackingProgress = false
         hideOverlay()
         runOnUiThread {
-            progressBar.visibility = View.GONE
         }
         Log.d("MeditationPlay", "All audio players stopped and released.")
     }

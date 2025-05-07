@@ -221,19 +221,16 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             // Initialize and start playback
             mediaPlayer1 = MediaPlayer.create(this, audioResId)
             mediaPlayer1?.start()
-            Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
         } else {
             if (mediaPlayer1?.isPlaying == true) {
                 // Stop playback
                 mediaPlayer1?.stop()
                 mediaPlayer1?.reset()
                 mediaPlayer1 = null
-                Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
             } else {
                 // Restart playback
                 mediaPlayer1 = MediaPlayer.create(this, audioResId)
                 mediaPlayer1?.start()
-                Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
             }
         }
     }
