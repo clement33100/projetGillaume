@@ -8,13 +8,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
     tools:context=".step3Music"
-    android:padding="16dp"
     >
 
     <!-- Contenu principal de l'activité -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout

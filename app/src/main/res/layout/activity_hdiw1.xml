@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
     tools:context=".hdiw1"
-    android:padding="16dp"
     >
 
 
@@ -18,6 +17,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         tools:context=".hdiw1">
 
         <!-- Bouton Menu Burger en haut à gauche -->

@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
     tools:context=".mesAffirmations"
-    android:padding="16dp"
     >
 
 
@@ -15,6 +14,7 @@
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
