@@ -167,7 +167,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val isIntroEnabled = intent.getBooleanExtra("isIntroEnabled", false)
         var introFilePath: String? = null
         if (isIntroEnabled) {
-            introFilePath = copyRawResourceToInternalStorage(R.raw.intro, "intro.mp3")
+            introFilePath = copyRawResourceToInternalStorage(R.raw.intromeditation, "intromeditation.mp3")
             if (introFilePath == null) {
                 Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
                 Log.e("MeditationPlay", "Échec de la copie du fichier d'intro.")
@@ -329,7 +329,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         /* ───────────────────── Flux MUSIQUE (fade-in / fade-out) ───────────────────── */
         val musicFilter = """
-        [1:a]volume=0.125,
+        [1:a]volume=0.07,
              atrim=duration=$loopedMusicDuration,
              asetpts=PTS-STARTPTS[music_cut];
         [music_cut]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,
@@ -362,10 +362,28 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             )
             affIndices += "[aff_delayed_$i]"
         }
+        val totalInputs = 1 + affIndices.size          // 1 = [mix1]
+
+        val musicWeight = 1f     // poids appliqué à la musique+bol
+        val voiceWeight = 0.8f     // poids appliqué à chaque affirmation
+
+// construit la chaîne "1|0.5|0.5|..."    ← mix1|aff0|aff1|...
+        val weights = buildString {
+            append(musicWeight)
+            repeat(affIndices.size) { append("|$voiceWeight") }
+        }
 
         val mixStreams = "[mix1]" + affIndices.joinToString("")
         if (affIndices.isNotEmpty()) {
-            filterComplexBuilder.append("$mixStreams amix=inputs=${2 + affIndices.size}:duration=longest[aout]; ")
+            filterComplexBuilder.append(
+                "$mixStreams amix=" +
+                        "inputs=$totalInputs:" +
+                        "duration=longest:" +
+                        "normalize=0:" +
+                        "dropout_transition=0:" +
+                        "weights=$weights" +      // ← ICI : les voix > musique
+                        "[aout]; "
+            )
         } else {
             filterComplexBuilder.append("[mix1]anull[aout]; ")
         }

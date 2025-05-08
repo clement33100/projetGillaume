@@ -106,13 +106,6 @@ class Step2 : Base() {
         val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
         val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
 
-        val arrowUpDrawable = ContextCompat.getDrawable(this, R.drawable.arrowbottomtom)
-        val insetArrow = InsetDrawable(arrowUpDrawable, 0, -28, 0, 0)
-        insetArrow?.setBounds(0, 0, insetArrow.intrinsicWidth, insetArrow.intrinsicHeight)
-
-        val arrowDownDrawable = ContextCompat.getDrawable(this, R.drawable.arrowdown)
-        arrowDownDrawable?.setBounds(0, 0, arrowDownDrawable.intrinsicWidth, arrowDownDrawable.intrinsicHeight)
-
         // Dans votre méthode onCreate, après avoir récupéré vos vues
         val rootView = findViewById<View>(R.id.drawer_layout)  // Vue racine globale
         val constraintLayout = findViewById<ConstraintLayout>(R.id.main)

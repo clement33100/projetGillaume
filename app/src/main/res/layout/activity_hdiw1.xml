@@ -105,7 +105,7 @@
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="@string/txt_explainhdiw"
+                    android:text="@string/txt_explainhdiw3"
                     android:textSize="22sp" />
 
                 <Button

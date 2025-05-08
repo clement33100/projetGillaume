@@ -1,8 +1,13 @@
 package com.example.myapplicationv2
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -29,9 +34,15 @@ class Rules : Base() {  // Hérite de Base
 
         // Définir un OnClickListener pour ouvrir l'activité Etape2Voix
         btnStart.setOnClickListener {
+            if (!isOnline()) {
+                Toast.makeText(this@Rules, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG
+                ).show()
+                return@setOnClickListener          // ← on ne lance pas l'activité
+            }
             val intent = Intent(this, Etape2Voix::class.java)
             startActivity(intent)
         }
+
 
         // Gérer les insets pour le layout (si nécessaire)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -45,4 +56,21 @@ class Rules : Base() {  // Hérite de Base
             insets
         }
     }
+    private fun isOnline(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        // Android M (23) et + : NetworkCapabilities
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = cm.activeNetwork ?: return false
+            val caps = cm.getNetworkCapabilities(network) ?: return false
+            return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                    caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        }
+        // Avant M
+        @Suppress("DEPRECATION")
+        val info = cm.activeNetworkInfo
+        @Suppress("DEPRECATION")
+        return info != null && info.isConnected
+    }
+
 }

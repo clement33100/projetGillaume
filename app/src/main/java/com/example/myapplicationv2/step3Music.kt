@@ -155,13 +155,13 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Copier les fichiers audio dans le stockage interne
         val puissanceinterieure = "puissanceinterieure.mp3"  // Nom du fichier dans le stockage interne
-        val savedFilePathPuissanceinterieure = copyRawResourceToInternalStorage(R.raw.puissance, puissanceinterieure)
+        //val savedFilePathPuissanceinterieure = copyRawResourceToInternalStorage(R.raw.puissance, puissanceinterieure)
 
         val renaissance = "renaissance.mp3"
-        val savedFilePathRenaissance = copyRawResourceToInternalStorage(R.raw.renaissance, renaissance)
+        //val savedFilePathRenaissance = copyRawResourceToInternalStorage(R.raw.renaissance, renaissance)
 
         val ressourceinfinie = "ressourceinfinie.mp3"
-        val savedFilePathRessourceinfinie = copyRawResourceToInternalStorage(R.raw.ressourceinfinie, ressourceinfinie)
+        //val savedFilePathRessourceinfinie = copyRawResourceToInternalStorage(R.raw.ressourceinfinie, ressourceinfinie)
 
         val expansion = "abondance.mp3"
         val savedFilePathExpansion = copyRawResourceToInternalStorage(R.raw.expansion, expansion)
