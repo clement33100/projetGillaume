@@ -242,16 +242,25 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Configuration des boutons de choix pour les fréquences vibratoires
         btn_ChoixFrequenceVibratoire1.setOnClickListener {
+            if (savedFilePathVoyageInterieur != null) {
+                playAudio(savedFilePathVoyageInterieur)
+            }
             setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathExpansion)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire2.setOnClickListener {
+            if (savedFilePathOndeTeta != null) {
+                playAudio(savedFilePathOndeTeta)
+            }
             setTextInfo(btn_ChoixFrequenceVibratoire2.text.toString(), savedFilePathOndeTeta)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire3.setOnClickListener {
+            if (savedFilePathVoyageInterieur != null) {
+                playAudio(savedFilePathVoyageInterieur)
+            }
             setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathVoyageInterieur)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
