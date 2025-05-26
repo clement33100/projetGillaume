@@ -12,7 +12,7 @@ constraintlayout = "2.1.4"
 okhttp = "4.9.3"  # Version d'OkHttp
 ffmpegkit = "4.5.LTS" # ou la version souhaitée
 googleAuthLibrary = "1.14.0"  # Ajout de la version de google-auth-library
-
+androidx-media3 = "1.3.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -25,7 +25,8 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }  # Déjà ajouté
 ffmpegkitfull = { group = "com.arthenica", name = "ffmpeg-kit-full", version.ref = "ffmpegkit" }
 google-auth-library-oauth2-http = { group = "com.google.auth", name = "google-auth-library-oauth2-http", version.ref = "googleAuthLibrary" }  # Ajout de la dépendance google-auth-library
-
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidx-media3" }
+androidx-media3-ui        = { group = "androidx.media3", name = "media3-ui",        version.ref = "androidx-media3" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
