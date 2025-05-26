@@ -33,34 +33,32 @@
             android:src="@drawable/menu_3_pointssvg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <!-- ProgressBar -->
-        <ProgressBar
-            android:id="@+id/progressBarManageAffirmation"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="227dp"
-            android:layout_height="75dp"
-            android:layout_margin="16dp"
-            android:indeterminateOnly="false"
-            android:max="100"
-            android:progress="0"
-            android:progressBackgroundTint="@color/light_green"
-            android:progressTint="@color/green"
-            android:scaleY="2"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-            app:layout_constraintStart_toEndOf="@+id/imageButtonPauseManageAffirmation" />
 
-        <!-- ImageButton pour Play/Pause -->
-        <ImageButton
-            android:id="@+id/imageButtonPauseManageAffirmation"
-            android:layout_width="65dp"
-            android:layout_height="74dp"
-            android:layout_marginStart="30dp"
-            android:background="#EFEFEF"
-            android:contentDescription="TODO"
-            android:src="@drawable/imgpause"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/progressBarManageAffirmation"
-            tools:srcCompat="@drawable/imgunpause" />
+        <LinearLayout
+            android:id="@+id/playerBar2"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="20dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:elevation="12dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.media3.ui.PlayerView
+                android:id="@+id/player_view2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:controller_layout_id="@layout/exo_playonly_controller"
+                app:show_buffering="when_playing"
+                app:show_timeout="0"
+                app:surface_type="none"
+                app:use_controller="true" />
+        </LinearLayout>
+
 
         <!-- LinearLayout pour les boutons -->
         <LinearLayout

@@ -14,12 +14,19 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import java.io.File
 import java.io.IOException
 
@@ -31,7 +38,7 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
     private lateinit var playPauseButton: ImageButton
     private lateinit var progressBar: ProgressBar
     private val handler = android.os.Handler()
-
+    private var exoPlayer: ExoPlayer? = null
     private lateinit var downloadButton: Button
     private lateinit var renameButton: Button
     private lateinit var deleteButton: Button
@@ -42,9 +49,11 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
         return R.layout.activity_manage_affirmation  // Fournit le layout spécifique à cette activité
     }
 
+    @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
 
 
         WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
@@ -64,8 +73,9 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
 
         // Initialisation des éléments UI
         fileNameTextView = findViewById(R.id.fileNameTextView)
-        playPauseButton = findViewById(R.id.imageButtonPauseManageAffirmation)
-        progressBar = findViewById(R.id.progressBarManageAffirmation)
+        //playPauseButton = findViewById(R.id.imageButtonPauseManageAffirmation)
+        //progressBar = findViewById(R.id.progressBarManageAffirmation)
+
         downloadButton = findViewById(R.id.downloadButton)
         renameButton = findViewById(R.id.renameButton)
         deleteButton = findViewById(R.id.deleteButton)
@@ -80,9 +90,14 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
 
         val file = File(filePath)
 
+
+
+
+
+
         // Afficher le nom du fichier
         fileNameTextView.text = file.nameWithoutExtension
-
+        /*
         // Initialiser le MediaPlayer mais ne pas démarrer la musique
         if (file.exists()) {
             mediaPlayer = MediaPlayer().apply {
@@ -92,16 +107,42 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
             }
         } else {
             Toast.makeText(this, "Fichier introuvable.", Toast.LENGTH_SHORT).show()
+        }*/
+
+
+
+
+        // 2. UI de base : titre
+        findViewById<TextView>(R.id.fileNameTextView).text =
+            File(filePath).nameWithoutExtension
+
+// 3. Préparation d’ExoPlayer
+        val playerView = findViewById<PlayerView>(R.id.player_view2).apply {
+            useController = true
+            controllerShowTimeoutMs = 0
+            showController()
+            bringToFront()
+            player = exoPlayer
         }
 
+
+        exoPlayer = ExoPlayer.Builder(this).build().also { p ->
+            playerView.player = p
+            p.setMediaItem(MediaItem.fromUri(Uri.fromFile(File(filePath))))
+            p.prepare()         // BUFFERING → READY
+        }
+
+
+
+
         // Bouton pour jouer ou mettre en pause le fichier
-        playPauseButton.setOnClickListener {
+        /*playPauseButton.setOnClickListener {
             if (isPlaying) {
                 pauseMusic()
             } else {
                 playMusic()
             }
-        }
+        }*/
 
         // Bouton pour télécharger le fichier
         downloadButton.setOnClickListener {
@@ -214,31 +255,31 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
 
 
 
-    private fun playMusic() {
+    /*private fun playMusic() {
         mediaPlayer?.let {
             it.start()
             isPlaying = true
             playPauseButton.setImageResource(R.drawable.imgunpause) // Changer l'icône en pause
             updateProgressBar()
         }
-    }
+    }*/
 
-    private fun pauseMusic() {
+    /*private fun pauseMusic() {
         mediaPlayer?.let {
             it.pause()
             isPlaying = false
             playPauseButton.setImageResource(R.drawable.imgpause) // Changer l'icône en lecture
         }
-    }
+    }*/
 
-    private fun updateProgressBar() {
+    /*private fun updateProgressBar() {
         mediaPlayer?.let {
             progressBar.progress = it.currentPosition / 1000
             if (isPlaying) {
                 handler.postDelayed({ updateProgressBar() }, 1000) // Met à jour toutes les secondes
             }
         }
-    }
+    }*/
 
 
     private fun showRenameDialog(file: File) {

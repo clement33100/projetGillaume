@@ -85,7 +85,7 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, mesAffirmationsDetails::class.java)
+        val intent = Intent(this, mesAffirmations::class.java)
         startActivity(intent)
         finish() // Optionnel, pour retirer cette activité de la pile
         super.onBackPressed()

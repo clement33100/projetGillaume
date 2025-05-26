@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputBinding
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +25,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -34,14 +36,23 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerControlView
+import androidx.media3.ui.PlayerView
+
 
 class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     // MediaPlayer Principal
     private var mediaPlayer: MediaPlayer? = null
-
+    private var exoPlayer: ExoPlayer? = null
     // UI Elements
-
+    private lateinit var progressBar: ProgressBar
+    private lateinit var pauseButton: ImageButton
     private lateinit var btnOK: Button
     private lateinit var editText: EditText
 
@@ -56,9 +67,12 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     // Handler pour la mise à jour périodique
     private val mainHandler = Handler(Looper.getMainLooper())
-
     // États
+    private var isPaused = true
     private var isTrackingProgress = false
+
+    //lateinit var binding: ActivityMediaPlayerBinding
+
 
     companion object {
         private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
@@ -71,9 +85,44 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     }
 
 
+    @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
+        val playerView = findViewById<PlayerView>(R.id.player_view).apply {
+            useController = true
+            controllerShowTimeoutMs = 0
+            showController()
+            bringToFront()
+            player = exoPlayer
+        }
+
+    exoPlayer = ExoPlayer.Builder(this).build().also { exo ->
+
+        exo.addListener(object : Player.Listener {
+
+            override fun onPlaybackStateChanged(state: Int) {
+                Log.d("DBG", "state=$state")              // 1=IDLE 2=BUFFERING 3=READY 4=ENDED
+            }
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                Log.d("DBG", "isPlaying=$isPlaying")
+            }
+
+            override fun onPlayerError(error: PlaybackException) {
+                Log.e("DBG", "Player error", error)
+            }
+        })
+
+        exo.volume        = 0.6f          // réglages initiaux
+        exo.playWhenReady = true          // démarrage auto après prepare()
+
+        playerView.player = exo           // on attache la vue
+    }
+
+
 
         WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
@@ -85,6 +134,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             insets
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
 
         /* ----------------------------------------------------------------
            Initialisation des vues principales
@@ -115,7 +165,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (!destinationDir.exists()) {
                 if (!destinationDir.mkdirs()) {
                     Log.e("MeditationPlay", "Impossible de créer le dossier affirmation")
-                    Toast.makeText(this, "Erreur lors de la création du dossier affirmation.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Erreur lors de la création du dossier affirmation.", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
@@ -131,14 +181,14 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 if (sourceFile.exists()) {
                     sourceFile.copyTo(destinationFile, overwrite = false)
                     Log.d("MeditationPlay", "Fichier enregistré : ${destinationFile.absolutePath}")
-                    Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name}.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Fichier copié sous le nom ${destinationFile.name}.", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e("MeditationPlay", "Le fichier source n'existe pas : ${sourceFile.absolutePath}")
-                    Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Le fichier source est introuvable.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("MeditationPlay", "Erreur lors de la copie : ${e.message}")
-                Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
             }
             startActivity(intent)
         }
@@ -150,7 +200,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val bowlEndFilePath   = copyRawResourceToInternalStorage(R.raw.boltibetainson, "boltibetainson_end.mp3")
 
         if (bowlStartFilePath == null || bowlEndFilePath == null) {
-            Toast.makeText(this, "Erreur lors de la copie des fichiers audio du bol tibétain.", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Erreur lors de la copie des fichiers audio du bol tibétain.", Toast.LENGTH_SHORT).show()
             Log.e("MeditationPlay", "Échec de la copie des fichiers bol tibétain.")
             return
         }
@@ -169,7 +219,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         if (isIntroEnabled) {
             introFilePath = copyRawResourceToInternalStorage(R.raw.intromeditation, "intromeditation.mp3")
             if (introFilePath == null) {
-                Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
                 Log.e("MeditationPlay", "Échec de la copie du fichier d'intro.")
             }
         }
@@ -192,10 +242,9 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                         introPath                = introFilePath
                     ) { mixSuccess ->
                         if (mixSuccess) {
-                            findViewById<ImageView>(R.id.imageView4)        // ← nouvelle ligne
-                                .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
-                            playMainAudio(finalOutputPath, selectedDurationInSeconds)
-
+                            runOnUiThread {
+                                playMainAudio(finalOutputPath, selectedDurationInSeconds)
+                            }
                         } else {
                             runOnUiThread {
                                 findViewById<ImageView>(R.id.imageView4)
@@ -208,9 +257,23 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         } else {
             Log.e("MeditationPlay", "Chemin de la musique choisi est null.")
-            Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Chemin de la musique choisi est invalide.", Toast.LENGTH_SHORT).show()
         }
 
+        /* ----------------------------------------------------------------
+           Bouton pause/lecture
+           ---------------------------------------------------------------- */
+        /*pauseButton.setOnClickListener {
+            if (isPaused) {
+                pauseButton.setImageResource(R.drawable.imgunpause)
+                mediaPlayer?.start()
+                isPaused = false
+            } else {
+                mediaPlayer?.pause()
+                pauseButton.setImageResource(R.drawable.imgpause)
+                isPaused = true
+            }
+        }*/
     }
 
 
@@ -255,7 +318,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (!sourceFile.exists()) {
                 Log.e("MeditationPlay", "Fichier de musique externe introuvable: $sourcePath")
                 runOnUiThread {
-                    Toast.makeText(this, "Fichier de musique externe introuvable.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Fichier de musique externe introuvable.", Toast.LENGTH_SHORT).show()
                 }
                 callback(false)
                 return
@@ -276,23 +339,27 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         } catch (e: Exception) {
             Log.e("MeditationPlay", "Erreur lors de la copie de la musique externe: ${e.message}")
             runOnUiThread {
-                Toast.makeText(this, "Erreur lors de la copie de la musique.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Erreur lors de la copie de la musique.", Toast.LENGTH_SHORT).show()
             }
             callback(false)
         }
     }
 
     private fun showOverlay() {
-        runOnUiThread {
-            circularProgressContainer.visibility = View.VISIBLE
-            circularProgressIndicator.progress = 0
-            circularProgressText.text = "0%"
+        circularProgressContainer.apply {
+            visibility  = View.VISIBLE
+            isClickable = true       // bloque l’UI le temps du mixage
+            //bringToFront()
         }
+        circularProgressIndicator.progress = 0
+        circularProgressText.text = "0%"
     }
 
     private fun hideOverlay() {
-        runOnUiThread {
-            circularProgressContainer.visibility = View.GONE
+        circularProgressContainer.apply {
+            visibility  = View.GONE  // retire complètement la vue du layout
+            isClickable = false
+
         }
     }
 
@@ -314,7 +381,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val bowlEndFile   = File(bowlEndPath)
         if (!bowlStartFile.exists() || !musicFile.exists() || !bowlEndFile.exists()) {
             runOnUiThread {
-                Toast.makeText(this, "Un des fichiers audio est introuvable.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Un des fichiers audio est introuvable.", Toast.LENGTH_SHORT).show()
                 hideOverlay()
             }
             callback(false); return
@@ -416,14 +483,13 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             append("-map \"[aout_normalized]\" -c:a libmp3lame -b:a 192k ")
             append("\"$outputPath\"")
         }
-
         Log.d("MeditationPlay", "Executing FFmpeg command: $cmd")
 
         /* ───────────────────── Exécution ───────────────────── */
         FFmpegKit.executeAsync(cmd, { session ->
             if (ReturnCode.isSuccess(session.returnCode)) {
                 runOnUiThread {
-                    Toast.makeText(this, "Mixage réussi ! Fichier : $outputPath", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Mixage réussi ! Fichier : $outputPath", Toast.LENGTH_SHORT).show()
                     findViewById<ImageView>(R.id.imageView4)        // ← nouvelle ligne
                         .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                     hideOverlay()
@@ -431,7 +497,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 callback(true)
             } else {
                 runOnUiThread {
-                    Toast.makeText(this, "Échec du mixage.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Échec du mixage.", Toast.LENGTH_SHORT).show()
                     Log.e("MeditationPlay", session.allLogsAsString)
                     hideOverlay()
                 }
@@ -450,6 +516,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         }, { /* statistics callback optionnel */ })
     }
 
+
     private fun getAudioDurationSeconds(filePath: String): Float {
         val retriever = MediaMetadataRetriever()
         return try {
@@ -465,34 +532,28 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     }
 
     private fun playMainAudio(finalAudioPath: String?, durationTime: Int) {
-        finalAudioPath?.let {
-            val mainFile = File(it)
-            if (!mainFile.exists()) {
-                Log.e("MeditationPlay", "Main audio file not found at $it")
-                Toast.makeText(this, "Main audio file not found.", Toast.LENGTH_SHORT).show()
-                return
-            }
-            Log.d("MeditationPlay", "Final audio path: $finalAudioPath")
-            Log.d("MeditationPlay", "Final audio exists: ${mainFile.exists()}")
-            try {
-                mediaPlayer = MediaPlayer().apply {
-                    setDataSource(it)
-                    prepare()
-                    setVolume(0.6f, 0.6f)
-                }
-                startProgressTrackingWithCircularIndicator(durationTime)
-                mediaPlayer?.setOnCompletionListener {
-                    Log.d("MeditationPlay", "Main audio playback completed.")
-                    stopAllAudio()
-                }
-            } catch (e: Exception) {
-                Log.e("MeditationPlay", "Error playing main audio: ${e.message}")
-                Toast.makeText(this, "Error playing main audio.", Toast.LENGTH_SHORT).show()
-            }
-        } ?: run {
-            Log.e("MeditationPlay", "Invalid main audio file path.")
+
+        /*if (finalAudioPath == null) {
             Toast.makeText(this, "Invalid main audio file path.", Toast.LENGTH_SHORT).show()
+            return
         }
+        val audioFile = File(finalAudioPath)
+        if (!audioFile.exists()) {
+            Toast.makeText(this, "Main audio file not found.", Toast.LENGTH_SHORT).show()
+            return
+        }*/
+
+        val mediaItem = MediaItem.fromUri(Uri.fromFile(File(finalAudioPath)))
+
+        Log.d("DBG", "playMainAudio called with $finalAudioPath")
+
+        exoPlayer?.apply {
+            setMediaItem(mediaItem)   // OK (thread UI)
+            prepare()                 // déclenche BUFFERING → READY
+            play()                    // isPlaying=true
+        }
+
+        startProgressTrackingWithCircularIndicator(durationTime)
     }
 
     private fun startProgressTrackingWithCircularIndicator(durationTime: Int) {
@@ -542,14 +603,15 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     }
 
     private fun stopAllAudio() {
-        mediaPlayer?.let {
-            if (it.isPlaying) it.stop()
-            it.release()
-            mediaPlayer = null
+        exoPlayer?.run {
+            stop()
+            release()
         }
+        exoPlayer = null
         mainHandler.removeCallbacksAndMessages(null)
         isTrackingProgress = false
         hideOverlay()
+        //progressBar.visibility = View.GONE
         runOnUiThread {
         }
         Log.d("MeditationPlay", "All audio players stopped and released.")

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.media3.ui.PlayerControlView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:background="@drawable/toast_background"
+    android:padding="4dp"
+
+    app:controller_layout_id="@layout/exo_toast_inner"
+
+    app:show_timeout="0"
+    app:repeat_toggle_modes="none"
+
+    app:show_rewind_button="false"
+    app:show_fastforward_button="false"
+    app:show_previous_button="false"
+    app:show_next_button="false"
+    app:show_shuffle_button="false"
+    app:show_subtitle_button="false"
+    app:show_vr_button="false"/>
