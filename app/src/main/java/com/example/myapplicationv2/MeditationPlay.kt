@@ -461,9 +461,13 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             "[2:a]atrim=duration=$bowlEndDurationSeconds,asetpts=PTS-STARTPTS," +
                     "adelay=$bowlEndDelayMs|$bowlEndDelayMs[bowl_end_delayed]; "
         )
-        filterComplexBuilder.append("[aout][bowl_end_delayed]amix=inputs=2:duration=longest[afinal]; ")
-        filterComplexBuilder.append("[afinal]loudnorm=I=-16:TP=-1.5:LRA=11[aout_normalized]")
-
+        filterComplexBuilder.append(
+            "[aout][bowl_end_delayed]amix=" +
+                    "inputs=2:" +
+                    "duration=longest:" +
+                    "normalize=0" +
+                    "[aout]"
+        )
         val filterComplex = filterComplexBuilder.toString()
 
         /* ───────────────────── Commande FFmpeg ───────────────────── */
@@ -480,7 +484,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
             append("-filter_complex \"$filterComplex\" ")
             append("-t $selectedDurationInSeconds ")
-            append("-map \"[aout_normalized]\" -c:a libmp3lame -b:a 192k ")
+            append("-map \"[aout]\" -c:a libmp3lame -b:a 192k ")
             append("\"$outputPath\"")
         }
         Log.d("MeditationPlay", "Executing FFmpeg command: $cmd")

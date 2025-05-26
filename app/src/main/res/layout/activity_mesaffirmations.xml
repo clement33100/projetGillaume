@@ -46,33 +46,39 @@
 
 
         <!-- Description -->
+
+        <!-- Bouton Créer Nouveau -->
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
+            android:autoLink="none"
+            android:linksClickable="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="Tes Mots, ta Tranfomartion, ton Histoire "
-            android:textSize="24dp"
+            android:text="@string/lien_texte"
+            android:textColorLink="@android:color/holo_blue_light"
+            android:textSize="19dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_advicesaffirmations" />
 
-        <!-- Bouton Créer Nouveau -->
         <Button
             android:id="@+id/btn_new"
             android:layout_width="316dp"
             android:layout_height="74dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="110dp"
             android:backgroundTint="@color/green"
             android:text="Créer Nouveau"
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
         <!-- Bouton Mes Affirmations -->
         <Button

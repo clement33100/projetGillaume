@@ -1,9 +1,17 @@
 package com.example.myapplicationv2
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -25,51 +33,56 @@ class mesAffirmations : Base() {  // Hérite de Base au lieu de AppCompatActivit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        // 1) Posez le layout
+        setContentView(getLayoutId())
 
-        WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
+        // 2) Edge-to-edge et status bar
+        enableEdgeToEdge()
+        WindowCompat.getInsetsController(window, window.decorView)
+            ?.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
-        // Configuration des vues
-        btnNew = findViewById<Button>(R.id.btn_new)
-        btnMyaffirmations = findViewById<Button>(R.id.btn_affirmation)
-        btnHowItWorks = findViewById<Button>(R.id.btn_howitworks)
-        btnAdvices = findViewById<Button>(R.id.btn_advicesaffirmations)
-        btnAffirmationsDetails = findViewById<Button>(R.id.btn_affirmation)  // Assurez-vous que l'ID est correct
+        // 3) Init des vues
+        btnNew = findViewById(R.id.btn_new)
+        btnMyaffirmations = findViewById(R.id.btn_affirmation)
+        btnHowItWorks = findViewById(R.id.btn_howitworks)
+        btnAdvices = findViewById(R.id.btn_advicesaffirmations)
+        btnAffirmationsDetails = findViewById(R.id.btn_affirmation) // si c'est le bon ID
+        val textView = findViewById<TextView>(R.id.textView9)
 
-        // Définir les OnClickListeners
-        btnNew.setOnClickListener {
-            // Créez une intention pour lancer choixIntentionAffirmation
-            val intent = Intent(this, Rules::class.java)
-            startActivity(intent)
+        // 4) Texte + span « Clique ici »
+        textView.text = getString(R.string.lien_texte)
+        val start = textView.text.indexOf("Clique")
+        val end   = start + "Clique ici".length
+        val ss = SpannableString(textView.text)
+        ss.setSpan(UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(
+            ForegroundColorSpan(
+                ContextCompat.getColor(this, R.color.green)
+            ), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textView.text = ss
+
+        // 5) Clic sur tout le textView
+        textView.setOnClickListener {
+            startActivity(Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://forms.gle/RtJFDrkqoJrxEhzh6")
+            ))
         }
 
-        btnHowItWorks.setOnClickListener {
-            val intent = Intent(this, hdiw1::class.java)
-            startActivity(intent)
-        }
-
-        btnAdvices.setOnClickListener {
-            val intent = Intent(this, Advices::class.java)
-            startActivity(intent)
-        }
-
+        // 6) Listeners des boutons
+        btnNew.setOnClickListener { startActivity(Intent(this, Rules::class.java)) }
+        btnHowItWorks.setOnClickListener { startActivity(Intent(this, hdiw1::class.java)) }
+        btnAdvices.setOnClickListener { startActivity(Intent(this, Advices::class.java)) }
         btnAffirmationsDetails.setOnClickListener {
-            val intent = Intent(this, mesAffirmationsDetails::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, mesAffirmationsDetails::class.java))
         }
 
-        // Gestion des insets pour le layout (si nécessaire)
+        // 7) Insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
+            val sys = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(sys.left, sys.top, sys.right, sys.bottom)
             insets
         }
-
     }
 }
