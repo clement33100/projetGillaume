@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "443195509801",
+    "project_id": "myaffirmplay-3937e",
+    "storage_bucket": "myaffirmplay-3937e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443195509801:android:dd1281658be2befbd9a038",
+        "android_client_info": {
+          "package_name": "com.example.myapplicationv2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOIY_UfYcAvLd4i2UHlOWxJE9ciayarKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

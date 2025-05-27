@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fond blanc -->
+    <solid android:color="#FFFFFF" />
+    <padding
+        android:left="16dp"
+        android:top="16dp"
+        android:right="16dp"
+        android:bottom="16dp" />
+    <!-- Coins arrondis -->
+    <corners android:radius="33dp" />
+
+    <!-- Contour jaune de 2dp -->
+    <stroke
+        android:width="5dp"
+        android:color="#FFCF00" />  <!-- ou @color/jaune_personnalise -->
+</shape>

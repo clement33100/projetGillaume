@@ -1,19 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:background="@color/yellow">
+    android:orientation="horizontal">
 
     <ImageButton
         android:id="@id/exo_play_pause"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/exo_play_pause_selector"
         android:background="@null"
         android:contentDescription="@string/exo_controls_play_pause_description"
-        />
+        android:src="@drawable/exo_play_pause_selector" />
 
     <!-- barre de progression fine (facultatif) -->
     <androidx.media3.ui.DefaultTimeBar
@@ -21,6 +20,13 @@
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_weight="1"
+        android:foregroundTint="@color/green"
 
-        />
+        android:outlineSpotShadowColor="@color/green"
+        app:ad_marker_color="@color/green"
+        app:buffered_color="@color/light_green"
+        app:played_ad_marker_color="@color/green"
+        app:played_color="@color/green"
+        app:scrubber_color="@color/green"
+        app:unplayed_color="@color/light_green" />
 </LinearLayout>

@@ -202,8 +202,8 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Configuration des boutons d'écoute pour les fréquences vibratoires
         FrequenceVibratoire1.setOnClickListener{
-            if (savedFilePathExpansion != null) {
-                playAudio(savedFilePathExpansion)
+            if (savedFilePathVoyageInterieur != null) {
+                playAudio(savedFilePathVoyageInterieur)
             } else {
                 //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
@@ -216,8 +216,8 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         }
         FrequenceVibratoire3.setOnClickListener{
-            if (savedFilePathVoyageInterieur != null) {
-                playAudio(savedFilePathVoyageInterieur)
+            if (savedFilePathExpansion != null) {
+                playAudio(savedFilePathExpansion)
             } else {
                 //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
@@ -245,7 +245,8 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (savedFilePathVoyageInterieur != null) {
                 playAudio(savedFilePathVoyageInterieur)
             }
-            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathExpansion)
+            setTextInfo(btn_ChoixFrequenceVibratoire1.text.toString(), savedFilePathVoyageInterieur)
+
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
@@ -258,10 +259,10 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
         btn_ChoixFrequenceVibratoire3.setOnClickListener {
-            if (savedFilePathVoyageInterieur != null) {
-                playAudio(savedFilePathVoyageInterieur)
+            if (savedFilePathExpansion != null) {
+                playAudio(savedFilePathExpansion)
             }
-            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathVoyageInterieur)
+            setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathExpansion)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }

@@ -1,6 +1,6 @@
 [versions]
-agp = "8.5.1"
-kotlin = "1.9.0"
+agp              = "8.5.1"
+kotlin           = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,6 +13,7 @@ okhttp = "4.9.3"  # Version d'OkHttp
 ffmpegkit = "4.5.LTS" # ou la version souhaitée
 googleAuthLibrary = "1.14.0"  # Ajout de la version de google-auth-library
 androidx-media3 = "1.3.0"
+firebaseAnalytics = "21.2.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -27,6 +28,8 @@ ffmpegkitfull = { group = "com.arthenica", name = "ffmpeg-kit-full", version.ref
 google-auth-library-oauth2-http = { group = "com.google.auth", name = "google-auth-library-oauth2-http", version.ref = "googleAuthLibrary" }  # Ajout de la dépendance google-auth-library
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidx-media3" }
 androidx-media3-ui        = { group = "androidx.media3", name = "media3-ui",        version.ref = "androidx-media3" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services           = { id = "com.google.gms.google-services", version = "4.4.0" }
