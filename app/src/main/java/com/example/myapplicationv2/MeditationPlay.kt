@@ -70,7 +70,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     // États
     private var isPaused = true
     private var isTrackingProgress = false
-
+    private lateinit var playerBar : View
     //lateinit var binding: ActivityMediaPlayerBinding
 
 
@@ -136,10 +136,11 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
 
+
         /* ----------------------------------------------------------------
            Initialisation des vues principales
            ---------------------------------------------------------------- */
-
+        playerBar = findViewById(R.id.playerBar)    // déjà à GONE via le XML
         btnOK        = findViewById(R.id.buttonOkMeditation)
         editText     = findViewById(R.id.nameAffirm)
 
@@ -243,10 +244,12 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     ) { mixSuccess ->
                         if (mixSuccess) {
                             runOnUiThread {
+                                hideOverlay(showPlayer = true)      // → player visible
                                 playMainAudio(finalOutputPath, selectedDurationInSeconds)
                             }
                         } else {
                             runOnUiThread {
+                                hideOverlay()                       // player reste caché
                                 findViewById<ImageView>(R.id.imageView4)
                                     .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                                 hideOverlay()
@@ -346,6 +349,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     }
 
     private fun showOverlay() {
+        playerBar.visibility = View.GONE
         circularProgressContainer.apply {
             visibility  = View.VISIBLE
             isClickable = true       // bloque l’UI le temps du mixage
@@ -355,12 +359,9 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         circularProgressText.text = "0%"
     }
 
-    private fun hideOverlay() {
-        circularProgressContainer.apply {
-            visibility  = View.GONE  // retire complètement la vue du layout
-            isClickable = false
-
-        }
+    private fun hideOverlay(showPlayer:Boolean = false) {
+        circularProgressContainer.visibility  = View.GONE  // retire complètement la vue du layout
+        playerBar.visibility = if (showPlayer) View.VISIBLE else View.GONE
     }
 
     private fun mixAudioFilesWithFade(

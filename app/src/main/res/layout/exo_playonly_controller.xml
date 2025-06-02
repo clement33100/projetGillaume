@@ -11,8 +11,10 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:background="@null"
+        android:src="@drawable/exo_play_pause_selector"
         android:contentDescription="@string/exo_controls_play_pause_description"
-        android:src="@drawable/exo_play_pause_selector" />
+        app:tint="@color/exo_green"
+         />
 
     <!-- barre de progression fine (facultatif) -->
     <androidx.media3.ui.DefaultTimeBar
