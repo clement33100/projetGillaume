@@ -30,5 +30,5 @@
         app:played_ad_marker_color="@color/green"
         app:played_color="@color/green"
         app:scrubber_color="@color/green"
-        app:unplayed_color="@color/light_green" />
+        app:unplayed_color="#B2E9D3" />
 </LinearLayout>

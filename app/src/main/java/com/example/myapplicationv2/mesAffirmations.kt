@@ -52,8 +52,8 @@ class mesAffirmations : Base() {  // Hérite de Base au lieu de AppCompatActivit
 
         // 4) Texte + span « Clique ici »
         textView.text = getString(R.string.lien_texte)
-        val start = textView.text.indexOf("Clique")
-        val end   = start + "Clique ici".length
+        val start = textView.text.indexOf("en cliquant")
+        val end   = start + "en cliquant ici".length
         val ss = SpannableString(textView.text)
         ss.setSpan(UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         ss.setSpan(
