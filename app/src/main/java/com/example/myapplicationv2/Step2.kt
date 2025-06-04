@@ -407,7 +407,7 @@ class Step2 : Base() {
      * Génère un fichier audio TTS pour un texte spécifique sans ajouter le nom.
      */
     private fun textToSpeech(text: String, index: Int, voiceId: String) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+        val apiKey = BuildConfig.ELEVENLABS_API_KEY
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
         val audioDir = File(basePath)
@@ -476,75 +476,5 @@ class Step2 : Base() {
         })
     }
 
-    /**
-     * Génère un fichier audio TTS pour une intention spécifique sans ajouter le nom.
-     */
-    private fun textToSpeechIntention(text: String, index: Int, voiceId: String) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
-        val client = OkHttpClient()
-        val basePath = filesDir.absolutePath + "/audio/"
-        val audioDir = File(basePath)
-        if (!audioDir.exists()) {
-            audioDir.mkdirs()
-        }
 
-        val generatedFilePath = "$basePath/voice_$index.mp3"
-        generateFiles.add(generatedFilePath)
-
-        val fullText = "$text."
-
-        Log.d("test1234", "textToSpeech: $fullText")
-        Log.i("test1234", "textToSpeech: $fullText")
-
-        val bodyJson = JSONObject().apply {
-            put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5")
-            put("language_code", "fr")
-            put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
-                put("similarity_boost", 0.75)
-            })
-        }
-
-        val requestBody = RequestBody.create(
-            "application/json; charset=utf-8".toMediaType(),
-            bodyJson.toString()
-        )
-
-        val request = Request.Builder()
-            .url("https://api.elevenlabs.io/v1/text-to-speech/$voiceId")
-            .addHeader("Content-Type", "application/json")
-            .addHeader("xi-api-key", apiKey)
-            .post(requestBody)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("testApi", "Erreur lors de l'appel API : ${e.message}")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body
-                if (responseBody != null) {
-                    val audioFile = File(generatedFilePath)
-                    try {
-                        val outputStream = FileOutputStream(audioFile)
-                        outputStream.write(responseBody.bytes())
-                        outputStream.close()
-
-                        Log.d("testApi123", "Fichier audio sauvegardé à : ${audioFile.absolutePath}")
-
-                        runOnUiThread {
-                            Toast.makeText(this@Step2, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
-                        }
-
-                    } catch (e: IOException) {
-                        Log.e("testApi", "Erreur lors de la sauvegarde de l'audio : ${e.message}")
-                    }
-                } else {
-                    Log.d("testApi", "Le corps de la réponse est null")
-                }
-            }
-        })
-    }
 }

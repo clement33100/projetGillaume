@@ -248,7 +248,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         voiceId: String,
         userTexts: ArrayList<String>?
     ) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplace avec ta clé API
+        val apiKey = BuildConfig.ELEVENLABS_API_KEY // Remplace avec ta clé API
 
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"

@@ -18,13 +18,20 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        getByName("debug") {
+            buildConfigField("String", "ELEVENLABS_API_KEY", "\"${property("ELEVENLABS_API_KEY")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_FEMME", "\"${project.property("ELEVENLABS_API_KEY_FEMME")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_HOMME", "\"${project.property("ELEVENLABS_API_KEY_HOMME")}\"")
+        }
+        getByName("release") {
+            buildConfigField("String", "ELEVENLABS_API_KEY", "\"${property("ELEVENLABS_API_KEY")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_FEMME", "\"${project.property("ELEVENLABS_API_KEY_FEMME")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_HOMME", "\"${project.property("ELEVENLABS_API_KEY_HOMME")}\"")
         }
     }
 

@@ -79,7 +79,7 @@ class Etape2Voix : Base() {  // Hérite de Base
 
         btn_VoiceFemme.setOnClickListener {
             setTextInfo(btn_VoiceFemme.text.toString(), "$basePath/voiceFemale1.mp3")
-            currentApiKey = "hGwGBgvO4Leffvcjs2vm"
+            currentApiKey = BuildConfig.ELEVENLABS_API_KEY_FEMME
             /*setViewVisibilityGone(scrollview_FemmeVoice)
             setViewVisibilityGone(scrollview_HommeVoice)*/
             playAudioFromRaw(R.raw.voixfemme1)
@@ -96,7 +96,7 @@ class Etape2Voix : Base() {  // Hérite de Base
 
         btn_VoiceHomme.setOnClickListener {
             setTextInfo(btn_VoiceHomme.text.toString(), "$basePath/voiceMale1.mp3")
-            currentApiKey = "fEvKi2irqAeR3H9fvTgO"
+            currentApiKey = BuildConfig.ELEVENLABS_API_KEY_HOMME
             /*setViewVisibilityGone(scrollview_HommeVoice)
             setViewVisibilityGone(scrollview_FemmeVoice)*/
             playAudioFromRaw(R.raw.voixhomme1)

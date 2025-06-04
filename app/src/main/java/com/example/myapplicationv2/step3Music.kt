@@ -500,8 +500,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
      * Texte à la synthèse vocale via l'API ElevenLabs.
      */
     private fun textToSpeech(text: String, index: Int, voiceId: String, userTexts: ArrayList<String>?) {
-        val apiKey = "sk_1e85a97e6cdd33e449f8578f3fa7152594bdab061b0649b7" // Remplacez avec votre clé API
-
+        val apiKey = BuildConfig.ELEVENLABS_API_KEY
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
         val audioDir = File(basePath)
