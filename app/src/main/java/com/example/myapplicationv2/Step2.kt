@@ -9,6 +9,7 @@ import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.text.Html
+import android.text.InputFilter
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -103,8 +104,9 @@ class Step2 : Base() {
         val title = formatHtmlText("<b>Conseils Pratiques</b>", 0.95f)
         val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.75f)
         val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.75f)
-        val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
-        val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
+        val advice3 = formatHtmlText("Écris sous la forme : <b>«Moi, [ton Prénom], je...»</b>", 0.75f)
+        val advice4 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
+        val advice5 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
 
         // Dans votre méthode onCreate, après avoir récupéré vos vues
         val rootView = findViewById<View>(R.id.drawer_layout)  // Vue racine globale
@@ -212,7 +214,7 @@ class Step2 : Base() {
 
         titleStep2 = findViewById(R.id.titlestep2)
 
-        val predefinedTexts = listOf("Je \"affirmation 1\"", "Je \"affirmation 2\"")
+        val predefinedTexts = listOf("Affirmation 1", "Affirmation 2")
         predefinedTexts.forEach {
             userTexts.add(it) // On ajoute le texte à userTexts
             addTextView(it, userTexts) // On affiche dans le layout
@@ -232,8 +234,8 @@ class Step2 : Base() {
         buttonOk.setOnClickListener {
             // userTexts est déjà mis à jour grâce aux TextWatcher
             // ─── 1. Vérifier si les deux affirmations de base sont inchangées ───
-            val def1 = "Je \"affirmation 1\""   // valeurs que tu crées au démarrage
-            val def2 = "Je \"affirmation 2\""
+            val def1 = "Affirmation 1"   // valeurs que tu crées au démarrage
+            val def2 = "Affirmation 2"
 
             val base1Unchanged = userTexts.getOrNull(0).isNullOrBlank() || userTexts[0] == def1
             val base2Unchanged = userTexts.getOrNull(1).isNullOrBlank() || userTexts[1] == def2
@@ -278,15 +280,21 @@ class Step2 : Base() {
      * @param apikey Clé API pour le service TTS.
      */
     private fun generateTTSFilesForAllTexts(apikey: String?) {
-        // Dans cet exemple, on ne génère que pour les 2 premiers textes
-        for (index in 0..3) {
-            if (index < userTexts.size) {
-                val text = userTexts[index]
-                if (apikey != null) {
-                    // Appel de textToSpeech sans ajouter le nom
-                    textToSpeech(text, index, apikey)
-                }
+        if (apikey == null) return
+
+        // On définit une regex qui matche exactement "Affirmation " suivi d'un ou plusieurs chiffres
+        val placeholderPattern = Regex("^Affirmation\\s+\\d+$")
+
+        userTexts.forEachIndexed { index, rawText ->
+            val text = rawText.trim()
+            // On ignore si :
+            // 1) le champ est vide
+            // 2) le champ correspond à "Affirmation <nombre>" (ex. "Affirmation 3")
+            if (text.isEmpty() || placeholderPattern.matches(text)) {
+                return@forEachIndexed
             }
+            // Sinon, on génère le TTS
+            textToSpeech(text, index, apikey)
         }
     }
 
@@ -298,7 +306,7 @@ class Step2 : Base() {
         for (i in 0 until container.childCount) {
             val linearLayout = container.getChildAt(i) as LinearLayout
             val editText = linearLayout.getChildAt(0) as? EditText
-            editText?.hint = "Je \"affirmation $count\""
+            editText?.hint = "Affirmation $count"
             count++
         }
         textViewCount = count - 1
@@ -310,7 +318,7 @@ class Step2 : Base() {
     private fun addTextView(text: String, userText: ArrayList<String>) {
         textViewCount++
         val placeholderText = if (text.isEmpty()) {
-            "Je \"affirmation $textViewCount\""
+            "Affirmation $textViewCount"
         } else {
             text
         }
@@ -318,50 +326,71 @@ class Step2 : Base() {
         // Position du texte actuel dans userTexts : c'est le dernier ajouté
         val position = userText.size - 1
 
-        val horizontalContainer = LinearLayout(this)
-        horizontalContainer.orientation = LinearLayout.HORIZONTAL
-        horizontalContainer.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            setMargins(16, 16, 16, 16)
+        val horizontalContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(16, 16, 16, 16) }
         }
 
-        val affirmationEditText = EditText(this)
-        affirmationEditText.hint = placeholderText
-        affirmationEditText.textSize = 24f
-        affirmationEditText.setHintTextColor(Color.parseColor("#808080"))
-        affirmationEditText.setTextColor(Color.parseColor("#333333"))
-        affirmationEditText.setBackgroundResource(R.drawable.rounded_corners)
-        affirmationEditText.setPadding(16, 40, 16, 40)
-        affirmationEditText.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        affirmationEditText.setTypeface(null, Typeface.ITALIC)
+        val affirmationEditText = EditText(this).apply {
+            hint = placeholderText
+            textSize = 24f
+            setHintTextColor(Color.parseColor("#808080"))
+            setTextColor(Color.parseColor("#333333"))
+            setBackgroundResource(R.drawable.rounded_corners)
+            setPadding(16, 40, 16, 40)
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
+            setTypeface(null, Typeface.ITALIC)
 
-        // Ajout des options IME pour afficher le bouton "OK" et fermer le clavier
-        affirmationEditText.imeOptions = EditorInfo.IME_ACTION_DONE
-        affirmationEditText.inputType = InputType.TYPE_CLASS_TEXT
-        affirmationEditText.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, 0)
-                true
-            } else {
-                false
+            // ── Limite à 177 caractères, avec toast en cas de dépassement ──
+            val maxChars = 177
+            filters = arrayOf(object : InputFilter {
+                override fun filter(
+                    source: CharSequence?,
+                    start: Int,
+                    end: Int,
+                    dest: Spanned,
+                    dstart: Int,
+                    dend: Int
+                ): CharSequence? {
+                    val currentLength = dest.length
+                    val replacingLength = dend - dstart
+                    val newChunkLength = end - start
+                    val resultingLength = currentLength - replacingLength + newChunkLength
+
+                    return if (resultingLength > maxChars) {
+                        // Bloquer le reste et afficher le Toast
+                        Toast.makeText(
+                            this@Step2,
+                            "Oups, ton affirmation est trop longue\nLimite : 177 caractères (≈ 25–35 mots)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        ""  // on ne laisse rien passer au-delà de 177 caractères
+                    } else {
+                        null  // on autorise la saisie
+                    }
+                }
+            })
+
+            // Options IME pour bouton "OK"
+            imeOptions = EditorInfo.IME_ACTION_DONE
+            inputType = InputType.TYPE_CLASS_TEXT
+            setOnEditorActionListener { v, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    true
+                } else {
+                    false
+                }
             }
         }
-
-        val layoutParams = LinearLayout.LayoutParams(
-            0,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1f
-        )
-        layoutParams.setMargins(0, 30, 0, 0)
-        affirmationEditText.layoutParams = layoutParams
 
         // Mettre à jour le style du texte et la liste userTexts en temps réel
         affirmationEditText.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
                     affirmationEditText.setTypeface(null, Typeface.NORMAL)
@@ -369,39 +398,44 @@ class Step2 : Base() {
                     affirmationEditText.setTypeface(null, Typeface.ITALIC)
                 }
             }
-
             override fun afterTextChanged(s: android.text.Editable?) {
                 // Met à jour userTexts à chaque changement
                 userText[position] = s.toString()
             }
         })
 
-        val deleteButton = ImageButton(this)
-        deleteButton.setImageResource(R.drawable.croix_jaune_fusion)
-        deleteButton.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            setMargins(16, 30, 0, 0)
-        }
-        deleteButton.setBackgroundColor(Color.TRANSPARENT)
-
-        deleteButton.setOnClickListener {
-// Récupère l'index de horizontalContainer dans le conteneur parent
-            val pos = container.indexOfChild(horizontalContainer)
-            if (pos != -1 && pos < userText.size) {
-                userText.removeAt(pos)
-                container.removeView(horizontalContainer)
-                updateTextNumbers()
-            } else {
-                Log.e("Error", "Position invalide pour la suppression : $pos")
+        val deleteButton = ImageButton(this).apply {
+            setImageResource(R.drawable.croix_jaune_fusion)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(16, 30, 0, 0) }
+            setBackgroundColor(Color.TRANSPARENT)
+            setOnClickListener {
+                val pos = container.indexOfChild(horizontalContainer)
+                if (pos != -1 && pos < userText.size) {
+                    userText.removeAt(pos)
+                    container.removeView(horizontalContainer)
+                    updateTextNumbers()
+                } else {
+                    Log.e("Error", "Position invalide pour la suppression : $pos")
+                }
             }
         }
+
+        // Mise en place des LayoutParams pour l’EditText
+        affirmationEditText.layoutParams = LinearLayout.LayoutParams(
+            0,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1f
+        ).apply { setMargins(0, 30, 0, 0) }
 
         horizontalContainer.addView(affirmationEditText)
         horizontalContainer.addView(deleteButton)
         container.addView(horizontalContainer)
     }
+
+
 
     /**
      * Génère un fichier audio TTS pour un texte spécifique sans ajouter le nom.

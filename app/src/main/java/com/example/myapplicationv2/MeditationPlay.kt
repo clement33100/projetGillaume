@@ -191,6 +191,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 Log.e("MeditationPlay", "Erreur lors de la copie : ${e.message}")
                 //Toast.makeText(this, "Erreur lors de la copie du fichier.", Toast.LENGTH_SHORT).show()
             }
+            stopAllAudio()        // ← on coupe la musique avant la navigation
             startActivity(intent)
         }
 
@@ -397,7 +398,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         /* ───────────────────── Flux MUSIQUE (fade-in / fade-out) ───────────────────── */
         val musicFilter = """
-        [1:a]volume=0.07,
+        [1:a]volume=-9dB,
              atrim=duration=$loopedMusicDuration,
              asetpts=PTS-STARTPTS[music_cut];
         [music_cut]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,
@@ -624,9 +625,16 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
     override fun onPause() {
         super.onPause()
-        stopAllAudio()
     }
-
+    override fun onBackPressed() {
+        // Avant de quitter l'activité, on arrête la lecture
+        stopAllAudio()
+        super.onBackPressed()
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        stopAllAudio()
+        return super.onSupportNavigateUp()
+    }
     override fun onDestroy() {
         super.onDestroy()
         stopAllAudio()

@@ -1,8 +1,6 @@
 package com.example.myapplicationv2
 
-import android.app.DownloadManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
@@ -10,35 +8,28 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.media3.common.MediaItem
-import androidx.media3.common.PlaybackException
-import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import java.io.File
 import java.io.IOException
 
-class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCompatActivity
+class ManageAffirmationActivity : Base() {
 
     private lateinit var filePath: String
-    private var mediaPlayer: MediaPlayer? = null
-    private var isPlaying = false
-    private lateinit var playPauseButton: ImageButton
-    private lateinit var progressBar: ProgressBar
-    private val handler = android.os.Handler()
+
+    // 1. Champ ExoPlayer
     private var exoPlayer: ExoPlayer? = null
+
     private lateinit var downloadButton: Button
     private lateinit var renameButton: Button
     private lateinit var deleteButton: Button
@@ -46,7 +37,7 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
     private lateinit var fileNameTextView: TextView
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_manage_affirmation  // Fournit le layout spécifique à cette activité
+        return R.layout.activity_manage_affirmation
     }
 
     @OptIn(UnstableApi::class)
@@ -54,12 +45,10 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
-
         WindowCompat.getInsetsController(window, window.decorView)?.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
-        // Configuration des Insets UI
+        // Gestion des Insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(
@@ -71,82 +60,45 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
             insets
         }
 
-        // Initialisation des éléments UI
-        fileNameTextView = findViewById(R.id.fileNameTextView)
-        //playPauseButton = findViewById(R.id.imageButtonPauseManageAffirmation)
-        //progressBar = findViewById(R.id.progressBarManageAffirmation)
-
-        downloadButton = findViewById(R.id.downloadButton)
-        renameButton = findViewById(R.id.renameButton)
-        deleteButton = findViewById(R.id.deleteButton)
-        backButton = findViewById(R.id.backButton)
-
-        // Récupérer le chemin du fichier depuis l'intent
+        // Récupérer le chemin du fichier depuis l’intent
         filePath = intent.getStringExtra("filePath") ?: run {
             Toast.makeText(this, "Chemin du fichier non trouvé.", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        val file = File(filePath)
+        // Initialisation des vues
+        fileNameTextView = findViewById(R.id.fileNameTextView)
+        downloadButton = findViewById(R.id.downloadButton)
+        renameButton = findViewById(R.id.renameButton)
+        deleteButton = findViewById(R.id.deleteButton)
+        backButton = findViewById(R.id.backButton)
 
+        // Afficher le nom du fichier sans extension
+        fileNameTextView.text = File(filePath).nameWithoutExtension
 
-
-
-
-
-        // Afficher le nom du fichier
-        fileNameTextView.text = file.nameWithoutExtension
-        /*
-        // Initialiser le MediaPlayer mais ne pas démarrer la musique
-        if (file.exists()) {
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(file.absolutePath)
-                prepare()
-                progressBar.max = duration / 1000 // Configurer la ProgressBar en fonction de la durée
-            }
-        } else {
-            Toast.makeText(this, "Fichier introuvable.", Toast.LENGTH_SHORT).show()
-        }*/
-
-
-
-
-        // 2. UI de base : titre
-        findViewById<TextView>(R.id.fileNameTextView).text =
-            File(filePath).nameWithoutExtension
-
-// 3. Préparation d’ExoPlayer
+        // ─── 2. Préparer ExoPlayer ───
         val playerView = findViewById<PlayerView>(R.id.player_view2).apply {
             useController = true
             controllerShowTimeoutMs = 0
             showController()
             bringToFront()
-            player = exoPlayer
+            // À ce stade, exoPlayer est null, on l’assignera ci-dessous
         }
 
-
-        exoPlayer = ExoPlayer.Builder(this).build().also { p ->
-            playerView.player = p
-            p.setMediaItem(MediaItem.fromUri(Uri.fromFile(File(filePath))))
-            p.prepare()         // BUFFERING → READY
+        exoPlayer = ExoPlayer.Builder(this).build().also { player ->
+            playerView.player = player
+            // On charge le fichier local dans ExoPlayer
+            player.setMediaItem(MediaItem.fromUri(Uri.fromFile(File(filePath))))
+            player.prepare()   // BUFFERING → READY
+            player.playWhenReady = true
         }
 
-
-
-
-        // Bouton pour jouer ou mettre en pause le fichier
-        /*playPauseButton.setOnClickListener {
-            if (isPlaying) {
-                pauseMusic()
-            } else {
-                playMusic()
-            }
-        }*/
-
-        // Bouton pour télécharger le fichier
+        // ─── 3. Download Button ───
         downloadButton.setOnClickListener {
-            val fileToDownload = File(filePath) // Utiliser le chemin mis à jour
+            // Avant toute navigation ou autre action, on ne coupe pas la lecture.
+            // On ne fait rien ici : Télécharger ne quitte pas l’écran.
+            val fileToDownload = File(filePath)
             if (fileToDownload.exists()) {
                 downloadFile(fileToDownload)
             } else {
@@ -154,98 +106,99 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
             }
         }
 
-        backButton.setOnClickListener {
-            val intent = Intent(this, mesAffirmations::class.java)
-            startActivity(intent)
+        // ─── 4. Renommer ───
+        renameButton.setOnClickListener {
+            // Comme on reste sur la même activité pour renommer, pas besoin d’arrêter la musique ici
+            showRenameDialog(File(filePath))
         }
 
-        // Bouton pour supprimer le fichier
+        // ─── 5. Supprimer ───
         deleteButton.setOnClickListener {
+            // Afficher la boîte de confirmation
             val alertDialog = android.app.AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.dialog_confirmation, null)
             alertDialog.setView(dialogView)
 
-            // Créer l'AlertDialog avec un fond personnalisé
-            val alert = alertDialog.create()
-            alert.window?.setBackgroundDrawableResource(R.drawable.rounded_background) // Appliquer le fond arrondi
+            val alert = alertDialog.create().apply {
+                window?.setBackgroundDrawableResource(R.drawable.rounded_background)
+            }
             alert.show()
 
-            // Bouton "Confirmer"
-            dialogView.findViewById<Button>(R.id.confirmButton)?.apply {
-                setOnClickListener {
-                    val deleted = file.delete()
-                    if (deleted) {
-                        Toast.makeText(this@ManageAffirmationActivity, "${file.name} supprimé.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@ManageAffirmationActivity, mesAffirmationsDetails::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this@ManageAffirmationActivity, "Erreur lors de la suppression.", Toast.LENGTH_SHORT).show()
-                    }
-                    alert.dismiss()
+            // Bouton Confirmer dans le dialogue
+            dialogView.findViewById<Button>(R.id.confirmButton)?.setOnClickListener {
+                val file = File(filePath)
+                val deleted = file.delete()
+                if (deleted) {
+                    Toast.makeText(this, "${file.name} supprimé.", Toast.LENGTH_SHORT).show()
+                    // → Avant de quitter pour retourner à mesAffirmationsDetails, on coupe la lecture
+                    stopAndReleasePlayer()
+                    val intent = Intent(this, mesAffirmationsDetails::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Erreur lors de la suppression.", Toast.LENGTH_SHORT).show()
                 }
+                alert.dismiss()
             }
 
-
+            // Vérification permission écriture (Android < Q)
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1001)
             }
 
-
-            // Bouton "Annuler"
-            dialogView.findViewById<Button>(R.id.cancelButton)?.apply {
-                setOnClickListener {
-                    alert.dismiss()
-                }
+            // Bouton Annuler dans le dialogue
+            dialogView.findViewById<Button>(R.id.cancelButton)?.setOnClickListener {
+                alert.dismiss()
             }
         }
 
-        // Bouton pour renommer le fichier
-        renameButton.setOnClickListener {
-            showRenameDialog(file)
+        // ─── 6. Bouton Retour (navigation interne) ───
+        backButton.setOnClickListener {
+            // Avant de quitter cet écran, on coupe la musique
+            stopAndReleasePlayer()
+            val intent = Intent(this, mesAffirmationsDetails::class.java)
+            startActivity(intent)
+            finish()
         }
-
     }
 
+    /**
+     * Télécharge le fichier audio dans le dossier Téléchargements
+     */
     private fun downloadFile(file: File) {
         // Vérifier si le stockage externe est disponible
-        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
             Toast.makeText(this, "Stockage externe non disponible.", Toast.LENGTH_SHORT).show()
             return
         }
 
         try {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                // Pour Android Q et supérieur, utiliser MediaStore pour enregistrer dans le dossier Downloads
-                // Vous pouvez modifier RELATIVE_PATH pour forcer "Téléchargements" si nécessaire.
+                // Android Q+ : MediaStore
                 val contentValues = android.content.ContentValues().apply {
                     put(android.provider.MediaStore.Downloads.DISPLAY_NAME, file.name)
                     put(android.provider.MediaStore.Downloads.MIME_TYPE, "audio/mpeg")
-                    // Utilisez "Download" (ou "Téléchargements" si vous préférez) pour le chemin relatif.
                     put(android.provider.MediaStore.Downloads.RELATIVE_PATH, "Download")
                 }
                 val resolver = contentResolver
-                // Utiliser la collection principale pour le stockage externe
                 val downloadsUri = android.provider.MediaStore.Downloads.getContentUri(android.provider.MediaStore.VOLUME_EXTERNAL_PRIMARY)
                 val uri = resolver.insert(downloadsUri, contentValues)
                 if (uri != null) {
-                    resolver.openOutputStream(uri)?.use { outputStream ->
-                        file.inputStream().use { inputStream ->
-                            inputStream.copyTo(outputStream)
+                    resolver.openOutputStream(uri)?.use { output ->
+                        file.inputStream().use { input ->
+                            input.copyTo(output)
                         }
                     }
-                    Toast.makeText(this, "Fichier téléchargé dans le dossier Téléchargements.", Toast.LENGTH_LONG).show()
-                    // Vous pouvez ici ajouter une notification renvoyant à ce fichier si besoin.
+                    Toast.makeText(this, "Fichier téléchargé dans Téléchargements.", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Erreur lors de l'insertion dans MediaStore.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                // Pour les versions antérieures à Android Q, utiliser le répertoire public "Download"
+                // Android < Q : copie manuelle dans /Download
                 val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 val destFile = File(downloadsDir, file.name)
                 file.copyTo(destFile, overwrite = true)
-                Toast.makeText(this, "Fichier téléchargé dans ${destFile.absolutePath}", Toast.LENGTH_LONG).show()
-                // Pour ouvrir le fichier avec FileProvider, assurez-vous que FileProvider est bien configuré dans votre manifeste.
+                Toast.makeText(this, "Fichier téléchargé : ${destFile.absolutePath}", Toast.LENGTH_LONG).show()
             }
         } catch (e: IOException) {
             Toast.makeText(this, "Erreur lors du téléchargement : ${e.message}", Toast.LENGTH_SHORT).show()
@@ -253,35 +206,9 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
         }
     }
 
-
-
-    /*private fun playMusic() {
-        mediaPlayer?.let {
-            it.start()
-            isPlaying = true
-            playPauseButton.setImageResource(R.drawable.imgunpause) // Changer l'icône en pause
-            updateProgressBar()
-        }
-    }*/
-
-    /*private fun pauseMusic() {
-        mediaPlayer?.let {
-            it.pause()
-            isPlaying = false
-            playPauseButton.setImageResource(R.drawable.imgpause) // Changer l'icône en lecture
-        }
-    }*/
-
-    /*private fun updateProgressBar() {
-        mediaPlayer?.let {
-            progressBar.progress = it.currentPosition / 1000
-            if (isPlaying) {
-                handler.postDelayed({ updateProgressBar() }, 1000) // Met à jour toutes les secondes
-            }
-        }
-    }*/
-
-
+    /**
+     * Affiche une boîte de dialogue pour renommer le fichier.
+     */
     private fun showRenameDialog(file: File) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_rename_file, null)
         val editText = dialogView.findViewById<EditText>(R.id.renameEditText)
@@ -290,31 +217,29 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
         val confirmButton = dialogView.findViewById<Button>(R.id.confirmButton)
         val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
 
-        // Créez et configurez la boîte de dialogue
         val alertDialog = android.app.AlertDialog.Builder(this)
             .setView(dialogView)
-            .create()
-        alertDialog.window?.setBackgroundDrawableResource(R.drawable.rounded_background)
+            .create().apply {
+                window?.setBackgroundDrawableResource(R.drawable.rounded_background)
+            }
 
-        // Action pour le bouton "Renommer"
         confirmButton.setOnClickListener {
-            val newName = editText.text.toString()
+            val newName = editText.text.toString().trim()
             if (newName.isNotEmpty()) {
                 val newFile = File(file.parent, "$newName.mp3")
                 if (file.renameTo(newFile)) {
                     Toast.makeText(this, "Fichier renommé en $newName.mp3", Toast.LENGTH_SHORT).show()
-                    filePath = newFile.absolutePath // Met à jour le chemin du fichier
-                    findViewById<TextView>(R.id.fileNameTextView).text = newFile.nameWithoutExtension
-                    alertDialog.dismiss()
+                    filePath = newFile.absolutePath
+                    fileNameTextView.text = newFile.nameWithoutExtension
                 } else {
                     Toast.makeText(this, "Erreur lors du renommage.", Toast.LENGTH_SHORT).show()
                 }
+                alertDialog.dismiss()
             } else {
                 Toast.makeText(this, "Le nom ne peut pas être vide.", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Action pour le bouton "Annuler"
         cancelButton.setOnClickListener {
             alertDialog.dismiss()
         }
@@ -322,17 +247,44 @@ class ManageAffirmationActivity : Base() {  // Hérite de Base au lieu de AppCom
         alertDialog.show()
     }
 
+    /**
+     * Coupe et libère ExoPlayer.
+     */
+    private fun stopAndReleasePlayer() {
+        exoPlayer?.let { player ->
+            player.stop()
+            player.release()
+        }
+        exoPlayer = null
+    }
+
+    /**
+     * Lorsque l’utilisateur appuie sur BACK physique, on coupe la musique puis on revient.
+     */
     override fun onBackPressed() {
-        val intent = Intent(this, mesAffirmationsDetails::class.java)
-        startActivity(intent)
-        finish() // Optionnel, pour retirer cette activité de la pile
+        stopAndReleasePlayer()
         super.onBackPressed()
     }
 
+    /**
+     * Ne jamais arrêter ExoPlayer dans onPause()/onStop() : ainsi la musique continue si l’app passe en arrière-plan ou si
+     * l’écran se verrouille.
+     */
+    override fun onPause() {
+        super.onPause()
+        // → Ne rien faire ici
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // → Ne rien faire ici
+    }
+
+    /**
+     * Avant de détruire l’activité, s’assurer que le player est bien relâché pour éviter les fuites.
+     */
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release()
-        mediaPlayer = null
-        handler.removeCallbacksAndMessages(null) // Supprime les mises à jour restantes
+        stopAndReleasePlayer()
     }
 }
