@@ -104,9 +104,8 @@ class Step2 : Base() {
         val title = formatHtmlText("<b>Conseils Pratiques</b>", 0.95f)
         val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.75f)
         val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.75f)
-        val advice3 = formatHtmlText("Écris sous la forme : <b>«Moi, [ton Prénom], je...»</b>", 0.75f)
-        val advice4 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
-        val advice5 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
+        val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
+        val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
 
         // Dans votre méthode onCreate, après avoir récupéré vos vues
         val rootView = findViewById<View>(R.id.drawer_layout)  // Vue racine globale
@@ -269,7 +268,7 @@ class Step2 : Base() {
                     Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
                 }
             }
-            }
+        }
 
 
     }
@@ -280,21 +279,18 @@ class Step2 : Base() {
      * @param apikey Clé API pour le service TTS.
      */
     private fun generateTTSFilesForAllTexts(apikey: String?) {
-        if (apikey == null) return
-
-        // On définit une regex qui matche exactement "Affirmation " suivi d'un ou plusieurs chiffres
+        // Dans cet exemple, on ne génère que pour les 2 premiers textes
         val placeholderPattern = Regex("^Affirmation\\s+\\d+$")
 
-        userTexts.forEachIndexed { index, rawText ->
-            val text = rawText.trim()
-            // On ignore si :
-            // 1) le champ est vide
-            // 2) le champ correspond à "Affirmation <nombre>" (ex. "Affirmation 3")
-            if (text.isEmpty() || placeholderPattern.matches(text)) {
-                return@forEachIndexed
+
+        for (index in 0..8) {
+            if (index < userTexts.size ) {
+                val text = userTexts[index]
+                if (apikey != null && !placeholderPattern.matches(text)) {
+                    // Appel de textToSpeech sans ajouter le nom
+                    textToSpeech(text, index, apikey)
+                }
             }
-            // Sinon, on génère le TTS
-            textToSpeech(text, index, apikey)
         }
     }
 
@@ -460,11 +456,12 @@ class Step2 : Base() {
 
         val bodyJson = JSONObject().apply {
             put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5")
-            put("language_code", "fr")
+            put("model_id", "eleven_multilingual_v2")
             put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
-                put("similarity_boost", 0.75)
+                put("stability", 0.5)  // Mettre une valeur entre 0.0 et 1.0
+                put("similarity_boost", 0.77)  // Conversion de 77 à 0.77
+                put("style_exaggeration", 0.07)  // Conversion de 7 à 0.07
+                put("speaker_boost", true)  // Laisser speaker_boost activé
             })
         }
 
