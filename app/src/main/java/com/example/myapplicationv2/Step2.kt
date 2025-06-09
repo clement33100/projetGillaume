@@ -279,17 +279,16 @@ class Step2 : Base() {
      * @param apikey Clé API pour le service TTS.
      */
     private fun generateTTSFilesForAllTexts(apikey: String?) {
-        // Dans cet exemple, on ne génère que pour les 2 premiers textes
         val placeholderPattern = Regex("^Affirmation\\s+\\d+$")
 
-
-        for (index in 0..8) {
-            if (index < userTexts.size ) {
-                val text = userTexts[index]
-                if (apikey != null && !placeholderPattern.matches(text)) {
-                    // Appel de textToSpeech sans ajouter le nom
+        for ((index, text) in userTexts.withIndex()) {
+            // Vérifie si le texte n'est pas vide ET ne correspond pas au placeholder par défaut
+            if (!text.isNullOrBlank() && !placeholderPattern.matches(text)) {
+                if (apikey != null) {
                     textToSpeech(text, index, apikey)
                 }
+            } else {
+                Log.d("TextSkipped", "Affirmation ignorée : '$text'")
             }
         }
     }

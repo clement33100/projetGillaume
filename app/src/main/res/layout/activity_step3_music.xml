@@ -356,12 +356,12 @@
             <!-- Texte de sélection de la musique -->
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-50dp"
+                android:layout_width="199dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="-10dp"
                 android:layout_marginTop="20dp"
                 android:padding="2dp"
-                android:text="clic sur la musique \n de ton choix"
+                android:text="clic sur la musique de ton choix"
                 android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="19sp"
