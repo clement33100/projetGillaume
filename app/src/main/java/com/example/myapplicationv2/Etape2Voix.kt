@@ -1,7 +1,11 @@
 package com.example.myapplicationv2
 
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -114,6 +118,13 @@ class Etape2Voix : Base() {  // Hérite de Base
         val intention = intent.getBooleanExtra("intention", false)
 
         btn_ok.setOnClickListener {
+
+            if (!isOnline()) {
+                Toast.makeText(this@Etape2Voix, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG
+                ).show()
+                return@setOnClickListener          // ← on ne lance pas l'activité
+            }
+
             if (curentVoice == null) {
                 Toast.makeText(this, "Sélectionner une voix", Toast.LENGTH_SHORT).show()
             } else {
@@ -197,4 +208,22 @@ class Etape2Voix : Base() {  // Hérite de Base
         mediaPlayer?.release()
         mediaPlayer = null
     }
+
+    private fun isOnline(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        // Android M (23) et + : NetworkCapabilities
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = cm.activeNetwork ?: return false
+            val caps = cm.getNetworkCapabilities(network) ?: return false
+            return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                    caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        }
+        // Avant M
+        @Suppress("DEPRECATION")
+        val info = cm.activeNetworkInfo
+        @Suppress("DEPRECATION")
+        return info != null && info.isConnected
+    }
+
 }
