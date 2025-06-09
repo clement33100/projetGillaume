@@ -69,7 +69,7 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
         displayAffirmationFiles(textEmpty,mesaffirmationContour)
 
         btnNewAffirmation.setOnClickListener {
-            val intent = Intent(this, Rules::class.java)
+            val intent = Intent(this, Etape2Voix::class.java)
             startActivity(intent)
         }
 

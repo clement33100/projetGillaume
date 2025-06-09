@@ -71,7 +71,7 @@ class mesAffirmations : Base() {  // Hérite de Base au lieu de AppCompatActivit
         }
 
         // 6) Listeners des boutons
-        btnNew.setOnClickListener { startActivity(Intent(this, Rules::class.java)) }
+        btnNew.setOnClickListener { startActivity(Intent(this, Etape2Voix::class.java)) }
         btnHowItWorks.setOnClickListener { startActivity(Intent(this, hdiw1::class.java)) }
         btnAdvices.setOnClickListener { startActivity(Intent(this, Advices::class.java)) }
         btnAffirmationsDetails.setOnClickListener {
