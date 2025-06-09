@@ -31,49 +31,59 @@
 
         <activity
             android:name=".ManageAffirmationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".mesAffirmationsDetails"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".Rules"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".step3Music"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Step2"
             android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Base"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MeditationPlay"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".Advices"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Step4"
-            android:exported="false" />
-        <activity
-            android:name=".Step5"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".hdiw1"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".mesAffirmations"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Etape2Voix"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".PageAcceuil"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
