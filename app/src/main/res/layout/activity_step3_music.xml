@@ -358,14 +358,13 @@
                 android:id="@+id/textView4"
                 android:layout_width="199dp"
                 android:layout_height="56dp"
-                android:layout_marginStart="-10dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:padding="2dp"
                 android:text="clic sur la musique de ton choix"
                 android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="19sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
@@ -377,7 +376,6 @@
                 android:text="Ton choix :"
                 android:textColor="@color/grey"
                 android:textSize="19sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView4" />
 

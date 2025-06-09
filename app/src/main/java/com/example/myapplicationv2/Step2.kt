@@ -175,6 +175,8 @@ class Step2 : Base() {
             val adviceText = SpannableStringBuilder().apply {
                 append(formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.9f))
                 append("\n\n")
+                append(formatHtmlText("Écris sous la forme :<b> \"Moi, [ton Prénom], je...\"</b>", 0.9f))
+                append("\n\n")
                 append(formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.9f))
                 append("\n\n")
                 append(formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.9f))
@@ -339,8 +341,8 @@ class Step2 : Base() {
             textAlignment = View.TEXT_ALIGNMENT_CENTER
             setTypeface(null, Typeface.ITALIC)
 
-            // ── Limite à 177 caractères, avec toast en cas de dépassement ──
-            val maxChars = 177
+            // ── Limite à 90 caractères, avec toast en cas de dépassement ──
+            val maxChars = 90
             filters = arrayOf(object : InputFilter {
                 override fun filter(
                     source: CharSequence?,
@@ -359,10 +361,10 @@ class Step2 : Base() {
                         // Bloquer le reste et afficher le Toast
                         Toast.makeText(
                             this@Step2,
-                            "Oups, ton affirmation est trop longue\nLimite : 177 caractères (≈ 25–35 mots)",
+                            "Oups, ton affirmation est trop longue\nLimite : 90 caractères (≈ 12–15 mots)",
                             Toast.LENGTH_SHORT
                         ).show()
-                        ""  // on ne laisse rien passer au-delà de 177 caractères
+                        ""  // on ne laisse rien passer au-delà de 90 caractères
                     } else {
                         null  // on autorise la saisie
                     }
