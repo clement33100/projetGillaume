@@ -398,7 +398,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         /* ───────────────────── Flux MUSIQUE (fade-in / fade-out) ───────────────────── */
         val musicFilter = """
-        [1:a]volume=-11dB,
+        [1:a]volume=-13dB,
              atrim=duration=$loopedMusicDuration,
              asetpts=PTS-STARTPTS[music_cut];
         [music_cut]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,

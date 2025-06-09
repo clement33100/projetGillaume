@@ -95,15 +95,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="44dp"
-            android:text="clique sur la voix \n que tu veux"
+            android:text="clic sur la voix \n que tu veux"
             android:textAlignment="center"
             android:textColor="@color/green"
             android:textSize="19sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.012" />
+            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme" />
 
         <Button
             android:id="@+id/btn_ok_step2"

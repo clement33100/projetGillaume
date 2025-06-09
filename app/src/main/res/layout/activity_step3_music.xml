@@ -353,26 +353,33 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <!-- Texte de sélection de la musique -->
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="199dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="22dp"
                 android:padding="2dp"
-                android:text="clic sur la musique de ton choix"
+                android:text="clic sur la musique \n de ton choix"
                 android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="19sp"
+                android:textStyle="bold"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:breakStrategy="simple"
+                android:hyphenationFrequency="none"
+                android:gravity="center"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                app:layout_constraintHorizontal_bias="0.012"/>
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="68dp"
+                android:layout_marginTop="2dp"
                 android:text="Ton choix :"
                 android:textColor="@color/grey"
                 android:textSize="19sp"

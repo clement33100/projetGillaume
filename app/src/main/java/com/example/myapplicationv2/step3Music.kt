@@ -340,9 +340,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
      */
     private fun setTextInfo(text: String, curentSong: String?) {
         val textInfo = findViewById<TextView>(R.id.textView4)
-        // Si le texte dépasse 30 caractères, on prend les 27 premiers et on ajoute "..."
-        val displayText = if (text.length > 30) {
-            text.substring(0, 27) + "..."
+        // Si le texte dépasse 20 caractères, on prend les 17 premiers et on ajoute "..."
+        val displayText = if (text.length > 17) {
+            text.substring(0, 17) + "..."
         } else {
             text
         }
