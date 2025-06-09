@@ -156,7 +156,7 @@ class ManageAffirmationActivity : Base() {
         backButton.setOnClickListener {
             // Avant de quitter cet écran, on coupe la musique
             stopAndReleasePlayer()
-            val intent = Intent(this, mesAffirmationsDetails::class.java)
+            val intent = Intent(this, mesAffirmations::class.java)
             startActivity(intent)
             finish()
         }
