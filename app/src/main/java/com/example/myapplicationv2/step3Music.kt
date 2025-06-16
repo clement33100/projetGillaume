@@ -33,6 +33,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private var mediaPlayer: MediaPlayer? = null
     private val fileList = mutableListOf<Pair<String, String>>()
     private var currentFilePath: String? = null
+    private var selectedSeekBarValue: Int = 0
 
     private var songChoose: String? = null
 
@@ -176,6 +177,20 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val silence = "silence.mp3"
         savedFilePathSilence = copyRawResourceToInternalStorage(R.raw.silence, silence)
 
+        val seekBar = findViewById<SeekBar>(R.id.seekBar)
+        val sliderText = findViewById<TextView>(R.id.sliderValueText)
+
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                selectedSeekBarValue  = progress - 5
+                sliderText.text = selectedSeekBarValue.toString()
+                // Tu peux faire autre chose avec realValue ici
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
         // Configuration des boutons d'écoute pour les musiques Epic
 //        epicMusic1.setOnClickListener{
 //            if (savedFilePathPuissanceinterieure != null) {
@@ -290,8 +305,10 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 val intent = Intent(this, Step4::class.java)
                 intent.putExtra("filePaths", songChoose)
                 intent.putExtra("curentVoice", curentVoice)
+                intent.putExtra("seekBarValue", selectedSeekBarValue)
                 intent.putStringArrayListExtra("userTexts", userTexts)
                 intent.putExtra("intention", intention)
+                Log.d("DEBUG", "Valeur envoyée : $selectedSeekBarValue")
 
                 if (userTextsSplit != null && userTextsSplit.size > 4) {
                     intent.putExtra("curentAPIKey", curentAPIKey)

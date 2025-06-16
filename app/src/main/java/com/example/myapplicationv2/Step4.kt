@@ -84,13 +84,14 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val filePaths = intent.getStringExtra("filePaths")
         val curentVoice = intent.getStringExtra("curentVoice")
         Log.d("test123", "onCreate: $curentVoice")
+        val seekBarValue = intent.getIntExtra("seekBarValue",0)
 
         val userTexts = intent.getStringArrayListExtra("userTexts")
         val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
         val nom = intent.getStringExtra("nom")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
         val intention = intent.getBooleanExtra("intention", false)
-
+        Log.d("DEBUG", "Valeur SeekBar reçue : $seekBarValue")
         if (userTextsSplit != null) {
             for (text in userTextsSplit) {
                 Log.d("test123456", "Received text: $text")
@@ -156,6 +157,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     val intent = Intent(this, MeditationPlay::class.java).apply {
                         putExtra("filePaths", filePaths)
                         putExtra("selectedDuration", selectedDurationInSeconds)
+                        putExtra("seekBarValue",seekBarValue)
                         putExtra("isIntroEnabled", isIntroEnabled)
                         putExtra("curentVoice", curentVoice)
                         putStringArrayListExtra("userTexts", userTexts)
