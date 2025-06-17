@@ -347,7 +347,7 @@
                 android:layout_marginTop="8dp"
                 android:text="0"
                 android:textColor="@color/green"
-                android:textSize="19sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -362,8 +362,9 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="64dp"
-                android:max="10"
-                android:progress="5"
+                android:max="12"
+                android:progress="6"
+                android:thumbOffset="0dp"
                 android:progressDrawable="@drawable/custom_seekbar_track"
                 android:progressTint="@color/green"
                 android:thumb="@drawable/thumb_custom"
@@ -377,7 +378,8 @@
                 android:id="@+id/btn_okmusic"
                 android:layout_width="90dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
                 android:padding="10dp"
                 android:text="ok"
                 android:textSize="19dp"
@@ -412,7 +414,7 @@
                 android:id="@+id/nameSeekbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:text="VOLUME MUSIQUE"
                 android:textColor="@color/grey"
                 android:textSize="19sp"
@@ -420,36 +422,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-            <TextView
-                android:id="@+id/faible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="faible"
-                android:textColor="@color/grey"
-                android:textSize="19sp"
-                app:layout_constraintBottom_toTopOf="@+id/sliderValueText"
-                app:layout_constraintEnd_toStartOf="@+id/seekBar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/seekBar" />
-
-            <TextView
-                android:id="@+id/fort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="fort"
-                android:textColor="@color/grey"
-                android:textSize="19sp"
-                app:layout_constraintBottom_toTopOf="@+id/sliderValueText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/seekBar"
-                app:layout_constraintTop_toTopOf="@+id/seekBar" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -462,6 +434,30 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+            <ImageView
+                android:id="@+id/lVol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/sliderValueText"
+                app:layout_constraintEnd_toStartOf="@+id/seekBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seekBar"
+                app:srcCompat="@drawable/lowvolume" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/sliderValueText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/seekBar"
+                app:layout_constraintTop_toTopOf="@+id/seekBar"
+                app:srcCompat="@drawable/highvolume" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

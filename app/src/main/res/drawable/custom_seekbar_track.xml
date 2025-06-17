@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Partie arrière (fond de la barre) -->
+    <!-- Fond -->
     <item android:id="@android:id/background">
-        <shape>
-            <corners android:radius="50dp" /> <!-- Coins arrondis -->
-            <size android:height="8dp"/>
-            <solid android:color="@color/light_green"/>
-        </shape>
+        <inset android:top="12dp" android:bottom="12dp"> <!-- pour centrer une barre de 8dp sous un thumb de 32dp -->
+            <shape>
+                <corners android:radius="50dp" />
+                <size android:height="8dp"/>
+                <solid android:color="@color/light_green"/>
+            </shape>
+        </inset>
     </item>
 
-    <!-- Partie avant (progression) -->
+    <!-- Barre de progression -->
     <item android:id="@android:id/progress">
-        <clip>
-            <shape>
-                <corners android:radius="50dp" /> <!-- Coins arrondis -->
-                <size android:height="8dp"/>
-                <solid android:color="@color/green"/>
-            </shape>
-        </clip>
+        <inset android:top="12dp" android:bottom="12dp">
+            <clip>
+                <shape>
+                    <corners android:radius="50dp" />
+                    <size android:height="8dp"/>
+                    <solid android:color="@color/green"/>
+                </shape>
+            </clip>
+        </inset>
     </item>
 </layer-list>

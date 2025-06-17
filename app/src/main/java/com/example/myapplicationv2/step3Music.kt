@@ -179,11 +179,19 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         val seekBar = findViewById<SeekBar>(R.id.seekBar)
         val sliderText = findViewById<TextView>(R.id.sliderValueText)
-
+        if (seekBar.progress == 6) { // 6 correspond à la position "0" (0 = milieu)
+            sliderText.text = ""
+        }
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                selectedSeekBarValue  = progress - 5
+                selectedSeekBarValue  = progress - 6
                 sliderText.text = selectedSeekBarValue.toString()
+
+                sliderText.text = when {
+                    selectedSeekBarValue == 0 -> ""
+                    selectedSeekBarValue > 0 -> "+$selectedSeekBarValue"
+                    else -> selectedSeekBarValue.toString()
+                }
                 // Tu peux faire autre chose avec realValue ici
             }
 
