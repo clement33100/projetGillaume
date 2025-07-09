@@ -212,7 +212,10 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val selectedDurationInSeconds = intent.getIntExtra("selectedDuration", 0)
         val currentVoice             = intent.getStringExtra("curentVoice")
         val userTexts                = intent.getStringArrayListExtra("userTexts")?.distinct()?.toCollection(ArrayList())
-
+        val seekBarValue = intent.getIntExtra("seekBarValue", 0)
+        runOnUiThread {
+            Log.d("zzzzzzzzzzz", "runOnUiThread: $seekBarValue")
+        }
         userTexts?.forEach { Log.d("MeditationPlay", "Received text: $it") }
             ?: Log.d("MeditationPlay", "No texts received")
 
@@ -241,7 +244,8 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                         affirmationPaths         = userTexts ?: emptyList(),
                         outputPath               = finalOutputPath,
                         selectedDurationInSeconds = selectedDurationInSeconds,
-                        introPath                = introFilePath
+                        introPath                = introFilePath,
+                        seekBarValue             = seekBarValue
                     ) { mixSuccess ->
                         if (mixSuccess) {
                             runOnUiThread {
@@ -373,6 +377,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         outputPath: String,
         selectedDurationInSeconds: Int,
         introPath: String?,
+        seekBarValue: Int,
         callback: (Boolean) -> Unit
     ) {
         showOverlay()
@@ -392,13 +397,14 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val bowlStartDurationSeconds = getAudioDurationSeconds(bowlStartPath)
         val bowlEndDurationSeconds   = getAudioDurationSeconds(bowlEndPath)
         val loopedMusicDuration      = selectedDurationInSeconds
+        val DBvalue      = -12 + (seekBarValue*2)
 
         val potentialAffirmationCount = selectedDurationInSeconds / AFFIRMATION_DELAY_SECONDS
         val filterComplexBuilder      = StringBuilder()
 
         /* ───────────────────── Flux MUSIQUE (fade-in / fade-out) ───────────────────── */
         val musicFilter = """
-        [1:a]volume=-11dB,
+        [1:a]volume=${DBvalue}dB,
              atrim=duration=$loopedMusicDuration,
              asetpts=PTS-STARTPTS[music_cut];
         [music_cut]afade=t=in:st=0:d=$FADE_IN_DURATION_SECONDS,

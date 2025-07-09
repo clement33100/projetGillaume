@@ -33,6 +33,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private var mediaPlayer: MediaPlayer? = null
     private val fileList = mutableListOf<Pair<String, String>>()
     private var currentFilePath: String? = null
+    private var selectedSeekBarValue: Int = 0
 
     private var songChoose: String? = null
 
@@ -176,6 +177,28 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val silence = "silence.mp3"
         savedFilePathSilence = copyRawResourceToInternalStorage(R.raw.silence, silence)
 
+        val seekBar = findViewById<SeekBar>(R.id.seekBar)
+        val sliderText = findViewById<TextView>(R.id.sliderValueText)
+        if (seekBar.progress == 6) { // 6 correspond à la position "0" (0 = milieu)
+            sliderText.text = ""
+        }
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                selectedSeekBarValue  = progress - 6
+                sliderText.text = selectedSeekBarValue.toString()
+
+                sliderText.text = when {
+                    selectedSeekBarValue == 0 -> ""
+                    selectedSeekBarValue > 0 -> "+$selectedSeekBarValue"
+                    else -> selectedSeekBarValue.toString()
+                }
+                // Tu peux faire autre chose avec realValue ici
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
         // Configuration des boutons d'écoute pour les musiques Epic
 //        epicMusic1.setOnClickListener{
 //            if (savedFilePathPuissanceinterieure != null) {
@@ -290,8 +313,10 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 val intent = Intent(this, Step4::class.java)
                 intent.putExtra("filePaths", songChoose)
                 intent.putExtra("curentVoice", curentVoice)
+                intent.putExtra("seekBarValue", selectedSeekBarValue)
                 intent.putStringArrayListExtra("userTexts", userTexts)
                 intent.putExtra("intention", intention)
+                Log.d("DEBUG", "Valeur envoyée : $selectedSeekBarValue")
 
                 if (userTextsSplit != null && userTextsSplit.size > 4) {
                     intent.putExtra("curentAPIKey", curentAPIKey)
@@ -340,9 +365,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
      */
     private fun setTextInfo(text: String, curentSong: String?) {
         val textInfo = findViewById<TextView>(R.id.textView4)
-        // Si le texte dépasse 30 caractères, on prend les 27 premiers et on ajoute "..."
-        val displayText = if (text.length > 30) {
-            text.substring(0, 27) + "..."
+        // Si le texte dépasse 20 caractères, on prend les 17 premiers et on ajoute "..."
+        val displayText = if (text.length > 17) {
+            text.substring(0, 17) + "..."
         } else {
             text
         }
