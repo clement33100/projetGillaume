@@ -31,7 +31,6 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 1) Posez le layout
