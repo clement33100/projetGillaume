@@ -10,15 +10,15 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 
-class mesAffirmations : Base() {  // Hérite de Base au lieu de AppCompatActivity
+class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de AppCompatActivity
 
     private lateinit var btnNew: Button
     private lateinit var btnMyaffirmations: Button
@@ -26,7 +26,7 @@ class mesAffirmations : Base() {  // Hérite de Base au lieu de AppCompatActivit
     private lateinit var btnAdvices: Button
     private lateinit var btnAffirmationsDetails: Button
 
-    override fun getLayoutId(): Int {
+    fun getLayoutId(): Int {
         return R.layout.activity_mesaffirmations  // Utilisez le layout adapté
     }
 
@@ -44,7 +44,6 @@ class mesAffirmations : Base() {  // Hérite de Base au lieu de AppCompatActivit
 
         // 3) Init des vues
         btnNew = findViewById(R.id.btn_new)
-        btnMyaffirmations = findViewById(R.id.btn_affirmation)
         btnHowItWorks = findViewById(R.id.btn_howitworks)
         btnAdvices = findViewById(R.id.btn_advicesaffirmations)
         btnAffirmationsDetails = findViewById(R.id.btn_affirmation) // si c'est le bon ID

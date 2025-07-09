@@ -248,7 +248,8 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         voiceId: String,
         userTexts: ArrayList<String>?
     ) {
-        val apiKey = BuildConfig.ELEVENLABS_API_KEY // Remplace avec ta clé API
+        val apiKey = BuildConfig.ELEVENLABS_API_KEY
+        Log.d("atere", apiKey.toString())
 
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
@@ -266,12 +267,13 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Créer le corps de la requête en JSON
         val bodyJson = JSONObject().apply {
             put("text", fullText)
-            put("model_id", "eleven_turbo_v2_5") // Use a multilingual model
-            put("language_code", "fr") // Set language code to French
+            put("model_id", "eleven_multilingual_v2") // Modèle multilingue
+            put("language_code", "fr") // Langue en français
             put("voice_settings", JSONObject().apply {
-                put("stability", 0.5)
-                put("similarity_boost", 0.75)
-                // You can adjust these values to fine-tune the accent
+                put("stability", 50) // Stability à 50
+                put("similarity_boost", 77) // Similarity Boost à 77
+                put("style_exaggeration", 7) // Style à 7%
+                put("speaker_boost", true) // Speaker Boost activé
             })
         }
 

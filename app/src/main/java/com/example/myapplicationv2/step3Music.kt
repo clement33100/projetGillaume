@@ -110,7 +110,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         btn_silence = findViewById(R.id.btn_silence) // Initialisation du bouton Silence
 
 //        scrollview_Epic = findViewById<ScrollView>(R.id.scrollViewEpic)
-          scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
+        scrollview_FrequenceVibratoire = findViewById<ScrollView>(R.id.scrollViewFrequenceVibratoire)
 //        epicMusic1 = findViewById<ImageButton>(R.id.listenepic1)
 //        epicMusic2 = findViewById<ImageButton>(R.id.listenepic2)
 //        epicMusic3 = findViewById<ImageButton>(R.id.listenepic3)

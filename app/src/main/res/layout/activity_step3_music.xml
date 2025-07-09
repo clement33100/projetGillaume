@@ -44,7 +44,7 @@
                 android:layout_marginTop="36dp"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
-                android:text="Choisis ta Musique"
+                android:text="@string/choisis_ta_musique"
                 android:textAlignment="center"
                 android:textColor="@color/grey"
                 android:textSize="27sp"
@@ -79,7 +79,7 @@
                         android:layout_width="316dp"
                         android:layout_height="74dp"
                         android:backgroundTint="@color/green"
-                        android:text="Upload MP3"
+                        android:text="@string/upload_mp3"
                         android:textSize="24dp" />
 
                     <LinearLayout
@@ -98,7 +98,7 @@
                 android:layout_height="74dp"
                 android:layout_marginTop="150dp"
                 android:backgroundTint="@color/green"
-                android:text="Musique"
+                android:text="@string/musique"
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +135,7 @@
                             android:layout_marginTop="30dp"
                             android:backgroundTint="@color/yellow"
                             android:padding="10dp"
-                            android:text="Voyage Intérieur"
+                            android:text="@string/voyage_interieur"
                             android:textColor="@color/grey"
                             android:textSize="19dp" />
 
@@ -164,7 +164,7 @@
                             android:layout_marginTop="0dp"
                             android:backgroundTint="@color/yellow"
                             android:padding="10dp"
-                            android:text="Onde Thêta"
+                            android:text="@string/onde_theta"
                             android:textColor="@color/grey"
                             android:textSize="19dp" />
 
@@ -193,7 +193,7 @@
                             android:layout_marginTop="30dp"
                             android:backgroundTint="@color/yellow"
                             android:padding="10dp"
-                            android:text="Expansion"
+                            android:text="@string/expansion"
                             android:textColor="@color/grey"
                             android:textSize="19dp" />
 
@@ -319,7 +319,7 @@
                 android:layout_height="74dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/green"
-                android:text="Silence"
+                android:text="@string/silence"
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
@@ -347,7 +347,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="50dp"
                 android:padding="10dp"
-                android:text="ok"
+                android:text="@string/ok_button"
                 android:textSize="19dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -361,7 +361,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:padding="2dp"
-                android:text="clic sur la musique de ton choix"
+                android:text="@string/clic_sur_musique"
                 android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="19sp"
@@ -373,7 +373,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="68dp"
-                android:text="Ton choix :"
+                android:text="@string/ton_choix"
                 android:textColor="@color/grey"
                 android:textSize="19sp"
                 app:layout_constraintStart_toStartOf="parent"

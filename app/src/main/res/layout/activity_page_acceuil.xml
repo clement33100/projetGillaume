@@ -20,7 +20,7 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Tes Mots, Ta Transformation, Ton Histoire "
+        android:text="@string/txt_page_acceuil"
         android:textColor="@color/grey"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"

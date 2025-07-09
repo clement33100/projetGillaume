@@ -29,7 +29,7 @@
             android:layout_marginTop="36dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
-            android:text="COMMENT ÇA MARCHE ?"
+            android:text="@string/hdiw_title"
             android:gravity="center"
             android:textSize="27sp"
             android:textStyle="bold"
@@ -113,7 +113,7 @@
                     android:layout_width="316dp"
                     android:layout_height="74dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Créer nouveau"
+                    android:text="@string/create_new"
                     android:textSize="24dp" />
 
                 <!-- Espace (Optionnel) -->
@@ -127,7 +127,7 @@
                     android:id="@+id/btnMenu"
                     android:layout_width="316dp"
                     android:layout_height="74dp"
-                    android:text="Menu Principal"
+                    android:text="@string/main_menu"
                     android:textSize="24dp" />
             </LinearLayout>
         </ScrollView>

@@ -86,7 +86,7 @@
                 android:layout_width="316dp"
                 android:layout_height="74dp"
                 android:layout_marginTop="0dp"
-                android:text="Télécharger"
+                android:text="@string/download"
                 android:textColor="@color/white"
                 android:textSize="24dp" />
 
@@ -96,7 +96,7 @@
                 android:layout_width="316dp"
                 android:layout_height="74dp"
                 android:layout_marginTop="30dp"
-                android:text="Renommer"
+                android:text="@string/rename"
                 android:textSize="24dp" />
 
             <!-- Bouton Supprimer -->
@@ -106,7 +106,7 @@
                 android:layout_height="74dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/red"
-                android:text="Supprimer"
+                android:text="@string/delete"
                 android:textColor="@color/white"
                 android:textSize="24dp"
                 android:textStyle="bold" />
@@ -117,7 +117,7 @@
                 android:layout_width="316dp"
                 android:layout_height="74dp"
                 android:layout_marginTop="50dp"
-                android:text="Menu principal"
+                android:text="@string/main_menu"
                 android:textSize="24dp" />
         </LinearLayout>
 

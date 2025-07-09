@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyAffirmPlay</string>
+    <string name="select_language">Select Language</string>
+    <string name="language_fr">French</string>
+    <string name="language_eng">English</string>
+    <string name="language_esp">Spanish</string>
+    <string name="open">Open Drawer</string>
+    <string name="close">Close Drawer</string>
+    <string name="menu">Menu</string>
+    <string name="exo_controls_play_pause_description">Play / Pause</string>
+    <string name="advices_text">
+        <![CDATA[
+        <b>1/ Use the present tense</b> as if it were already a reality. "I am confident." <br/>
+        <b>2/ Be positive</b> by focusing on what you want, not on what you want to avoid. <br/>
+        <b>3/ Choose words that are meaningful</b> to you. <br/>
+        <b>4/ Be clear.</b> <br/>
+        <b>5/ Strengthen your affirmations with concrete examples</b> from your life that confirm them: "I am organized because I plan my days and finish my projects on time."
+        ]]>
+    </string>
+
+    <string name="subtitle_text"><i> “I, [your First Name], I...”</i></string>
+
+    <string name="txt_explainhdiw">
+        Imagine that at your birth, your <b>brain</b> is like a <b>dense jungle</b>. Moving through this jungle is difficult. When you have a <b>thought for the first time</b>, it’s like <b>opening a new trail</b> in the jungle. The more you think that thought, the easier it becomes to follow this trail, and the more you use this trail, the more you think that thought. Gradually, <b>this trail becomes</b> a path, then a road, and eventually <b>an expressway</b>.
+    </string>
+
+    <string name="txt_explainhdiw2">
+        <b>Changing your belief system</b> is like <b>carving a new path in the jungle</b>. Your brain, for energy efficiency, prefers to use the neural highway it has patiently created. So, it takes a <b>conscious effort</b> to create this new path.
+    </string>
+
+    <string name="txt_explainhdiw3">
+        If you know the destination of an old highway that no longer suits you (<b>a limiting belief you have identified</b>), it’s time to steer away from that highway by taking the new path you’ve chosen (<b>positive affirmation</b>) again and again. This path will eventually become, too, a beautiful expressway, while the old one, no longer used, will be overtaken by vegetation, allowing for the emergence of a <b>new sense of identity</b> and a renewed self-perception.
+    </string>
+
+    <string name="txt_explainadive">
+        <b>Listen to this audio for 21 days</b> as much as you can, at least once a day, and <b>repeat the phrases out loud during moments of silence</b>. Say the phrases with the <b>conviction</b> that they are true. <b>Feel that you are already what you want to become</b>. Feel <b>gratitude</b> for this limitless being that you are.
+    </string>
+
+    <string name="txt_explainadive2">
+        To <b>strengthen the imprint of these affirmations</b> in your nervous system – these new beliefs YOU have chosen to reach your goals – <b>move your body</b> and contract your muscles. These are not just affirmations: these are <b>Powerful Declarations</b>. Find the Energy of <b>Conviction</b> within yourself. <b>Feel</b> what this new truth awakens in you: <b>sensations</b>, <b>emotions</b>, and <b>images</b>. This exercise <b>transforms your thoughts</b>, therefore your <b>vibration</b>, and consequently your <b>actions</b>, <b>attracting</b> the <b>experience you’ve chosen</b>. Integrate visualization into this practice to amplify its effect.
+    </string>
+
+    <string name="txt_explainadive3">
+        Your brain does not distinguish between imagination and reality. If you imagine your favorite dish, you’ll salivate. If you imagine joyful situations, you will truly feel happy. <b>Imagination allows</b> you to <b>change your vibrational state</b>.
+    </string>
+
+    <string name="txt_explainadive4">
+        To change your vibration even more powerfully, you must <b>go beyond words</b>. When you listen to your affirmations and repeat them out loud, <b>visualize yourself living these affirmations</b>. Use your imagination to live them fully and feel them. The more you experience your affirmations through imagination, the more you change your vibration, attracting the real-life experience. To help you, <b>focus on your 5 senses</b>: what do you see, feel, hear, touch, taste?
+    </string>
+
+    <string name="txt_rules1">
+        Choose a \n <b>Voice Over</b>
+    </string>
+    <string name="txt_rules2">
+        Write your \n <b>Affirmations</b>
+    </string>
+    <string name="txt_rules3">
+        Choose your    \n <b>background music</b>
+    </string>
+    <string name="txt_rules4">
+        Choose the \n <b>Duration</b> of your \n audio file
+    </string>
+    <string name="txt_rules5">
+        <b>Listen</b> to your \n affirmations\n every day
+    </string>
+
+    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue en cliquant ici.</string>
+    <string name="btn_create_new">Create New</string>
+    <string name="btn_my_affirmations">My affirmations</string>
+    <string name="btn_how_it_works">How it works?</string>
+    <string name="btn_practical_advices">Practical advice</string>
+    <string name="txt_page_acceuil">Your Words, Your Transformation, Your Story</string>
+
+    <string name="btn_choose_female_voice">Female Voice</string>
+    <string name="btn_choose_male_voice">Male Voice</string>
+    <string name="your_choice">Your choice:</string>
+    <string name="click_on_the_voice">click on the voice \n you want</string>
+
+    <string name="titlestep2">Write Your Affirmations</string>
+    <string name="btn_show_advices">Practical Advice</string>
+    <string name="add_new_affirmation">NEW</string>
+    <string name="ok_button">OK</string>
+
+    <string name="choisis_ta_musique">Choose Your Music</string>
+    <string name="upload_mp3">Upload MP3</string>
+    <string name="musique">Music</string>
+    <string name="silence">Silence</string>
+    <string name="clic_sur_musique">click on the music of your choice</string>
+    <string name="ton_choix">Your choice:</string>
+    <string name="voyage_interieur">Inner Journey</string>
+    <string name="onde_theta">Theta Wave</string>
+    <string name="expansion">Expansion</string>
+
+    <string name="choisis_duree_fichier_audio">Choose the Duration of Your Audio File</string>
+    <string name="intro">Intro</string>
+    <string name="duree">Duration:</string>
+    <string name="default_duration">00 minutes 00 seconds</string>
+    <string name="play_intro_audio">Play the introduction audio</string>
+
+    <string name="meditation_ready">IT\'S READY!</string>
+    <string name="name_your_creation">Name Your Creation</string>
+    <string name="progress_indicator_percentage">0%</string>
+    <string name="progress_description">Audio Progress: 0 percent</string>
+
+    <string name="mes_affirmations">MY AFFIRMATIONS</string>
+    <string name="affirmation_no_data">You have no intentions yet. Create your custom audio file by clicking on Create New.</string>
+    <string name="create_new">Create New</string>
+    <string name="main_menu">Main Menu</string>
+
+    <string name="download">Download</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+
+    <string name="hdiw_title">HOW IT WORKS?</string>
+    <string name="advices_title">PRACTICAL ADVICE</string>
+    <string name="btn_new_advice">My Affirmations</string>
+    <string name="visualisation">Visualization</string>
+
+</resources>
