@@ -65,7 +65,7 @@
     <string name="txt_rules5"><b>Escucha</b> tus \n afirmaciones\n cada día</string>
 
     <!-- Home / botones -->
-    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue en cliquant ici.</string>
+    <string name="lien_texte">🎁 Recibe tu regalo de bienvenida haciendo clic aquí.</string>
     <string name="btn_create_new">Crear nuevo</string>
     <string name="btn_my_affirmations">Mis afirmaciones</string>
     <string name="btn_how_it_works">¿Cómo funciona?</string>

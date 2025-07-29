@@ -52,27 +52,49 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
         btnAffirmationsDetails = findViewById(R.id.btn_affirmation) // si c'est le bon ID
         val textView = findViewById<TextView>(R.id.textView9)
 
-        // 4) Texte + span « Clique ici »
+// 4) Texte dynamique selon la langue
         textView.text = getString(R.string.lien_texte)
-        val start = textView.text.indexOf("en cliquant")
-        val end   = start + "en cliquant ici".length
-        val ss = SpannableString(textView.text)
-        ss.setSpan(UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        ss.setSpan(
-            ForegroundColorSpan(
-                ContextCompat.getColor(this, R.color.green)
-            ), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textView.text = ss
+        val fullText = textView.text.toString()
 
-        // 5) Clic sur tout le textView
-        textView.setOnClickListener {
-            startActivity(Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://forms.gle/RtJFDrkqoJrxEhzh6")
-            ))
+// Détection automatique de la portion à souligner
+        val (start, end) = when {
+            fullText.contains("en cliquant ici", ignoreCase = true) -> {
+                val s = fullText.indexOf("en cliquant ici")
+                s to s + "en cliquant ici".length
+            }
+            fullText.contains("by clicking here", ignoreCase = true) -> {
+                val s = fullText.indexOf("by clicking here")
+                s to s + "by clicking here".length
+            }
+            fullText.contains("haciendo clic aquí", ignoreCase = true) -> { // espagnol
+                val s = fullText.indexOf("haciendo clic aquí")
+                s to s + "haciendo clic aquí".length
+            }
+            else -> -1 to -1
         }
 
-        // 6) Listeners des boutons
+// Applique le span si trouvé
+        if (start >= 0 && end > start) {
+            val ss = SpannableString(fullText)
+            ss.setSpan(UnderlineSpan(), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ss.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.green)),
+                start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            textView.text = ss
+        }
+
+// 5) Clic sur tout le textView
+        textView.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://forms.gle/RtJFDrkqoJrxEhzh6")
+                )
+            )
+        }
+
+// 6) Listeners des boutons
         btnNew.setOnClickListener { startActivity(Intent(this, Etape2Voix::class.java)) }
         btnHowItWorks.setOnClickListener { startActivity(Intent(this, hdiw1::class.java)) }
         btnAdvices.setOnClickListener { startActivity(Intent(this, Advices::class.java)) }
@@ -80,13 +102,14 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
             startActivity(Intent(this, mesAffirmationsDetails::class.java))
         }
 
-        // 7) Insets
+// 7) Insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val sys = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(sys.left, sys.top, sys.right, sys.bottom)
             insets
         }
 
+// 8) Changement de langue
         val tvFrench   = findViewById<TextView>(R.id.textView2)
         val tvEnglish  = findViewById<TextView>(R.id.textView5)
         val tvSpanish  = findViewById<TextView>(R.id.textView10)
@@ -94,7 +117,6 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
         tvFrench.setOnClickListener  { switchLanguage("fr") }
         tvEnglish.setOnClickListener { switchLanguage("en") }
         tvSpanish.setOnClickListener { switchLanguage("es") }
-
 
     }
     private fun switchLanguage(tag: String) {
