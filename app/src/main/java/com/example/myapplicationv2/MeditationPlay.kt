@@ -222,7 +222,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val isIntroEnabled = intent.getBooleanExtra("isIntroEnabled", false)
         var introFilePath: String? = null
         if (isIntroEnabled) {
-            introFilePath = copyRawResourceToInternalStorage(R.raw.intromeditation, "intromeditation.mp3")
+            introFilePath = copyRawResourceToInternalStorage(R.raw.introfr, "intromeditation.mp3")
             if (introFilePath == null) {
                 //Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
                 Log.e("MeditationPlay", "Échec de la copie du fichier d'intro.")

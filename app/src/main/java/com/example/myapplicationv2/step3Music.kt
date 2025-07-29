@@ -182,6 +182,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         if (seekBar.progress == 6) { // 6 correspond à la position "0" (0 = milieu)
             sliderText.text = ""
         }
+
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 selectedSeekBarValue  = progress - 6
