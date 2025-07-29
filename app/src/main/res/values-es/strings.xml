@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nombre de la aplicación -->
+    <string name="app_name">MyAffirmPlay</string>
+
+    <!-- Pantalla de selección de idioma -->
+    <string name="select_language">Seleccionar idioma</string>
+    <string name="language_fr">Francés</string>
+    <string name="language_eng">Inglés</string>
+    <string name="language_esp">Español</string>
+
+    <!-- Accesibilidad / Drawer -->
+    <string name="open">Abrir menú</string>
+    <string name="close">Cerrar menú</string>
+    <string name="menu">Menú</string>
+    <string name="exo_controls_play_pause_description">Reproducir / Pausar</string>
+
+    <!-- Consejos prácticos -->
+    <string name="advices_text"><![CDATA[
+        <b>1/ Usa el tiempo presente</b> como si ya fuera una realidad. «Soy seguro de mí mismo».<br/>
+        <b>2/ Sé positivo</b> y concéntrate en lo que deseas, no en lo que quieres evitar.<br/>
+        <b>3/ Elige palabras que tengan sentido</b> para ti.<br/>
+        <b>4/ Sé claro.</b><br/>
+        <b>5/ Refuerza tus afirmaciones con ejemplos concretos</b> de tu vida que las confirmen: «Soy organizado porque planifico mis días y termino mis proyectos a tiempo».
+    ]]></string>
+
+    <!-- Subtítulo de ejemplo -->
+    <string name="subtitle_text"><i> «Yo, [tu Nombre], yo…»</i></string>
+
+    <!-- Cómo funciona -->
+    <string name="txt_explainhdiw">
+        Imagina que al nacer tu <b>cerebro</b> es como una <b>jungla densa</b>. Avanzar por esta jungla es difícil. Cuando tienes un <b>pensamiento por primera vez</b>, es como <b>abrir un nuevo sendero</b>. Cuanto más piensas ese pensamiento, más fácil es recorrer ese sendero, y cuanto más lo usas, más piensas lo mismo. Con el tiempo, <b>ese sendero se convierte</b> en camino, luego en carretera y finalmente en <b>autopista</b>.
+    </string>
+
+    <string name="txt_explainhdiw2">
+        <b>Cambiar tu sistema de creencias</b> es como <b>trazar un nuevo camino en la jungla</b>. Tu cerebro, por eficiencia energética, prefiere usar la autopista neuronal ya creada. Por eso requiere un <b>esfuerzo consciente</b> crear este nuevo camino.
+    </string>
+
+    <string name="txt_explainhdiw3">
+        Si conoces el destino de una autopista antigua que ya no te sirve (<b>una creencia limitante identificada</b>), es momento de desviarte tomando el nuevo camino elegido (<b>afirmación positiva</b>) una y otra vez. Ese camino se convertirá también en una hermosa autopista, mientras que la antigua, sin uso, será invadida por la vegetación, permitiendo el surgimiento de una <b>nueva identidad</b> y una renovada percepción de ti mismo.
+    </string>
+
+    <!-- Consejos para escuchar afirmaciones -->
+    <string name="txt_explainadive">
+        <b>Escucha este audio durante 21 días</b> tanto como puedas, al menos una vez al día, y <b>repite las frases en voz alta en los momentos de silencio</b>. Di las frases con <b>convicción</b> de que son verdad. <b>Siente que ya eres lo que deseas ser</b>. Siente <b>gratitud</b> por este ser ilimitado que eres.
+    </string>
+
+    <string name="txt_explainadive2">
+        Para <b>reforzar la huella de estas afirmaciones</b> en tu sistema nervioso —estas nuevas creencias que TÚ has elegido para alcanzar tus metas—, <b>mueve tu cuerpo</b> y contrae los músculos. No son solo afirmaciones: son <b>Declaraciones Poderosas</b>. Encuentra la Energía de la <b>Convicción</b> dentro de ti. <b>Siente</b> lo que despierta esta nueva verdad: <b>sensaciones</b>, <b>emociones</b> e <b>imágenes</b>. Este ejercicio <b>transforma tus pensamientos</b>, por ende tu <b>vibración</b> y, en consecuencia, tus <b>acciones</b>, <b>atrayendo</b> la <b>experiencia elegida</b>. Integra la visualización para amplificar su efecto.
+    </string>
+
+    <string name="txt_explainadive3">
+        Tu cerebro no distingue entre imaginación y realidad. Si imaginas tu plato favorito, salivas. Si imaginas situaciones alegres, realmente te sientes feliz. <b>La imaginación te permite</b> <b>cambiar tu estado vibracional</b>.
+    </string>
+
+    <string name="txt_explainadive4">
+        Para cambiar tu vibración aún más poderosamente, debes <b>ir más allá de las palabras</b>. Cuando escuches tus afirmaciones y las repitas en voz alta, <b>visualízate viviendo esas afirmaciones</b>. Usa tu imaginación para vivirlas plenamente y sentirlas. Cuanto más experimentes tus afirmaciones mediante la imaginación, más cambiarás tu vibración, atrayendo la experiencia real. Para ayudarte, <b>concéntrate en tus 5 sentidos</b>: ¿qué ves, sientes, oyes, tocas, saboreas?
+    </string>
+
+    <!-- Reglas / pasos -->
+    <string name="txt_rules1">Elige una \n <b>Voz en off</b></string>
+    <string name="txt_rules2">Escribe tus \n <b>Afirmaciones</b></string>
+    <string name="txt_rules3">Elige tu \n <b>música de fondo</b></string>
+    <string name="txt_rules4">Elige la \n <b>Duración</b> de tu \n archivo de audio</string>
+    <string name="txt_rules5"><b>Escucha</b> tus \n afirmaciones\n cada día</string>
+
+    <!-- Home / botones -->
+    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue en cliquant ici.</string>
+    <string name="btn_create_new">Crear nuevo</string>
+    <string name="btn_my_affirmations">Mis afirmaciones</string>
+    <string name="btn_how_it_works">¿Cómo funciona?</string>
+    <string name="btn_practical_advices">Consejo práctico</string>
+    <string name="txt_page_acceuil">Tus Palabras, Tu Transformación, Tu Historia</string>
+
+    <!-- Paso 1: voz -->
+    <string name="btn_choose_female_voice">Voz femenina</string>
+    <string name="btn_choose_male_voice">Voz masculina</string>
+    <string name="your_choice">Tu elección:</string>
+    <string name="click_on_the_voice">haz clic en la voz \n que prefieras</string>
+
+    <!-- Paso 2: texto -->
+    <string name="titlestep2">Escribe tus afirmaciones</string>
+    <string name="btn_show_advices">Consejo práctico</string>
+    <string name="add_new_affirmation">NUEVA</string>
+    <string name="ok_button">OK</string>
+
+    <!-- Paso 3: música -->
+    <string name="choisis_ta_musique">Elige tu música</string>
+    <string name="upload_mp3">Subir MP3</string>
+    <string name="musique">Música</string>
+    <string name="silence">Silencio</string>
+    <string name="clic_sur_musique">haz clic en la música que prefieras</string>
+    <string name="ton_choix">Tu elección:</string>
+    <string name="voyage_interieur">Viaje interior</string>
+    <string name="onde_theta">Onda Theta</string>
+    <string name="expansion">Expansión</string>
+
+    <!-- Paso 4: duración -->
+    <string name="choisis_duree_fichier_audio">Elige la duración de tu archivo de audio</string>
+    <string name="intro">Intro</string>
+    <string name="duree">Duración:</string>
+    <string name="default_duration">00 minutos 00 segundos</string>
+    <string name="play_intro_audio">Reproducir la introducción</string>
+
+    <!-- Paso 5 -->
+    <string name="meditation_ready">¡ESTÁ LISTO!</string>
+    <string name="name_your_creation">Nombra tu creación</string>
+    <string name="progress_indicator_percentage">0%</string>
+    <string name="progress_description">Progreso de audio: 0 por ciento</string>
+
+    <!-- Sección: Mis afirmaciones -->
+    <string name="mes_affirmations">MIS AFIRMACIONES</string>
+    <string name="affirmation_no_data">Aún no tienes intenciones. Crea tu archivo de audio personalizado haciendo clic en Crear nuevo.</string>
+    <string name="create_new">Crear nuevo</string>
+    <string name="main_menu">Menú principal</string>
+
+    <!-- Menú contextual -->
+    <string name="download">Descargar</string>
+    <string name="rename">Renombrar</string>
+    <string name="delete">Eliminar</string>
+
+    <!-- Títulos de pantallas -->
+    <string name="hdiw_title">¿CÓMO FUNCIONA?</string>
+    <string name="advices_title">CONSEJO PRÁCTICO</string>
+    <string name="btn_new_advice">Mis afirmaciones</string>
+    <string name="visualisation">Visualización</string>
+</resources>

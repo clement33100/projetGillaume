@@ -13,7 +13,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -83,6 +85,27 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
             val sys = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(sys.left, sys.top, sys.right, sys.bottom)
             insets
+        }
+
+        val tvFrench   = findViewById<TextView>(R.id.textView2)
+        val tvEnglish  = findViewById<TextView>(R.id.textView5)
+        val tvSpanish  = findViewById<TextView>(R.id.textView10)
+
+        tvFrench.setOnClickListener  { switchLanguage("fr") }
+        tvEnglish.setOnClickListener { switchLanguage("en") }
+        tvSpanish.setOnClickListener { switchLanguage("es") }
+
+
+    }
+    private fun switchLanguage(tag: String) {
+        LocaleHelper.setLocale(tag)
+        recreate()          // recharge l’activité courante pour appliquer la langue
+    }
+
+    object LocaleHelper {
+        fun setLocale(languageTag: String) {
+            val appLocale = LocaleListCompat.forLanguageTags(languageTag)
+            AppCompatDelegate.setApplicationLocales(appLocale)
         }
     }
 }
