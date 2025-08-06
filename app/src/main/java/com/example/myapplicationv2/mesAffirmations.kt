@@ -123,7 +123,7 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
         Toast.makeText(
             this,
             getString(R.string.toast_bienvenue),   // <-- référence correcte à la ressource
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         ).show()
 
     }
