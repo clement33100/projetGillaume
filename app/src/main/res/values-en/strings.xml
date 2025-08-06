@@ -83,6 +83,7 @@
 
     <string name="btn_choose_female_voice">Female Voice</string>
     <string name="btn_choose_male_voice">Male Voice</string>
+    <string name="btn_choose_your_voice">Your Voice</string>
     <string name="your_choice">Your choice:</string>
     <string name="click_on_the_voice">click on the voice \n you want</string>
 

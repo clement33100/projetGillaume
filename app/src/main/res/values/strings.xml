@@ -79,6 +79,7 @@
 
     <string name="btn_choose_female_voice">Voix de Femme</string>
     <string name="btn_choose_male_voice">Voix d"'"Homme</string>
+    <string name="btn_choose_your_voice">Ta Voix</string>
     <string name="your_choice">Ton choix :</string>
     <string name="click_on_the_voice">clique sur la voix \n que tu veux</string>
 

@@ -46,16 +46,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- NumberPickers pour Minutes et Secondes -->
+
         <NumberPicker
             android:id="@+id/numberPickerMinutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/intro"
             app:layout_constraintEnd_toStartOf="@+id/numberPickerSeconds"
-            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintHorizontal_bias="0.37"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_explain"
-            app:layout_constraintVertical_bias="0.336" />
+            app:layout_constraintVertical_bias="0.334" />
 
         <NumberPicker
             android:id="@+id/numberPickerSeconds"
@@ -155,6 +156,18 @@
             android:textSize="19dp"
             app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="💎 > 7 min "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textViewMinutesEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

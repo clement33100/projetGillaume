@@ -133,7 +133,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (!isOnline()) {
                 Toast.makeText(this, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG).show()
                 return@setOnClickListener   // Stoppe l’exécution tant qu’il n’y a pas Internet
-            }else{
+            } else {
 
                 // Récupérer les valeurs des NumberPickers
                 val minutes = numberPickerMinutes.value
@@ -144,33 +144,48 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                 // Vérifier si la durée dépasse 23 minutes
                 if (totalDurationInSeconds > 1380) {
-                    // Afficher un message d'erreur si la durée est trop longue
                     Toast.makeText(this, "La durée ne doit pas dépasser 23 minutes.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener  // Empêche la suite de l'exécution si la durée est trop longue
+                    return@setOnClickListener
                 }
 
                 selectedDurationInSeconds = totalDurationInSeconds
                 val isIntroEnabled = introSwitch.isChecked
 
-                // Passer directement les données à MeditationPlay
+                // Vérification durée valide
                 if (filePaths != null && selectedDurationInSeconds > 30) {
-                    val intent = Intent(this, MeditationPlay::class.java).apply {
-                        putExtra("filePaths", filePaths)
-                        putExtra("selectedDuration", selectedDurationInSeconds)
-                        putExtra("seekBarValue",seekBarValue)
-                        putExtra("isIntroEnabled", isIntroEnabled)
-                        putExtra("curentVoice", curentVoice)
-                        putStringArrayListExtra("userTexts", userTexts)
-                        putExtra("intention", intention)
+
+                    // ✅ Vérifie si l'utilisateur a créé 5 ou 6 affirmations
+                    val nbAffirmations = userTexts?.size ?: 0
+                    Log.d("DEBUG_AFFIRMATIONS", "Nombre d'affirmations réelles : $nbAffirmations")
+                    val doitAfficherToast = nbAffirmations in 5..8
+
+                    if (doitAfficherToast) {
+                        // Affiche le Toast avant de lancer la page suivante
+                        Toast.makeText(this, "Patience, la magie opère…", Toast.LENGTH_SHORT).show()
                     }
-                    startActivity(intent)
+
+                    // Délai de 3 secondes avant de passer à la page suivante
+                    val delay = if (doitAfficherToast) 2000L else 0L
+
+                    btn_valider.postDelayed({
+
+                        val intent = Intent(this, MeditationPlay::class.java).apply {
+                            putExtra("filePaths", filePaths)
+                            putExtra("selectedDuration", selectedDurationInSeconds)
+                            putExtra("seekBarValue", seekBarValue)
+                            putExtra("isIntroEnabled", isIntroEnabled)
+                            putExtra("curentVoice", curentVoice)
+                            putStringArrayListExtra("userTexts", userTexts)
+                            putExtra("intention", intention)
+                        }
+                        startActivity(intent)
+
+                    }, delay)
+
                 } else {
-                    // Afficher un message d'erreur
                     Toast.makeText(this, "Veuillez sélectionner une durée valide.", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
         }
 
         // Définir le listener pour le bouton Écouter l'Intro

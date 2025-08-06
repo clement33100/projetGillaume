@@ -83,6 +83,7 @@
     <!-- Paso 1: voz -->
     <string name="btn_choose_female_voice">Voz femenina</string>
     <string name="btn_choose_male_voice">Voz masculina</string>
+    <string name="btn_choose_your_voice">Tu voz</string>
     <string name="your_choice">Tu elección:</string>
     <string name="click_on_the_voice">haz clic en la voz \n que prefieras</string>
 

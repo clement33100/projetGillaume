@@ -442,7 +442,9 @@ class Step2 : Base() {
         val client = OkHttpClient()
         val basePath = filesDir.absolutePath + "/audio/"
         val audioDir = File(basePath)
-        if (!audioDir.exists()) {
+        if (audioDir.exists()) {
+            audioDir.listFiles()?.forEach { it.delete() }
+        } else {
             audioDir.mkdirs()
         }
 
