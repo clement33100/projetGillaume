@@ -11,6 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -117,6 +118,13 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
         tvFrench.setOnClickListener  { switchLanguage("fr") }
         tvEnglish.setOnClickListener { switchLanguage("en") }
         tvSpanish.setOnClickListener { switchLanguage("es") }
+
+
+        Toast.makeText(
+            this,
+            getString(R.string.toast_bienvenue),   // <-- référence correcte à la ressource
+            Toast.LENGTH_SHORT
+        ).show()
 
     }
     private fun switchLanguage(tag: String) {
