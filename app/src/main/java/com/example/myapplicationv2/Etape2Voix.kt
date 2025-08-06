@@ -81,14 +81,12 @@ class Etape2Voix : Base() {  // Hérite de Base
         val basePath = filesDir.absolutePath + "/audio/"
         Log.i("TEST123", "path : " + basePath)
 
-        btn_VoiceFemme.setOnClickListener {
-            setTextInfo(btn_VoiceFemme.text.toString(), "$basePath/voiceFemale1.mp3")
-            currentApiKey = BuildConfig.ELEVENLABS_API_KEY_FEMME
-            /*setViewVisibilityGone(scrollview_FemmeVoice)
-            setViewVisibilityGone(scrollview_HommeVoice)*/
-            playAudioFromRaw(R.raw.voixfemmefr)
-        }
 
+        btn_VoiceFemme.setOnClickListener {
+            setTextInfo(btn_VoiceFemme.text.toString(), "$basePath/voiceFemale.mp3")
+            currentApiKey = BuildConfig.ELEVENLABS_API_KEY_FEMME
+            playAudioFromRaw(R.raw.voixfemme)   // idem
+        }
 
         /*btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(), "$basePath/voiceFemale2.mp3")
@@ -99,11 +97,9 @@ class Etape2Voix : Base() {  // Hérite de Base
         }*/
 
         btn_VoiceHomme.setOnClickListener {
-            setTextInfo(btn_VoiceHomme.text.toString(), "$basePath/voiceMale1.mp3")
+            setTextInfo(btn_VoiceHomme.text.toString(), "$basePath/voiceMale.mp3")
             currentApiKey = BuildConfig.ELEVENLABS_API_KEY_HOMME
-            /*setViewVisibilityGone(scrollview_HommeVoice)
-            setViewVisibilityGone(scrollview_FemmeVoice)*/
-            playAudioFromRaw(R.raw.voixhommefr)
+            playAudioFromRaw(R.raw.voixhomme)   // choisi fr/en/es selon la locale
         }
 
         /*btn_ChoixVoiceHomme2.setOnClickListener {
