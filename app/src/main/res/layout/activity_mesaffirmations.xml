@@ -37,12 +37,29 @@
 
         <!-- Bouton Créer Nouveau -->
         <TextView
+            android:id="@+id/textviewDiamant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:autoLink="none"
+            android:gravity="center"
+            android:linksClickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/diamant"
+            android:textColorLink="@android:color/holo_blue_light"
+            android:textSize="19dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_advicesaffirmations" />
+
+        <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:gravity="center"
             android:autoLink="none"
+            android:gravity="center"
             android:linksClickable="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -53,7 +70,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_advicesaffirmations" />
+            app:layout_constraintTop_toBottomOf="@+id/textviewDiamant"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/btn_new"
