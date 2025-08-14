@@ -8,6 +8,7 @@
     <string name="language_fr">Francés</string>
     <string name="language_eng">Inglés</string>
     <string name="language_esp">Español</string>
+    <string name="titletavoix">Graba tus afirmaciones</string>
 
     <!-- Accesibilidad / Drawer -->
     <string name="open">Abrir menú</string>

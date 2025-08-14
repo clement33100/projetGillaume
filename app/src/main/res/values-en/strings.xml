@@ -7,6 +7,8 @@
     <string name="language_esp">Spanish</string>
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
+    <string name="titletavoix">Record your affirmations</string>
+
     <string name="menu">Menu</string>
     <string name="exo_controls_play_pause_description">Play / Pause</string>
     <string name="advices_text">
