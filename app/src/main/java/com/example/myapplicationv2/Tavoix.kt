@@ -6,7 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.InsetDrawable
+import android.media.MediaRecorder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.text.Html
 import android.text.InputFilter
@@ -40,6 +43,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowCompat
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.ReturnCode
 
 
 class Tavoix : Base() {
@@ -51,7 +56,10 @@ class Tavoix : Base() {
     private lateinit var textToSpeech: TextToSpeech
     private val generateFiles = ArrayList<String>()  // Liste pour stocker les chemins des fichiers générés
     private lateinit var titleStep2: TextView
-
+    private var mediaRecorder: MediaRecorder? = null
+    private var isRecording = false
+    private var currentRecordingIndex: Int = -1
+    private var recordStartTime: Long = 0L
     override fun getLayoutId(): Int {
         return R.layout.activity_tavoix  // Retourne le layout spécifique à cette activité
     }
@@ -274,7 +282,131 @@ class Tavoix : Base() {
 
 
     }
+    private fun checkAndRequestMicPermission(onGranted: () -> Unit) {
+        val perm = android.Manifest.permission.RECORD_AUDIO
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, perm)
+            == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            onGranted(); return
+        }
+        androidx.core.app.ActivityCompat.requestPermissions(this, arrayOf(perm), 101)
+        // On relance onGranted s’il est accordé dans onRequestPermissionsResult :
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            // Rien à relancer ici automatiquement; l’utilisateur refait l’appui long
+            Toast.makeText(this, "Permission micro accordée. Maintiens le bouton pour enregistrer.", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == 101) {
+            Toast.makeText(this, "Permission micro refusée.", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun ensureAudioDir(): File {
+        val dir = File(filesDir, "audio")
+        if (!dir.exists()) dir.mkdirs()
+        return dir
+    }
+
+    private fun m4aPathForIndex(index: Int): String =
+        File(ensureAudioDir(), "voice_$index.m4a").absolutePath
+
+    private fun mp3PathForIndex(index: Int): String =
+        File(ensureAudioDir(), "voice_$index.mp3").absolutePath
+
+    private fun outputPathForIndex(index: Int): String {
+        // Fichier natif Android recommandé : AAC/M4A
+        // Si tu veux écraser/“remplacer” un TTS existant, garde le même nom
+        // return File(ensureAudioDir(), "voice_$index.m4a").absolutePath
+
+        // Variante : séparer tes enregistrements manuels pour éviter d’écraser le TTS :
+        return File(ensureAudioDir(), "voice_$index.m4a").absolutePath
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startRecording(index: Int) {
+        if (isRecording) return
+        checkAndRequestMicPermission {
+            val m4aPath = m4aPathForIndex(index)
+            try {
+                mediaRecorder = MediaRecorder().apply {
+                    setAudioSource(MediaRecorder.AudioSource.MIC)
+                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                    setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                    setAudioEncodingBitRate(128_000)
+                    setAudioSamplingRate(44_100)
+                    setOutputFile(m4aPath)
+                    setMaxDuration(10_000) // max 10 secondes
+                    prepare()
+                    start()
+                }
+                recordStartTime = System.currentTimeMillis() // ⏱ heure de début
+                isRecording = true
+                currentRecordingIndex = index
+
+                // Sécurité : stop auto après 10s
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (isRecording && currentRecordingIndex == index) {
+                        stopRecording()
+                        Toast.makeText(this, "Enregistrement limité à 10 secondes", Toast.LENGTH_SHORT).show()
+                    }
+                }, 10_000)
+
+            } catch (e: Exception) {
+                Log.e("REC", "startRecording error: ${e.message}")
+                Toast.makeText(this, "Impossible de démarrer l’enregistrement", Toast.LENGTH_SHORT).show()
+                stopRecording(force = true)
+            }
+        }
+    }
+
+    private fun stopRecording(force: Boolean = false) {
+        if (!isRecording && !force) return
+        try {
+            mediaRecorder?.apply {
+                try { stop() } catch (_: Exception) {}
+                release()
+            }
+        } catch (_: Exception) {}
+        mediaRecorder = null
+
+        val finishedIndex = currentRecordingIndex
+        isRecording = false
+        currentRecordingIndex = -1
+
+        // Calcul de la durée
+        val duration = System.currentTimeMillis() - recordStartTime
+        if (duration < 2000) { // moins de 2 secondes
+            // On supprime le fichier m4a créé
+            try { File(m4aPathForIndex(finishedIndex)).delete() } catch (_: Exception) {}
+            Toast.makeText(this, "Enregistrement trop court (< 2 sec), ignoré", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (finishedIndex >= 0) {
+            val inPath = m4aPathForIndex(finishedIndex)
+            val outPath = inPath.replace(".m4a", ".mp3")
+
+            val cmd = "-y -i \"$inPath\" -codec:a libmp3lame -q:a 2 \"$outPath\""
+            FFmpegKit.executeAsync(cmd) { session ->
+                val ok = ReturnCode.isSuccess(session.returnCode)
+                runOnUiThread {
+                    if (ok) {
+                        try { File(inPath).delete() } catch (_: Exception) {}
+                        while (generateFiles.size <= finishedIndex) generateFiles.add("")
+                        generateFiles[finishedIndex] = outPath
+                        Toast.makeText(this, "Enregistré : voice_$finishedIndex.mp3", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Conversion MP3 échouée", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopRecording(force = true)
+    }
     /**
      * Génère les fichiers audio TTS pour tous les textes.
      *
@@ -312,126 +444,89 @@ class Tavoix : Base() {
     /**
      * Ajoute une nouvelle TextView pour une affirmation ou une intention.
      */
-    private fun addTextView(text: String, userText: ArrayList<String>) {
-        textViewCount++
-        val placeholderText = if (text.isEmpty()) {
-            "Affirmation $textViewCount"
-        } else {
-            text
+    private fun addTextView(@Suppress("UNUSED_PARAMETER") text: String, userText: ArrayList<String>) {
+        val max = 8
+        if (container.childCount >= max) {
+            Toast.makeText(this, "Maximum $max enregistrements.", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        // Position du texte actuel dans userTexts : c'est le dernier ajouté
-        val position = userText.size - 1
+        userText.add("")                           // compat
+        while (generateFiles.size < container.childCount + 1) generateFiles.add("")
 
-        val horizontalContainer = LinearLayout(this).apply {
+        val row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply { setMargins(16, 16, 16, 16) }
+            gravity = Gravity.CENTER_VERTICAL
         }
 
-        val affirmationEditText = EditText(this).apply {
-            hint = placeholderText
-            textSize = 24f
-            setHintTextColor(Color.parseColor("#808080"))
+        // 1) Label "Affirmation X" (affiché en premier)
+        val label = TextView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f
+            ).apply { setMargins(8, 0, 8, 0) }
+            this.text = "Affirmation ${container.childCount + 1}"   // 👈 IMPORTANT: 'this.text'
+            textSize = 18f
             setTextColor(Color.parseColor("#333333"))
-            setBackgroundResource(R.drawable.rounded_corners)
-            setPadding(16, 40, 16, 40)
-            textAlignment = View.TEXT_ALIGNMENT_CENTER
-            setTypeface(null, Typeface.ITALIC)
+            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+        }
 
-            // ── Limite à 90 caractères, avec toast en cas de dépassement ──
-            val maxChars = 90
-            filters = arrayOf(object : InputFilter {
-                override fun filter(
-                    source: CharSequence?,
-                    start: Int,
-                    end: Int,
-                    dest: Spanned,
-                    dstart: Int,
-                    dend: Int
-                ): CharSequence? {
-                    val currentLength = dest.length
-                    val replacingLength = dend - dstart
-                    val newChunkLength = end - start
-                    val resultingLength = currentLength - replacingLength + newChunkLength
-
-                    return if (resultingLength > maxChars) {
-                        // Bloquer le reste et afficher le Toast
-                        Toast.makeText(
-                            this@Tavoix,
-                            "Oups, ton affirmation est trop longue\nLimite : 90 caractères (≈ 12–15 mots)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        ""  // on ne laisse rien passer au-delà de 90 caractères
-                    } else {
-                        null  // on autorise la saisie
-                    }
-                }
-            })
-
-            // Options IME pour bouton "OK"
-            imeOptions = EditorInfo.IME_ACTION_DONE
-            inputType = InputType.TYPE_CLASS_TEXT
-            setOnEditorActionListener { v, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(v.windowToken, 0)
-                    true
-                } else {
-                    false
-                }
+        // 2) Bouton micro
+        val micBtn = ImageButton(this).apply {
+            setImageResource(R.drawable.svg_bouton_micro)
+            layoutParams = LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f
+            ).apply { setMargins(8, 0, 8, 0) }
+            setBackgroundColor(Color.TRANSPARENT)
+            contentDescription = "Maintiens pour enregistrer"
+            scaleType = ImageView.ScaleType.CENTER_INSIDE
+        }
+        micBtn.setOnTouchListener { _, event ->
+            val index = container.indexOfChild(row)
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> { micBtn.alpha = 0.6f; startRecording(index); true }
+                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> { micBtn.alpha = 1f; stopRecording(); true }
+                else -> false
             }
         }
 
-        // Mettre à jour le style du texte et la liste userTexts en temps réel
-        affirmationEditText.addTextChangedListener(object : android.text.TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    affirmationEditText.setTypeface(null, Typeface.NORMAL)
-                } else {
-                    affirmationEditText.setTypeface(null, Typeface.ITALIC)
-                }
-            }
-            override fun afterTextChanged(s: android.text.Editable?) {
-                // Met à jour userTexts à chaque changement
-                userText[position] = s.toString()
-            }
-        })
-
-        val deleteButton = ImageButton(this).apply {
+        // 3) Bouton supprimer
+        val deleteBtn = ImageButton(this).apply {
             setImageResource(R.drawable.croix_jaune_fusion)
             layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { setMargins(16, 30, 0, 0) }
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.2f
+            ).apply { setMargins(8, 0, 0, 0) }
             setBackgroundColor(Color.TRANSPARENT)
-            setOnClickListener {
-                val pos = container.indexOfChild(horizontalContainer)
-                if (pos != -1 && pos < userText.size) {
-                    userText.removeAt(pos)
-                    container.removeView(horizontalContainer)
-                    updateTextNumbers()
-                } else {
-                    Log.e("Error", "Position invalide pour la suppression : $pos")
-                }
-            }
+            contentDescription = "Supprimer cet enregistrement"
+        }
+        deleteBtn.setOnClickListener {
+            val index = container.indexOfChild(row)
+            if (isRecording && currentRecordingIndex == index) stopRecording(force = true)
+            generateFiles.getOrNull(index)?.let { p -> if (p.isNotBlank()) try { File(p).delete() } catch (_: Exception) {} }
+            if (index in userText.indices) userText.removeAt(index)
+            if (index in 0 until generateFiles.size) generateFiles.removeAt(index)
+            container.removeView(row)
+            updateAffirmationLabels()
         }
 
-        // Mise en place des LayoutParams pour l’EditText
-        affirmationEditText.layoutParams = LinearLayout.LayoutParams(
-            0,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1f
-        ).apply { setMargins(0, 30, 0, 0) }
+        row.addView(label)
+        row.addView(micBtn)
+        row.addView(deleteBtn)
+        container.addView(row)
 
-        horizontalContainer.addView(affirmationEditText)
-        horizontalContainer.addView(deleteButton)
-        container.addView(horizontalContainer)
+        updateAffirmationLabels()
     }
 
+    private fun updateAffirmationLabels() {
+        for (i in 0 until container.childCount) {
+            val row = container.getChildAt(i) as LinearLayout
+            val label = row.getChildAt(0) as TextView
+            label.text = "Affirmation ${i + 1}"
+        }
+    }
 
 
     /**
