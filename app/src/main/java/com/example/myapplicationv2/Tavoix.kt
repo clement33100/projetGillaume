@@ -484,11 +484,22 @@ class Tavoix : Base() {
             contentDescription = "Maintiens pour enregistrer"
             scaleType = ImageView.ScaleType.CENTER_INSIDE
         }
-        micBtn.setOnTouchListener { _, event ->
+        micBtn.setOnTouchListener { v, event ->
             val index = container.indexOfChild(row)
-            when (event.action) {
-                android.view.MotionEvent.ACTION_DOWN -> { micBtn.alpha = 0.6f; startRecording(index); true }
-                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> { micBtn.alpha = 1f; stopRecording(); true }
+            when (event.actionMasked) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    micBtn.setImageResource(R.drawable.svgmicrojauncetransparent) // pressed
+                    startRecording(index)
+                    v.isPressed = true
+                    true
+                }
+                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
+                    micBtn.setImageResource(R.drawable.svg_bouton_micro) // back to normal
+                    stopRecording()
+                    v.isPressed = false
+                    if (event.actionMasked == android.view.MotionEvent.ACTION_UP) v.performClick()
+                    true
+                }
                 else -> false
             }
         }
