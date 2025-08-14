@@ -45,7 +45,11 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.WindowCompat
 import com.arthenica.ffmpegkit.FFmpegKit
 import com.arthenica.ffmpegkit.ReturnCode
-
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
+import androidx.media3.common.MediaItem
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
 
 class Tavoix : Base() {
     private lateinit var container: LinearLayout
@@ -307,6 +311,7 @@ class Tavoix : Base() {
         return dir
     }
 
+
     private fun m4aPathForIndex(index: Int): String =
         File(ensureAudioDir(), "voice_$index.m4a").absolutePath
 
@@ -395,6 +400,7 @@ class Tavoix : Base() {
                         while (generateFiles.size <= finishedIndex) generateFiles.add("")
                         generateFiles[finishedIndex] = outPath
                         Toast.makeText(this, "Enregistré : voice_$finishedIndex.mp3", Toast.LENGTH_SHORT).show()
+                        replaceMicWithPlayer(finishedIndex, outPath)
                     } else {
                         Toast.makeText(this, "Conversion MP3 échouée", Toast.LENGTH_LONG).show()
                     }
@@ -441,6 +447,38 @@ class Tavoix : Base() {
         textViewCount = count - 1
     }
 
+    @OptIn(UnstableApi::class)
+    private fun replaceMicWithPlayer(index: Int, filePath: String) {
+        val row = container.getChildAt(index) as? LinearLayout ?: return
+
+        // L'ordre actuel : [0]=Label, [1]=Micro (à remplacer), [2]=Croix
+        // Par sécurité, si la structure a été modifiée, on contrôle la taille
+        if (row.childCount < 2) return
+
+        // 1) Retirer l'ancien micro
+        row.removeViewAt(1)
+
+        // 2) Créer le PlayerView
+        val playerView = PlayerView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f
+            ).apply { setMargins(8, 0, 8, 0) }
+            useController = true
+            controllerShowTimeoutMs = 0   // contrôles toujours visibles
+            showController()
+        }
+
+        // 3) Créer le player et lier le fichier créé
+        val player = ExoPlayer.Builder(this).build().also { exo ->
+            playerView.player = exo
+            exo.setMediaItem(MediaItem.fromUri(android.net.Uri.fromFile(java.io.File(filePath))))
+            exo.prepare()
+            exo.playWhenReady = true      // lecture immédiate pour vérif rapide
+        }
+
+        // 4) Insérer le PlayerView à la place du micro (index 1)
+        row.addView(playerView, 1)
+    }
     /**
      * Ajoute une nouvelle TextView pour une affirmation ou une intention.
      */
@@ -519,6 +557,7 @@ class Tavoix : Base() {
             generateFiles.getOrNull(index)?.let { p -> if (p.isNotBlank()) try { File(p).delete() } catch (_: Exception) {} }
             if (index in userText.indices) userText.removeAt(index)
             if (index in 0 until generateFiles.size) generateFiles.removeAt(index)
+            (row.getChildAt(1) as? PlayerView)?.player?.release()
             container.removeView(row)
             updateAffirmationLabels()
         }
