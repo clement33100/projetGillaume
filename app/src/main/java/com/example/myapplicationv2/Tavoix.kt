@@ -383,7 +383,7 @@ class Tavoix : Base() {
         if (duration < 2000) { // moins de 2 secondes
             // On supprime le fichier m4a créé
             try { File(m4aPathForIndex(finishedIndex)).delete() } catch (_: Exception) {}
-            Toast.makeText(this, "Enregistrement trop court (< 2 sec), ignoré", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enregistrement trop court (< 2 sec)", Toast.LENGTH_SHORT).show()
             return
         }
 
