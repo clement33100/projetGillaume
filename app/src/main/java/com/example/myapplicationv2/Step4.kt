@@ -86,6 +86,8 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         Log.d("test123", "onCreate: $curentVoice")
         val seekBarValue = intent.getIntExtra("seekBarValue",0)
 
+
+
         val userTexts = intent.getStringArrayListExtra("userTexts")
         val userTextsSplit = intent.getStringArrayListExtra("userTextsSplit")
         val nom = intent.getStringExtra("nom")

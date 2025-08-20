@@ -64,6 +64,10 @@ class Tavoix : Base() {
     private var isRecording = false
     private var currentRecordingIndex: Int = -1
     private var recordStartTime: Long = 0L
+    private var curentVoice: String? = null
+
+
+
     override fun getLayoutId(): Int {
         return R.layout.activity_tavoix  // Retourne le layout spécifique à cette activité
     }
@@ -222,8 +226,7 @@ class Tavoix : Base() {
             insets
         }
 
-        val curentVoice = intent.getStringExtra("curentVoice")
-        val curentAPIKey = intent.getStringExtra("curentAPIKey")
+
 
         titleStep2 = findViewById(R.id.titlestep2)
 
@@ -245,43 +248,22 @@ class Tavoix : Base() {
         }
 
         buttonOk.setOnClickListener {
-            // userTexts est déjà mis à jour grâce aux TextWatcher
-            // ─── 1. Vérifier si les deux affirmations de base sont inchangées ───
-            val def1 = "Affirmation 1"   // valeurs que tu crées au démarrage
-            val def2 = "Affirmation 2"
 
-            val base1Unchanged = userTexts.getOrNull(0).isNullOrBlank() || userTexts[0] == def1
-            val base2Unchanged = userTexts.getOrNull(1).isNullOrBlank() || userTexts[1] == def2
+            Log.d("tata", "onCreate: " + generateFiles[0].toString())
 
-            if (base1Unchanged && base2Unchanged) {
-                Toast.makeText(
-                    this,
-                    "Modifie au moins l’une des deux affirmations proposées avant de continuer.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener        // ⬅ stop : on ne continue pas
-            }
+            //generateTTSFilesForAllTexts(curentAPIKey) // (si tu veux attendre la fin, vois la note plus bas)
+            val intent = Intent(this, step3Music::class.java)
+            // → Envoi de la voix
 
-            generateTTSFilesForAllTexts(curentAPIKey)
+            // → Envoi des MP3 (on filtre les chemins valides)
+            val mp3s = ArrayList(
+                generateFiles.filter { it.isNotBlank() && File(it).exists() }
+            )
+            intent.putStringArrayListExtra("userTexts", mp3s)
 
-            if(userTexts.size==0){
-                Toast.makeText(this, "Vous devez selectionner au moins une affirmation positive", Toast.LENGTH_SHORT).show()
-            }else{
-                if (curentVoice != null) {
-                    val intent = Intent(this, step3Music::class.java)
-                    intent.putExtra("curentVoice", curentVoice)
-                    intent.putStringArrayListExtra("userTexts", generateFiles)
 
-                    if (userTexts.size > 3) {
-                        intent.putExtra("curentAPIKey", curentAPIKey)
-                        intent.putStringArrayListExtra("userTextsSplit", userTexts)
-                    }
+            startActivity(intent)
 
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
 
 

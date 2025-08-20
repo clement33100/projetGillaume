@@ -137,6 +137,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val nom = intent.getStringExtra("nom")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
 
+
+
+
         val intention = intent.getBooleanExtra("intention", false)
 
         if (userTextsSplit != null) {

@@ -125,6 +125,7 @@ class Etape2Voix : Base() {  // Hérite de Base
         }*/
         val btnTavoix = findViewById<Button>(R.id.btn_tavoix) // remplace par l'ID exact de ton bouton
         btnTavoix.setOnClickListener {
+
             val intent = Intent(this,Tavoix::class.java)
             startActivity(intent)
         }
