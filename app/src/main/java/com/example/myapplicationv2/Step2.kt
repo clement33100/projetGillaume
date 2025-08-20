@@ -402,7 +402,7 @@ class Step2 : Base() {
         })
 
         val deleteButton = ImageButton(this).apply {
-            setImageResource(R.drawable.croix_jaune_fusion)
+            setImageResource(R.drawable.croix_verte_fusion)
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

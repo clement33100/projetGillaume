@@ -383,7 +383,7 @@ class Tavoix : Base() {
         if (duration < 2000) { // moins de 2 secondes
             // On supprime le fichier m4a créé
             try { File(m4aPathForIndex(finishedIndex)).delete() } catch (_: Exception) {}
-            Toast.makeText(this, "Enregistrement trop court (< 2 sec)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enregistrement trop court (< 2 sec), ignoré", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -412,6 +412,10 @@ class Tavoix : Base() {
     override fun onStop() {
         super.onStop()
         stopRecording(force = true)
+        for (i in 0 until container.childCount) {
+            val r = container.getChildAt(i) as? LinearLayout ?: continue
+            r.findViewById<PlayerView>(R.id.player_view_inline)?.player?.release()
+        }
     }
     /**
      * Génère les fichiers audio TTS pour tous les textes.
@@ -450,35 +454,38 @@ class Tavoix : Base() {
     @OptIn(UnstableApi::class)
     private fun replaceMicWithPlayer(index: Int, filePath: String) {
         val row = container.getChildAt(index) as? LinearLayout ?: return
-
-        // L'ordre actuel : [0]=Label, [1]=Micro (à remplacer), [2]=Croix
-        // Par sécurité, si la structure a été modifiée, on contrôle la taille
         if (row.childCount < 2) return
 
-        // 1) Retirer l'ancien micro
+        // 1) Retirer le micro (à l’index 1)
         row.removeViewAt(1)
 
-        // 2) Créer le PlayerView
-        val playerView = PlayerView(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.3f
-            ).apply { setMargins(8, 0, 8, 0) }
-            useController = true
-            controllerShowTimeoutMs = 0   // contrôles toujours visibles
+        // 2) Gonfler le player stylé
+        val playerContainer = layoutInflater.inflate(
+            R.layout.player_item_view, row, false
+        ) as LinearLayout
+
+        // >>> Compact: largeur partielle de la ligne (ex: 30%)
+        playerContainer.layoutParams = LinearLayout.LayoutParams(
+            0, LinearLayout.LayoutParams.WRAP_CONTENT, /* weight */ 0.3f
+        ).apply { setMargins(8, 0, 8, 0) }
+
+        val playerView = playerContainer.findViewById<PlayerView>(R.id.player_view_inline).apply {
+            setControllerShowTimeoutMs(0)
             showController()
         }
 
-        // 3) Créer le player et lier le fichier créé
+        // 3) Créer le player et lier le fichier
         val player = ExoPlayer.Builder(this).build().also { exo ->
             playerView.player = exo
             exo.setMediaItem(MediaItem.fromUri(android.net.Uri.fromFile(java.io.File(filePath))))
             exo.prepare()
-            exo.playWhenReady = true      // lecture immédiate pour vérif rapide
+            exo.playWhenReady = true
         }
 
-        // 4) Insérer le PlayerView à la place du micro (index 1)
-        row.addView(playerView, 1)
+        // 4) Insérer à la place du micro -> la croix reste en (nouvel) index 2
+        row.addView(playerContainer, 1)
     }
+
     /**
      * Ajoute une nouvelle TextView pour une affirmation ou une intention.
      */
@@ -557,8 +564,8 @@ class Tavoix : Base() {
             generateFiles.getOrNull(index)?.let { p -> if (p.isNotBlank()) try { File(p).delete() } catch (_: Exception) {} }
             if (index in userText.indices) userText.removeAt(index)
             if (index in 0 until generateFiles.size) generateFiles.removeAt(index)
-            (row.getChildAt(1) as? PlayerView)?.player?.release()
-            container.removeView(row)
+            row.findViewById<PlayerView>(R.id.player_view_inline)?.player?.release() // ⬅️ release
+            //            container.removeView(row)
             updateAffirmationLabels()
         }
 
