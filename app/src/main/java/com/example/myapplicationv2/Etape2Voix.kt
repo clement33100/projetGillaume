@@ -95,6 +95,7 @@ class Etape2Voix : Base() {  // Hérite de Base
         val basePath = filesDir.absolutePath + "/audio/"
         Log.i("TEST123", "path : " + basePath)
 
+        clearAudioDir()
 
         btn_VoiceFemme.setOnClickListener {
             setTextInfo(btn_VoiceFemme.text.toString(), "$basePath/voiceFemale.mp3")
@@ -166,6 +167,22 @@ class Etape2Voix : Base() {  // Hérite de Base
         }
 
     }
+
+
+    private fun clearAudioDir() {
+        val audioDir = File(filesDir, "audio")
+        if (audioDir.exists() && audioDir.isDirectory) {
+            audioDir.listFiles()?.forEach { file ->
+                try {
+                    file.delete()
+                    Log.d("AppInit", "Deleted: ${file.absolutePath}")
+                } catch (e: Exception) {
+                    Log.e("AppInit", "Failed to delete: ${file.absolutePath} -> ${e.message}")
+                }
+            }
+        }
+    }
+
     private fun ensureRecordPermission(): Boolean {
         val perm = android.Manifest.permission.RECORD_AUDIO
         return if (checkSelfPermission(perm) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
