@@ -27,11 +27,19 @@ android {
             buildConfigField("String", "ELEVENLABS_API_KEY", "\"${property("ELEVENLABS_API_KEY")}\"")
             buildConfigField("String", "ELEVENLABS_API_KEY_FEMME", "\"${project.property("ELEVENLABS_API_KEY_FEMME")}\"")
             buildConfigField("String", "ELEVENLABS_API_KEY_HOMME", "\"${project.property("ELEVENLABS_API_KEY_HOMME")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_FEMME_EN", "\"${project.property("ELEVENLABS_API_KEY_FEMME_EN")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_HOMME_EN", "\"${project.property("ELEVENLABS_API_KEY_HOMME_EN")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_FEMME_ES", "\"${project.property("ELEVENLABS_API_KEY_FEMME_ES")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_HOMME_ES", "\"${project.property("ELEVENLABS_API_KEY_HOMME_ES")}\"")
         }
         getByName("release") {
             buildConfigField("String", "ELEVENLABS_API_KEY", "\"${property("ELEVENLABS_API_KEY")}\"")
             buildConfigField("String", "ELEVENLABS_API_KEY_FEMME", "\"${project.property("ELEVENLABS_API_KEY_FEMME")}\"")
             buildConfigField("String", "ELEVENLABS_API_KEY_HOMME", "\"${project.property("ELEVENLABS_API_KEY_HOMME")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_FEMME_EN", "\"${project.property("ELEVENLABS_API_KEY_FEMME_EN")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_HOMME_EN", "\"${project.property("ELEVENLABS_API_KEY_HOMME_EN")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_FEMME_ES", "\"${project.property("ELEVENLABS_API_KEY_FEMME_ES")}\"")
+            buildConfigField("String", "ELEVENLABS_API_KEY_HOMME_ES", "\"${project.property("ELEVENLABS_API_KEY_HOMME_ES")}\"")
         }
     }
 

@@ -192,7 +192,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Définir le listener pour le bouton Écouter l'Intro
         btn_listenIntro.setOnClickListener {
-            playAudioFromRaw(R.raw.introfr)
+            playAudioFromRaw(R.raw.intro)
         }
     }
 

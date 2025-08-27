@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import java.io.File
+import java.util.Locale
 
 class Etape2Voix : Base() {  // Hérite de Base
     private lateinit var btn_VoiceFemme: Button
@@ -36,7 +37,7 @@ class Etape2Voix : Base() {  // Hérite de Base
 
     private fun tempM4a(tag: String) = File(audioDir(), "rec_${tag}.m4a")
     private fun outMp3(tag: String) = File(audioDir(), "rec_${tag}.mp3")
-
+    private enum class Gender { FEMALE, MALE }
     private lateinit var btn_ChoixVoiceHomme1: Button
     private lateinit var btn_ChoixVoiceHomme2: Button
 
@@ -99,10 +100,12 @@ class Etape2Voix : Base() {  // Hérite de Base
 
         btn_VoiceFemme.setOnClickListener {
             setTextInfo(btn_VoiceFemme.text.toString(), "$basePath/voiceFemale.mp3")
-            currentApiKey = BuildConfig.ELEVENLABS_API_KEY_FEMME
-            playAudioFromRaw(R.raw.voixfemme)   // idem
-        }
+            currentApiKey = pickApiKeyByLang(Gender.FEMALE)
 
+
+            playAudioFromRaw(R.raw.voixfemme)   // choisi fr/en/es selon la locale
+
+        }
         /*btn_ChoixVoiceFemme2.setOnClickListener {
             setTextInfo(btn_ChoixVoiceFemme2.text.toString(), "$basePath/voiceFemale2.mp3")
             currentApiKey = "huLASkSLzY35zexSYP1g "
@@ -113,7 +116,9 @@ class Etape2Voix : Base() {  // Hérite de Base
 
         btn_VoiceHomme.setOnClickListener {
             setTextInfo(btn_VoiceHomme.text.toString(), "$basePath/voiceMale.mp3")
-            currentApiKey = BuildConfig.ELEVENLABS_API_KEY_HOMME
+            currentApiKey = pickApiKeyByLang(Gender.MALE)
+
+
             playAudioFromRaw(R.raw.voixhomme)   // choisi fr/en/es selon la locale
         }
 
@@ -134,6 +139,8 @@ class Etape2Voix : Base() {  // Hérite de Base
         val intention = intent.getBooleanExtra("intention", false)
 
         btn_ok.setOnClickListener {
+
+            Log.d("tatata", "onCreate: "+currentApiKey.toString())
 
             if (!isOnline()) {
                 Toast.makeText(this@Etape2Voix, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG
@@ -182,6 +189,26 @@ class Etape2Voix : Base() {  // Hérite de Base
             }
         }
     }
+
+
+    private fun pickApiKeyByLang(gender: Gender): String {
+        // Option 1 : langue passée par Intent ("fr", "en", "es"), sinon langue du device
+        val lang = intent.getStringExtra("lang") ?: Locale.getDefault().language.lowercase()
+
+        return when (gender) {
+            Gender.FEMALE -> when (lang) {
+                "en" -> BuildConfig.ELEVENLABS_API_KEY_FEMME_EN
+                "es" -> BuildConfig.ELEVENLABS_API_KEY_FEMME_ES
+                else -> BuildConfig.ELEVENLABS_API_KEY_FEMME // défaut FR
+            }
+            Gender.MALE -> when (lang) {
+                "en" -> BuildConfig.ELEVENLABS_API_KEY_HOMME_EN
+                "es" -> BuildConfig.ELEVENLABS_API_KEY_HOMME_ES
+                else -> BuildConfig.ELEVENLABS_API_KEY_HOMME // défaut FR
+            }
+        }
+    }
+
 
     private fun ensureRecordPermission(): Boolean {
         val perm = android.Manifest.permission.RECORD_AUDIO
