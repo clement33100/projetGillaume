@@ -65,8 +65,9 @@ class Tavoix : Base() {
     private var currentRecordingIndex: Int = -1
     private var recordStartTime: Long = 0L
     private var curentVoice: String? = null
-
-
+    companion object {
+        private const val MAX_AFFIRMATIONS = 6
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_tavoix  // Retourne le layout spécifique à cette activité
@@ -237,13 +238,10 @@ class Tavoix : Base() {
         }
 
         addButton.setOnClickListener {
-            if (userTexts.size < 8) {
-                // Ajout d'une nouvelle affirmation vide
-                val newText = ""
-                userTexts.add(newText)
-                addTextView(newText, userTexts)
+            if (container.childCount < MAX_AFFIRMATIONS) {
+                addTextView("", userTexts)   // addTextView s’occupe d’ajouter dans userTexts
             } else {
-                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (8).", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Vous avez atteint le maximum ($MAX_AFFIRMATIONS).", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -472,9 +470,8 @@ class Tavoix : Base() {
      * Ajoute une nouvelle TextView pour une affirmation ou une intention.
      */
     private fun addTextView(@Suppress("UNUSED_PARAMETER") text: String, userText: ArrayList<String>) {
-        val max = 8
-        if (container.childCount >= max) {
-            Toast.makeText(this, "Maximum $max enregistrements.", Toast.LENGTH_SHORT).show()
+        if (container.childCount >= MAX_AFFIRMATIONS) {
+            Toast.makeText(this, "Maximum $MAX_AFFIRMATIONS enregistrements.", Toast.LENGTH_SHORT).show()
             return
         }
 
