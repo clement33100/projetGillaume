@@ -87,12 +87,8 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
 
 // 5) Clic sur tout le textView
         textView.setOnClickListener {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://forms.gle/RtJFDrkqoJrxEhzh6")
-                )
-            )
+            val url = getString(R.string.linkform)
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 
 // 6) Listeners des boutons

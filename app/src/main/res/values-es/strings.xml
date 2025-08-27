@@ -134,4 +134,6 @@
     <string name="advices_title">CONSEJO PRÁCTICO</string>
     <string name="btn_new_advice">Mis afirmaciones</string>
     <string name="visualisation">Visualización</string>
+
+    <string name="linkform">https://docs.google.com/forms/d/e/1FAIpQLSeOqv-pycOhf-v8zC98fxlZri63H7TxPifA0SDN4vj7L2B7Eg/viewform?usp=dialog</string>
 </resources>

@@ -381,10 +381,10 @@ class Tavoix : Base() {
                         try { File(inPath).delete() } catch (_: Exception) {}
                         while (generateFiles.size <= finishedIndex) generateFiles.add("")
                         generateFiles[finishedIndex] = outPath
-                        Toast.makeText(this, "Enregistré : voice_$finishedIndex.mp3", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Enregistré : voice_$finishedIndex.mp3", Toast.LENGTH_SHORT).show()
                         replaceMicWithPlayer(finishedIndex, outPath)
                     } else {
-                        Toast.makeText(this, "Conversion MP3 échouée", Toast.LENGTH_LONG).show()
+                        //Toast.makeText(this, "Conversion MP3 échouée", Toast.LENGTH_LONG).show()
                     }
                 }
             }
