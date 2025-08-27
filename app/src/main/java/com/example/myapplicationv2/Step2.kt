@@ -213,6 +213,8 @@ class Step2 : Base() {
         val curentVoice = intent.getStringExtra("curentVoice")
         val curentAPIKey = intent.getStringExtra("curentAPIKey")
 
+        Log.d("currentapik", "onCreate: " +curentAPIKey.toString())
+
         titleStep2 = findViewById(R.id.titlestep2)
 
         val predefinedTexts = listOf("Affirmation 1", "Affirmation 2")
@@ -222,13 +224,13 @@ class Step2 : Base() {
         }
 
         addButton.setOnClickListener {
-            if (userTexts.size < 8) {
+            if (userTexts.size < 6) {
                 // Ajout d'une nouvelle affirmation vide
                 val newText = ""
                 userTexts.add(newText)
                 addTextView(newText, userTexts)
             } else {
-                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (8).", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (6).", Toast.LENGTH_SHORT).show()
             }
         }
 
