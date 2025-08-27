@@ -43,6 +43,9 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
+import androidx.activity.OnBackPressedCallback
+import kotlin.math.min
+import kotlin.math.max
 
 
 class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
@@ -78,6 +81,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         private const val FADE_OUT_DURATION_SECONDS = 20 // 20 secondes
         private const val AFFIRMATION_DELAY_SECONDS = 10   // 10 secondes
         private const val FADE_IN_DURATION_SECONDS = 5
+        private const val GAP_BETWEEN_AFFIRMATIONS_SECONDS = 10 // silence entre 2 affirmations
     }
 
     override fun getLayoutId(): Int {
@@ -98,6 +102,13 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             bringToFront()
             player = exoPlayer
         }
+    onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // Ici on ne fait rien → le bouton retour est désactivé
+            // Tu peux afficher un Toast si tu veux informer l’utilisateur :
+            // Toast.makeText(this@MeditationPlay, "Retour désactivé", Toast.LENGTH_SHORT).show()
+        }
+    })
 
     exoPlayer = ExoPlayer.Builder(this).build().also { exo ->
 
@@ -222,7 +233,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val isIntroEnabled = intent.getBooleanExtra("isIntroEnabled", false)
         var introFilePath: String? = null
         if (isIntroEnabled) {
-            introFilePath = copyRawResourceToInternalStorage(R.raw.introfr, "intromeditation.mp3")
+            introFilePath = copyRawResourceToInternalStorage(R.raw.intro, "intromeditation.mp3")
             if (introFilePath == null) {
                 //Toast.makeText(this, "Erreur lors de la copie du fichier d'intro.", Toast.LENGTH_SHORT).show()
                 Log.e("MeditationPlay", "Échec de la copie du fichier d'intro.")
@@ -382,27 +393,27 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     ) {
         showOverlay()
 
-        /* ───────────────────── Vérifications ───────────────────── */
+        /* ───────────────────── Vérifs fichiers ───────────────────── */
         val bowlStartFile = File(bowlStartPath)
         val musicFile     = File(musicPath)
         val bowlEndFile   = File(bowlEndPath)
         if (!bowlStartFile.exists() || !musicFile.exists() || !bowlEndFile.exists()) {
-            runOnUiThread {
-                //Toast.makeText(this, "Un des fichiers audio est introuvable.", Toast.LENGTH_SHORT).show()
-                hideOverlay()
-            }
+            runOnUiThread { hideOverlay() }
             callback(false); return
+        }
+        if (affirmationPaths.isEmpty()) {
+            // pas d’affirmations : on mixe juste bol + musique + bol fin
+            // (le reste de la fonction gère ce cas aussi via affIndices vides)
         }
 
         val bowlStartDurationSeconds = getAudioDurationSeconds(bowlStartPath)
         val bowlEndDurationSeconds   = getAudioDurationSeconds(bowlEndPath)
         val loopedMusicDuration      = selectedDurationInSeconds
-        val DBvalue      = -12 + (seekBarValue*2)
+        val DBvalue                  = -12 + (seekBarValue * 2)
 
-        val potentialAffirmationCount = selectedDurationInSeconds / AFFIRMATION_DELAY_SECONDS
-        val filterComplexBuilder      = StringBuilder()
+        val filterComplexBuilder = StringBuilder()
 
-        /* ───────────────────── Flux MUSIQUE (fade-in / fade-out) ───────────────────── */
+        /* ───────────────────── MUSIQUE (fade in/out) ───────────────────── */
         val musicFilter = """
         [1:a]volume=${DBvalue}dB,
              atrim=duration=$loopedMusicDuration,
@@ -411,71 +422,102 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                    afade=t=out:st=${loopedMusicDuration - FADE_OUT_DURATION_SECONDS}:d=$FADE_OUT_DURATION_SECONDS[music_ready];
     """.trimIndent()
 
+        val introDur = introPath?.let { getAudioDurationSeconds(it).toInt() } ?: 0
+
         if (introPath != null) {
-            // Avec intro : bol de début = input 0, intro = input 3
+            // inputs: 0=bowlStart, 1=music, 2=bowlEnd, 3=intro, 4..=voices (occurrences)
             filterComplexBuilder.append(musicFilter).append(' ')
             filterComplexBuilder.append("[0:a][3:a]concat=n=2:v=0:a=1[start_intro]; ")
             filterComplexBuilder.append("[start_intro][music_ready]amix=inputs=2:duration=longest[mix1]; ")
         } else {
-            // Sans intro : bol de début = input 0
+            // inputs: 0=bowlStart, 1=music, 2=bowlEnd, 3..=voices (occurrences)
             filterComplexBuilder.append(musicFilter).append(' ')
             filterComplexBuilder.append("[0:a][music_ready]amix=inputs=2:duration=longest[mix1]; ")
         }
 
-        /* ───────────────────── Insertion des affirmations ───────────────────── */
-        val affIndices = mutableListOf<String>()
-        for (i in 0 until potentialAffirmationCount) {
-            val startOffset = AFFIRMATION_DELAY_SECONDS * (i + 1) +
-                    (introPath?.let { getAudioDurationSeconds(it).toInt() } ?: 0)
-            if (selectedDurationInSeconds - startOffset < 10) break   // marge de fin
+        /* ───────────────────── Planification des affirmations en boucle ─────────────────────
+           Règles :
+           - chaque affirmation joue jusqu’à 10 s max (ou moins si fichier plus court / temps restant),
+           - silence ~GAP_BETWEEN_AFFIRMATIONS_SECONDS entre deux,
+           - on boucle 1,2,3,1,2,3… jusqu’à selectedDurationInSeconds.
+        */
+        data class Occ(val idxInList: Int, val playable: Float, val delayMs: Int)
 
-            val delayMs   = startOffset * 1000
-            val inputIdx  = if (introPath != null) 4 + i else 3 + i
+        val occurrences = mutableListOf<Occ>()
+        var nextStart = introDur + AFFIRMATION_DELAY_SECONDS // 1re aff pas trop tôt (garde ton comportement)
+
+        var cursor = 0
+        while (nextStart < selectedDurationInSeconds - 1 && affirmationPaths.isNotEmpty()) {
+            val idxInList = cursor % affirmationPaths.size
+            val path = affirmationPaths[idxInList]
+            if (!File(path).exists()) {
+                cursor++
+                continue
+            }
+
+            val voiceDur = getAudioDurationSeconds(path)
+
+            // Temps restant avant la fin
+            val remainingFromStart = selectedDurationInSeconds - nextStart - 1 // marge 1s
+
+            // Condition : si la durée de la voix + le gap ne rentrent pas, on arrête la boucle
+            if (voiceDur > remainingFromStart) break
+            if (voiceDur + GAP_BETWEEN_AFFIRMATIONS_SECONDS > remainingFromStart) break
+
+            // Durée jouée = min(10s, durée réelle, ce qu'il reste)
+            val playable = min(10f, min(voiceDur, remainingFromStart.toFloat()))
+            if (playable <= 0.2f) break
+
+            val delayMs = nextStart * 1000
+            occurrences += Occ(idxInList, playable, delayMs)
+
+            // avance timeline
+            nextStart += playable.toInt() + GAP_BETWEEN_AFFIRMATIONS_SECONDS
+            cursor++
+        }
+
+        /* ───────────────────── Filtres pour chaque occurrence ───────────────────── */
+        val affIndices = mutableListOf<String>()
+        val voiceBaseInputIdx = if (introPath != null) 4 else 3
+
+        for (i in occurrences.indices) {
+            val (idxInList, playable, delayMs) = occurrences[i]
+            val inputIdx = voiceBaseInputIdx + i // chaque occurrence est un nouvel input
             filterComplexBuilder.append(
-                "[$inputIdx:a]atrim=duration=5,asetpts=PTS-STARTPTS," +
-                        "adelay=$delayMs|$delayMs[aff_delayed_$i]; "
+                "[$inputIdx:a]atrim=duration=$playable,asetpts=PTS-STARTPTS," +
+                        "adelay=${delayMs}|${delayMs}[aff_delayed_$i]; "
             )
             affIndices += "[aff_delayed_$i]"
         }
-        val totalInputs = 1 + affIndices.size          // 1 = [mix1]
 
-        val musicWeight = 1f     // poids appliqué à la musique+bol
-        val voiceWeight = 0.8f     // poids appliqué à chaque affirmation
-
-// construit la chaîne "1|0.5|0.5|..."    ← mix1|aff0|aff1|...
-        val weights = buildString {
-            append(musicWeight)
-            repeat(affIndices.size) { append("|$voiceWeight") }
-        }
-
-        val mixStreams = "[mix1]" + affIndices.joinToString("")
+        /* ───────────────────── Mix final musique + voix ───────────────────── */
+        val totalInputs = 1 + affIndices.size // 1 = [mix1]
         if (affIndices.isNotEmpty()) {
+            val musicWeight = 1f
+            val voiceWeight = 0.8f
+            val weights = buildString {
+                append(musicWeight)
+                repeat(affIndices.size) { append("|$voiceWeight") }
+            }
+            val mixStreams = "[mix1]" + affIndices.joinToString("")
             filterComplexBuilder.append(
-                "$mixStreams amix=" +
-                        "inputs=$totalInputs:" +
-                        "duration=longest:" +
-                        "normalize=0:" +
-                        "dropout_transition=0:" +
-                        "weights=$weights" +      // ← ICI : les voix > musique
-                        "[aout]; "
+                "$mixStreams amix=inputs=$totalInputs:duration=longest:normalize=0:" +
+                        "dropout_transition=0:weights=$weights[aout]; "
             )
         } else {
             filterComplexBuilder.append("[mix1]anull[aout]; ")
         }
 
         /* ───────────────────── Bol de fin ───────────────────── */
-        val bowlEndDelayMs = ((loopedMusicDuration - bowlEndDurationSeconds) * 1000).toInt()
+        val bowlEndDelayMs = max(0, ((loopedMusicDuration - bowlEndDurationSeconds) * 1000).toInt())
         filterComplexBuilder.append(
             "[2:a]atrim=duration=$bowlEndDurationSeconds,asetpts=PTS-STARTPTS," +
                     "adelay=$bowlEndDelayMs|$bowlEndDelayMs[bowl_end_delayed]; "
         )
         filterComplexBuilder.append(
-            "[aout][bowl_end_delayed]amix=" +
-                    "inputs=2:" +
-                    "duration=longest:" +
-                    "normalize=0" +
-                    "[aout]"
+            "[aout][bowl_end_delayed]amix=inputs=2:duration=longest:normalize=0[aout]"
         )
+
         val filterComplex = filterComplexBuilder.toString()
 
         /* ───────────────────── Commande FFmpeg ───────────────────── */
@@ -486,8 +528,9 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
             append("-i \"$bowlEndPath\" ")
             introPath?.let { append("-i \"$it\" ") }
 
-            for (i in 0 until potentialAffirmationCount) {
-                append("-i \"${affirmationPaths[i % affirmationPaths.size]}\" ")
+            // Ajoute un -i pour CHAQUE occurrence (réutilise les mêmes fichiers en boucle)
+            occurrences.forEach { occ ->
+                append("-i \"${affirmationPaths[occ.idxInList]}\" ")
             }
 
             append("-filter_complex \"$filterComplex\" ")
@@ -501,15 +544,13 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         FFmpegKit.executeAsync(cmd, { session ->
             if (ReturnCode.isSuccess(session.returnCode)) {
                 runOnUiThread {
-                    //Toast.makeText(this, "Mixage réussi ! Fichier : $outputPath", Toast.LENGTH_SHORT).show()
-                    findViewById<ImageView>(R.id.imageView4)        // ← nouvelle ligne
+                    findViewById<ImageView>(R.id.imageView4)
                         .setImageResource(R.drawable.logo_my_affirmation_tete_et_texte_vert)
                     hideOverlay()
                 }
                 callback(true)
             } else {
                 runOnUiThread {
-                    //Toast.makeText(this, "Échec du mixage.", Toast.LENGTH_SHORT).show()
                     Log.e("MeditationPlay", session.allLogsAsString)
                     hideOverlay()
                 }
@@ -525,8 +566,9 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     circularProgressText.text = "$pct%"
                 }
             }
-        }, { /* statistics callback optionnel */ })
+        }, { /* stats optionnelles */ })
     }
+
 
 
     private fun getAudioDurationSeconds(filePath: String): Float {
