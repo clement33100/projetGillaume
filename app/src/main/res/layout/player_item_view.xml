@@ -11,7 +11,8 @@
     android:paddingBottom="10dp"
     android:clipToPadding="false"
     android:clipChildren="false"
-    android:elevation="12dp">
+    android:elevation="0dp"
+    android:stateListAnimator="@null">
 
     <androidx.media3.ui.PlayerView
         android:id="@+id/player_view_inline"

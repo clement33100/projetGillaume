@@ -547,7 +547,7 @@ class Tavoix : Base() {
             if (index in userText.indices) userText.removeAt(index)
             if (index in 0 until generateFiles.size) generateFiles.removeAt(index)
             row.findViewById<PlayerView>(R.id.player_view_inline)?.player?.release() // ⬅️ release
-            //            container.removeView(row)
+            container.removeView(row)
             updateAffirmationLabels()
         }
 
