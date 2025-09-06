@@ -73,6 +73,8 @@
     <string name="txt_rules4">Elige la \n <b>Duración</b> de tu \n archivo de audio</string>
     <string name="txt_rules5"><b>Escucha</b> tus \n afirmaciones\n cada día</string>
 
+
+
     <!-- Home / botones -->
     <string name="lien_texte">🎁 Recibe tu regalo de bienvenida haciendo clic aquí.</string>
     <string name="btn_create_new">Crear nuevo</string>
@@ -99,12 +101,12 @@
     <string name="upload_mp3">Subir MP3</string>
     <string name="musique">Música</string>
     <string name="silence">Silencio</string>
-    <string name="clic_sur_musique">haz clic en la música que prefieras</string>
+    <string name="clic_sur_musique">haz clic en la música \n que prefieras</string>
     <string name="ton_choix">Tu elección:</string>
     <string name="voyage_interieur">Viaje interior</string>
     <string name="onde_theta">Onda Theta</string>
     <string name="expansion">Expansión</string>
-
+    <string name="volume_musique">VOLUMEN DE LA MÚSICA</string>
     <!-- Paso 4: duración -->
     <string name="choisis_duree_fichier_audio">Elige la duración de tu archivo de audio</string>
     <string name="intro">Intro</string>

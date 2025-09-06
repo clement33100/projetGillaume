@@ -75,7 +75,6 @@
         <b>Listen</b> to your \n affirmations\n every day
     </string>
 
-
     <string name="lien_texte">🎁 Receive your Welcome Gift by clicking here.</string>
     <string name="btn_create_new">Create New</string>
     <string name="btn_my_affirmations">My affirmations</string>
@@ -98,11 +97,12 @@
     <string name="upload_mp3">Upload MP3</string>
     <string name="musique">Music</string>
     <string name="silence">Silence</string>
-    <string name="clic_sur_musique">click on the music of your choice</string>
+    <string name="clic_sur_musique">click on the music \n of your choice</string>
     <string name="ton_choix">Your choice:</string>
     <string name="voyage_interieur">Inner Journey</string>
     <string name="onde_theta">Theta Wave</string>
     <string name="expansion">Expansion</string>
+    <string name="volume_musique">MUSIC VOLUME</string>
 
     <string name="choisis_duree_fichier_audio">Choose the Duration of Your Audio File</string>
     <string name="intro">Intro</string>

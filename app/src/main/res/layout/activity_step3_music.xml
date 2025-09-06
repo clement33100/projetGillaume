@@ -37,24 +37,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Texte principal -->
+
+            <!-- ScrollView pour les uploads et les boutons dynamiques -->
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
                 android:layout_marginStart="60dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginEnd="60dp"
-                android:text="Choisis ta Musique"
+                android:text="@string/choisis_ta_musique"
                 android:textAlignment="center"
                 android:textColor="@color/grey"
                 android:textSize="27sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.507"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- ScrollView pour les uploads et les boutons dynamiques -->
             <ScrollView
                 android:id="@+id/scrollView"
                 android:layout_width="350dp"
@@ -321,7 +322,7 @@
                 android:layout_height="74dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/green"
-                android:text="Silence"
+                android:text="@string/silence"
                 android:textSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.494"
@@ -402,7 +403,7 @@
                 android:hyphenationFrequency="none"
                 android:maxLines="3"
                 android:padding="2dp"
-                android:text="clic sur la musique \n de ton choix"
+                android:text="@string/clic_sur_musique"
                 android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="19sp"
@@ -417,7 +418,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="VOLUME MUSIQUE"
+                android:text="@string/volume_musique"
                 android:textColor="@color/grey"
                 android:textSize="19sp"
                 android:textStyle="bold"
@@ -430,7 +431,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="68dp"
-                android:text="Ton choix :"
+                android:text="@string/ton_choix"
                 android:textColor="@color/grey"
                 android:textSize="19sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
