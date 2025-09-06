@@ -129,7 +129,7 @@
     <string name="btn_new_advice">My Affirmations</string>
     <string name="visualisation">Visualization</string>
 
-    <string name="fichier_telecharge">Fichier téléchargé dans Téléchargements.</string>
+    <string name="fichier_telecharge">Find your affirmation in your Downloads folder 🙂</string>
     <string name="erreur_mediastore">Error inserting into MediaStore.</string>
 
     <string name="linkform">https://docs.google.com/forms/d/e/1FAIpQLSfWYpQX4Pp3tmJXk-a1m1BdsatOWc-VjJoaqf28jh8IX_STFw/viewform?usp=dialog</string>
