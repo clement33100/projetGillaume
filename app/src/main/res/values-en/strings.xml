@@ -134,5 +134,6 @@
 
     <string name="linkform">https://docs.google.com/forms/d/e/1FAIpQLSfWYpQX4Pp3tmJXk-a1m1BdsatOWc-VjJoaqf28jh8IX_STFw/viewform?usp=dialog</string>
     <string name="toastMagieOpere">Be patient, the magic is working...</string>
+    <string name="titreEtape2Voix">Choose the Voice You Prefer</string>
 
 </resources>

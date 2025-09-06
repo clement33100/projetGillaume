@@ -134,5 +134,5 @@
 
     <string name="fichier_telecharge">Fichier téléchargé dans Téléchargements.</string>
     <string name="erreur_mediastore">Erreur lors de l"'"insertion dans MediaStore.</string>
-
+    <string name="titreEtape2Voix">Choisis la Voix\nque tu Préfères</string>
 </resources>
