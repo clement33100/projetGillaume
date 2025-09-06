@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/btn_affirm"
-        android:title="Menu Principal" />
+        android:title="@string/menuItem1" />
     <item
         android:id="@+id/btn_new"
-        android:title="Créer Nouveau" />
+        android:title="@string/menuItem2" />
     <item
         android:id="@+id/btn_myAffirm"
-        android:title="Mes Affirmations" />
+        android:title="@string/menuItem3" />
 
     <item
         android:id="@+id/btn_advices"
-        android:title="Conseil Pratiques" />
+        android:title="@string/menuItem4" />
     <item
         android:id="@+id/btn_hdiw"
-        android:title="Comment ça Marche?"/>
+        android:title="@string/menuItem5"/>
 </menu>

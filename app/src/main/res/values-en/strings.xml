@@ -144,4 +144,9 @@
     <string name="supprimer_definitivement">Delete this file permanently?</string>
     <string name="supprimer">Delete</string>
 
+    <string name="menuItem1">Main Menu</string>
+    <string name="menuItem2">Create New</string>
+    <string name="menuItem3">My Affirmations</string>
+    <string name="menuItem4">Practical Tips</string>
+    <string name="menuItem5">How It Works?</string>
 </resources>

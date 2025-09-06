@@ -150,4 +150,9 @@
     <string name="supprimer_definitivement">¿Eliminar este archivo de forma permanente?</string>
     <string name="supprimer">Delete</string>
 
+    <string name="menuItem1">Menú Principal</string>
+    <string name="menuItem2">Crear Nuevo</string>
+    <string name="menuItem3">Mis Afirmaciones</string>
+    <string name="menuItem4">Consejos Prácticos</string>
+    <string name="menuItem5">¿Cómo Funciona?</string>
 </resources>

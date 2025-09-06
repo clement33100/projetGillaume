@@ -143,4 +143,10 @@
     <string name="supprimer">Supprimer</string>
 
     <string name="titreEtape2Voix">Choisis la Voix\nque tu Préfères</string>
+
+    <string name="menuItem1">Menu Principal</string>
+    <string name="menuItem2">Créer Nouveau</string>
+    <string name="menuItem3">Mes Affirmations</string>
+    <string name="menuItem4">Conseil Pratiques</string>
+    <string name="menuItem5">Comment ça Marche?</string>
 </resources>
