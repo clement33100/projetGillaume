@@ -10,7 +10,7 @@
         android:id="@+id/dialogMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Renommer ce fichier"
+        android:text="@string/renommer_fichier"
         android:textSize="18sp"
         android:textColor="#000000"
         android:gravity="center"
@@ -20,7 +20,7 @@
         android:id="@+id/renameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nouveau nom"
+        android:hint="@string/nouveau_nom"
         android:padding="13dp"
         android:textSize="16sp" />
 
@@ -30,13 +30,15 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:paddingTop="8dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:paddingBottom="16dp"> <!-- Ajout d'un paddingBottom ici -->
 
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirmer"
+            android:text="@string/confirmer"
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_cancel_background"
             android:textColor="#FFFFFF" />
@@ -45,7 +47,7 @@
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Annuler"
+            android:text="@string/annuler"
             android:background="@drawable/button_confirm_background"
             android:textColor="#FFFFFF" />
     </LinearLayout>

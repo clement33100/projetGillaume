@@ -136,4 +136,12 @@
     <string name="toastMagieOpere">Be patient, the magic is working...</string>
     <string name="titreEtape2Voix">Choose the Voice You Prefer</string>
 
+
+    <string name="renommer_fichier">Rename this file</string>
+    <string name="nouveau_nom">New name</string>
+    <string name="confirmer">Confirm</string>
+    <string name="annuler">Cancel</string>
+    <string name="supprimer_definitivement">Delete this file permanently?</string>
+    <string name="supprimer">Delete</string>
+
 </resources>

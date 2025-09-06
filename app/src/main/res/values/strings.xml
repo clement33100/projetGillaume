@@ -134,5 +134,13 @@
 
     <string name="fichier_telecharge">Fichier téléchargé dans Téléchargements.</string>
     <string name="erreur_mediastore">Erreur lors de l"'"insertion dans MediaStore.</string>
+
+    <string name="renommer_fichier">Renommer ce fichier</string>
+    <string name="nouveau_nom">Nouveau nom</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="annuler">Annuler</string>
+    <string name="supprimer_definitivement">Supprimer définitivement ce fichier ?</string>
+    <string name="supprimer">Supprimer</string>
+
     <string name="titreEtape2Voix">Choisis la Voix\nque tu Préfères</string>
 </resources>

@@ -10,7 +10,7 @@
         android:id="@+id/dialogMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Supprimer définitivement ce fichier ?"
+        android:text="@string/supprimer_definitivement"
         android:textSize="18sp"
         android:textColor="#000000"
         android:gravity="center"
@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:padding="8dp">
 
         <Button
@@ -28,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Supprimer"
+            android:text="@string/supprimer"
             android:layout_marginEnd="10dp"
             android:background="@drawable/button_confirm_background"
             android:textColor="#FFFFFF" />
@@ -38,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Annuler"
+            android:text="@string/annuler"
             android:background="@drawable/button_cancel_background"
             android:textColor="#FFFFFF" />
     </LinearLayout>
