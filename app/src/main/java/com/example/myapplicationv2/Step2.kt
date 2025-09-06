@@ -246,7 +246,7 @@ class Step2 : Base() {
             if (base1Unchanged && base2Unchanged) {
                 Toast.makeText(
                     this,
-                    "Modifie au moins l’une des deux affirmations proposées avant de continuer.",
+                    getString(R.string.toastModifAffirm),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener        // ⬅ stop : on ne continue pas

@@ -149,4 +149,9 @@
     <string name="menuItem3">My Affirmations</string>
     <string name="menuItem4">Practical Tips</string>
     <string name="menuItem5">How It Works?</string>
+
+    <string name="titreAdvices">PRACTICAL TIPS</string>
+    <string name="toastSelectVoice">Select a voice</string>
+    <string name="toastDisconected">Oops! It looks like you are offline…</string>
+    <string name="toastModifAffirm">Edit at least one of the two suggested affirmations</string>
 </resources>

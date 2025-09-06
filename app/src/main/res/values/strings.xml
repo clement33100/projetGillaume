@@ -149,4 +149,10 @@
     <string name="menuItem3">Mes Affirmations</string>
     <string name="menuItem4">Conseil Pratiques</string>
     <string name="menuItem5">Comment ça Marche?</string>
+
+    <string name="titreAdvices">CONSEILS PRATIQUES</string>
+    <string name="toastSelectVoice">Sélectionner une voix</string>
+    <string name="toastDisconected">Oops ! Il semble que tu sois hors ligne…</string>
+    <string name="toastModifAffirm">Modifie au moins l’une des deux affirmations proposées</string>
+
 </resources>

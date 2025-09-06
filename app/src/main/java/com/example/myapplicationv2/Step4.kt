@@ -71,7 +71,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
         val updateDuration = {
             val minutes = numberPickerMinutes.value
             val seconds = numberPickerSeconds.value
-            textViewDuration.text = "$minutes minutes $seconds secondes"
+            textViewDuration.text = "$minutes min $seconds sec"
         }
 
         numberPickerMinutes.setOnValueChangedListener { _, _, _ -> updateDuration() }

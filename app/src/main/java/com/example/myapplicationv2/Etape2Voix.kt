@@ -143,13 +143,15 @@ class Etape2Voix : Base() {  // Hérite de Base
             Log.d("tatata", "onCreate: "+currentApiKey.toString())
 
             if (!isOnline()) {
-                Toast.makeText(this@Etape2Voix, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG
+                Toast.makeText(this@Etape2Voix, getString(R.string.toastDisconected)
+                    , Toast.LENGTH_LONG
                 ).show()
                 return@setOnClickListener          // ← on ne lance pas l'activité
             }
 
             if (curentVoice == null) {
-                Toast.makeText(this, "Sélectionner une voix", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toastSelectVoice)
+                    , Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, Step2::class.java)
                 intent.putExtra("curentVoice", curentVoice)

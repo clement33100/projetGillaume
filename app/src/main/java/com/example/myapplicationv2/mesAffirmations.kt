@@ -35,6 +35,7 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
 
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 1) Posez le layout
@@ -124,7 +125,7 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
 
     }
     private fun switchLanguage(tag: String) {
-        LocaleHelper.setLocale(tag)
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
         recreate()          // recharge l’activité courante pour appliquer la langue
     }
 
