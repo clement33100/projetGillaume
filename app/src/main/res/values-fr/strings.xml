@@ -135,5 +135,6 @@
     <string name="erreur_mediastore">Erreur lors de l"'"insertion dans MediaStore.</string>
 
     <string name="linkform">https://forms.gle/RtJFDrkqoJrxEhzh6</string>
+    <string name="toastMagieOpere">Patience, la magie opère...</string>
 
 </resources>

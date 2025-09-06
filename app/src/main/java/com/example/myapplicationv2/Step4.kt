@@ -163,11 +163,11 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                     if (doitAfficherToast) {
                         // Affiche le Toast avant de lancer la page suivante
-                        Toast.makeText(this, "Patience, la magie opère…", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.toastMagieOpere), Toast.LENGTH_SHORT).show()
                     }
 
                     // Délai de 3 secondes avant de passer à la page suivante
-                    val delay = if (doitAfficherToast) 2000L else 0L
+                    val delay = if (doitAfficherToast) 3000L else 0L
 
                     btn_valider.postDelayed({
 

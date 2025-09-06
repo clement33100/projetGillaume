@@ -132,5 +132,7 @@
     <string name="fichier_telecharge">Fichier téléchargé dans Téléchargements.</string>
     <string name="erreur_mediastore">Error inserting into MediaStore.</string>
 
-    <string name="linkform"> https://forms.gle/6Xq3u7kAaJgdhW1G7</string>
+    <string name="linkform">https://docs.google.com/forms/d/e/1FAIpQLSfWYpQX4Pp3tmJXk-a1m1BdsatOWc-VjJoaqf28jh8IX_STFw/viewform?usp=dialog</string>
+    <string name="toastMagieOpere">Be patient, the magic is working...</string>
+
 </resources>
