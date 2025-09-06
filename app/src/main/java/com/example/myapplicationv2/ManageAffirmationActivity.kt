@@ -189,9 +189,9 @@ class ManageAffirmationActivity : Base() {
                             input.copyTo(output)
                         }
                     }
-                    Toast.makeText(this, "Fichier téléchargé dans Téléchargements.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.fichier_telecharge), Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "Erreur lors de l'insertion dans MediaStore.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.erreur_mediastore), Toast.LENGTH_SHORT).show()
                 }
             } else {
                 // Android < Q : copie manuelle dans /Download

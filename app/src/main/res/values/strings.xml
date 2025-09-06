@@ -130,4 +130,7 @@
 
     <string name="linkform">https://forms.gle/RtJFDrkqoJrxEhzh6</string>
 
+    <string name="fichier_telecharge">Fichier téléchargé dans Téléchargements.</string>
+    <string name="erreur_mediastore">Erreur lors de l"'"insertion dans MediaStore.</string>
+
 </resources>
