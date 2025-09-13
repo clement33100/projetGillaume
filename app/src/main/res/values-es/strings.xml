@@ -8,7 +8,7 @@
     <string name="language_fr">Francés</string>
     <string name="language_eng">Inglés</string>
     <string name="language_esp">Español</string>
-    <string name="titletavoix">Graba tus afirmaciones</string>
+    <string name="titletavoix">Graba tus Afirmaciones</string>
 
     <!-- Accesibilidad / Drawer -->
     <string name="open">Abrir menú</string>
@@ -91,13 +91,13 @@
     <string name="click_on_the_voice">haz clic en la voz \n que prefieras</string>
 
     <!-- Paso 2: texto -->
-    <string name="titlestep2">Escribe tus afirmaciones</string>
+    <string name="titlestep2">Escribe tus\nAfirmaciones</string>
     <string name="btn_show_advices">Consejo práctico</string>
     <string name="add_new_affirmation">NUEVA</string>
     <string name="ok_button">OK</string>
 
     <!-- Paso 3: música -->
-    <string name="choisis_ta_musique">Elige tu música</string>
+    <string name="choisis_ta_musique">Elige tu Música</string>
     <string name="upload_mp3">Subir MP3</string>
     <string name="musique">Música</string>
     <string name="silence">Silencio</string>
@@ -108,7 +108,7 @@
     <string name="expansion">Expansión</string>
     <string name="volume_musique">VOLUMEN DE LA MÚSICA</string>
     <!-- Paso 4: duración -->
-    <string name="choisis_duree_fichier_audio">Elige la duración de tu archivo de audio</string>
+    <string name="choisis_duree_fichier_audio">Elige la Duración de tu Archivo de Audio</string>
     <string name="intro">Intro</string>
     <string name="duree">Duración:</string>
     <string name="default_duration">00 minutos 00 segundos</string>
@@ -141,7 +141,7 @@
     <string name="erreur_mediastore">Error al insertar en MediaStore.</string>
     <string name="linkform">https://docs.google.com/forms/d/e/1FAIpQLSeOqv-pycOhf-v8zC98fxlZri63H7TxPifA0SDN4vj7L2B7Eg/viewform?usp=dialog</string>
     <string name="toastMagieOpere"> Ten paciencia, la magia está actuando...</string>
-    <string name="titreEtape2Voix">Elige la voz que prefieras</string>
+    <string name="titreEtape2Voix">Elige la voz\nque prefieras</string>
 
     <string name="renommer_fichier">Renombrar este archivo</string>
     <string name="nouveau_nom">Nuevo nombre</string>

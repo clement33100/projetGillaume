@@ -88,12 +88,12 @@
     <string name="your_choice">Your choice:</string>
     <string name="click_on_the_voice">click on the voice \n you want</string>
 
-    <string name="titlestep2">Write Your Affirmations</string>
+    <string name="titlestep2">Write Your\nAffirmations</string>
     <string name="btn_show_advices">Practical Advice</string>
     <string name="add_new_affirmation">NEW</string>
     <string name="ok_button">OK</string>
 
-    <string name="choisis_ta_musique">Choose Your Music</string>
+    <string name="choisis_ta_musique">Choose Your\nMusic</string>
     <string name="upload_mp3">Upload MP3</string>
     <string name="musique">Music</string>
     <string name="silence">Silence</string>
@@ -134,7 +134,7 @@
 
     <string name="linkform">https://docs.google.com/forms/d/e/1FAIpQLSfWYpQX4Pp3tmJXk-a1m1BdsatOWc-VjJoaqf28jh8IX_STFw/viewform?usp=dialog</string>
     <string name="toastMagieOpere">Be patient, the magic is working...</string>
-    <string name="titreEtape2Voix">Choose the Voice You Prefer</string>
+    <string name="titreEtape2Voix">Choose the Voice\nYou Prefer</string>
 
 
     <string name="renommer_fichier">Rename this file</string>
