@@ -76,16 +76,13 @@
             android:name=".hdiw1"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".mesAffirmations"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Etape2Voix"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PageAcceuil"
+            android:name=".mesAffirmations"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
