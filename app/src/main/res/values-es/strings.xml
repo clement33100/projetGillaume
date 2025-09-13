@@ -76,7 +76,7 @@
 
 
     <!-- Home / botones -->
-    <string name="lien_texte">🎁 Recibe tu regalo de bienvenida haciendo clic aquí.</string>
+    <string name="lien_texte">🎁 Recibe tu regalo de bienvenida\nhaciendoclic aquí.</string>
     <string name="btn_create_new">Crear nuevo</string>
     <string name="btn_my_affirmations">Mis afirmaciones</string>
     <string name="btn_how_it_works">¿Cómo funciona?</string>

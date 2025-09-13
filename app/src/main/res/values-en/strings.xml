@@ -75,7 +75,7 @@
         <b>Listen</b> to your \n affirmations\n every day
     </string>
 
-    <string name="lien_texte">🎁 Receive your Welcome Gift by clicking here.</string>
+    <string name="lien_texte">🎁 Receive your Welcome Gift\nby clicking here.</string>
     <string name="btn_create_new">Create New</string>
     <string name="btn_my_affirmations">My affirmations</string>
     <string name="btn_how_it_works">How it works?</string>

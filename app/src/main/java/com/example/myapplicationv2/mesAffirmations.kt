@@ -117,18 +117,21 @@ class mesAffirmations : AppCompatActivity() {  // Hérite de Base au lieu de App
         tvSpanish.setOnClickListener { switchLanguage("es") }
 
 
-        Toast.makeText(
-            this,
-            getString(R.string.toast_bienvenue),   // <-- référence correcte à la ressource
-            Toast.LENGTH_LONG
-        ).show()
 
     }
+    private var isSwitchingLocale = false
+
     private fun switchLanguage(tag: String) {
-        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
-        recreate()          // recharge l’activité courante pour appliquer la langue
-    }
+        if (isSwitchingLocale) return  // anti double-clic pendant la transition
 
+        val newLocales = LocaleListCompat.forLanguageTags(tag)
+        val current = AppCompatDelegate.getApplicationLocales()
+        if (current == newLocales) return  // déjà sur cette langue
+
+        isSwitchingLocale = true
+        AppCompatDelegate.setApplicationLocales(newLocales)
+        // NE PAS appeler recreate() : AppCompat va recréer l’activité tout seul.
+    }
     object LocaleHelper {
         fun setLocale(languageTag: String) {
             val appLocale = LocaleListCompat.forLanguageTags(languageTag)

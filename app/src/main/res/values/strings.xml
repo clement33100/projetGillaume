@@ -73,7 +73,7 @@
     </string>
 
 
-    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue en cliquant ici.</string>
+    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue\nen cliquant ici.</string>
     <string name="btn_create_new">Créer Nouveau</string>
     <string name="btn_my_affirmations">Mes affirmations</string>
     <string name="btn_how_it_works">Comment ça Marche ?</string>
