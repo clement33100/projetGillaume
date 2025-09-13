@@ -155,4 +155,14 @@
     <string name="toastDisconected">Oops ! Il semble que tu sois hors ligne…</string>
     <string name="toastModifAffirm">Modifie au moins l’une des deux affirmations proposées</string>
 
+
+
+    <string name="affirmation_present" translatable="false"><b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>"Je suis confiant."</i></string>
+    <string name="affirmation_form" translatable="false">Écris sous la forme : <b>"Moi, [ton Prénom], je..."</b></string>
+    <string name="affirmation_positive" translatable="false"><b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter</string>
+    <string name="affirmation_words" translatable="false"><b>CHOISIS TES MOTS</b> riches de sens pour toi</string>
+    <string name="affirmation_resistance" translatable="false"><b>SURMONTE TES RÉSISTANCES</b> avec : <i>"Je m’ouvre à la possibilité de... ."</i></string>
+
+
+
 </resources>

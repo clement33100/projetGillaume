@@ -173,15 +173,15 @@ class Step2 : Base() {
             val tvAdvices = dialogView.findViewById<TextView>(R.id.tvAdvices)
 
             val adviceText = SpannableStringBuilder().apply {
-                append(formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_present), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("Écris sous la forme :<b> \"Moi, [ton Prénom], je...\"</b>", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_form), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_positive), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_words), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_resistance), 0.9f))
             }
 
             tvAdvices.text = adviceText

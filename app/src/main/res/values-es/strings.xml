@@ -91,13 +91,13 @@
     <string name="click_on_the_voice">haz clic en la voz \n que prefieras</string>
 
     <!-- Paso 2: texto -->
-    <string name="titlestep2">Escribe tus \n Afirmaciones</string>
-    <string name="btn_show_advices">Consejo Práctico</string>
+    <string name="titlestep2">Escribe tus afirmaciones</string>
+    <string name="btn_show_advices">Consejo práctico</string>
     <string name="add_new_affirmation">NUEVA</string>
     <string name="ok_button">OK</string>
 
     <!-- Paso 3: música -->
-    <string name="choisis_ta_musique">Elige tu Música</string>
+    <string name="choisis_ta_musique">Elige tu música</string>
     <string name="upload_mp3">Subir MP3</string>
     <string name="musique">Música</string>
     <string name="silence">Silencio</string>
@@ -108,7 +108,7 @@
     <string name="expansion">Expansión</string>
     <string name="volume_musique">VOLUMEN DE LA MÚSICA</string>
     <!-- Paso 4: duración -->
-    <string name="choisis_duree_fichier_audio">Elige la Duración de tu Archivo de Audio</string>
+    <string name="choisis_duree_fichier_audio">Elige la duración de tu archivo de audio</string>
     <string name="intro">Intro</string>
     <string name="duree">Duración:</string>
     <string name="default_duration">00 minutos 00 segundos</string>
@@ -160,4 +160,12 @@
     <string name="toastSelectVoice">Selecciona una voz</string>
     <string name="toastDisconected">¡Ups! Parece que estás sin conexión…</string>
     <string name="toastModifAffirm">Modifica al menos una de las dos afirmaciones propuestas</string>
+
+    <string name="affirmation_present" translatable="false"><b>USA EL PRESENTE</b> como si ya fuera una realidad. <i>"Soy confiado."</i></string>
+    <string name="affirmation_form" translatable="false">Escribe en la forma: <b>"Yo, [tu Nombre], ..."</b></string>
+    <string name="affirmation_positive" translatable="false"><b>SÉ POSITIVO</b> céntrate en lo que quieres, no en lo que quieres evitar</string>
+    <string name="affirmation_words" translatable="false"><b>ELIGE PALABRAS</b> que tengan un significado especial para ti</string>
+    <string name="affirmation_resistance" translatable="false"><b>SUPERA TUS RESISTENCIAS</b> con: <i>"Me abro a la posibilidad de... ."</i></string>
+
+
 </resources>

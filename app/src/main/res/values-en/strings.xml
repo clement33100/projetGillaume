@@ -144,6 +144,13 @@
     <string name="supprimer_definitivement">Delete this file permanently?</string>
     <string name="supprimer">Delete</string>
 
+    <string name="affirmation_present" translatable="false"><b>USE THE PRESENT TENSE</b> as if it were already real. <i>"I am confident."</i></string>
+    <string name="affirmation_form" translatable="false">Write in the form: <b>"I, [your First Name], ..."</b></string>
+    <string name="affirmation_positive" translatable="false"><b>BE POSITIVE</b> focus on what you want, not on what you want to avoid</string>
+    <string name="affirmation_words" translatable="false"><b>CHOOSE WORDS</b> that are meaningful to you</string>
+    <string name="affirmation_resistance" translatable="false"><b>OVERCOME RESISTANCE</b> with: <i>"I open myself to the possibility of... ."</i></string>
+
+
     <string name="menuItem1">Main Menu</string>
     <string name="menuItem2">Create New</string>
     <string name="menuItem3">My Affirmations</string>
