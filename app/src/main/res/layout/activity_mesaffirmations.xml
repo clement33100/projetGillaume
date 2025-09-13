@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -8,28 +9,30 @@
     android:background="@drawable/activity_background"
     tools:context=".mesAffirmations">
 
-    <!-- Toute la page est scrollable -->
+    <!-- ScrollView englobe tout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <!-- Contenu principal -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:background="@drawable/activity_background"
+            tools:context=".step3Music">
 
             <!-- Bandeau langues -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/langBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginTop="16dp">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
                     android:id="@+id/textView2"
@@ -43,8 +46,7 @@
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginHorizontal="8dp"
                     android:text="|"
                     android:textColor="#FFFFFF" />
 
@@ -60,8 +62,7 @@
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginHorizontal="8dp"
                     android:text="|"
                     android:textColor="#FFFFFF" />
 
@@ -80,7 +81,10 @@
                 android:layout_width="264dp"
                 android:layout_height="77dp"
                 android:layout_marginTop="36dp"
-                app:srcCompat="@drawable/txt_appliname" />
+                app:srcCompat="@drawable/txt_appliname"
+                app:layout_constraintTop_toBottomOf="@+id/langBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Boutons -->
             <Button
@@ -90,7 +94,10 @@
                 android:layout_marginTop="50dp"
                 android:backgroundTint="@color/green"
                 android:text="@string/btn_create_new"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/imageView7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/btn_affirmation"
@@ -99,7 +106,10 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/green"
                 android:text="@string/btn_my_affirmations"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/btn_new"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/btn_howitworks"
@@ -108,7 +118,10 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/green"
                 android:text="@string/btn_how_it_works"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/btn_affirmation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/btn_advicesaffirmations"
@@ -117,32 +130,49 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/green"
                 android:text="@string/btn_practical_advices"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@id/btn_howitworks"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Textes -->
+            <!-- Texte diamant -->
             <TextView
                 android:id="@+id/textviewDiamant"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
+                android:paddingHorizontal="20dp"
                 android:text="@string/diamant"
-                android:textSize="19sp" />
+                android:textSize="19sp"
+                app:layout_constraintTop_toBottomOf="@id/btn_advicesaffirmations"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <!-- Texte lien -->
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
+                android:paddingHorizontal="20dp"
                 android:text="@string/lien_texte"
-                android:textSize="19sp" />
+                android:textSize="19sp"
+                app:layout_constraintTop_toBottomOf="@id/textviewDiamant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <!-- Menu latéral (optionnel) -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
