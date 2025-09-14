@@ -119,7 +119,7 @@
 
     <!-- Sección: Mis afirmaciones -->
     <string name="mes_affirmations">MIS AFIRMACIONES</string>
-    <string name="affirmation_no_data">Aún no tienes intenciones. Crea tu archivo de audio personalizado haciendo clic en Crear nuevo.</string>
+    <string name="affirmation_no_data">Todavía no tienes ninguna Afirmación. Crea tu archivo de audio personalizado haciendo clic en Crear nuevo.</string>
     <string name="create_new">Crear nuevo</string>
     <string name="main_menu">Menú principal</string>
 

@@ -113,7 +113,7 @@
     <string name="progress_description">Progression de l"'"audio : 0 pour cent</string>
 
     <string name="mes_affirmations">MES AFFIRMATIONS</string>
-    <string name="affirmation_no_data">Vous n"'"avez encore aucune Intentions. Créez votre fichier audio personalisé en cliquant sur Créer nouveau.</string>
+    <string name="affirmation_no_data">Vous n"'"avez encore aucune Affirmation. Créez votre fichier audio personalisé en cliquant sur Créer nouveau.</string>
     <string name="create_new">Créer Nouveau</string>
     <string name="main_menu">Menu principal</string>
 

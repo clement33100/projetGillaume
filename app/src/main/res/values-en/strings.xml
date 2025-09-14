@@ -114,7 +114,7 @@
     <string name="progress_description">Audio Progress: 0 percent</string>
 
     <string name="mes_affirmations">MY AFFIRMATIONS</string>
-    <string name="affirmation_no_data">You have no intentions yet. Create your custom audio file by clicking on Create New.</string>
+    <string name="affirmation_no_data"> You don’t have any Affirmation yet. Create your custom audio file by clicking on Create New.</string>
     <string name="create_new">Create New</string>
     <string name="main_menu">Main Menu</string>
 

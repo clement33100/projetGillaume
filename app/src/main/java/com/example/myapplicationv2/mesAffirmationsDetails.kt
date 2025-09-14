@@ -147,8 +147,6 @@ class mesAffirmationsDetails : Base() {  // Hérite de Base au lieu de AppCompat
 
             textEdit.visibility = View.VISIBLE
 
-            // Si le dossier est vide
-            Toast.makeText(this, "Aucun fichier dans le dossier affirmations.", Toast.LENGTH_SHORT).show()
         }
     }
 }
