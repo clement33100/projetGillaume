@@ -9,7 +9,10 @@
     android:background="@drawable/activity_background"
     tools:context=".Advices"
     >
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
 
     <!-- Contenu principal de l'activité -->
@@ -50,120 +53,129 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- ScrollView principal pour le contenu -->
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+
+
+
+                <!-- Texte Explicatif 1 -->
+
+        <!-- Texte Explicatif 2 -->
+
+        <!-- Titre de la Visualisation -->
+        <TextView
+            android:id="@+id/txt_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:fontFamily="@font/customfont"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/txt_explainadive"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <TextView
+            android:id="@+id/txt_explain2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/customfont"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/txt_explainadive2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
+
+        <TextView
+            android:id="@+id/txt_explain3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/customfont"
+            android:gravity="center"
+            android:text="@string/visualisation"
+            android:textSize="27dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain2" />
+
+                <!-- Texte Explicatif 3 -->
+
+        <!-- Texte Explicatif 4 -->
+
+        <!-- Bouton Mes Affirmations -->
+        <TextView
+            android:id="@+id/txt_explain4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/customfont"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/txt_explainadive3"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain3" />
+
+        <TextView
+            android:id="@+id/txt_explain5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/customfont"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/txt_explainadive4"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain4" />
+
+        <!-- Espace (Optionnel) -->
+
+        <Button
+            android:id="@+id/btnNewAdvice"
+            android:layout_width="316dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="110dp"
+            android:text="@string/btn_new_advice"
+            android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title">
+            app:layout_constraintTop_toBottomOf="@+id/txt_explain5"
+            app:layout_constraintVertical_bias="1.0" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <!-- Texte Explicatif 1 -->
-                <TextView
-                    android:id="@+id/txt_explain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/customfont"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainadive"
-                    android:textSize="22sp" />
-
-                <!-- Texte Explicatif 2 -->
-                <TextView
-                    android:id="@+id/txt_explain2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/customfont"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainadive2"
-                    android:textSize="22sp" />
-
-                <!-- Titre de la Visualisation -->
-                <TextView
-                    android:id="@+id/txt_explain3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/customfont"
-                    android:gravity="center"
-                    android:text="@string/visualisation"
-                    android:textSize="27dp"
-                    android:textStyle="bold" />
-
-                <!-- Texte Explicatif 3 -->
-                <TextView
-                    android:id="@+id/txt_explain4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/customfont"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainadive3"
-                    android:textSize="22sp" />
-
-                <!-- Texte Explicatif 4 -->
-                <TextView
-                    android:id="@+id/txt_explain5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/customfont"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainadive4"
-                    android:textSize="22sp" />
-
-                <!-- Bouton Mes Affirmations -->
-                <Button
-                    android:id="@+id/btnNewAdvice"
-                    android:layout_width="316dp"
-                    android:layout_height="74dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/btn_new_advice"
-                    android:textSize="24dp" />
-
-                <!-- Espace (Optionnel) -->
-                <TextView
-                    android:id="@+id/spaceBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
                 <!-- Bouton Menu Principal -->
-                <Button
-                    android:id="@+id/btnMenu"
-                    android:layout_width="316dp"
-                    android:layout_height="74dp"
-                    android:text="@string/main_menu"
-                    android:textSize="24dp" />
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="316dp"
+            android:layout_height="74dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/main_menu"
 
-            </LinearLayout>
-        </ScrollView>
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNewAdvice"
+            app:layout_constraintVertical_bias="1.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <!-- Menu de navigation latéral -->
     <com.google.android.material.navigation.NavigationView

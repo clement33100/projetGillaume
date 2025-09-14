@@ -42,10 +42,7 @@
             android:name=".mesAffirmationsDetails"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Rules"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".step3Music"
             android:exported="false"

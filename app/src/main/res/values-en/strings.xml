@@ -39,9 +39,7 @@
         <b>Listen to your affirmations for 21 days</b>, as often as possible, at least once a day. <b>Repeat them out loud during the moments of silence</b>, with the <b>conviction</b> that they are already true. Feel with <b>gratitude</b> that you are already <b>becoming the person you wish to be</b>.
 </string>
 
-    <string name="toast_bienvenue">
-    Enjoy the 💎 free features during launch; they’ll later be reserved for Premium subscribers.
-</string>
+
     <string name="diamant">
     💎 Currently free → soon Premium
     </string>
@@ -75,11 +73,11 @@
         <b>Listen</b> to your \n affirmations\n every day
     </string>
 
-    <string name="lien_texte">🎁 Receive your Welcome Gift\nby clicking here.</string>
+    <string name="lien_texte">🎁 Receive your Welcome Gift\nby clicking here</string>
     <string name="btn_create_new">Create New</string>
     <string name="btn_my_affirmations">My affirmations</string>
     <string name="btn_how_it_works">How it works?</string>
-    <string name="btn_practical_advices">Practical advice</string>
+    <string name="btn_practical_advices">Practical Advice</string>
     <string name="txt_page_acceuil">Your Words, Your Transformation, Your Story</string>
 
     <string name="btn_choose_female_voice">Female Voice</string>
@@ -107,7 +105,7 @@
     <string name="choisis_duree_fichier_audio">Choose the Duration of Your Audio File</string>
     <string name="intro">Intro</string>
     <string name="duree">Duration:</string>
-    <string name="default_duration">00 minutes 00 seconds</string>
+    <string name="default_duration">00 min 00 sec</string>
     <string name="play_intro_audio">Play the introduction audio</string>
 
     <string name="meditation_ready">IT\'S READY!</string>
@@ -124,8 +122,8 @@
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
 
-    <string name="hdiw_title">HOW IT WORKS?</string>
-    <string name="advices_title">PRACTICAL ADVICE</string>
+    <string name="hdiw_title">HOW\nIT WORKS?</string>
+    <string name="advices_title">PRACTICAL\nADVICE</string>
     <string name="btn_new_advice">My Affirmations</string>
     <string name="visualisation">Visualization</string>
 

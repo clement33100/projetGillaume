@@ -11,13 +11,17 @@
     tools:context=".MeditationPlay"
     android:clipToPadding="false">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <!-- Contenu principal de l'activité -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:background="@drawable/activity_background"
         android:padding="16dp"
         android:clipToPadding="false">
 
@@ -105,13 +109,15 @@
             android:id="@+id/buttonOkMeditation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="120dp"
             android:padding="10dp"
             android:text="@string/ok_button"
             android:textSize="19sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" /> <!-- colle juste sous le player -->
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:layout_constraintVertical_bias="1.0" /> <!-- colle juste sous le player -->
 
         <!-- Overlay pour le téléchargement avec indicateur circulaire -->
 
@@ -200,6 +206,7 @@
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <!-- Menu de navigation latéral -->
     <com.google.android.material.navigation.NavigationView

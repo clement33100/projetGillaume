@@ -34,9 +34,7 @@
           Si tu connais la destination d"'"une ancienne autoroute et qu"'"elle ne te convient plus (<b>une croyance limitante que tu as identifiée</b>), il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi (<b>affirmation positive</b>). Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l"'"ancienne, n"'"étant plus utilisée, disparaîtra sous la végétation, permettant ainsi l"'"émergence d"'"un <b>nouveau sentiment d"'"identité</b> et d"'"une perception renouvelée de toi-même.
       </string>
 
-    <string name="toast_bienvenue">
-        Profite des fonctions 💎 gratuites pendant le lancement; elles seront ensuite réservées aux abonnés Premium.
-    </string>
+
 
     <string name="diamant">
         💎 Actuellement gratuit → bientôt Premium
@@ -73,11 +71,11 @@
     </string>
 
 
-    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue\nen cliquant ici.</string>
+    <string name="lien_texte">🎁 Reçois ton Cadeau de Bienvenue\nen cliquant ici</string>
     <string name="btn_create_new">Créer Nouveau</string>
     <string name="btn_my_affirmations">Mes affirmations</string>
     <string name="btn_how_it_works">Comment ça Marche ?</string>
-    <string name="btn_practical_advices">Conseils pratiques</string>
+    <string name="btn_practical_advices">Conseils Pratiques</string>
     <string name="txt_page_acceuil">Tes Mots, Ta Transformation, Ton Histoire</string>
 
     <string name="btn_choose_female_voice">Voix de Femme</string>
@@ -86,7 +84,7 @@
     <string name="your_choice">Ton choix :</string>
     <string name="click_on_the_voice">clique sur la voix \n que tu veux</string>
 
-    <string name="titlestep2">Écris tes Affirmations</string>
+    <string name="titlestep2">Écris tes\nAffirmations</string>
     <string name="btn_show_advices">Conseils Pratiques</string>
     <string name="add_new_affirmation">NEW</string>
     <string name="ok_button">OK</string>
@@ -105,7 +103,7 @@
     <string name="choisis_duree_fichier_audio">Choisis la Durée de ton Fichier Audio</string>
     <string name="intro">Intro</string>
     <string name="duree">Durée :</string>
-    <string name="default_duration">00 minutes 00 secondes</string>
+    <string name="default_duration">00 min 00 sec</string>
     <string name="play_intro_audio">Play the introduction audio</string>
 
 
@@ -123,8 +121,8 @@
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>
 
-    <string name="hdiw_title">COMMENT ÇA MARCHE ?</string>
-    <string name="advices_title">CONSEILS PRATIQUES</string>
+    <string name="hdiw_title">COMMENT\nÇA MARCHE ?</string>
+    <string name="advices_title">CONSEILS\nPRATIQUES</string>
     <string name="btn_new_advice">Mes Affirmations</string>
     <string name="visualisation">La Visualisation </string>
 

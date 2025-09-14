@@ -58,7 +58,7 @@ abstract class Base : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.btn_new -> {
-                val intent = Intent(this, Rules::class.java)
+                val intent = Intent(this, Etape2Voix::class.java)
                 startActivity(intent)
             }
             R.id.btn_myAffirm -> {

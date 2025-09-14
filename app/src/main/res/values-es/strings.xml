@@ -46,9 +46,6 @@
         <b>Escucha tus afirmaciones durante 21 días</b>, tan a menudo como sea posible, al menos una vez al día. <b>Repítelas en voz alta durante los momentos de silencio</b>, con la <b>convicción</b> de que ya son verdad. Siente con <b>gratitud</b> que ya te estás <b>convirtiendo en la persona que deseas ser</b>.
 </string>
 
-    <string name="toast_bienvenue">
-    Disfruta de las funciones 💎 gratuitas durante el lanzamiento; luego estarán reservadas para los suscriptores Premium.
-</string>
 
     <string name="diamant">
     💎 Actualmente gratis → pronto Premium
@@ -76,11 +73,11 @@
 
 
     <!-- Home / botones -->
-    <string name="lien_texte">🎁 Recibe tu regalo de bienvenida\nhaciendo clic aquí.</string>
+    <string name="lien_texte">🎁 Recibe tu regalo de bienvenida\nhaciendo clic aquí</string>
     <string name="btn_create_new">Crear nuevo</string>
     <string name="btn_my_affirmations">Mis afirmaciones</string>
     <string name="btn_how_it_works">¿Cómo funciona?</string>
-    <string name="btn_practical_advices">Consejo práctico</string>
+    <string name="btn_practical_advices">Consejo Práctico</string>
     <string name="txt_page_acceuil">Tus Palabras, Tu Transformación, Tu Historia</string>
 
     <!-- Paso 1: voz -->
@@ -111,7 +108,7 @@
     <string name="choisis_duree_fichier_audio">Elige la Duración de tu Archivo de Audio</string>
     <string name="intro">Intro</string>
     <string name="duree">Duración:</string>
-    <string name="default_duration">00 minutos 00 segundos</string>
+    <string name="default_duration">00 min 00 sec</string>
     <string name="play_intro_audio">Reproducir la introducción</string>
 
     <!-- Paso 5 -->
@@ -132,8 +129,8 @@
     <string name="delete">Eliminar</string>
 
     <!-- Títulos de pantallas -->
-    <string name="hdiw_title">¿CÓMO FUNCIONA?</string>
-    <string name="advices_title">CONSEJO PRÁCTICO</string>
+    <string name="hdiw_title">¿CÓMO\nFUNCIONA?</string>
+    <string name="advices_title">CONSEJO\nPRÁCTICO</string>
     <string name="btn_new_advice">Mis afirmaciones</string>
     <string name="visualisation">Visualización</string>
 

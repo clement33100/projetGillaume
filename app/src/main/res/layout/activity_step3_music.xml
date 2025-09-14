@@ -20,8 +20,8 @@
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:background="@drawable/activity_background"
+            android:padding="16dp"
             tools:context=".step3Music">
 
             <ImageButton
@@ -62,7 +62,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
                 android:fillViewport="true"
-                app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +78,8 @@
                         android:id="@+id/uploadButton"
                         android:layout_width="316dp"
                         android:layout_height="74dp"
-                        android:elevation="8dp"
                         android:backgroundTint="@color/green"
+                        android:elevation="8dp"
                         android:text="@string/upload_mp3"
                         android:textSize="24dp" />
 
@@ -93,6 +92,7 @@
 
                 </LinearLayout>
             </ScrollView>
+
 
             <!-- Bouton pour afficher les fréquences vibratoires -->
             <Button
@@ -367,10 +367,10 @@
                 android:layout_marginEnd="64dp"
                 android:max="12"
                 android:progress="6"
-                android:thumbOffset="0dp"
                 android:progressDrawable="@drawable/custom_seekbar_track"
                 android:progressTint="@color/green"
                 android:thumb="@drawable/thumb_custom"
+                android:thumbOffset="0dp"
                 android:thumbTint="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -381,7 +381,7 @@
                 android:id="@+id/btn_okmusic"
                 android:layout_width="90dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:padding="10dp"
                 android:text="ok"
@@ -389,29 +389,24 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sliderValueText" />
+                app:layout_constraintTop_toBottomOf="@+id/sliderValueText"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="22dp"
-                android:breakStrategy="simple"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:hyphenationFrequency="none"
                 android:maxLines="3"
-                android:padding="2dp"
                 android:text="@string/clic_sur_musique"
-                android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="19sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.012"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <TextView
                 android:id="@+id/nameSeekbar"
@@ -430,13 +425,13 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="68dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/ton_choix"
                 android:textColor="@color/grey"
                 android:textSize="19sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
             <ImageView
                 android:id="@+id/lVol"

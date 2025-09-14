@@ -28,7 +28,7 @@ class hdiw1 : Base() {
 
         // Définir les OnClickListener
         btnNew.setOnClickListener {
-            val intent = Intent(this, Rules::class.java)
+            val intent = Intent(this, Etape2Voix::class.java)
             startActivity(intent)
         }
 

@@ -91,7 +91,7 @@
                 android:id="@+id/btn_new"
                 android:layout_width="316dp"
                 android:layout_height="74dp"
-                android:layout_marginTop="76dp"
+                android:layout_marginTop="90dp"
                 android:backgroundTint="@color/green"
                 android:text="@string/btn_create_new"
                 android:textSize="24sp"
@@ -155,13 +155,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:paddingHorizontal="20dp"
                 android:text="@string/lien_texte"
                 android:textSize="19sp"
-                app:layout_constraintTop_toBottomOf="@id/textviewDiamant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/textviewDiamant"
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -1,144 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
-    tools:context=".hdiw1"
-    >
+    tools:context=".hdiw1">
 
-
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+    <!-- Scroll global pour reproduire le rendu de la page Advices -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        tools:context=".hdiw1">
+        android:fillViewport="true">
 
-        <!-- Bouton Menu Burger en haut à gauche -->
+        <!-- Contenu principal -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/activity_background"
+            android:padding="16dp"
+            tools:context=".hdiw1">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:text="@string/hdiw_title"
-            android:gravity="center"
-            android:textSize="27sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Bouton menu (en haut à droite) -->
+            <ImageButton
+                android:id="@+id/btn_burger"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:contentDescription="@string/menu"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_3_pointssvg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btn_burger"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="8dp"
-            android:background="@null"
-            android:contentDescription="@string/menu"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu_3_pointssvg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Bouton de sélection de la langue en haut à droite -->
-
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="392dp"
-            android:layout_height="620dp"
-            android:layout_marginStart="16dp"
-            android:paddingTop="35dp"
-            android:layout_marginTop="120dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Titre centré -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="60dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:text="@string/hdiw_title"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/txt_explain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/customfont"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainhdiw"
-                    android:textSize="22sp" />
+            <!-- Texte 1 -->
+            <TextView
+                android:id="@+id/txt_explain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:fontFamily="@font/customfont"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/txt_explainhdiw"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
 
-                <TextView
-                    android:id="@+id/txt_explain2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainhdiw2"
-                    android:textSize="22sp" />
+            <!-- Texte 2 -->
+            <TextView
+                android:id="@+id/txt_explain2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/txt_explainhdiw2"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_explain" />
 
-                <TextView
-                    android:id="@+id/txt_explain3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="@string/txt_explainhdiw3"
-                    android:textSize="22sp" />
+            <!-- Sous-titre / Titre section -->
+            <TextView
+                android:id="@+id/txt_explain3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/txt_explainhdiw3"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_explain2" />
 
-                <Button
-                    android:id="@+id/btnNewAdvice"
-                    android:layout_width="316dp"
-                    android:layout_height="74dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/create_new"
-                    android:textSize="24dp" />
 
-                <!-- Espace (Optionnel) -->
-                <TextView
-                    android:id="@+id/spaceBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <!-- Bouton action principale -->
+            <Button
+                android:id="@+id/btnNewAdvice"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="110dp"
+                android:text="@string/create_new"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_explain3"
+                app:layout_constraintVertical_bias="1.0" />
 
-                <!-- Bouton Menu Principal -->
-                <Button
-                    android:id="@+id/btnMenu"
-                    android:layout_width="316dp"
-                    android:layout_height="74dp"
-                    android:text="@string/main_menu"
-                    android:textSize="24dp" />
-            </LinearLayout>
-        </ScrollView>
+            <!-- Bouton menu principal -->
+            <Button
+                android:id="@+id/btnMenu"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/main_menu"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnNewAdvice"
+                app:layout_constraintVertical_bias="1.0" />
 
-        <!-- Autres vues spécifiques à l'activité hdiw1 peuvent être ajoutées ici -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <!-- Navigation latérale -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"

@@ -7,242 +7,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/activity_background"
-    tools:context=".Etape2Voix"
-    >
+    tools:context=".Etape2Voix">
 
-
-    <!-- Contenu principal de l'activité -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+    <!-- ScrollView englobe tout le contenu -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/activity_background"
-        android:padding="16dp"
-        tools:context=".Etape2Voix">
+        android:fillViewport="true">
 
-        <!-- Bouton Menu Burger en haut à droite -->
-        <ImageButton
-            android:id="@+id/btn_burger"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="8dp"
-            android:background="@null"
-            android:contentDescription="@string/menu"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu_3_pointssvg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <!-- Titre centré avec marges uniformes -->
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="60dp"
-            android:text="@string/titreEtape2Voix"
-            android:textAlignment="center"
-            android:textColor="@color/grey"
-            android:textSize="27sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Boutons pour choisir la voix -->
-        <Button
-            android:id="@+id/btn_voix_femme"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="100dp"
-            android:text="@string/btn_choose_female_voice"
-            android:textSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-
-        <Button
-            android:id="@+id/btn_voix_homme"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="48dp"
-            android:text="@string/btn_choose_male_voice"
-            android:textSize="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/btn_voix_femme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494" />
-
-        <!-- TextViews pour les étapes et descriptions -->
-        <Button
-            android:id="@+id/btn_tavoix"
-            android:layout_width="316dp"
-            android:layout_height="74dp"
-            android:layout_marginTop="48dp"
-            android:text="@string/btn_choose_your_voice"
-            android:textSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="68dp"
-            android:text="@string/your_choice"
-            android:textColor="@color/grey"
-            android:textSize="19sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textViewStep2" />
-
-        <TextView
-            android:id="@+id/textViewStep2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="44dp"
-            android:text="@string/click_on_the_voice"
-            android:textAlignment="center"
-            android:textColor="@color/green"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.012"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/btn_tavoix" />
-
-        <Button
-            android:id="@+id/btn_ok_step2"
-            android:layout_width="90dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:padding="10dp"
-            android:text="@string/ok_button"
-            android:textSize="19dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStep2" />
-
-        <!-- ScrollView pour les voix féminines
-        <ScrollView
-            android:id="@+id/scrollViewFemmeVoice"
+        <!-- Contenu principal -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/btn_voix_femme">
+            android:fitsSystemWindows="true"
+            android:clipToPadding="false"
+            android:background="@drawable/activity_background"
+            android:padding="16dp"
+            tools:context=".Etape2Voix">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Bouton Menu Burger -->
+            <ImageButton
+                android:id="@+id/btn_burger"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:contentDescription="@string/menu"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_3_pointssvg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Titre -->
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginTop="36dp"
+                android:text="@string/titreEtape2Voix"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
+            <!-- Boutons Voix -->
+            <Button
+                android:id="@+id/btn_voix_femme"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="100dp"
+                android:text="@string/btn_choose_female_voice"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                    <Button
-                        android:id="@+id/voixFemme1"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="La Gardienne"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
-                </LinearLayout>
+            <Button
+                android:id="@+id/btn_voix_homme"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="48dp"
+                android:text="@string/btn_choose_male_voice"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@+id/btn_voix_femme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_tavoix"
+                android:layout_width="316dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="48dp"
+                android:text="@string/btn_choose_your_voice"
+                android:textSize="24sp"
+                app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                    <Button
-                        android:id="@+id/voixFemme2"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="L'Amazone"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>-->
-
-        <!-- ScrollView pour les voix masculines
-        <ScrollView
-            android:id="@+id/scrollViewHommeVoice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/btn_voix_homme">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Indications -->
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginTop="30dp"
+                android:text="@string/your_choice"
+                android:textColor="@color/grey"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_tavoix" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textViewStep2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/click_on_the_voice"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-                    <Button
-                        android:id="@+id/voixHomme1"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="Le Guerrier"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
-                </LinearLayout>
+            <!-- Bouton OK -->
+            <Button
+                android:id="@+id/btn_ok_step2"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:padding="10dp"
+                android:text="@string/ok_button"
+                android:textSize="19sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewStep2"
+                app:layout_constraintVertical_bias="1.0" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-                    <Button
-                        android:id="@+id/voixHomme2"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/yellow"
-                        android:padding="10dp"
-                        android:text="Le Sage"
-                        android:textColor="@color/grey"
-                        android:textSize="19dp" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>-->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Menu de navigation latéral -->
+    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="280dp"
