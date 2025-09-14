@@ -3,7 +3,7 @@
     <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">        <!-- Personnalisez votre thème ici. -->
         <item name="android:textViewStyle">@style/CustomTextView</item>
-        <item name="android:windowBackground">@color/yellow</item>
+        <item name="android:windowIsTranslucent">false</item>
         <!-- Appliquer le style de bouton personnalisé globalement -->
         <item name="buttonStyle">@style/MyButtonStyle</item>
     </style>
