@@ -42,6 +42,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private var selectedDurationInSeconds: Int = 0
     private var mediaPlayer1: MediaPlayer? = null
     private lateinit var introSwitch: Switch
+    private var lastClickTime: Long = 0
 
     override fun getLayoutId(): Int {
         return R.layout.activity_step4  // Utilisez le layout adapté
@@ -130,6 +131,17 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         // Définir le listener pour le bouton Valider
         btn_valider.setOnClickListener {
+
+
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClickTime < 3000) {
+                // Si moins de 3 secondes se sont écoulées, ignore le clic
+                return@setOnClickListener
+            }
+
+            // Met à jour le temps du dernier clic
+            lastClickTime = currentTime
+
 
             stopAudio()
             if (!isOnline()) {
