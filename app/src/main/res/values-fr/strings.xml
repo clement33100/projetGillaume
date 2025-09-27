@@ -143,7 +143,7 @@
     <string name="toast_offline">Oops ! Il semble que tu sois hors ligne…</string>
     <string name="toast_duration_limit">La durée ne doit pas dépasser 23 minutes.</string>
     <string name="toast_select_valid_duration">Veuillez sélectionner une durée valide.</string>
-    <string name="toast_audio_generated">Fichier audio généré pour l'index %1$d.</string>
+    <string name="toast_audio_generated">Fichier audio généré pour l"'"index %1$d.</string>
 
 
     <string name="fichier_telecharge">Retrouve ton affirmation dans ton dossier Téléchargements 🙂</string>

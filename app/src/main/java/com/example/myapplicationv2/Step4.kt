@@ -331,7 +331,6 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                         // Notification de succès
                         runOnUiThread {
-                            Toast.makeText(this@Step4,  getString(R.string.toast_audio_generated, index), Toast.LENGTH_SHORT).show()
                         }
 
                     } catch (e: IOException) {
