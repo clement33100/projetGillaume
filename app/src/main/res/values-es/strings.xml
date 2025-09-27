@@ -94,7 +94,7 @@
     <string name="ok_button">OK</string>
 
     <!-- Paso 3: música -->
-    <string name="choisis_ta_musique">Elige tu Música</string>
+    <string name="choisis_ta_musique">Elige tu\nMúsica</string>
     <string name="upload_mp3">Subir MP3</string>
     <string name="musique">Música</string>
     <string name="silence">Silencio</string>

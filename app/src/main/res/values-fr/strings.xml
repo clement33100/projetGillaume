@@ -90,7 +90,7 @@
     <string name="add_new_affirmation">NEW</string>
     <string name="ok_button">OK</string>
 
-    <string name="choisis_ta_musique">Choisis ta Musique</string>
+    <string name="choisis_ta_musique">Choisis ta\nMusique</string>
     <string name="upload_mp3">Upload MP3</string>
     <string name="musique">Musique</string>
     <string name="silence">Silence</string>
