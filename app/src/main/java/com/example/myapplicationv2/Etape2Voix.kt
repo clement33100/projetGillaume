@@ -212,98 +212,14 @@ class Etape2Voix : Base() {  // Hérite de Base
     }
 
 
-    private fun ensureRecordPermission(): Boolean {
-        val perm = android.Manifest.permission.RECORD_AUDIO
-        return if (checkSelfPermission(perm) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            true
-        } else {
-            requestPermissions(arrayOf(perm), 1234)
-            false
-        }
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1234 && (grantResults.firstOrNull() ?: -1) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Micro refusé : impossible d’enregistrer.", Toast.LENGTH_LONG).show()
-        }
-    }
-    private fun startRecording(tag: String) {
-        if (isRecording) return
-        if (!ensureRecordPermission()) return
-
-        try {
-            currentTempM4a = tempM4a(tag).apply { if (exists()) delete() }
-            mediaRecorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-                setAudioEncodingBitRate(128_000)   // 128 kbps
-                setAudioSamplingRate(44100)
-                setOutputFile(currentTempM4a!!.absolutePath)
-                prepare()
-                start()
-            }
-            isRecording = true
-            Toast.makeText(this, "Enregistrement… (maintiens appuyé)", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, "Erreur démarrage enregistrement: ${e.message}", Toast.LENGTH_LONG).show()
-            stopRecordingInternal()
-        }
-    }
-
-    private fun stopRecordingAndConvert(tag: String) {
-        if (!isRecording) return
-        stopRecordingInternal()
-
-        val inFile = currentTempM4a ?: return
-        val outFile = outMp3(tag).apply { if (exists()) delete() }
-
-        // Conversion via FFmpegKit (asynchrone)
-        val cmd = "-y -i ${inFile.absolutePath} -codec:a libmp3lame -q:a 2 ${outFile.absolutePath}"
-        com.arthenica.ffmpegkit.FFmpegKit.executeAsync(cmd) { session ->
-            val state = session.state
-            val returnCode = session.returnCode
-            runOnUiThread {
-                if (com.arthenica.ffmpegkit.ReturnCode.isSuccess(returnCode)) {
-                    Toast.makeText(this, "Sauvegardé : ${outFile.name}", Toast.LENGTH_LONG).show()
-                    Log.d("REC", "MP3: ${outFile.absolutePath}")
-                } else {
-                    Toast.makeText(this, "Conversion MP3 échouée (${state} / ${returnCode}).", Toast.LENGTH_LONG).show()
-                }
-            }
-            // Option: supprimer le .m4a temporaire
-            inFile.delete()
-        }
-    }
-
-    private fun stopRecordingInternal() {
-        try {
-            mediaRecorder?.apply {
-                stop()
-                reset()
-                release()
-            }
-        } catch (_: Exception) { /* ignore */ }
-        mediaRecorder = null
-        isRecording = false
-    }
     private fun setTextInfo(text: String, currentVoice: String) {
         val textInfo = findViewById<TextView>(R.id.textViewStep2)
         curentVoice = currentVoice
         textInfo.text = text
     }
 
-    private fun setViewVisibility(scrollview: View) {
-        scrollview.visibility = if (scrollview.visibility == View.GONE) View.VISIBLE else View.GONE
-    }
 
-    private fun setViewVisibilityGone(scrollview: View) {
-        if (scrollview.visibility == View.VISIBLE) {
-            scrollview.visibility = View.GONE
-        }
-    }
 
     private fun playAudioFromRaw(audioResId: Int) {
         if (mediaPlayer == null) {

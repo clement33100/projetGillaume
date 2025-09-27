@@ -136,7 +136,10 @@
     <string name="toast_recording_failed">Impossible de démarrer l’enregistrement.</string>
     <string name="toast_recording_too_short">Enregistrement trop court (&lt; 2 sec), ignoré.</string>
     <string name="toast_max_affirmations_tavoix">Maximum %1$d enregistrements.</string>
-
+    <string name="toast_max_affirmations_reached">Vous avez atteint le nombre maximum d"'"affirmations (6).</string>
+    <string name="toast_select_affirmation">Vous devez sélectionner au moins une affirmation positive.</string>
+    <string name="toast_audio_save_failed">Échec de l"'"enregistrement du fichier audio.</string>
+    <string name="toast_affirmation_too_long">Oups, ton affirmation est trop longue\nLimite : 90 caractères (≈ 12–15 mots)</string>
 
     <string name="fichier_telecharge">Retrouve ton affirmation dans ton dossier Téléchargements 🙂</string>
     <string name="erreur_mediastore">Erreur lors de l"'"insertion dans MediaStore.</string>

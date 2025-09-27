@@ -214,7 +214,7 @@ class Step2 : Base() {
                 userTexts.add(newText)
                 addTextView(newText, userTexts)
             } else {
-                Toast.makeText(this, "Vous avez atteint le nombre maximum d'affirmations (6).", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toast_max_affirmations_reached, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -238,7 +238,7 @@ class Step2 : Base() {
             generateTTSFilesForAllTexts(curentAPIKey)
 
             if (userTexts.size == 0) {
-                Toast.makeText(this, "Vous devez selectionner au moins une affirmation positive", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toast_select_affirmation, Toast.LENGTH_SHORT).show()
             } else {
                 if (curentVoice != null) {
                     val intent = Intent(this, step3Music::class.java)
@@ -252,7 +252,7 @@ class Step2 : Base() {
 
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.toast_audio_save_failed, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -344,7 +344,7 @@ class Step2 : Base() {
                         // Bloquer le reste et afficher le Toast
                         Toast.makeText(
                             this@Step2,
-                            "Oups, ton affirmation est trop longue\nLimite : 90 caractères (≈ 12–15 mots)",
+                            R.string.toast_affirmation_too_long,
                             Toast.LENGTH_SHORT
                         ).show()
                         ""  // on ne laisse rien passer au-delà de 90 caractères
