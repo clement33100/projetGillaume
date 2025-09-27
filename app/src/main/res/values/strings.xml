@@ -134,6 +134,10 @@
     <string name="toast_select_affirmation">Vous devez sélectionner au moins une affirmation positive.</string>
     <string name="toast_audio_save_failed">Échec de l"'"enregistrement du fichier audio.</string>
     <string name="toast_affirmation_too_long">Oups, ton affirmation est trop longue\nLimite : 90 caractères (≈ 12–15 mots)</string>
+    <string name="toast_offline">Oops ! Il semble que tu sois hors ligne…</string>
+    <string name="toast_duration_limit">La durée ne doit pas dépasser 23 minutes.</string>
+    <string name="toast_select_valid_duration">Veuillez sélectionner une durée valide.</string>
+    <string name="toast_audio_generated">Fichier audio généré pour l'index %1$d.</string>
 
 
     <string name="hdiw_title">COMMENT\nÇA MARCHE ?</string>

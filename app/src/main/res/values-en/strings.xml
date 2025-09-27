@@ -35,6 +35,11 @@
     <string name="toast_select_affirmation">You must select at least one positive affirmation.</string>
     <string name="toast_audio_save_failed">Failed to save the audio file.</string>
     <string name="toast_affirmation_too_long">Oops, your affirmation is too long\nLimit: 90 characters (≈ 12–15 words)</string>
+    <string name="toast_offline">Oops! It seems like you are offline...</string>
+    <string name="toast_duration_limit">The duration must not exceed 23 minutes.</string>
+    <string name="toast_select_valid_duration">Please select a valid duration.</string>
+    <string name="toast_audio_generated">Audio file generated for index %1$d.</string>
+
 
     <string name="txt_explainhdiw">
         Imagine that at your birth, your <b>brain</b> is like a <b>dense jungle</b>. Moving through this jungle is difficult. When you have a <b>thought for the first time</b>, it’s like <b>opening a new trail</b> in the jungle. The more you think that thought, the easier it becomes to follow this trail, and the more you use this trail, the more you think that thought. Gradually, <b>this trail becomes</b> a path, then a road, and eventually <b>an expressway</b>.

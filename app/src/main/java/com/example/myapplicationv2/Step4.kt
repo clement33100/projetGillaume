@@ -133,7 +133,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
             stopAudio()
             if (!isOnline()) {
-                Toast.makeText(this, "Oops ! Il semble que tu sois hors ligne…", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.toast_offline, Toast.LENGTH_LONG).show()
                 return@setOnClickListener   // Stoppe l’exécution tant qu’il n’y a pas Internet
             } else {
 
@@ -146,7 +146,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                 // Vérifier si la durée dépasse 23 minutes
                 if (totalDurationInSeconds > 1380) {
-                    Toast.makeText(this, "La durée ne doit pas dépasser 23 minutes.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.toast_duration_limit, Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
@@ -185,7 +185,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
                     }, delay)
 
                 } else {
-                    Toast.makeText(this, "Veuillez sélectionner une durée valide.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.toast_select_valid_duration, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -331,7 +331,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
                         // Notification de succès
                         runOnUiThread {
-                            Toast.makeText(this@Step4, "Fichier audio généré pour l'index $index", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@Step4,  getString(R.string.toast_audio_generated, index), Toast.LENGTH_SHORT).show()
                         }
 
                     } catch (e: IOException) {
