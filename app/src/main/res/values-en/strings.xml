@@ -173,4 +173,11 @@
     <string name="toastSelectVoice">Select a voice</string>
     <string name="toastDisconected">Oops! It looks like you are offline…</string>
     <string name="toastModifAffirm">Edit at least one of the two suggested affirmations</string>
+
+    <string name="toastManagaaffirmation1">File path not found.</string>
+    <string name="toastManagaaffirmation2">Error during deletion.</string>
+    <string name="toastManagaaffirmation3">External storage not available.</string>
+    <string name="toastManagaaffirmation4">Error during renaming.</string>
+    <string name="toastManagaaffirmation5">The name cannot be empty.</string>
+
 </resources>

@@ -74,7 +74,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 savedFilePath = saveFileToInternalStorage(it, audioFileName.toString())
                 fileList.add(Pair(audioFileName.toString(), savedFilePath.toString()))
                 createDynamicButton(audioFileName.toString(), savedFilePath.toString())
-                Toast.makeText(this, "Selected: $audioFileName", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Selected: $audioFileName", Toast.LENGTH_SHORT).show()
                 // Ici, vous pouvez gérer le fichier MP3 (téléchargement, lecture, etc.)
             }
         }

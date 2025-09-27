@@ -176,6 +176,10 @@
     <string name="affirmation_words" translatable="false"><b>CHOISIS TES MOTS</b> riches de sens pour toi</string>
     <string name="affirmation_resistance" translatable="false"><b>SURMONTE TES RÉSISTANCES</b> avec : <i>"Je m’ouvre à la possibilité de... ."</i></string>
 
-
+    <string name="toastManagaaffirmation1">Chemin du fichier non trouvé.</string>
+    <string name="toastManagaaffirmation2">Erreur lors de la suppression.</string>
+    <string name="toastManagaaffirmation3">Stockage externe non disponible.</string>
+    <string name="toastManagaaffirmation4">Erreur lors du renommage.</string>
+    <string name="toastManagaaffirmation5">Le nom ne peut pas être vide.</string>
 
 </resources>

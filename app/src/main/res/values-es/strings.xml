@@ -178,5 +178,11 @@
     <string name="affirmation_words" translatable="false"><b>ELIGE PALABRAS</b> que tengan un significado especial para ti</string>
     <string name="affirmation_resistance" translatable="false"><b>SUPERA TUS RESISTENCIAS</b> con: <i>"Me abro a la posibilidad de... ."</i></string>
 
+    <string name="toastManagaaffirmation1">No se encuentra la ruta del archivo.</string>
+    <string name="toastManagaaffirmation2">Error al eliminar.</string>
+    <string name="toastManagaaffirmation3">Almacenamiento externo no disponible.</string>
+    <string name="toastManagaaffirmation4">Error al cambiar el nombre.</string>
+    <string name="toastManagaaffirmation5">El nombre no puede estar vacío.</string>
+
 
 </resources>

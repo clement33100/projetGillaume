@@ -62,7 +62,7 @@ class ManageAffirmationActivity : Base() {
 
         // Récupérer le chemin du fichier depuis l’intent
         filePath = intent.getStringExtra("filePath") ?: run {
-            Toast.makeText(this, "Chemin du fichier non trouvé.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toastManagaaffirmation1, Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -102,7 +102,7 @@ class ManageAffirmationActivity : Base() {
             if (fileToDownload.exists()) {
                 downloadFile(fileToDownload)
             } else {
-                Toast.makeText(this, "Fichier introuvable pour le téléchargement.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toastManagaaffirmation1, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -129,14 +129,14 @@ class ManageAffirmationActivity : Base() {
                 val file = File(filePath)
                 val deleted = file.delete()
                 if (deleted) {
-                    Toast.makeText(this, "${file.name} supprimé.", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "${file.name} supprimé.", Toast.LENGTH_SHORT).show()
                     // → Avant de quitter pour retourner à mesAffirmationsDetails, on coupe la lecture
                     stopAndReleasePlayer()
                     val intent = Intent(this, mesAffirmationsDetails::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this, "Erreur lors de la suppression.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.toastManagaaffirmation2, Toast.LENGTH_SHORT).show()
                 }
                 alert.dismiss()
             }
@@ -168,7 +168,7 @@ class ManageAffirmationActivity : Base() {
     private fun downloadFile(file: File) {
         // Vérifier si le stockage externe est disponible
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
-            Toast.makeText(this, "Stockage externe non disponible.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toastManagaaffirmation3, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -198,10 +198,10 @@ class ManageAffirmationActivity : Base() {
                 val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 val destFile = File(downloadsDir, file.name)
                 file.copyTo(destFile, overwrite = true)
-                Toast.makeText(this, "Fichier téléchargé : ${destFile.absolutePath}", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "Fichier téléchargé : ${destFile.absolutePath}", Toast.LENGTH_LONG).show()
             }
         } catch (e: IOException) {
-            Toast.makeText(this, "Erreur lors du téléchargement : ${e.message}", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Erreur lors du téléchargement : ${e.message}", Toast.LENGTH_SHORT).show()
             Log.e("ManageAffirmationActivity", "Erreur : ${e.message}")
         }
     }
@@ -228,15 +228,15 @@ class ManageAffirmationActivity : Base() {
             if (newName.isNotEmpty()) {
                 val newFile = File(file.parent, "$newName.mp3")
                 if (file.renameTo(newFile)) {
-                    Toast.makeText(this, "Fichier renommé en $newName.mp3", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Fichier renommé en $newName.mp3", Toast.LENGTH_SHORT).show()
                     filePath = newFile.absolutePath
                     fileNameTextView.text = newFile.nameWithoutExtension
                 } else {
-                    Toast.makeText(this, "Erreur lors du renommage.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.toastManagaaffirmation4, Toast.LENGTH_SHORT).show()
                 }
                 alertDialog.dismiss()
             } else {
-                Toast.makeText(this, "Le nom ne peut pas être vide.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toastManagaaffirmation5, Toast.LENGTH_SHORT).show()
             }
         }
 
