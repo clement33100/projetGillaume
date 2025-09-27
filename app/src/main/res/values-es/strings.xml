@@ -100,9 +100,10 @@
     <string name="silence">Silencio</string>
     <string name="clic_sur_musique">haz clic en la música \n que prefieras</string>
     <string name="ton_choix">Tu elección:</string>
-    <string name="voyage_interieur">Viaje interior</string>
-    <string name="onde_theta">Onda Theta</string>
+    <string name="voyage_interieur">8D</string>
+    <string name="onde_theta">Binaural</string>
     <string name="expansion">Expansión</string>
+    <string name="elevation">Elevación</string>
     <string name="volume_musique">VOLUMEN DE LA MÚSICA</string>
     <!-- Paso 4: duración -->
     <string name="choisis_duree_fichier_audio">Elige la Duración de tu Archivo de Audio</string>

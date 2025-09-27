@@ -44,6 +44,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private lateinit var btn_ChoixFrequenceVibratoire1: Button
     private lateinit var btn_ChoixFrequenceVibratoire2: Button
     private lateinit var btn_ChoixFrequenceVibratoire3: Button
+    private lateinit var btn_ChoixFrequenceVibratoire4: Button
 
     private lateinit var btn_ok: Button
 
@@ -57,6 +58,8 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
     private lateinit var FrequenceVibratoire1: ImageButton
     private lateinit var FrequenceVibratoire2: ImageButton
     private lateinit var FrequenceVibratoire3: ImageButton
+    private lateinit var FrequenceVibratoire4: ImageButton
+
 
     private lateinit var btn_silence: Button // Ajout du bouton Silence
 
@@ -119,6 +122,8 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         FrequenceVibratoire1 = findViewById<ImageButton>(R.id.listenfrequence1)
         FrequenceVibratoire2 = findViewById<ImageButton>(R.id.listenfrequence2)
         FrequenceVibratoire3 = findViewById<ImageButton>(R.id.listenfrequence3)
+        FrequenceVibratoire4 = findViewById<ImageButton>(R.id.listenfrequence4)
+
 //
 //        btn_ChoixEpic1 = findViewById<Button>(R.id.epic1)
 //        btn_ChoixEpic2 = findViewById<Button>(R.id.epic2)
@@ -127,6 +132,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
         btn_ChoixFrequenceVibratoire1 = findViewById<Button>(R.id.frequence1)
         btn_ChoixFrequenceVibratoire2 = findViewById<Button>(R.id.frequence2)
         btn_ChoixFrequenceVibratoire3 = findViewById<Button>(R.id.frequence3)
+        btn_ChoixFrequenceVibratoire4 = findViewById<Button>(R.id.frequence4)
 
 //        val ButtonEpic = findViewById<Button>(R.id.btn_epic)
         val ButtonVib = findViewById<Button>(R.id.btn_frequence)
@@ -175,6 +181,9 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         val voyageinterieur = "voyageinterieur.mp3"
         val savedFilePathVoyageInterieur = copyRawResourceToInternalStorage(R.raw.voyageinterieur, voyageinterieur)
+
+        val elevation = "elevation.mp3"
+        val savedFilePathElevation = copyRawResourceToInternalStorage(R.raw.elevation, elevation)
 
         // Copier le fichier silence dans le stockage interne
         val silence = "silence.mp3"
@@ -249,6 +258,13 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
             }
         }
+        FrequenceVibratoire4.setOnClickListener{
+            if (savedFilePathElevation != null) {
+                playAudio(savedFilePathElevation)
+            } else {
+                //Toast.makeText(this, "Failed to save the audio file.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Configuration des boutons de choix pour les musiques Epic
 //        btn_ChoixEpic1.setOnClickListener {
@@ -290,6 +306,14 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 playAudio(savedFilePathExpansion)
             }
             setTextInfo(btn_ChoixFrequenceVibratoire3.text.toString(), savedFilePathExpansion)
+            //setViewVisibilityGone(scrollview_Epic)
+            setViewVisibilityGone(scrollview_FrequenceVibratoire)
+        }
+        btn_ChoixFrequenceVibratoire4.setOnClickListener {
+            if (savedFilePathElevation != null) {
+                playAudio(savedFilePathElevation)
+            }
+            setTextInfo(btn_ChoixFrequenceVibratoire4.text.toString(), savedFilePathExpansion)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }

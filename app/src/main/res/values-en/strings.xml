@@ -101,9 +101,10 @@
     <string name="silence">Silence</string>
     <string name="clic_sur_musique">click on the music \n of your choice</string>
     <string name="ton_choix">Your choice:</string>
-    <string name="voyage_interieur">Inner Journey</string>
-    <string name="onde_theta">Theta Wave</string>
+    <string name="voyage_interieur">8D</string>
+    <string name="onde_theta">Binaural</string>
     <string name="expansion">Expansion</string>
+    <string name="elevation">Elevation</string>
     <string name="volume_musique">MUSIC VOLUME</string>
 
     <string name="choisis_duree_fichier_audio">Choose the Duration of Your Audio File</string>

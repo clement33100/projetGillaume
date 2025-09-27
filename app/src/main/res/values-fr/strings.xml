@@ -96,9 +96,10 @@
     <string name="silence">Silence</string>
     <string name="clic_sur_musique">clic sur la musique \n de ton choix</string>
     <string name="ton_choix">Ton choix :</string>
-    <string name="voyage_interieur">Voyage Intérieur</string>
-    <string name="onde_theta">Onde Thêta</string>
+    <string name="voyage_interieur">8D</string>
+    <string name="onde_theta">Binaural</string>
     <string name="expansion">Expansion</string>
+    <string name="elevation">Élévation</string>
     <string name="volume_musique">VOLUME MUSIQUE</string>
 
     <string name="choisis_duree_fichier_audio">Choisis la Durée de ton Fichier Audio</string>
