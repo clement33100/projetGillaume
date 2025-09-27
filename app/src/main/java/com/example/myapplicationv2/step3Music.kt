@@ -313,7 +313,7 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
             if (savedFilePathElevation != null) {
                 playAudio(savedFilePathElevation)
             }
-            setTextInfo(btn_ChoixFrequenceVibratoire4.text.toString(), savedFilePathExpansion)
+            setTextInfo(btn_ChoixFrequenceVibratoire4.text.toString(), savedFilePathElevation)
             //setViewVisibilityGone(scrollview_Epic)
             setViewVisibilityGone(scrollview_FrequenceVibratoire)
         }
