@@ -128,6 +128,7 @@
     <string name="btn_new_advice">Mes Affirmations</string>
     <string name="visualisation">La Visualisation </string>
     <string name="toast_enregistrement">Enregistre ta voix pour passer à l’étape suivante.</string>
+    <string name="toast_max_affirmations">Vous avez atteint le maximum (%1$d)</string>
 
 
     <string name="fichier_telecharge">Retrouve ton affirmation dans ton dossier Téléchargements 🙂</string>

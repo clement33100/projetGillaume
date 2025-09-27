@@ -24,6 +24,8 @@
     <string name="subtitle_text"><i> “I, [your First Name], I...”</i></string>
 
     <string name="toast_enregistrement">Record your voice to proceed to the next step.</string>
+    <string name="toast_max_affirmations">You have reached the maximum (%1$d)</string>
+
 
     <string name="txt_explainhdiw">
         Imagine that at your birth, your <b>brain</b> is like a <b>dense jungle</b>. Moving through this jungle is difficult. When you have a <b>thought for the first time</b>, it’s like <b>opening a new trail</b> in the jungle. The more you think that thought, the easier it becomes to follow this trail, and the more you use this trail, the more you think that thought. Gradually, <b>this trail becomes</b> a path, then a road, and eventually <b>an expressway</b>.

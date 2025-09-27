@@ -123,6 +123,8 @@
     <string name="create_new">Crear nuevo</string>
     <string name="main_menu">Menú principal</string>
     <string name="toast_enregistrement">Graba tu voz para pasar al siguiente paso.</string>
+    <string name="toast_max_affirmations">Has alcanzado el máximo (%1$d)</string>
+
     <!-- Menú contextual -->
     <string name="download">Descargar</string>
     <string name="rename">Renombrar</string>

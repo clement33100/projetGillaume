@@ -122,6 +122,7 @@
     <string name="delete">Supprimer</string>
 
     <string name="toast_enregistrement">Enregistre ta voix pour passer à l’étape suivante.</string>
+    <string name="toast_max_affirmations">Vous avez atteint le maximum (%1$d)</string>
 
     <string name="hdiw_title">COMMENT\nÇA MARCHE ?</string>
     <string name="advices_title">CONSEILS\nPRATIQUES</string>

@@ -241,7 +241,7 @@ class Tavoix : Base() {
             if (container.childCount < MAX_AFFIRMATIONS) {
                 addTextView("", userTexts)   // addTextView s’occupe d’ajouter dans userTexts
             } else {
-                Toast.makeText(this, "Vous avez atteint le maximum ($MAX_AFFIRMATIONS).", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,     getString(R.string.toast_max_affirmations, MAX_AFFIRMATIONS), Toast.LENGTH_SHORT).show()
             }
         }
 
