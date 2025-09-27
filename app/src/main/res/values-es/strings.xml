@@ -123,8 +123,14 @@
     <string name="affirmation_no_data">Todavía no tienes ninguna Afirmación. Crea tu archivo de audio personalizado haciendo clic en Crear nuevo.</string>
     <string name="create_new">Crear nuevo</string>
     <string name="main_menu">Menú principal</string>
-    <string name="toast_enregistrement">Graba tu voz para pasar al siguiente paso.</string>
+    <string name="toast_enregistrement">Graba al menos una de las dos afirmaciones sugeridas.</string>
     <string name="toast_max_affirmations">Has alcanzado el máximo (%1$d)</string>
+    <string name="toast_mic_permission_granted">Permiso de micrófono concedido. Mantén el botón presionado para grabar.</string>
+    <string name="toast_mic_permission_denied">Permiso de micrófono denegado.</string>
+    <string name="toast_recording_limited">Grabación limitada a 10 segundos.</string>
+    <string name="toast_recording_failed">No se pudo iniciar la grabación.</string>
+    <string name="toast_recording_too_short">Grabación demasiado corta (&lt; 2 seg), ignorada.</string>
+    <string name="toast_max_affirmations_tavoix">Máximo %1$d registros.</string>
 
     <!-- Menú contextual -->
     <string name="download">Descargar</string>

@@ -247,7 +247,6 @@ class Tavoix : Base() {
 
         buttonOk.setOnClickListener {
 
-            Log.d("tata", "onCreate: " + generateFiles[0].toString())
 
             // 1) Stoppe un éventuel enregistrement en cours pour éviter les incohérences
             if (isRecording) stopRecording(force = true)
@@ -300,9 +299,9 @@ class Tavoix : Base() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
             // Rien à relancer ici automatiquement; l’utilisateur refait l’appui long
-            Toast.makeText(this, "Permission micro accordée. Maintiens le bouton pour enregistrer.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_mic_permission_granted, Toast.LENGTH_SHORT).show()
         } else if (requestCode == 101) {
-            Toast.makeText(this, "Permission micro refusée.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_mic_permission_denied, Toast.LENGTH_SHORT).show()
         }
     }
     private fun ensureAudioDir(): File {
@@ -352,13 +351,13 @@ class Tavoix : Base() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (isRecording && currentRecordingIndex == index) {
                         stopRecording()
-                        Toast.makeText(this, "Enregistrement limité à 10 secondes", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.toast_recording_limited, Toast.LENGTH_SHORT).show()
                     }
                 }, 10_000)
 
             } catch (e: Exception) {
                 Log.e("REC", "startRecording error: ${e.message}")
-                Toast.makeText(this, "Impossible de démarrer l’enregistrement", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toast_recording_failed, Toast.LENGTH_SHORT).show()
                 stopRecording(force = true)
             }
         }
@@ -383,7 +382,7 @@ class Tavoix : Base() {
         if (duration < 2000) { // moins de 2 secondes
             // On supprime le fichier m4a créé
             try { File(m4aPathForIndex(finishedIndex)).delete() } catch (_: Exception) {}
-            Toast.makeText(this, "Enregistrement trop court (< 2 sec), ignoré", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_recording_too_short, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -491,7 +490,7 @@ class Tavoix : Base() {
      */
     private fun addTextView(@Suppress("UNUSED_PARAMETER") text: String, userText: ArrayList<String>) {
         if (container.childCount >= MAX_AFFIRMATIONS) {
-            Toast.makeText(this, "Maximum $MAX_AFFIRMATIONS enregistrements.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_max_affirmations_tavoix, Toast.LENGTH_SHORT).show()
             return
         }
 

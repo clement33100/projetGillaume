@@ -122,8 +122,16 @@
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>
 
-    <string name="toast_enregistrement">Enregistre ta voix pour passer à l’étape suivante.</string>
+    <string name="toast_enregistrement">Enregistrez au moins l"'"une des deux affirmations suggérées.</string>
     <string name="toast_max_affirmations">Vous avez atteint le maximum (%1$d)</string>
+    <string name="toast_mic_permission_granted">Permission micro accordée. Maintiens le bouton pour enregistrer.</string>
+    <string name="toast_mic_permission_denied">Permission micro refusée.</string>
+    <string name="toast_recording_limited">Enregistrement limité à 10 secondes.</string>
+    <string name="toast_recording_failed">Impossible de démarrer l’enregistrement.</string>
+    <string name="toast_recording_too_short">Enregistrement trop court (&lt; 2 sec), ignoré.</string>
+    <string name="toast_max_affirmations_tavoix">Maximum %1$d enregistrements.</string>
+
+
 
     <string name="hdiw_title">COMMENT\nÇA MARCHE ?</string>
     <string name="advices_title">CONSEILS\nPRATIQUES</string>
