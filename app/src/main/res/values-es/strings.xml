@@ -122,7 +122,7 @@
     <string name="affirmation_no_data">Todavía no tienes ninguna Afirmación. Crea tu archivo de audio personalizado haciendo clic en Crear nuevo.</string>
     <string name="create_new">Crear nuevo</string>
     <string name="main_menu">Menú principal</string>
-
+    <string name="toast_enregistrement">Graba tu voz para pasar al siguiente paso.</string>
     <!-- Menú contextual -->
     <string name="download">Descargar</string>
     <string name="rename">Renombrar</string>

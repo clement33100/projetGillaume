@@ -249,6 +249,26 @@ class Tavoix : Base() {
 
             Log.d("tata", "onCreate: " + generateFiles[0].toString())
 
+            // 1) Stoppe un éventuel enregistrement en cours pour éviter les incohérences
+            if (isRecording) stopRecording(force = true)
+
+            // 2) Vérifie qu'au moins une voix a été enregistrée (fichier réellement présent)
+            val hasAtLeastOneRecording = generateFiles.any { path ->
+                path.isNotBlank() && File(path).exists()
+            }
+
+            if (!hasAtLeastOneRecording) {
+                Toast.makeText(
+                    this,
+                    R.string.toast_enregistrement,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+
+
+
             //generateTTSFilesForAllTexts(curentAPIKey) // (si tu veux attendre la fin, vois la note plus bas)
             val intent = Intent(this, step3Music::class.java)
             // → Envoi de la voix
