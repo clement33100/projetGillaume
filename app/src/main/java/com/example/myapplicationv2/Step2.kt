@@ -201,7 +201,7 @@ class Step2 : Base() {
 
         titleStep2 = findViewById(R.id.titlestep2)
 
-        val predefinedTexts = listOf("Affirmation 1", "Affirmation 2")
+        val predefinedTexts = listOf("MyAffirm 1", "MyAffirm 2")
         predefinedTexts.forEach {
             userTexts.add(it) // On ajoute le texte à userTexts
             addTextView(it, userTexts) // On affiche dans le layout
@@ -220,8 +220,8 @@ class Step2 : Base() {
 
         buttonOk.setOnClickListener {
             // userTexts est déjà mis à jour grâce aux TextWatcher
-            val def1 = "Affirmation 1"   // valeurs que tu crées au démarrage
-            val def2 = "Affirmation 2"
+            val def1 = "MyAffirm 1"   // valeurs que tu crées au démarrage
+            val def2 = "MyAffirm 2"
 
             val base1Unchanged = userTexts.getOrNull(0).isNullOrBlank() || userTexts[0] == def1
             val base2Unchanged = userTexts.getOrNull(1).isNullOrBlank() || userTexts[1] == def2
@@ -286,7 +286,7 @@ class Step2 : Base() {
         for (i in 0 until container.childCount) {
             val linearLayout = container.getChildAt(i) as LinearLayout
             val editText = linearLayout.getChildAt(0) as? EditText
-            editText?.hint = "Affirmation $count"
+            editText?.hint = "MyAffirm $count"
             count++
         }
         textViewCount = count - 1
@@ -298,7 +298,7 @@ class Step2 : Base() {
     private fun addTextView(text: String, userText: ArrayList<String>) {
         textViewCount++
         val placeholderText = if (text.isEmpty()) {
-            "Affirmation $textViewCount"
+            "MyAffirm $textViewCount"
         } else {
             text
         }

@@ -231,7 +231,7 @@ class Tavoix : Base() {
 
         titleStep2 = findViewById(R.id.titlestep2)
 
-        val predefinedTexts = listOf("Affirmation 1", "Affirmation 2")
+        val predefinedTexts = listOf("MyAffirm 1", "MyAffirm 2")
         predefinedTexts.forEach {
             userTexts.add(it) // On ajoute le texte à userTexts
             addTextView(it, userTexts) // On affiche dans le layout
@@ -444,7 +444,7 @@ class Tavoix : Base() {
         for (i in 0 until container.childCount) {
             val linearLayout = container.getChildAt(i) as LinearLayout
             val editText = linearLayout.getChildAt(0) as? EditText
-            editText?.hint = "Affirmation $count"
+            editText?.hint = "MyAffirm $count"
             count++
         }
         textViewCount = count - 1
@@ -511,7 +511,7 @@ class Tavoix : Base() {
             layoutParams = LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f
             ).apply { setMargins(8, 0, 8, 0) }
-            this.text = "Affirmation ${container.childCount + 1}"   // 👈 IMPORTANT: 'this.text'
+            this.text = "MyAffirm ${container.childCount + 1}"   // 👈 IMPORTANT: 'this.text'
             textSize = 18f
             setTextColor(Color.parseColor("#333333"))
             gravity = Gravity.START or Gravity.CENTER_VERTICAL
@@ -579,7 +579,7 @@ class Tavoix : Base() {
         for (i in 0 until container.childCount) {
             val row = container.getChildAt(i) as LinearLayout
             val label = row.getChildAt(0) as TextView
-            label.text = "Affirmation ${i + 1}"
+            label.text = "MyAffirm ${i + 1}"
         }
     }
 
