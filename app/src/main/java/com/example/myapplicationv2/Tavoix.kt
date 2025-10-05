@@ -413,7 +413,7 @@ class Tavoix : Base() {
      * @param apikey Clé API pour le service TTS.
      */
     private fun generateTTSFilesForAllTexts(apikey: String?) {
-        val placeholderPattern = Regex("^Affirmation\\s+\\d+$")
+        val placeholderPattern = Regex("^MyAffirm\\s+\\d+$")
 
         for ((index, text) in userTexts.withIndex()) {
             // Vérifie si le texte n'est pas vide ET ne correspond pas au placeholder par défaut
