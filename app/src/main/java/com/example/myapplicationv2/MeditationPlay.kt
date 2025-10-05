@@ -92,6 +92,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         enableEdgeToEdge()
 
 
@@ -680,7 +681,7 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
     }
     override fun onStop() {
         super.onStop()
-        stopAllAudio()
+        exoPlayer?.pause()
     }
     override fun onSupportNavigateUp(): Boolean {
         return true

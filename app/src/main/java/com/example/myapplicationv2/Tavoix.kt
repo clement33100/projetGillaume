@@ -113,16 +113,7 @@ class Tavoix : Base() {
         addButton = findViewById(R.id.addButton)
         container = findViewById(R.id.container)
         val btnShowAdvices = findViewById<Button>(R.id.btn_show_advices)
-        val scrollView = findViewById<ScrollView>(R.id.scrollViewAffirm)
-        var isAdviceExpanded = false
         btnShowAdvices.isAllCaps = false
-
-        // Préparation du texte de conseils
-        val title = formatHtmlText("<b>Conseils Pratiques</b>", 0.95f)
-        val advice1 = formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.75f)
-        val advice2 = formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.75f)
-        val advice3 = formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.75f)
-        val advice6 = formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.75f)
 
         // Dans votre méthode onCreate, après avoir récupéré vos vues
         val rootView = findViewById<View>(R.id.drawer_layout)  // Vue racine globale
@@ -190,15 +181,15 @@ class Tavoix : Base() {
             val tvAdvices = dialogView.findViewById<TextView>(R.id.tvAdvices)
 
             val adviceText = SpannableStringBuilder().apply {
-                append(formatHtmlText("<b>FORMULE AU PRÉSENT</b> comme si c’était une réalité. <i>\"Je suis confiant.\"</i>", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_present), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("Écris sous la forme :<b> \"Moi, [ton Prénom], je...\"</b>", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_form), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("<b>SOIS POSITIF</b> en te concentrant sur ce que tu veux, pas sur ce que tu veux éviter", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_positive), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("<b>CHOISIS TES MOTS</b> riches de sens pour toi", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_words), 0.9f))
                 append("\n\n")
-                append(formatHtmlText("<b>SURMONTE TES RÉSISTANCES</b> avec : <i>\"Je m’ouvre à la possibilité de... .\"</i>", 0.9f))
+                append(formatHtmlText(getString(R.string.affirmation_resistance), 0.9f))
             }
 
             tvAdvices.text = adviceText
