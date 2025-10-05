@@ -66,7 +66,7 @@ class Tavoix : Base() {
     private var recordStartTime: Long = 0L
     private var curentVoice: String? = null
     companion object {
-        private const val MAX_AFFIRMATIONS = 6
+        private const val MAX_AFFIRMATIONS = 5
     }
 
     override fun getLayoutId(): Int {

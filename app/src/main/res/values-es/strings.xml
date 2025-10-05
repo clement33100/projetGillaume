@@ -131,7 +131,7 @@
     <string name="toast_recording_failed">No se pudo iniciar la grabación.</string>
     <string name="toast_recording_too_short">Grabación demasiado corta (&lt; 2 seg), ignorada.</string>
     <string name="toast_max_affirmations_tavoix">Máximo %1$d registros.</string>
-    <string name="toast_max_affirmations_reached">Has alcanzado el número máximo de afirmaciones (6).</string>
+    <string name="toast_max_affirmations_reached">Has alcanzado el número máximo de afirmaciones (5).</string>
     <string name="toast_select_affirmation">Debes seleccionar al menos una afirmación positiva.</string>
     <string name="toast_audio_save_failed">Error al guardar el archivo de audio.</string>
     <string name="toast_affirmation_too_long">Vaya, tu afirmación es demasiado larga\nLímite: 90 caracteres (≈ 12–15 palabras)</string>

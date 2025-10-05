@@ -27,7 +27,7 @@ class mesAffirmations : AppCompatActivity() {
     private lateinit var btnAdvices: Button
     private lateinit var btnAffirmationsDetails: Button
     private lateinit var textView: TextView
-
+    private lateinit var tvDiamant: TextView
     fun getLayoutId(): Int = R.layout.activity_mesaffirmations
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class mesAffirmations : AppCompatActivity() {
         btnAdvices = findViewById(R.id.btn_advicesaffirmations)
         btnAffirmationsDetails = findViewById(R.id.btn_affirmation)
         textView = findViewById(R.id.textView9)
-
+        tvDiamant = findViewById(R.id.textviewDiamant) // <-- AJOUT
         // 3) Texte dynamique selon la langue + soulignement
         textView.text = getString(R.string.lien_texte)
         applyUnderlineStyle(textView)
@@ -107,7 +107,7 @@ class mesAffirmations : AppCompatActivity() {
         btnHowItWorks.text = getString(R.string.btn_how_it_works)
         btnAdvices.text = getString(R.string.btn_practical_advices)
         btnAffirmationsDetails.text = getString(R.string.btn_my_affirmations)
-
+        tvDiamant.text = getString(R.string.diamant)
         // Texte avec lien + soulignement selon la langue
         textView.text = getString(R.string.lien_texte)
         applyUnderlineStyle(textView)

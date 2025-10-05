@@ -678,6 +678,10 @@ class MeditationPlay : Base() {  // Hérite de Base au lieu de AppCompatActivity
         // Avant de quitter l'activité, on arrête la lecture
         super.onBackPressed()
     }
+    override fun onStop() {
+        super.onStop()
+        stopAllAudio()
+    }
     override fun onSupportNavigateUp(): Boolean {
         return true
     }

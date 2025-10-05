@@ -49,6 +49,7 @@ class Step2 : Base() {
     private lateinit var textToSpeech: TextToSpeech
     private val generateFiles = ArrayList<String>()  // Liste pour stocker les chemins des fichiers générés
     private lateinit var titleStep2: TextView
+    private val MAX_AFFIRMATIONS = 5
 
     override fun getLayoutId(): Int {
         return R.layout.activity_step2  // Retourne le layout spécifique à cette activité
@@ -208,7 +209,7 @@ class Step2 : Base() {
         }
 
         addButton.setOnClickListener {
-            if (userTexts.size < 6) {
+            if (userTexts.size < MAX_AFFIRMATIONS) {
                 // Ajout d'une nouvelle affirmation vide
                 val newText = ""
                 userTexts.add(newText)
