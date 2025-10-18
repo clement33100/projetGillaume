@@ -140,6 +140,10 @@
     <string name="toast_select_valid_duration">Por favor, seleccione una duración válida.</string>
     <string name="toast_audio_generated">Archivo de audio generado para el índice %1$d.</string>
 
+    <string name="infoenregistrement">
+            La grabación debe durar entre 2 y 10 segundos
+    </string>
+
 
 
     <!-- Menú contextual -->

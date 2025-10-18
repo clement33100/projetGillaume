@@ -34,7 +34,9 @@
           Si tu connais la destination d"'"une ancienne autoroute et qu"'"elle ne te convient plus (<b>une croyance limitante que tu as identifiée</b>), il est temps de te détourner de cette autoroute en empruntant encore et encore le nouveau sentier que tu as choisi (<b>affirmation positive</b>). Ce sentier finira par devenir, lui aussi, une belle autoroute, tandis que l"'"ancienne, n"'"étant plus utilisée, disparaîtra sous la végétation, permettant ainsi l"'"émergence d"'"un <b>nouveau sentiment d"'"identité</b> et d"'"une perception renouvelée de toi-même.
       </string>
 
-
+    <string name="infoenregistrement">
+            L’enregistrement doit durer entre 2 et 10 secondes
+    </string>
 
     <string name="diamant">
         💎 Actuellement gratuit → bientôt Premium

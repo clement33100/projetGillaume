@@ -52,6 +52,11 @@
        Pour aller plus loin, visualise-toi en train de vivre vraiment tes affirmations. <b>Active tes 5 sens</b> : qu’est-ce que tu vois ? qu’est-ce que tu entends ? qu’est-ce que tu ressens dans ton corps ? Plus ton image est précise, plus l’impact est fort.
     </string>
 
+    <string name="infoenregistrement">
+        L’enregistrement doit durer entre 2 et 10 secondes
+
+    </string>
+
     <string name="txt_rules1">
         Choisis une \n <b>Voix Off</b>
     </string>

@@ -57,6 +57,10 @@
         <b>Listen to your affirmations for 21 days</b>, as often as possible, at least once a day. <b>Repeat them out loud during the moments of silence</b>, with the <b>conviction</b> that they are already true. Feel with <b>gratitude</b> that you are already <b>becoming the person you wish to be</b>.
 </string>
 
+    <string name="infoenregistrement">
+            The recording must last between 2 and 10 seconds
+    </string>
+
 
     <string name="diamant">
     💎 Currently free → soon Premium
