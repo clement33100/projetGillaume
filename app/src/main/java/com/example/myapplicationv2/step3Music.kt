@@ -524,25 +524,30 @@ class step3Music : Base() {  // Hérite de Base au lieu de AppCompatActivity
                 start()
             }
             currentFilePath = filePath
-            //Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            Log.d("Audio", "Lecture démarrée pour $filePath")
         } else {
-            if (mediaPlayer?.isPlaying == true && currentFilePath == filePath) {
-                // Arrêter la lecture
-                mediaPlayer?.stop()
-                mediaPlayer?.reset()
-                currentFilePath = null
-                //Toast.makeText(this, "Stopping audio", Toast.LENGTH_SHORT).show()
-            } else {
-                // Changer de fichier audio ou redémarrer la lecture
-                mediaPlayer?.reset()
-                mediaPlayer?.setDataSource(filePath)
-                mediaPlayer?.prepare()
-                mediaPlayer?.start()
-                currentFilePath = filePath
-                //Toast.makeText(this, "Playing audio", Toast.LENGTH_SHORT).show()
+            when {
+                // Si la musique est en cours et que c’est la même → arrêter
+                mediaPlayer?.isPlaying == true && currentFilePath == filePath -> {
+
+                    Log.d("Audio", "Lecture arrêtée pour $filePath")
+                }
+
+
+
+                // Sinon : nouvelle musique ou redémarrage d’une autre
+                else -> {
+                    mediaPlayer?.reset()
+                    mediaPlayer?.setDataSource(filePath)
+                    mediaPlayer?.prepare()
+                    mediaPlayer?.start()
+                    currentFilePath = filePath
+                    Log.d("Audio", "Lecture redémarrée pour $filePath")
+                }
             }
         }
     }
+
 
     /**
      * Change la visibilité d'une ScrollView.
