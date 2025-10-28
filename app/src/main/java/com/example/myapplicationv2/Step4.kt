@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.NumberPicker
 import android.widget.Switch
@@ -77,6 +78,7 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
 
         numberPickerMinutes.setOnValueChangedListener { _, _, _ -> updateDuration() }
         numberPickerSeconds.setOnValueChangedListener { _, _, _ -> updateDuration() }
+
 
         // Appel initial pour afficher la durée de départ
         updateDuration()
@@ -228,6 +230,9 @@ class Step4 : Base() {  // Hérite de Base au lieu de AppCompatActivity
             }
         }
     }
+
+
+
 
 
     private fun isOnline(): Boolean {

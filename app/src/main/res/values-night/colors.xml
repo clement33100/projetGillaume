@@ -17,8 +17,7 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorSecondary">#B0BEC5</color>
 
-    <color name="number_picker_text">#000000</color> <!-- noir pour le mode clair -->
-
+    <color name="number_picker_text">#FFFFFF</color> <!-- blanc pour le mode sombre -->
 
 
 </resources>
