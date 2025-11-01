@@ -6,8 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +31,10 @@ class mesAffirmations : AppCompatActivity() {
     private lateinit var btnAffirmationsDetails: Button
     private lateinit var textView: TextView
     private lateinit var tvDiamant: TextView
+
+    // CGU / Privacy
+    private lateinit var textViewCGU: TextView
+
     fun getLayoutId(): Int = R.layout.activity_mesaffirmations
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,16 +53,22 @@ class mesAffirmations : AppCompatActivity() {
         btnAdvices = findViewById(R.id.btn_advicesaffirmations)
         btnAffirmationsDetails = findViewById(R.id.btn_affirmation)
         textView = findViewById(R.id.textView9)
-        tvDiamant = findViewById(R.id.textviewDiamant) // <-- AJOUT
-        // 3) Texte dynamique selon la langue + soulignement
+        tvDiamant = findViewById(R.id.textviewDiamant)
+        textViewCGU = findViewById(R.id.cgu)
+
+        // 3) Texte dynamique selon la langue + soulignement (cadeau)
         textView.text = getString(R.string.lien_texte)
         applyUnderlineStyle(textView)
 
-        // 4) Clic sur tout le textView
+        // 4) Clic sur tout le textView (cadeau)
         textView.setOnClickListener {
             val url = getString(R.string.linkform)
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
+
+        // 4bis) CGU/Privacy : deux segments cliquables uniquement
+        textViewCGU.text = getString(R.string.cgu)
+        applyMultiClickableStyle(textViewCGU)
 
         // 5) Listeners des boutons
         btnNew.setOnClickListener { startActivity(Intent(this, Etape2Voix::class.java)) }
@@ -73,10 +86,11 @@ class mesAffirmations : AppCompatActivity() {
         }
 
         // 7) Changement de langue (live update, pas de recréation)
-        val tvFrench   = findViewById<TextView>(R.id.textView2)
-        val tvEnglish  = findViewById<TextView>(R.id.textView5)
-        val tvSpanish  = findViewById<TextView>(R.id.textView10)
-        tvFrench.setOnClickListener  { switchLanguage("fr") }
+        val tvFrench = findViewById<TextView>(R.id.textView2)
+        val tvEnglish = findViewById<TextView>(R.id.textView5)
+        val tvSpanish = findViewById<TextView>(R.id.textView10)
+
+        tvFrench.setOnClickListener { switchLanguage("fr") }
         tvEnglish.setOnClickListener { switchLanguage("en") }
         tvSpanish.setOnClickListener { switchLanguage("es") }
 
@@ -93,11 +107,7 @@ class mesAffirmations : AppCompatActivity() {
     private fun switchLanguage(tag: String) {
         val newLocales = LocaleListCompat.forLanguageTags(tag)
         if (AppCompatDelegate.getApplicationLocales() == newLocales) return
-
-        // 1) Change la locale (persistant pour l’appli)
         AppCompatDelegate.setApplicationLocales(newLocales)
-
-        // 2) Recharge les textes visibles (sans recréation)
         updateTexts()
     }
 
@@ -108,13 +118,17 @@ class mesAffirmations : AppCompatActivity() {
         btnAdvices.text = getString(R.string.btn_practical_advices)
         btnAffirmationsDetails.text = getString(R.string.btn_my_affirmations)
         tvDiamant.text = getString(R.string.diamant)
-        // Texte avec lien + soulignement selon la langue
+
+        // Texte cadeau (même logique)
         textView.text = getString(R.string.lien_texte)
         applyUnderlineStyle(textView)
+
+        // CGU/Privacy (réappliquer pour suivre la langue)
+        textViewCGU.text = getString(R.string.cgu)
+        applyMultiClickableStyle(textViewCGU)
     }
 
-    // --- Utilitaires soulignement ---
-
+    // --- Utilitaires soulignement (texte cadeau) ---
     private fun applyUnderlineStyle(tv: TextView) {
         val fullText = tv.text.toString()
         val (start, end) = computeUnderlineRange(fullText)
@@ -143,5 +157,50 @@ class mesAffirmations : AppCompatActivity() {
             s to s + "haciendo clic aquí".length
         }
         else -> -1 to -1
+    }
+
+    // --- Liens multiples dans le TextView CGU ---
+    private fun applyMultiClickableStyle(tv: TextView) {
+        val full = tv.text.toString()
+        val spannable = SpannableString(full)
+
+        // Couples (terme, url) pour chaque langue
+        val parts = listOf(
+            "CGU" to getString(R.string.linkcgu),
+            "Terms of Use" to getString(R.string.linkcgu),
+            "Condiciones Generales de Uso" to getString(R.string.linkcgu),
+
+            "Politique de Confidentialité" to getString(R.string.linkpol),
+            "Privacy Policy" to getString(R.string.linkpol),
+            "Política de Confidencialidad" to getString(R.string.linkpol)
+        )
+
+        parts.forEach { (term, url) ->
+            val start = full.indexOf(term, ignoreCase = true)
+            if (start >= 0) {
+                val end = start + term.length
+
+                // clic
+                spannable.setSpan(object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    }
+                }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                // style (vert + souligné)
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(this, R.color.green)),
+                    start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable.setSpan(
+                    UnderlineSpan(),
+                    start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        tv.text = spannable
+        tv.movementMethod = LinkMovementMethod.getInstance()
+        tv.highlightColor = android.graphics.Color.TRANSPARENT
     }
 }

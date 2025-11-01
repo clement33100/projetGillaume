@@ -4,12 +4,13 @@
 
 
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:allowBackup="true"
@@ -22,13 +23,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
+        <!-- Activities -->
         <activity
             android:name=".Tavoix"
             android:exported="false" />
 
+        <!-- ✅ FileProvider corrigé -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.myapplicationv2.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -40,6 +44,7 @@
             android:name=".ManageAffirmationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".mesAffirmationsDetails"
             android:exported="false"
@@ -49,28 +54,34 @@
             android:name=".step3Music"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Step2"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".Base"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".MeditationPlay"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".Advices"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Step4"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".hdiw1"
             android:exported="false"
@@ -80,6 +91,7 @@
             android:name=".Etape2Voix"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".mesAffirmations"
             android:exported="true"

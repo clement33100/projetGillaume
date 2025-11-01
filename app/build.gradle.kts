@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "com.example.myapplicationv2"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myapplicationv2"
+        applicationId = "com.myaffirmplay.app"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 6
+        versionName = "1.0.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -188,4 +188,8 @@
     <string name="toastManagaaffirmation4">Erreur lors du renommage.</string>
     <string name="toastManagaaffirmation5">Le nom ne peut pas être vide.</string>
 
+    <string name="cgu">CGU et Politique de Confidentialité </string>
+    <string name="linkcgu">https://myaffirmplay.com/fr/cgu/</string>
+    <string name="linkpol">https://myaffirmplay.com/fr/politique-confidentialite/</string>
+
 </resources>

@@ -193,5 +193,8 @@
     <string name="toastManagaaffirmation4">Error al cambiar el nombre.</string>
     <string name="toastManagaaffirmation5">El nombre no puede estar vacío.</string>
 
+    <string name="cgu">Condiciones Generales de Uso y Política de Confidencialidad </string>
+    <string name="linkcgu">https://myaffirmplay.com/es/terminos-y-condiciones-de-uso/</string>
+    <string name="linkpol">https://myaffirmplay.com/es/politica-de-privacidad/</string>
 
 </resources>

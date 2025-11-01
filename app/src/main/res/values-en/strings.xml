@@ -189,4 +189,8 @@
     <string name="toastManagaaffirmation4">Error during renaming.</string>
     <string name="toastManagaaffirmation5">The name cannot be empty.</string>
 
+    <string name="cgu">Terms of Use and Privacy Policy </string>
+    <string name="linkcgu">https://myaffirmplay.com/terms-of-use/</string>
+    <string name="linkpol">https://myaffirmplay.com/privacy-policy/</string>
+
 </resources>
