@@ -11,6 +11,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import androidx.activity.enableEdgeToEdge
+
 
 abstract class Base : AppCompatActivity() {
 
@@ -20,9 +22,13 @@ abstract class Base : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Edge-to-edge Android 15 compatible
+        enableEdgeToEdge()
+
         setContentView(getLayoutId())
 
-        // Initialiser le DrawerLayout et le NavigationView
+        // Drawer + nav
         drawerLayout = findViewById(R.id.drawer_layout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
@@ -35,45 +41,34 @@ abstract class Base : AppCompatActivity() {
             true
         }
 
-        // Configurer le bouton du menu burger pour ouvrir le drawer
+        // Bouton burger
         btnBurger = findViewById(R.id.btn_burger)
         btnBurger.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        // Gérer les insets pour le layout
+        // Appliquer les WindowInsets à la vue principale
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+            WindowInsetsCompat.CONSUMED
         }
+    }
+
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
+        // Pas de listener global ici → évite le double padding
     }
 
     abstract fun getLayoutId(): Int
 
     private fun handleMenuItemClick(menuItem: MenuItem) {
         when (menuItem.itemId) {
-            R.id.btn_affirm -> {
-                val intent = Intent(this, mesAffirmations::class.java)
-                startActivity(intent)
-            }
-            R.id.btn_new -> {
-                val intent = Intent(this, Etape2Voix::class.java)
-                startActivity(intent)
-            }
-            R.id.btn_myAffirm -> {
-                val intent = Intent(this, mesAffirmationsDetails::class.java)
-                startActivity(intent)
-            }
-            R.id.btn_advices -> {
-                val intent = Intent(this, Advices::class.java)
-                startActivity(intent)
-            }
-            R.id.btn_hdiw -> {
-                val intent = Intent(this, hdiw1::class.java)
-                startActivity(intent)
-            }
-
+            R.id.btn_affirm -> startActivity(Intent(this, mesAffirmations::class.java))
+            R.id.btn_new -> startActivity(Intent(this, Etape2Voix::class.java))
+            R.id.btn_myAffirm -> startActivity(Intent(this, mesAffirmationsDetails::class.java))
+            R.id.btn_advices -> startActivity(Intent(this, Advices::class.java))
+            R.id.btn_hdiw -> startActivity(Intent(this, hdiw1::class.java))
         }
     }
 
